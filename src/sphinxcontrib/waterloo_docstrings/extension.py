@@ -1108,9 +1108,6 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 
 		node_entry = nodes.entry()
 		if label in ("Preamble","Contract"):
-#			node_paragraph = nodes.paragraph()
-#			node_entry += node_paragraph
-			node_bullet_list = nodes.bullet_list()
 			for label1,item_subsection in cast(dict[str, Any], cast(Any, item_section).items()).items():
 				if label1 == "profile":
 					continue
@@ -1119,7 +1116,6 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 				if label1 in ("normative_sections",):
 					label1_hr = label1.replace("_"," ")
 
-				node_list_item = nodes.list_item()
 				node1_paragraph = nodes.paragraph()
 				node1_paragraph.extend(ctx.parse(node1_paragraph,0,ctx.add_role_label(label1_hr)))
 				if label1 in ("normative_sections","traits","status","scope"):
@@ -1151,11 +1147,8 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 					node2_bullet_list = build_bullet_list_from_subsection_items(item_subsection.items())
 				else:
 					raise NotImplementedError("dude",label1)
-				node_list_item += node1_paragraph
-				node_list_item += node2_bullet_list
-				node_bullet_list += node_list_item
-
-			node_entry += node_bullet_list
+				node_entry += node1_paragraph
+				node_entry += node2_bullet_list
 
 		elif label in ("Definitions","Terminology"):
 			dl = nodes.definition_list(classes=["wtrl-dfn-list"])

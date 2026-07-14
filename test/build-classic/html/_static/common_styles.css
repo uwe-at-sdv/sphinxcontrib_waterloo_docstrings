@@ -13,6 +13,22 @@ Current state [2023-08-08]
 - python
 */
 
+:root {
+    /* 1. Etwas kleinere Schrift macht die Box kompakter und hebt sie optisch an */
+    --font-size--code: 0.875em;
+
+    /* 2. Falls installiert: Furo bevorzugt eigentlich Fira Code oder JetBrains Mono.
+          Indem wir moderne Programmierschriften nach vorne stellen, nutzt Firefox 
+          bessere Schriftmetriken, falls du sie auf dem System hast. */
+    --font-stack--monospace: "JetBrains Mono", "Fira Code", "Fira Mono", "Menlo", "Consolas", monospace;
+}
+
+/* 3. Korrektur des Innenabstands (Padding) speziell für Firefox/Linux */
+code.docutils.literal {
+	vertical-align: 0.06em;
+	font-size:100%;
+}
+
 :root
 	{
 	--sdv-plain-color:inherit;
@@ -65,7 +81,7 @@ Current state [2023-08-08]
 
 	--sdv-label-color:#304030;
 	--sdv-label-font-weight:normal;
-	--sdv-label-font-style:normal;
+	--sdv-label-font-style:oblique;
 
 	--sdv-mod-color:#462;
 	--sdv-mod-font-weight:normal;

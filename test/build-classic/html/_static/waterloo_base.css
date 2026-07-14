@@ -86,7 +86,6 @@ a.wtrl_var:visited
 	color:var(--sdv-attr-color);
 	font-weight:var(--sdv-attr-font-weight);
 	font-style:var(--sdv-attr-font-style);
-	font-size: 90%;
 
 	background-color:inherit;
 	}
@@ -97,7 +96,6 @@ a.wtrl_var:visited
 	color:var(--sdv-class-color);
 	font-weight:var(--sdv-class-font-weight);
 	font-style:var(--sdv-class-font-style);
-	font-size: 90%;
 
 	background-color:inherit;
 	}
@@ -108,7 +106,6 @@ a.wtrl_var:visited
 	color:var(--sdv-cmd-color);
 	font-weight:var(--sdv-cmd-font-weight);
 	font-style:var(--sdv-cmd-font-style);
-	font-size: 90%;
 
 	background-color:inherit;
 	}
@@ -128,7 +125,6 @@ a.wtrl_var:visited
 	color:var(--sdv-file-color);
 	font-weight:var(--sdv-file-font-weight);
 	font-style:var(--sdv-file-font-style);
-	font-size: 90%;
 
 	background-color:inherit;
 	}
@@ -139,7 +135,6 @@ a.wtrl_var:visited
 	color:var(--sdv-func-color);
 	font-weight:var(--sdv-func-font-weight);
 	font-style:var(--sdv-func-font-style);
-	font-size: 90%;
 
 	background-color:inherit;
 	}
@@ -150,7 +145,6 @@ a.wtrl_var:visited
 	color:var(--sdv-key-color);
 	font-weight:var(--sdv-key-font-weight);
 	font-style:var(--sdv-key-font-style);
-	font-size: 90%;
 	border: 1px solid black;
 	border-radius:3px;
 	padding-left:3px;
@@ -175,7 +169,6 @@ a.wtrl_var:visited
 
 	color:inherit;
 	font-weight:normal;
-	font-size: 90%;
 
 	background-color:inherit;
 	}
@@ -186,7 +179,6 @@ a.wtrl_var:visited
 	color: var(--sdv-mod-color);
 	font-weight:var(--sdv-mod-font-weight);
 	font-style:var(--sdv-mod-font-style);
-	font-size: 90%;
 
 	background-color:inherit;
 	}
@@ -234,7 +226,6 @@ a.wtrl_var:visited
 	color: var(--sdv-pkg-color);
 	font-weight:var(--sdv-pkg-font-weight);
 	font-style:var(--sdv-pkg-font-style);
-	font-size: 90%;
 
 	background-color:inherit;
 	}
@@ -273,7 +264,6 @@ a.wtrl_var:visited
 	color:var(--sdv-type-color);
 	font-weight:var(--sdv-type-font-weight);
 	font-style:var(--sdv-type-font-style);
-	font-size: 90%;
 
 	background-color:inherit;
 	}
@@ -283,7 +273,6 @@ a.wtrl_var:visited
 	color:var(--sdv-url-color);
 	font-weight:var(--sdv-url-font-weight);
 	font-style:var(--sdv-url-font-style);
-	font-size: 90%;
 
 	background-color:inherit;
 	}
@@ -343,11 +332,12 @@ a.wtrl_var:visited
 
 /*--- The relation of docstring boxes w.r.t each others ------*/
 table.wtrl-box {
-/* Tabellen sind per-default zentriert. */
+/* leave to theme
 	margin-left:auto;
 	margin-right:auto;
 	margin-top:0.5em;
 	margin-bottom:1em;
+*/
 	width:100%;
 	}
 
@@ -365,7 +355,7 @@ table.wtrl-box p.wtrl-freeform-paragraph-content {
 
 /*----- Docstring box interior -------------------------------*/
 
-/*
+/* leave to theme
 table.wtrl-box
 	{
 	font-family:sans-serif;
@@ -384,11 +374,12 @@ table.wtrl-box
 
 /* General properties of table cells (head and body) */
 
-/* leave to theme
 table.wtrl-box td, table.wtrl-box th {
+/* leave to theme
 	border: 0px;;
-	}
 */
+	vertical-align: top;
+	}
 
 /* leave to theme
 table.wtrl-box td .pre, table.wtrl-box th .pre {
@@ -410,7 +401,7 @@ table.wtrl-box > thead > tr > th
 
 table.wtrl-box > thead > tr > th p.wtrl-obj-kind {
 	font-weight:normal;
-	color: #ffffff;
+	color: var(--color-foreground-primary);
 	}
 
 table.wtrl-box > thead > tr > th p.wtrl-obj-qid
@@ -425,24 +416,19 @@ table.wtrl-box > thead > tr > th p.wtrl-obj-qid
    */
 
 table.wtrl-box > thead.wtrl-box-head-module > tr > th {
-	background-color: #335522;
-	color:#fff;
+	color: #335522;
 	}
 table.wtrl-box > thead.wtrl-box-head-class > tr > th {
-	background-color: #885555;
-	color:#fff;
+	color: #885555;
 	}
 table.wtrl-box > thead.wtrl-box-head-method > tr > th {
-	background-color: #7080d3;
-	color:#fff;
+	color: #7080d3;
 	}
 table.wtrl-box > thead.wtrl-box-head-function > tr > th {
-	background-color: #7080d3;
-	color:#fff;
+	color: #7080d3;
 	}
 table.wtrl-box > thead.wtrl-box-head-inherited_method > tr > th {
-	background-color: #90a0d3;
-	color:#fff;
+	color: #90a0d3;
 	}
 
 /*..... Table body ...........................................*/
@@ -460,12 +446,15 @@ table.wtrl-box > tbody > tr:nth-child(odd)
 	}
 */
 
+/* leave to theme
 table.wtrl-box > tbody > tr > td
 	{
 	padding-left:10px;
 	padding-right:10px;
 	vertical-align:top;
 	}
+*/
+
 /* Prevent docstring boxes from expanding horizontally due to long pre/code
    elements (e.g. long Literal["..."] type annotations).
    max-width:82% keeps the right td in the intended table proportion;
@@ -518,5 +507,4 @@ table.wtrl-box > tbody > tr.wtrl-section ul {
 	margin-bottom:0em;
 	}
 .wtrl-side-by-side .code-block-caption {
-	font-size: 90%;
 	}
