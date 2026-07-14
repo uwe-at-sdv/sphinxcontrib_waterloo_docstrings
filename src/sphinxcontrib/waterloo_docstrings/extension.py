@@ -2594,8 +2594,9 @@ def wtrl_cmd_role(name: str, rawtext: str, text: str, lineno: int, inliner: Inli
 	node = nodes.literal(text, text, classes=["wtrl_cmd"])
 	return [node], []
 
+# inline, not literal
 def wtrl_dfn_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.literal(text, text, classes=["wtrl_dfn"])
+	node = nodes.inline(text, text, classes=["wtrl_dfn"])
 	return [node], []
 
 def wtrl_file_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
@@ -2644,8 +2645,9 @@ def wtrl_tag_role(name: str, rawtext: str, text: str, lineno: int, inliner: Inli
 	node = nodes.literal(text, text, classes=["wtrl_tag"])
 	return [node], []
 
+# inline, not literal
 def wtrl_term_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.literal(text, text, classes=["wtrl_term"])
+	node = nodes.inline(text, text, classes=["wtrl_term"])
 	return [node], []
 
 def wtrl_url_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
