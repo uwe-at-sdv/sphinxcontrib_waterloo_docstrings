@@ -365,9 +365,12 @@ table.wtrl-box p.wtrl-freeform-paragraph-content {
 
 /*----- Docstring box interior -------------------------------*/
 
+/*
 table.wtrl-box
 	{
 	font-family:sans-serif;
+/ * These seem to be necessary in order to be compatible to both,
+   classic and alabaster. * /
 	font-size: 12pt;
 	line-height: 140%;
 
@@ -377,15 +380,25 @@ table.wtrl-box
 	border-collapse:separate;
 	box-shadow: 0px 0px 0px;
 	}
+*/
 
 /* General properties of table cells (head and body) */
 
+/* leave to theme
 table.wtrl-box td, table.wtrl-box th {
 	border: 0px;;
 	}
+*/
+
+/* leave to theme
+table.wtrl-box td .pre, table.wtrl-box th .pre {
+	background-color:inherit;
+	}
+*/
 
 /*..... Table head ...........................................*/
 
+/* leave to theme
 table.wtrl-box > thead > tr > th
 	{
 	font-weight:bold;
@@ -393,6 +406,7 @@ table.wtrl-box > thead > tr > th
 	padding-left:10px;
 	padding-right:10px;
 	}
+*/
 
 table.wtrl-box > thead > tr > th p.wtrl-obj-kind {
 	font-weight:normal;
@@ -433,6 +447,7 @@ table.wtrl-box > thead.wtrl-box-head-inherited_method > tr > th {
 
 /*..... Table body ...........................................*/
 
+/* leave to theme
 table.wtrl-box > tbody > tr:nth-child(even)
 	{
 	padding-left:10px;
@@ -443,6 +458,8 @@ table.wtrl-box > tbody > tr:nth-child(odd)
 	{
 	background-color:#eeeeee;
 	}
+*/
+
 table.wtrl-box > tbody > tr > td
 	{
 	padding-left:10px;

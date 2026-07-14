@@ -2610,8 +2610,9 @@ def wtrl_key_role(name: str, rawtext: str, text: str, lineno: int, inliner: Inli
 	node = nodes.literal(text, text, classes=["wtrl_key"])
 	return [node], []
 
+# inline, not literal
 def wtrl_label_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.literal(text, text, classes=["wtrl_label"])
+	node = nodes.inline(text, text, classes=["wtrl_label"])
 	return [node], []
 
 def wtrl_lit_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
@@ -2622,8 +2623,9 @@ def wtrl_mod_role(name: str, rawtext: str, text: str, lineno: int, inliner: Inli
 	node = nodes.literal(text, text, classes=["wtrl_mod"])
 	return [node], []
 
+# inline, not literal
 def wtrl_norm_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.literal(text, text, classes=["wtrl_norm"])
+	node = nodes.inline(text, text, classes=["wtrl_norm"])
 	return [node], []
 
 def wtrl_op_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
