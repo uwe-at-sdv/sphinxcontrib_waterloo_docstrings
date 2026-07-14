@@ -110,6 +110,7 @@ Function_overview:
 """
 
 from __future__ import annotations
+from importlib.metadata import PackageNotFoundError, version
 from types import FunctionType, ModuleType
 from typing import Any, Callable, Dict, Final, get_type_hints, get_origin, get_args, Generator, Iterable, Iterator, List, Mapping, NewType, NoReturn, Protocol, Sequence, Set, Tuple, Type, TypeAlias, TypeGuard, Union, cast
 
@@ -132,16 +133,16 @@ from sphinx.util.nodes import make_refnode
 
 import sdv.doc.waterloo.docitem as mod_docitem
 
-__version__ = "0.3.0"
-# - 0.3.0 [2026-07-04]	New semantic roles
-# - 0.2.1 [2026-05-08]	Bugfixes name resolution in link lists like "Public_methods"
-# - 0.2.0 [2026-05-06]	Scope awareness
-# - 0.1.1 [2026-04-25]	Parameters is now rendered as free-form text, not bullet list.
-# - 0.1.0 [2026-04-17]	Public_types/constants/variables are now rendered as free-form text, not bullet list.
-
 #===== Typechecking ===========================================#
 
 Struct: TypeAlias = RstStruct
+
+
+def _extension_version() -> str:
+	try:
+		return version("sphinxcontrib-waterloo-docstrings")
+	except PackageNotFoundError:
+		return "0.0.0"
 
 
 class InlinerDocumentSettings(Protocol):
@@ -2694,7 +2695,8 @@ def _add_static_path(config: Any, path : str) -> None:
 
 def _add_css_files(app: Any) -> None:
 	app.add_css_file("common_styles.css")
-	app.add_css_file("alabaster_waterloo.css")
+	app.add_css_file("waterloo_base.css")
+#	app.add_css_file("alabaster_waterloo.css")
 
 def on_source_read(app: Any, docname: str, source: List[str]) -> None:
 	pass
@@ -2764,7 +2766,7 @@ def setup(app: Any) -> dict[str, Any]:
 		roles.register_local_role(name,cast(RoleHandler,func))
 
 	return {
-	 "version": "0.1",
+	 "version": _extension_version(),
 	 "parallel_read_safe": True,
 	 "parallel_write_safe": True,
 	 }

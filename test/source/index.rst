@@ -16,3 +16,5 @@ documentation for details.
    :caption: Contents:
 
 .. wtrl_autodoc_module:: mymodule
+
+.. wtrl_autodoc_module:: sdv.doc.waterloo.docitem_helper

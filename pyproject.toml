@@ -5,17 +5,51 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "sphinxcontrib-waterloo-docstrings"
 description = "Sphinx extension for Waterloo Docstrings"
-version = "0.1.0"
+dynamic = ["version"]
+readme = "README.md"
 requires-python = ">=3.10"
 authors = [{ name = "Uwe" }]
 license = "BSD-2-Clause"
+keywords = [
+	"docstrings",
+	"documentation",
+	"normativity",
+	"sphinx",
+	"waterloo",
+	]
+classifiers = [
+	"Development Status :: 4 - Beta",
+	"Environment :: Console",
+	"Framework :: Sphinx :: Extension",
+	"Intended Audience :: Developers",
+	"Operating System :: OS Independent",
+	"Programming Language :: Python :: 3",
+	"Programming Language :: Python :: 3.10",
+	"Programming Language :: Python :: 3.11",
+	"Programming Language :: Python :: 3.12",
+	"Programming Language :: Python :: 3.13",
+	"Programming Language :: Python :: 3.14",
+	"Topic :: Documentation",
+	"Topic :: Software Development :: Documentation",
+	]
 dependencies = [
 	"sdv-doc-waterloo>=0.12,<0.13",
-	"sphinx",
-	"docutils",
+	]
+
+[project.urls]
+Homepage = "https://github.com/uwe-at-sdv/sdv_doc_waterloo"
+Source = "https://github.com/uwe-at-sdv/sdv_doc_waterloo/tree/sphinx"
+Issues = "https://github.com/uwe-at-sdv/sdv_doc_waterloo/issues"
+
+[project.optional-dependencies]
+sphinx = [
+	"sphinx"
 	]
 
 [tool.setuptools.package-data]
 "sphinxcontrib.waterloo_docstrings" = [
 	"_static/*.css"
 	]
+
+[tool.setuptools.dynamic]
+version = {file = "VERSION"}

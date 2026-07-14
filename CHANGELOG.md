@@ -1,0 +1,19 @@
+# Changelog
+
+Format:
+
+- VERSION [YYYY-MM-DD]: Summary.
+
+#----- extend here --------------------------------------------#
+* 0.3.1 [2026-07-14]
+	* Decouple Sphinx extension and move from main branch to new sphinx branch
+* 0.3.0 [2026-07-04]
+	* New semantic roles
+* 0.2.1 [2026-05-08]
+	* Bugfixes name resolution in link lists like "Public_methods"
+* 0.2.0 [2026-05-06]
+	* Scope awareness
+* 0.1.1 [2026-04-25]
+	* Parameters is now rendered as free-form text, not bullet list.
+* 0.1.0 [2026-04-17]
+	* Public_types/constants/variables are now rendered as free-form text, not bullet list.
