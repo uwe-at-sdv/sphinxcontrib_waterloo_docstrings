@@ -367,6 +367,12 @@ table.wtrl-box p.wtrl-freeform-paragraph-content {
 
 table.wtrl-box
 	{
+	font-family:sans-serif;
+/* These seem to be necessary in order to be compatible to both,
+   classic and alabaster. */
+	font-size: 12pt;
+	line-height: 140%;
+
 	border: 0px;
 	padding: 0px;
 	border-spacing:2px;
