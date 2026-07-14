@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=67", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sphinxcontrib-waterloo-docstrings"
+description = "Sphinx extension for Waterloo Docstrings"
+version = "0.1.0"
+requires-python = ">=3.10"
+authors = [{ name = "Uwe" }]
+license = "BSD-2-Clause"
+dependencies = [
+	"sdv-doc-waterloo>=0.12,<0.13",
+	"sphinx",
+	"docutils",
+	]
+
+[tool.setuptools.package-data]
+"sphinxcontrib.waterloo_docstrings" = [
+	"_static/*.css"
+	]
