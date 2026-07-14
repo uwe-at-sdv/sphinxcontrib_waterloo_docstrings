@@ -1060,9 +1060,9 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 	node_thead = nodes.thead(classes=["wtrl-box-head-" + profile])
 	node_hrow = nodes.row()
 	node1_entry = nodes.entry()
-	node1_entry += ctx.parse(node1_entry,0,ctx.add_role_label(profile.capitalize()))
+	node1_entry += nodes.paragraph(text=profile.capitalize(),classes=["wtrl-obj-kind"])
 	node2_entry = nodes.entry()
-	node2_entry += nodes.paragraph(text=objname)
+	node2_entry += nodes.paragraph(text=objname,classes=["wtrl-obj-qid"])
 	node_hrow += node1_entry
 	node_hrow += node2_entry
 	node_thead += node_hrow
