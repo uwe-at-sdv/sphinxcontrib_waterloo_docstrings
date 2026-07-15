@@ -29,6 +29,8 @@ htmlcov/
 # Sphinx build output
 docs/_build/
 _build/
+test/build-pydata/
+test/build-rtd/
 
 # OS / editor
 .DS_Store
