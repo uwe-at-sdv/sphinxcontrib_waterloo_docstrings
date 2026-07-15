@@ -1,0 +1,66 @@
+name: Publish Sphinx showcase to gh-pages
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ sphinx ]
+
+permissions:
+  contents: write
+
+jobs:
+  publish-showcase:
+    name: Build and publish Sphinx showcase
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out sphinx branch
+        uses: actions/checkout@v4
+        with:
+          path: sphinx
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      - name: Install showcase dependencies
+        working-directory: sphinx
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade '.[sphinx]'
+          python -m pip install --upgrade furo
+
+      - name: Build supported showcase themes
+        working-directory: sphinx/test
+        run: |
+          make clean-furo html-furo
+          make clean-alabaster html-alabaster
+          make clean-classic html-classic
+
+      - name: Check out gh-pages branch
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Update gh-pages showcase directories
+        run: |
+          rm -rf gh-pages/sphinx/furo gh-pages/sphinx/alabaster gh-pages/sphinx/classic
+          mkdir -p gh-pages/sphinx
+          cp -a sphinx/test/build-furo/html gh-pages/sphinx/furo
+          cp -a sphinx/test/build-alabaster/html gh-pages/sphinx/alabaster
+          cp -a sphinx/test/build-classic/html gh-pages/sphinx/classic
+
+      - name: Commit and push gh-pages update
+        working-directory: gh-pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sphinx/furo sphinx/alabaster sphinx/classic
+          if git diff --cached --quiet; then
+            echo "No Sphinx showcase changes to publish."
+            exit 0
+          fi
+          git commit -m "Publish Sphinx showcase"
+          git push origin gh-pages
