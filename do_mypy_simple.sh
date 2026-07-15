@@ -11,7 +11,7 @@
 # We presuppose that the script is located on repository level.
 SCRIPT_DIR=$(realpath $(dirname $0))
 PATH_MYPY_INI="${SCRIPT_DIR}/mypy.ini"
-PATH_SRC_DIR="${SCRIPT_DIR}/src/sdv/doc/waterloo"
+PATH_SRC_DIR="${SCRIPT_DIR}/src/sphinxcontrib/waterloo_docstrings"
 PATH_CHK_OUT="${SCRIPT_DIR}/doc/source/type_checking_report.txt"
 PATH_EXC_OUT="${SCRIPT_DIR}/doc/source/type_checking_exceptions.txt"
 PATH_FILES_OUT="${SCRIPT_DIR}/doc/source/type_checking_files.txt"
@@ -38,5 +38,5 @@ grep -nE '#[[:space:]]*(type: ignore(\[[^]]+\])?|pragma: no cover.*)$' "${PATH_S
 > "${PATH_EXC_OUT}"
 
 pushd ${SCRIPT_DIR}/src > /dev/null
-find sdv/doc/waterloo/ -name "*.py" > ${PATH_FILES_OUT}
+find src/sphinxcontrib/waterloo_docstrings/ -name "*.py" > ${PATH_FILES_OUT}
 popd > /dev/null
