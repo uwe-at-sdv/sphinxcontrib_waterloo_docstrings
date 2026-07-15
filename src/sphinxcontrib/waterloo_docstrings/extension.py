@@ -386,14 +386,14 @@ def _build_internal_ref(ctx: context, target_obj: object, link_text: str, css_cl
 			and isinstance(loc[1], str)
 		):
 			target_docname, target_id = loc
-		node_ref = make_refnode(
+		node_ref = cast(nodes.reference, make_refnode(
 			builder,
 			from_docname,
 			target_docname,
 			target_id,
 			node_child,
 			title=target_fqn,
-		)
+		))
 	else:
 		node_ref = nodes.reference(link_text, link_text, refid=target_anchor)
 

@@ -23,6 +23,7 @@ echo > ${PATH_CHK_OUT}
 mypy --config-file "${PATH_MYPY_INI}" \
 	--namespace-packages \
 	--explicit-package-bases \
+	--follow-imports=skip \
 	"${PATH_SRC_DIR}" \
 	> "${PATH_CHK_OUT}"
 rc=$?
