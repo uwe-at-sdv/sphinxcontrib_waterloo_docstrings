@@ -408,6 +408,26 @@ table.wtrl-box > thead > tr > th p.wtrl-obj-qid
 	{
 	font-family:monospace;
 	}
+table.wtrl-box > thead.wtrl-box-head-module > tr > th p.wtrl-obj-qid
+	{
+	color:var(--sdv-mod-color);
+	}
+table.wtrl-box > thead.wtrl-box-head-class > tr > th p.wtrl-obj-qid
+	{
+	color:var(--sdv-class-color);
+	}
+table.wtrl-box > thead.wtrl-box-head-function > tr > th p.wtrl-obj-qid
+	{
+	color:var(--sdv-func-color);
+	}
+table.wtrl-box > thead.wtrl-box-head-method > tr > th p.wtrl-obj-qid
+	{
+	color:var(--sdv-func-color);
+	}
+table.wtrl-box > thead.wtrl-box-head-inherited_method > tr > th p.wtrl-obj-qid
+	{
+	color:var(--sdv-func-color);
+	}
 
 /* Coloured background depending on object "kind".
    modules: green

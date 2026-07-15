@@ -211,6 +211,7 @@ Contract:
 		self.env = None
 		self.wtrl_validated_doc_cache: dict[int, mod_docitem.docitem_docstring_base | None] = {}
 		self.add_role_attr = lambda t:f":wtrl_attr:`{t}`"
+		self.add_role_class = lambda t:f":wtrl_class:`{t}`"
 		self.add_role_cmd = lambda t:f":wtrl_cmd:`{t}`"
 		self.add_role_dfn = lambda t:f":wtrl_dfn:`{t}`"
 		self.add_role_file = lambda t:f":wtrl_file:`{t}`"
@@ -232,6 +233,8 @@ Contract:
 
 	def set_add_role_attr(self,c : Callable[[str],str]) -> None:
 		self.add_role_attr = c
+	def set_add_role_class(self,c : Callable[[str],str]) -> None:
+		self.add_role_class = c
 	def set_add_role_cmd(self,c : Callable[[str],str]) -> None:
 		self.add_role_cmd = c
 	def set_add_role_dfn(self,c : Callable[[str],str]) -> None:
@@ -1320,7 +1323,7 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 			render_linked_public_entries(
 				node1_paragraph,
 				cast(Sequence[str], item_section.items()),
-				objname_q, "wtrl_type", ctx.add_role_type, label)
+				objname_q, "wtrl_class", ctx.add_role_class, label)
 			node_entry += node1_paragraph
 		elif label in ("Public_functions","Public_methods"):
 			node1_paragraph = nodes.paragraph()
@@ -2119,7 +2122,7 @@ Notes:
 		if not mod_docitem.is_obj_module(mod_obj):
 			raise RuntimeError(f"{qname} does not resolve to a module.")
 		push_current_module(qname, env=ctx.env)
-		msg = f"Classes and functions below this point implicitly belong to package/module {ctx.add_role_var(qname)}. "
+		msg = f"Classes and functions below this point implicitly belong to package/module {ctx.add_role_mod(qname)}. "
 		node_par = nodes.paragraph(classes=["wtrl-current-module-message", "wtrl-current-module-push"])
 		node_par.extend(parse_inline(inliner, node_par, lineno, msg))
 		return [node_par]
@@ -2167,7 +2170,7 @@ Notes:
 		if not mod_docitem.is_obj_class(cls_obj):
 			raise RuntimeError(f"{qname} does not resolve to a class.")
 		push_current_class(qname, env=ctx.env)
-		msg = f"Methods below this point implicitly belong to class {ctx.add_role_var(qname)}."
+		msg = f"Methods below this point implicitly belong to class {ctx.add_role_class(qname)}."
 		node_par = nodes.paragraph(classes=["wtrl-current-class-message", "wtrl-current-class-push"])
 		node_par.extend(parse_inline(inliner, node_par, lineno, msg))
 		return [node_par]
@@ -2265,9 +2268,9 @@ Notes:
 		pop_current_module(ctx.env)
 		if has_current_module(ctx.env):
 			new_top = get_current_module(ctx.env)
-			msg = f"Default module qualifier {ctx.add_role_var(text_top)} ends here. New default: {ctx.add_role_var(new_top)}. "
+			msg = f"Default module qualifier {ctx.add_role_mod(text_top)} ends here. New default: {ctx.add_role_mod(new_top)}. "
 		else:
-			msg = f"Default module qualifier {ctx.add_role_var(text_top)} ends here. No default module active. "
+			msg = f"Default module qualifier {ctx.add_role_mod(text_top)} ends here. No default module active. "
 		node_par = nodes.paragraph(classes=["wtrl-current-module-message", "wtrl-current-module-pop"])
 		node_par.extend(parse_inline(inliner, node_par, lineno, msg))
 		return [node_par]
@@ -2322,7 +2325,7 @@ Notes:
 		pop_current_class(ctx.env)
 		if has_current_class(ctx.env):
 			new_top = get_current_class(ctx.env)
-			msg = f"Default class qualifier {ctx.add_role_var(text_top)} ends here. New default: {ctx.add_role_var(new_top)}. "
+			msg = f"Default class qualifier {ctx.add_role_var(text_top)} ends here. New default: {ctx.add_role_class(new_top)}. "
 		else:
 			msg = f"Default class qualifier {ctx.add_role_var(text_top)} ends here. No default class active. "
 		node_par = nodes.paragraph(classes=["wtrl-current-class-message", "wtrl-current-class-pop"])

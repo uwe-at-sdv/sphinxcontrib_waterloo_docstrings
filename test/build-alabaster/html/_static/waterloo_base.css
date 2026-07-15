@@ -81,7 +81,7 @@ a.wtrl_var:visited
 
 .wtrl_attr
 	{
-	font-family:"Courier New",courier,monospace;
+	font-family:monospace;
 
 	color:var(--sdv-attr-color);
 	font-weight:var(--sdv-attr-font-weight);

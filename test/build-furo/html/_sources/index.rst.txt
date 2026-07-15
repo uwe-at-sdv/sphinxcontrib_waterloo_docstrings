@@ -18,3 +18,16 @@ documentation for details.
 .. wtrl_autodoc_module:: mymodule
 
 .. wtrl_autodoc_module:: sdv.doc.waterloo.docitem_helper
+
+.. wtrl_push_current_module:: sdv.doc.waterloo
+
+.. wtrl_autodoc_class:: docitem_helper.tracer
+
+.. wtrl_push_current_class:: docitem_helper.tracer
+
+.. wtrl_autodoc_method:: build_json
+
+.. wtrl_pop_current_class:: docitem_helper.tracer
+
+.. wtrl_pop_current_module:: sdv.doc.waterloo
+
