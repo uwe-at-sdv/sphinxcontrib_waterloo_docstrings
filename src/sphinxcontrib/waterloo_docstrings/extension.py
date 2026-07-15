@@ -125,17 +125,17 @@ from pathlib import Path
 
 from docutils.parsers.rst import roles
 from docutils.parsers.rst import languages
+from docutils.parsers.rst import states as rst_states
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst.directives.admonitions import BaseAdmonition
-from docutils.parsers.rst.states import Struct as RstStruct
-from typing import Sequence, TypeAlias, cast, no_type_check
+from typing import no_type_check
 from sphinx.util.nodes import make_refnode
 
 import sdv.doc.waterloo.docitem as mod_docitem
 
 #===== Typechecking ===========================================#
 
-Struct: TypeAlias = RstStruct
+Struct: TypeAlias = Any
 
 
 def _extension_version() -> str:
@@ -313,7 +313,8 @@ def make_context(app: SphinxAppProtocol | Any, parse_inline: Callable[[nodes.Ele
 def parse_inline(inliner: InlinerProtocol, parent: nodes.Element, ln: int, txt: str) -> List[nodes.Node]:
 	lang = languages.get_language(inliner.document.settings.language_code)
 
-	memo = RstStruct(
+	memo_factory = getattr(rst_states, "Struct")
+	memo = memo_factory(
 	 document=inliner.document,
 	 reporter=inliner.reporter,
 	 language=lang,
@@ -530,7 +531,7 @@ def _is_doc_visible_in_current_scope(ctx: context, doc: mod_docitem.docitem_docs
 	Return whether the documented object is visible under the current
 	Sphinx rendering scope.
 	"""
-	return doc.is_visible(_get_current_scope_set(ctx.env))
+	return cast(bool, doc.is_visible(_get_current_scope_set(ctx.env)))
 
 def _get_validated_doc_for_object(
 	ctx: context,
@@ -569,9 +570,9 @@ def _is_target_obj_visible_in_current_scope(ctx: context, obj: object) -> bool:
 #		return False
 # We must return True here. A target should not be greyed out
 # just because of a missing docstring. It may remain unlinked
-# but it is not out of scope.
+	# but it is not out of scope.
 		return True
-	return doc.is_visible(_get_current_scope_set(ctx.env))
+	return cast(bool, doc.is_visible(_get_current_scope_set(ctx.env)))
 
 #==============================================================#
 
@@ -592,10 +593,10 @@ def resolve_markup(text : str, ctx: context) -> str:
 # if we cannot access the current document name.
 		env = getattr(ctx, "env", None)
 		if env is None:
-			return "#" + target_anchor
+			return cast(str, "#" + target_anchor)
 		from_docname = getattr(env, "docname", None)
 		if not isinstance(from_docname, str) or not from_docname:
-			return "#" + target_anchor
+			return cast(str, "#" + target_anchor)
 # Part of the best effort fallback strategy: If we fail to build the
 # inter-page URI we can still hope the target is on the same page.
 		target_docname: str = from_docname
@@ -670,7 +671,7 @@ def resolve_markup(text : str, ctx: context) -> str:
 			return f":ref:`{body}`"
 		return f":wtrl_{role}:`{body}`"
 	s =  mod_docitem.RE_WTRL_MARKUP_BACKTICK_COMPILED.sub(_repl, text)
-	return s
+	return cast(str, s)
 
 def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstring_base) -> List[nodes.Node]:
 	"""
@@ -1312,7 +1313,7 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 				node1_paragraph,
 				cast(Sequence[str], item_section.items()),
 				is_normative_section("See_also"),
-				obj.__name__ if mod_docitem.is_obj_module(obj) else getattr(obj, "__module__", None),
+				mod_docitem.get_obj_name(obj) if mod_docitem.is_obj_module(obj) else getattr(obj, "__module__", None),
 			)
 			node_entry += node1_paragraph
 # The following three, Public_classes/functions/methods have the
@@ -2079,6 +2080,14 @@ Raises:
 			print(tr.str_by_severity(mod_docitem.tracer.Severity.DEBUG),file=sys.stderr)
 			raise
 
+def _make_context_admonition(inliner: InlinerProtocol, lineno: int, title: str, msg: str, classes: list[str]) -> nodes.admonition:
+	node_adm = nodes.admonition(classes=["admonition", *classes])
+	node_adm += nodes.title(text=title)
+	node_par = nodes.paragraph()
+	node_par.extend(parse_inline(inliner, node_par, lineno, msg))
+	node_adm += node_par
+	return node_adm
+
 def wtrl_build_push_current_module_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
 	"""
 Preamble:
@@ -2123,9 +2132,7 @@ Notes:
 			raise RuntimeError(f"{qname} does not resolve to a module.")
 		push_current_module(qname, env=ctx.env)
 		msg = f"Classes and functions below this point implicitly belong to package/module {ctx.add_role_mod(qname)}. "
-		node_par = nodes.paragraph(classes=["wtrl-current-module-message", "wtrl-current-module-push"])
-		node_par.extend(parse_inline(inliner, node_par, lineno, msg))
-		return [node_par]
+		return [_make_context_admonition(inliner, lineno, "Waterloo module context", msg, ["wtrl-current-module-message", "wtrl-current-module-push"])]
 
 def wtrl_build_push_current_class_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
 	"""
@@ -2171,9 +2178,7 @@ Notes:
 			raise RuntimeError(f"{qname} does not resolve to a class.")
 		push_current_class(qname, env=ctx.env)
 		msg = f"Methods below this point implicitly belong to class {ctx.add_role_class(qname)}."
-		node_par = nodes.paragraph(classes=["wtrl-current-class-message", "wtrl-current-class-push"])
-		node_par.extend(parse_inline(inliner, node_par, lineno, msg))
-		return [node_par]
+		return [_make_context_admonition(inliner, lineno, "Waterloo class context", msg, ["wtrl-current-class-message", "wtrl-current-class-push"])]
 
 def wtrl_build_push_current_scope_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, scope_tag: str) -> list[nodes.Node]:
 	"""
@@ -2214,9 +2219,7 @@ Notes:
 	with mod_docitem.traced_section(tr, scope_tag):
 		push_current_scope(scope_tag, env=ctx.env)
 		msg = f"Scope below this point is set to {ctx.add_role_var(scope_tag)}."
-		node_par = nodes.paragraph(classes=["wtrl-current-scope-message", "wtrl-current-scope-push"])
-		node_par.extend(parse_inline(inliner, node_par, lineno, msg))
-		return [node_par]
+		return [_make_context_admonition(inliner, lineno, "Waterloo scope context", msg, ["wtrl-current-scope-message", "wtrl-current-scope-push"])]
 
 def wtrl_build_pop_current_module_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
 	"""
@@ -2271,9 +2274,7 @@ Notes:
 			msg = f"Default module qualifier {ctx.add_role_mod(text_top)} ends here. New default: {ctx.add_role_mod(new_top)}. "
 		else:
 			msg = f"Default module qualifier {ctx.add_role_mod(text_top)} ends here. No default module active. "
-		node_par = nodes.paragraph(classes=["wtrl-current-module-message", "wtrl-current-module-pop"])
-		node_par.extend(parse_inline(inliner, node_par, lineno, msg))
-		return [node_par]
+		return [_make_context_admonition(inliner, lineno, "Waterloo module context", msg, ["wtrl-current-module-message", "wtrl-current-module-pop"])]
 
 def wtrl_build_pop_current_class_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
 	"""
@@ -2328,9 +2329,7 @@ Notes:
 			msg = f"Default class qualifier {ctx.add_role_var(text_top)} ends here. New default: {ctx.add_role_class(new_top)}. "
 		else:
 			msg = f"Default class qualifier {ctx.add_role_var(text_top)} ends here. No default class active. "
-		node_par = nodes.paragraph(classes=["wtrl-current-class-message", "wtrl-current-class-pop"])
-		node_par.extend(parse_inline(inliner, node_par, lineno, msg))
-		return [node_par]
+		return [_make_context_admonition(inliner, lineno, "Waterloo class context", msg, ["wtrl-current-class-message", "wtrl-current-class-pop"])]
 
 def wtrl_build_pop_current_scope_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, scope_tag: str) -> list[nodes.Node]:
 	"""
@@ -2384,9 +2383,7 @@ Notes:
 			msg = f"Scope qualifier {ctx.add_role_var(scope_tag)} ends here. New current scope: {ctx.add_role_var(mod_docitem.Scope(new_scope).name.lower())}. "
 		else:
 			msg = f"Scope qualifier {ctx.add_role_var(scope_tag)} ends here. No current scope active. "
-		node_par = nodes.paragraph(classes=["wtrl-current-scope-message", "wtrl-current-scope-pop"])
-		node_par.extend(parse_inline(inliner, node_par, lineno, msg))
-		return [node_par]
+		return [_make_context_admonition(inliner, lineno, "Waterloo scope context", msg, ["wtrl-current-scope-message", "wtrl-current-scope-pop"])]
 
 def wtrl_build_method_signature_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
 	"""

@@ -4,7 +4,7 @@ SPHINXOPTS  ?=
 SPHINXBUILD ?= sphinx-build
 O           ?=
 
-THEMES = alabaster classic furo
+THEMES = alabaster classic furo rtd pydata
 
 .PHONY: help themes $(foreach theme,$(THEMES),html-$(theme) clean-$(theme) help-$(theme))
 
@@ -14,6 +14,8 @@ help:
 		'  make html-alabaster   make clean-alabaster' \
 		'  make html-classic     make clean-classic' \
 		'  make html-furo        make clean-furo' \
+		'  make html-rtd         make clean-rtd' \
+		'  make html-pydata      make clean-pydata' \
 		'' \
 		'Use SPHINXOPTS=... or O=... to pass options to sphinx-build.'
 

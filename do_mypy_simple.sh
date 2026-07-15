@@ -23,7 +23,6 @@ echo > ${PATH_CHK_OUT}
 mypy --config-file "${PATH_MYPY_INI}" \
 	--namespace-packages \
 	--explicit-package-bases \
-	--no-site-packages \
 	"${PATH_SRC_DIR}" \
 	> "${PATH_CHK_OUT}"
 rc=$?
@@ -38,5 +37,5 @@ grep -nE '#[[:space:]]*(type: ignore(\[[^]]+\])?|pragma: no cover.*)$' "${PATH_S
 > "${PATH_EXC_OUT}"
 
 pushd ${SCRIPT_DIR}/src > /dev/null
-find src/sphinxcontrib/waterloo_docstrings/ -name "*.py" > ${PATH_FILES_OUT}
+find sphinxcontrib/waterloo_docstrings -name "*.py" > ${PATH_FILES_OUT}
 popd > /dev/null
