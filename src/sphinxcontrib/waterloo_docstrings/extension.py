@@ -791,7 +791,19 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 	if not _is_doc_visible_in_current_scope(ctx, doc):
 # Scope-aware rendering omits invisible objects entirely. If later
 # we need author-facing placeholders, this is the early return to adapt.
-		return []
+# Ok, we definitely need placeholders...
+		obj_name = mod_docitem.get_obj_name(obj)
+		if mod_docitem.is_obj_module(obj):
+			obj_name_markup = ":wtrl_mod:"
+		elif mod_docitem.is_obj_class(obj):
+			obj_name_markup = ":wtrl_class:"
+		elif mod_docitem.is_obj_function(obj):
+			obj_name_markup = ":wtrl_func:"
+		node_paragraph = nodes.paragraph()
+		node_omit_note = nodes.inline()
+		node_omit_note.extend(ctx.parse(node_omit_note, 0, f"Note: Skipping {obj_name_markup}`{obj_name}` because of scope rule."))
+		node_paragraph += node_omit_note
+		return [node_paragraph]
 	def parse_text(parent: nodes.Element, text: str) -> List[nodes.Node]:
 		return ctx.parse(parent, 0, resolve_markup(text, ctx))
 
@@ -1261,7 +1273,7 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 					node_entry += paragraph
 # Factory: List of function names, each with a line-by-line executable contract.
 		elif label in ("Factory"):
-			if False:
+			if len(item_section.items()) == 0:
 				node_entry.extend(parse_text(node1_paragraph,"|empty|"))
 			else:
 # The table cell is an alternating sequence of paragraphs and bulletlists.
@@ -1903,7 +1915,7 @@ Contract:
 		|Must| parse and validate the module's Waterloo docstring.
 		|Must| render the parsed docstring into Docutils nodes using the configured context.
 Description:
-	Implementation of role |attr|`:wtrl_autodoc_module:`.
+	Implementation of directive |attr|`:wtrl_autodoc_module:`.
 Parameters:
 	app:
 		The Sphinx application instance that carries configuration and environment state.
@@ -1976,6 +1988,7 @@ Raises:
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	tr = ctx.tr
 	session = mod_docitem.DocSession()
+
 	with mod_docitem.traced_section(tr, qname):
 		function_obj, _, _, _ = resolve_qualified_name(ctx, qname)
 		if not callable(function_obj):
@@ -2137,7 +2150,7 @@ Raises:
 		|May| propagate exceptions from |func|`resolve_qualified_name`.
 		|May| propagate exceptions from within Sphinx or Docutils.
 Notes:
-	Last review:
+	Last reviewed:
 		2026-02-04
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
@@ -2183,7 +2196,7 @@ Raises:
 		|May| propagate exceptions from |func|`resolve_qualified_name`.
 		|May| propagate exceptions from within Sphinx or Docutils.
 Notes:
-	Last review:
+	Last reviewed:
 		2026-02-04
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
@@ -2227,7 +2240,7 @@ Raises:
 	BaseException:
 		|May| propagate exceptions from within Sphinx or Docutils.
 Notes:
-	Last review:
+	Last reviewed:
 		2026-02-04
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
@@ -2267,13 +2280,14 @@ Returns:
 Raises:
 	RuntimeError:
 		|Must| raise on the attempt to access an element from an empty stack.
+		|Must| raise if the qualified name on top of the stack does not match |var|`qname`.
 		|Must| raise if |var|`qname` does not resolve to a module.
 	BaseException:
 		|May| propagate exceptions from |func|`resolve_qualified_name`.
 		|May| propagate exceptions from within Sphinx or Docutils.
 Notes:
-	Last review:
-		2026-02-04
+	Last reviewed:
+		2026-07-16
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	tr = ctx.tr
@@ -2322,13 +2336,14 @@ Returns:
 Raises:
 	RuntimeError:
 		|Must| raise on the attempt to access an element from an empty stack.
+		|Must| raise if the qualified name on top of the stack does not match |var|`qname`.
 		|Must| raise if |var|`qname` does not resolve to a class.
 	BaseException:
 		|May| propagate exceptions from |func|`resolve_qualified_name`.
 		|May| propagate exceptions from within Sphinx or Docutils.
 Notes:
-	Last review:
-		2026-02-04
+	Last reviewed:
+		2026-07-16
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	tr = ctx.tr
@@ -2376,12 +2391,13 @@ Returns:
 Raises:
 	RuntimeError:
 		|Must| raise on the attempt to access an element from an empty stack.
+		|Must| raise if the scope identifier on top of the stack does not match |var|`scope_tag`.
 		|Must| raise if |var|`scope_tag` is unknown or mismatches the stack top.
 	BaseException:
 		|May| propagate exceptions from within Sphinx or Docutils.
 Notes:
-	Last review:
-		2026-02-04
+	Last reviewed:
+		2026-07-16
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner,parent,ln,txt), lineno)
 	tr = ctx.tr
@@ -2428,7 +2444,7 @@ Raises:
 	BaseException:
 		|May| propagate exceptions from |type|`docutils`.
 Notes:
-	Last review:
+	Last reviewed:
 		2026-02-04
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
@@ -2461,7 +2477,7 @@ Raises:
 	BaseException:
 		|May| propagate exceptions from |type|`docutils`.
 Notes:
-	Last review:
+	Last reviewed:
 		2026-02-04
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
@@ -2494,7 +2510,7 @@ Raises:
 	BaseException:
 		|May| propagate exceptions from |type|`docutils`.
 Notes:
-	Last review:
+	Last reviewed:
 		2026-02-04
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
@@ -2527,7 +2543,7 @@ Raises:
 	BaseException:
 		|May| propagate exceptions from |type|`docutils`.
 Notes:
-	Last review:
+	Last reviewed:
 		2026-02-04
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
