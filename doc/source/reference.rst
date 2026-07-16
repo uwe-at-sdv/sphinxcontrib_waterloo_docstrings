@@ -36,10 +36,23 @@ The code for the following state change is
 
 .. wtrl_push_current_module:: sphinxcontrib.waterloo_docstrings.extension
 
+Helper
+~~~~~~
+
+Function :wtrl_func:`resolve_qualified_name`
+............................................
+
+.. wtrl_autodoc_function:: resolve_qualified_name
+
 Function :wtrl_func:`build_sphinx_nodes`
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+........................................
 
 .. wtrl_autodoc_function:: build_sphinx_nodes
+
+Function :wtrl_func:`build_sphinx_nodes_full`
+.............................................
+
+.. wtrl_autodoc_function:: build_sphinx_nodes_full
 
 
 Directives for docstring rendering
@@ -99,6 +112,29 @@ Function :wtrl_func:`wtrl_build_function_signature_block_nodes`
 ...............................................................
 
 .. wtrl_autodoc_function:: wtrl_build_function_signature_block_nodes
+
+Roles for semantic markup
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Function :wtrl_func:`wtrl_attr_role`
+........................................
+
+.. wtrl_autodoc_function:: wtrl_attr_role
+
+Similar roles
+.............
+
+There are around 15 more role implementations like :wtrl_func:`wtrl_attr_role`,
+which only differ in the CSS class passed and the :wtrl_pkg:`docutil` node classes
+:wtrl_class:`literal` vs :wtrl_class:`inline`. We skip these here in order
+to keep the document at low redundancy.
+
+Function :wtrl_func:`wtrl_var_type_role`
+........................................
+
+.. wtrl_autodoc_function:: wtrl_var_type_role
+
+
 
 
 The code for the following state change is

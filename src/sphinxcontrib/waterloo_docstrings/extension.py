@@ -185,8 +185,8 @@ Notes:
 
 from __future__ import annotations
 from importlib.metadata import PackageNotFoundError, version
-from types import FunctionType, ModuleType
 from typing import Any, Callable, Dict, Final, get_type_hints, get_origin, get_args, Generator, Iterable, Iterator, List, Mapping, NewType, NoReturn, Protocol, Sequence, Set, Tuple, Type, TypeAlias, TypeGuard, Union, cast
+from dataclasses import dataclass
 
 import inspect
 import re
@@ -1524,33 +1524,33 @@ def build_sphinx_nodes_full(ctx : context, class_obj: Any, session: mod_docitem.
 
 def resolve_qualified_name(ctx: context | None, qname: str) -> tuple[object, str, str, list[str]]:
 	"""
-Preamble:
-	profile:
-		function
-	normative_sections:
-		Contract, Parameters, Returns, Raises
-Contract:
-	general:
-		|Must| resolve the qualified name |var|`qname` using current module/class context in |var|`ctx` when present.
-		|Must| try to import the resolved object as criterion that resolution succeeded (see section |label|`Raises`)
-		|Must| try fully qualified forms in this order: current module + current class + |var|`qname`, current module + |var|`qname`, then |var|`qname` as given.
-Parameters:
-	ctx:
-		The context which provides current module and current class.
-	qname:
-		The qualified name to resolve.
-Returns:
-	|Must| return a tuple |type|`(obj, module_name, head_name, tail_parts)` where
-	|var|`obj` is the resolved object, |var|`module_name` is the imported module name,
-	|var|`head_name` is the last attribute component, and |var|`tail_parts`
-	is the attribute chain after the module components.
-Raises:
-	ImportError:
-		|Must| raise if the module of the qualified name cannot be resolved.
-	ValueError:
-		|Must| raise if no attribute is specified after a resolved module name.
-	BaseException:
-		|Must| propagate exceptions from the module import.
+	Preamble:
+		profile:
+			function
+		normative_sections:
+			Contract, Parameters, Returns, Raises
+	Contract:
+		general:
+			|Must| resolve the qualified name |var|`qname` using current module/class context in |var|`ctx` when present.
+			|Must| try to import the resolved object as criterion that resolution succeeded (see section |label|`Raises`)
+			|Must| try fully qualified forms in this order: current module + current class + |var|`qname`, current module + |var|`qname`, then |var|`qname` as given.
+	Parameters:
+		ctx:
+			The context which provides current module and current class.
+		qname:
+			The qualified name to resolve.
+	Returns:
+		|Must| return a tuple |type|`(obj, module_name, head_name, tail_parts)` where
+		|var|`obj` is the resolved object, |var|`module_name` is the imported module name,
+		|var|`head_name` is the last attribute component, and |var|`tail_parts`
+		is the attribute chain after the module components.
+	Raises:
+		ImportError:
+			|Must| raise if the module of the qualified name cannot be resolved.
+		ValueError:
+			|Must| raise if no attribute is specified after a resolved module name.
+		BaseException:
+			|Must| propagate exceptions from the module import.
 	"""
 	env = ctx.env if ctx is not None else None
 	def _resolve_absolute(abs_qname: str) -> tuple[object, str, str, list[str]]:
@@ -2119,39 +2119,41 @@ def _make_context_admonition(inliner: InlinerProtocol, lineno: int, title: str, 
 
 def wtrl_build_push_current_module_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
 	"""
-Preamble:
-	profile:
-		function
-	normative_sections:
-		Contract, Parameters, Returns, Raises
-Contract:
-	general:
-		|Must| push the qualified module name in |var|`text` to the module stack, which makes it the new current module.
-		|Must| resolve |var|`qname`.
-		|Must| build a list of Docutils nodes which represent a message about the changed state in the document.
-		|May| write a log message to |file|`stdout`.
-Description:
-	Implementation of directive |attr|`.. wtrl_push_current_module::`.
-Parameters:
-	app:
-		The Sphinx application instance that carries configuration and environment state.
-	inliner:
-		The Docutils inliner used to parse inline markup into nodes.
-	lineno:
-		Line number in the source document.
-	qname:
-		The qualified module name to push onto the stack.
-Returns:
-	The list of generated |type|`docutils.nodes.Node` describing the resulting default module state.
-Raises:
-	RuntimeError:
-		|Must| raise if |var|`qname` does not resolve to a module.
-	BaseException:
-		|May| propagate exceptions from |func|`resolve_qualified_name`.
-		|May| propagate exceptions from within Sphinx or Docutils.
-Notes:
-	Last reviewed:
-		2026-02-04
+	Preamble:
+		profile:
+			function
+		normative_sections:
+			Contract, Parameters, Returns, Raises, See_also
+	Contract:
+		general:
+			|Must| push the qualified module name in |var|`text` to the module stack, which makes it the new current module.
+			|Must| resolve |var|`qname`.
+			|Must| build a list of Docutils nodes which represent a message about the changed state in the document.
+			|May| write a log message to |file|`stdout`.
+	Description:
+		Implementation of directive |attr|`.. wtrl_push_current_module::`.
+	Parameters:
+		app:
+			The Sphinx application instance that carries configuration and environment state.
+		inliner:
+			The Docutils inliner used to parse inline markup into nodes.
+		lineno:
+			Line number in the source document.
+		qname:
+			The qualified module name to push onto the stack.
+	Returns:
+		The list of generated |type|`docutils.nodes.Node` describing the resulting default module state.
+	Raises:
+		RuntimeError:
+			|Must| raise if |var|`qname` does not resolve to a module.
+		BaseException:
+			|May| propagate exceptions from |func|`resolve_qualified_name`.
+			|May| propagate exceptions from within Sphinx or Docutils.
+	See_also:
+		wtrl_build_pop_current_module_nodes,wtrl_build_push_current_class_nodes, wtrl_build_push_current_scope_nodes
+	Notes:
+		Last reviewed:
+			2026-07-16
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	tr = ctx.tr
@@ -2165,39 +2167,41 @@ Notes:
 
 def wtrl_build_push_current_class_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
 	"""
-Preamble:
-	profile:
-		function
-	normative_sections:
-		Contract, Parameters, Returns, Raises
-Contract:
-	general:
-		|Must| push the qualified class name in |var|`text` to the class stack, which makes it the new current class.
-		|Must| resolve |var|`qname`.
-		|Must| build a list of Docutils nodes which represent a message about the changed state in the document.
-		|May| write a log message to |file|`stdout`.
-Description:
-	Implementation of directive |attr|`.. wtrl_push_current_class::`.
-Parameters:
-	app:
-		The Sphinx application instance that carries configuration and environment state.
-	inliner:
-		The Docutils inliner used to parse inline markup into nodes.
-	lineno:
-		Line number in the source document.
-	qname:
-		The qualified class name to push onto the stack.
-Returns:
-	The list of generated |type|`docutils.nodes.Node` describing the resulting default module state.
-Raises:
-	RuntimeError:
-		|Must| raise if |var|`qname` does not resolve to a class.
-	BaseException:
-		|May| propagate exceptions from |func|`resolve_qualified_name`.
-		|May| propagate exceptions from within Sphinx or Docutils.
-Notes:
-	Last reviewed:
-		2026-02-04
+	Preamble:
+		profile:
+			function
+		normative_sections:
+			Contract, Parameters, Returns, Raises, See_also
+	Contract:
+		general:
+			|Must| push the qualified class name in |var|`text` to the class stack, which makes it the new current class.
+			|Must| resolve |var|`qname`.
+			|Must| build a list of Docutils nodes which represent a message about the changed state in the document.
+			|May| write a log message to |file|`stdout`.
+	Description:
+		Implementation of directive |attr|`.. wtrl_push_current_class::`.
+	Parameters:
+		app:
+			The Sphinx application instance that carries configuration and environment state.
+		inliner:
+			The Docutils inliner used to parse inline markup into nodes.
+		lineno:
+			Line number in the source document.
+		qname:
+			The qualified class name to push onto the stack.
+	Returns:
+		The list of generated |type|`docutils.nodes.Node` describing the resulting default module state.
+	Raises:
+		RuntimeError:
+			|Must| raise if |var|`qname` does not resolve to a class.
+		BaseException:
+			|May| propagate exceptions from |func|`resolve_qualified_name`.
+			|May| propagate exceptions from within Sphinx or Docutils.
+	See_also:
+		wtrl_build_pop_current_class_nodes, wtrl_build_push_current_module_nodes, wtrl_build_push_current_scope_nodes
+	Notes:
+		Last reviewed:
+			2026-07-16
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	tr = ctx.tr
@@ -2211,37 +2215,39 @@ Notes:
 
 def wtrl_build_push_current_scope_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, scope_tag: str) -> list[nodes.Node]:
 	"""
-Preamble:
-	profile:
-		function
-	normative_sections:
-		Contract, Parameters, Returns, Raises
-Contract:
-	general:
-		|Must| push the scope identifier in |var|`scope_tag` to the scope stack, which makes it the new current scope.
-		|Must| build a list of Docutils nodes which represent a message about the changed state in the document.
-		|May| write a log message to |file|`stdout`.
-Description:
-	Implementation of directive |attr|`.. wtrl_push_current_scope::`.
-Parameters:
-	app:
-		The Sphinx application instance that carries configuration and environment state.
-	inliner:
-		The Docutils inliner used to parse inline markup into nodes.
-	lineno:
-		Line number in the source document.
-	scope_tag:
-		The scope identifier to push onto the stack.
-Returns:
-	The list of generated |type|`docutils.nodes.Node` describing the resulting default scope state.
-Raises:
-	RuntimeError:
-		|Must| raise if |var|`scope_tag` is unknown.
-	BaseException:
-		|May| propagate exceptions from within Sphinx or Docutils.
-Notes:
-	Last reviewed:
-		2026-02-04
+	Preamble:
+		profile:
+			function
+		normative_sections:
+			Contract, Parameters, Returns, Raises, See_also
+	Contract:
+		general:
+			|Must| push the scope identifier in |var|`scope_tag` to the scope stack, which makes it the new current scope.
+			|Must| build a list of Docutils nodes which represent a message about the changed state in the document.
+			|May| write a log message to |file|`stdout`.
+	Description:
+		Implementation of directive |attr|`.. wtrl_push_current_scope::`.
+	Parameters:
+		app:
+			The Sphinx application instance that carries configuration and environment state.
+		inliner:
+			The Docutils inliner used to parse inline markup into nodes.
+		lineno:
+			Line number in the source document.
+		scope_tag:
+			The scope identifier to push onto the stack.
+	Returns:
+		The list of generated |type|`docutils.nodes.Node` describing the resulting default scope state.
+	Raises:
+		RuntimeError:
+			|Must| raise if |var|`scope_tag` is unknown.
+		BaseException:
+			|May| propagate exceptions from within Sphinx or Docutils.
+	See_also:
+		wtrl_build_pop_current_scope_nodes, wtrl_build_push_current_module_nodes, wtrl_build_push_current_class_nodes
+	Notes:
+		Last reviewed:
+			2026-07-16
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	tr = ctx.tr
@@ -2252,42 +2258,44 @@ Notes:
 
 def wtrl_build_pop_current_module_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
 	"""
-Preamble:
-	profile:
-		function
-	normative_sections:
-		Contract, Parameters, Returns, Raises
-Contract:
-	general:
-		|Must| compare the qualified module name in |var|`qname` to the top of the module stack and raise an exception in case of mismatch.
-		|Must| resolve |var|`qname` against the current module/class context.
-		|Must| pop one element from the module stack.
-		|Must| build a list of Docutils nodes which represent a message about the changed state in the document.
-		|May| write a log message to |file|`stdout`.
-Description:
-	Implementation of directive |attr|`.. wtrl_pop_current_module::`.
-Parameters:
-	app:
-		The Sphinx application instance that carries configuration and environment state.
-	inliner:
-		The Docutils inliner used to parse inline markup into nodes.
-	lineno:
-		Line number in the source document.
-	qname:
-		The qualified module name to compare and pop from the stack.
-Returns:
-	The list of generated |type|`docutils.nodes.Node` describing the resulting default module state.
-Raises:
-	RuntimeError:
-		|Must| raise on the attempt to access an element from an empty stack.
-		|Must| raise if the qualified name on top of the stack does not match |var|`qname`.
-		|Must| raise if |var|`qname` does not resolve to a module.
-	BaseException:
-		|May| propagate exceptions from |func|`resolve_qualified_name`.
-		|May| propagate exceptions from within Sphinx or Docutils.
-Notes:
-	Last reviewed:
-		2026-07-16
+	Preamble:
+		profile:
+			function
+		normative_sections:
+			Contract, Parameters, Returns, Raises, See_also
+	Contract:
+		general:
+			|Must| compare the qualified module name in |var|`qname` to the top of the module stack and raise an exception in case of mismatch.
+			|Must| resolve |var|`qname` against the current module/class context.
+			|Must| pop one element from the module stack.
+			|Must| build a list of Docutils nodes which represent a message about the changed state in the document.
+			|May| write a log message to |file|`stdout`.
+	Description:
+		Implementation of directive |attr|`.. wtrl_pop_current_module::`.
+	Parameters:
+		app:
+			The Sphinx application instance that carries configuration and environment state.
+		inliner:
+			The Docutils inliner used to parse inline markup into nodes.
+		lineno:
+			Line number in the source document.
+		qname:
+			The qualified module name to compare and pop from the stack.
+	Returns:
+		The list of generated |type|`docutils.nodes.Node` describing the resulting default module state.
+	Raises:
+		RuntimeError:
+			|Must| raise on the attempt to access an element from an empty stack.
+			|Must| raise if the qualified name on top of the stack does not match |var|`qname`.
+			|Must| raise if |var|`qname` does not resolve to a module.
+		BaseException:
+			|May| propagate exceptions from |func|`resolve_qualified_name`.
+			|May| propagate exceptions from within Sphinx or Docutils.
+	See_also:
+		wtrl_build_push_current_module_nodes, wtrl_build_pop_current_class_nodes, wtrl_build_pop_current_scope_nodes
+	Notes:
+		Last reviewed:
+			2026-07-16
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	tr = ctx.tr
@@ -2308,42 +2316,44 @@ Notes:
 
 def wtrl_build_pop_current_class_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
 	"""
-Preamble:
-	profile:
-		function
-	normative_sections:
-		Contract, Parameters, Returns, Raises
-Contract:
-	general:
-		|Must| compare the qualified class name in |var|`qname` to the top of the class stack and raise an exception in case of mismatch.
-		|Must| resolve |var|`qname` against the current module/class context.
-		|Must| pop one element from the class stack.
-		|Must| build a list of Docutils nodes which represent a message about the changed state in the document.
-		|May| write a log message to |file|`stdout`.
-Description:
-	Implementation of directive |attr|`.. wtrl_pop_current_class::`.
-Parameters:
-	app:
-		The Sphinx application instance that carries configuration and environment state.
-	inliner:
-		The Docutils inliner used to parse inline markup into nodes.
-	lineno:
-		Line number in the source document.
-	qname:
-		The qualified class name to compare and pop from the stack.
-Returns:
-	The list of generated |type|`docutils.nodes.Node` describing the resulting default class state.
-Raises:
-	RuntimeError:
-		|Must| raise on the attempt to access an element from an empty stack.
-		|Must| raise if the qualified name on top of the stack does not match |var|`qname`.
-		|Must| raise if |var|`qname` does not resolve to a class.
-	BaseException:
-		|May| propagate exceptions from |func|`resolve_qualified_name`.
-		|May| propagate exceptions from within Sphinx or Docutils.
-Notes:
-	Last reviewed:
-		2026-07-16
+	Preamble:
+		profile:
+			function
+		normative_sections:
+			Contract, Parameters, Returns, Raises, See_also
+	Contract:
+		general:
+			|Must| compare the qualified class name in |var|`qname` to the top of the class stack and raise an exception in case of mismatch.
+			|Must| resolve |var|`qname` against the current module/class context.
+			|Must| pop one element from the class stack.
+			|Must| build a list of Docutils nodes which represent a message about the changed state in the document.
+			|May| write a log message to |file|`stdout`.
+	Description:
+		Implementation of directive |attr|`.. wtrl_pop_current_class::`.
+	Parameters:
+		app:
+			The Sphinx application instance that carries configuration and environment state.
+		inliner:
+			The Docutils inliner used to parse inline markup into nodes.
+		lineno:
+			Line number in the source document.
+		qname:
+			The qualified class name to compare and pop from the stack.
+	Returns:
+		The list of generated |type|`docutils.nodes.Node` describing the resulting default class state.
+	Raises:
+		RuntimeError:
+			|Must| raise on the attempt to access an element from an empty stack.
+			|Must| raise if the qualified name on top of the stack does not match |var|`qname`.
+			|Must| raise if |var|`qname` does not resolve to a class.
+		BaseException:
+			|May| propagate exceptions from |func|`resolve_qualified_name`.
+			|May| propagate exceptions from within Sphinx or Docutils.
+	See_also:
+		wtrl_build_push_current_class_nodes, wtrl_build_pop_current_module_nodes, wtrl_build_pop_current_scope_nodes
+	Notes:
+		Last reviewed:
+			2026-07-16
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	tr = ctx.tr
@@ -2364,40 +2374,42 @@ Notes:
 
 def wtrl_build_pop_current_scope_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, scope_tag: str) -> list[nodes.Node]:
 	"""
-Preamble:
-	profile:
-		function
-	normative_sections:
-		Contract, Parameters, Returns, Raises
-Contract:
-	general:
-		|Must| compare the scope identifier name in |var|`qname` to the top of the scope stack and raise an exception in case of mismatch.
-		|Must| pop one element from the scope stack.
-		|Must| build a list of Docutils nodes which represent a message about the changed state in the document.
-		|May| write a log message to |file|`stdout`.
-Description:
-	Implementation of directive |attr|`.. wtrl_pop_current_scope::`.
-Parameters:
-	app:
-		The Sphinx application instance that carries configuration and environment state.
-	inliner:
-		The Docutils inliner used to parse inline markup into nodes.
-	lineno:
-		Line number in the source document.
-	scope_tag:
-		The scope identifier to compare and pop from the stack.
-Returns:
-	The list of generated |type|`docutils.nodes.Node` describing the resulting default scope state.
-Raises:
-	RuntimeError:
-		|Must| raise on the attempt to access an element from an empty stack.
-		|Must| raise if the scope identifier on top of the stack does not match |var|`scope_tag`.
-		|Must| raise if |var|`scope_tag` is unknown or mismatches the stack top.
-	BaseException:
-		|May| propagate exceptions from within Sphinx or Docutils.
-Notes:
-	Last reviewed:
-		2026-07-16
+	Preamble:
+		profile:
+			function
+		normative_sections:
+			Contract, Parameters, Returns, Raises, See_also
+	Contract:
+		general:
+			|Must| compare the scope identifier name in |var|`qname` to the top of the scope stack and raise an exception in case of mismatch.
+			|Must| pop one element from the scope stack.
+			|Must| build a list of Docutils nodes which represent a message about the changed state in the document.
+			|May| write a log message to |file|`stdout`.
+	Description:
+		Implementation of directive |attr|`.. wtrl_pop_current_scope::`.
+	Parameters:
+		app:
+			The Sphinx application instance that carries configuration and environment state.
+		inliner:
+			The Docutils inliner used to parse inline markup into nodes.
+		lineno:
+			Line number in the source document.
+		scope_tag:
+			The scope identifier to compare and pop from the stack.
+	Returns:
+		The list of generated |type|`docutils.nodes.Node` describing the resulting default scope state.
+	Raises:
+		RuntimeError:
+			|Must| raise on the attempt to access an element from an empty stack.
+			|Must| raise if the scope identifier on top of the stack does not match |var|`scope_tag`.
+			|Must| raise if |var|`scope_tag` is unknown or mismatches the stack top.
+		BaseException:
+			|May| propagate exceptions from within Sphinx or Docutils.
+	Notes:
+		Last reviewed:
+			2026-07-16
+	See_also:
+		wtrl_build_push_current_scope_nodes, wtrl_build_pop_current_module_nodes, wtrl_build_pop_current_class_nodes
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner,parent,ln,txt), lineno)
 	tr = ctx.tr
@@ -2423,7 +2435,7 @@ Preamble:
 	profile:
 		function
 	normative_sections:
-		Contract, Parameters, Returns, Raises
+		Contract, Parameters, Returns, Raises, See_also
 	scope:
 		core
 Contract:
@@ -2443,9 +2455,11 @@ Returns:
 Raises:
 	BaseException:
 		|May| propagate exceptions from |type|`docutils`.
+See_also:
+	wtrl_build_function_signature_nodes, wtrl_build_method_signature_block_nodes
 Notes:
 	Last reviewed:
-		2026-02-04
+		2026-07-16
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	return render_signature_tokens_inline(ctx, qname)
@@ -2456,7 +2470,7 @@ Preamble:
 	profile:
 		function
 	normative_sections:
-		Contract, Parameters, Returns, Raises
+		Contract, Parameters, Returns, Raises, See_also
 	scope:
 		core
 Contract:
@@ -2470,15 +2484,17 @@ Parameters:
 	lineno:
 		Line number in the source document.
 	qname:
-		Qualified name of method to render.
+		Qualified name of function to render.
 Returns:
 	The list of generated |type|`docutils.nodes.Node` describing the function signature.
 Raises:
 	BaseException:
 		|May| propagate exceptions from |type|`docutils`.
+See_also:
+	wtrl_build_method_signature_nodes, wtrl_build_function_signature_block_nodes
 Notes:
 	Last reviewed:
-		2026-02-04
+		2026-07-16
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	return render_signature_tokens_inline(ctx, qname, drop_self=False)
@@ -2489,7 +2505,7 @@ Preamble:
 	profile:
 		function
 	normative_sections:
-		Contract, Parameters, Returns, Raises
+		Contract, Parameters, Returns, Raises, See_also
 	scope:
 		core
 Contract:
@@ -2509,9 +2525,11 @@ Returns:
 Raises:
 	BaseException:
 		|May| propagate exceptions from |type|`docutils`.
+See_also:
+	wtrl_build_method_signature_nodes, wtrl_build_function_signature_block_nodes
 Notes:
 	Last reviewed:
-		2026-02-04
+		2026-07-16
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	return render_signature_tokens_multiline(ctx, qname)
@@ -2522,7 +2540,7 @@ Preamble:
 	profile:
 		function
 	normative_sections:
-		Contract, Parameters, Returns, Raises
+		Contract, Parameters, Returns, Raises, See_also
 	scope:
 		core
 Contract:
@@ -2536,15 +2554,17 @@ Parameters:
 	lineno:
 		Line number in the source document.
 	qname:
-		Qualified name of method to render.
+		Qualified name of function to render.
 Returns:
 	The list of generated |type|`docutils.nodes.Node` describing the function signature.
 Raises:
 	BaseException:
 		|May| propagate exceptions from |type|`docutils`.
+See_also:
+	wtrl_build_method_signature_block_nodes, wtrl_build_function_signature_nodes
 Notes:
 	Last reviewed:
-		2026-02-04
+		2026-07-16
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	return render_signature_tokens_multiline(ctx, qname, drop_self=False)
@@ -2607,106 +2627,172 @@ def build_prolog_method_block(ctx: context,parent : nodes.Element | None,class_o
 #	return render_signature_tokens_multiline(ctx, qname, drop_self=True, display_scope=True)
 	return []
 
-def wtrl_attr_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.literal(text, text, classes=["wtrl_attr"])
+# Just in order to avoid endless repetition of the same parameters in the role functions below.
+@dataclass(frozen=True)
+class RolePara:
+	name: str
+	rawtext: str
+	text: str
+	lineno: int
+	inliner: InlinerProtocol
+	options: Mapping[str,Any] | None
+	content: list[str] | None
+
+# This is a pair: the first list is the list of nodes to insert into the document,
+# and the second list is a list of system messages (errors, warnings, etc.)
+# that may have been generated during processing.
+RoleResult = tuple[List[nodes.Node], list[nodes.Node]]
+
+# We distinguish between literal and inline nodes to let the theme decide styling:
+# literal nodes are typically rendered in monospace, inline nodes in regular font.
+# This gives theme designers the flexibility to style these semantic distinctions.
+# We also add CSS classes prefixed with "wtrl_" for cases where we need to override
+# the theme's default styling, but modern themes like Furo usually handle this well
+# without additional CSS customization.
+
+def wtrl_attr_role(para: RolePara) -> RoleResult:
+	r"""
+	Preamble:
+		profile:
+			function
+		normative_sections:
+			Contract, Parameters, Returns, Raises
+	Contract:
+		general:
+			|Must| create a |type|`docutils.nodes.literal` node with the text in |var|`para.text` and the CSS class |value|`wtrl_attr`.
+	Parameters:
+		para:
+			|class|`RolePara` instance containing the role parameters.
+	Returns:
+		A tuple containing a list with the created |type|`docutils.nodes.literal` node and an empty list of system messages.
+	Raises:
+		BaseException:
+			|May| propagate exceptions from |type|`docutils`.
+	Notes:
+		Examples:
+			* JSON: { \"|attr|`my_attribute`\": \"|value|`my_value`\" }
+	"""
+	node = nodes.literal(para.text, para.text, classes=["wtrl_attr"])
 	return [node], []
 
-def wtrl_class_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.literal(text, text, classes=["wtrl_class"])
+def wtrl_class_role(para: RolePara) -> RoleResult:
+	node = nodes.literal(para.text, para.text, classes=["wtrl_class"])
 	return [node], []
 
-def wtrl_cmd_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.literal(text, text, classes=["wtrl_cmd"])
-	return [node], []
-
-# inline, not literal
-def wtrl_dfn_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.inline(text, text, classes=["wtrl_dfn"])
-	return [node], []
-
-def wtrl_file_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.literal(text, text, classes=["wtrl_file"])
-	return [node], []
-
-def wtrl_func_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.literal(text, text, classes=["wtrl_func"])
-	return [node], []
-
-def wtrl_key_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.literal(text, text, classes=["wtrl_key"])
-	return [node], []
-
-# inline, not literal
-def wtrl_label_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.inline(text, text, classes=["wtrl_label"])
-	return [node], []
-
-def wtrl_lit_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.literal(text, text, classes=["wtrl_lit"])
-	return [node], []
-
-def wtrl_mod_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.literal(text, text, classes=["wtrl_mod"])
-	return [node], []
-
-# inline, not literal
-def wtrl_norm_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.inline(text, text, classes=["wtrl_norm"])
-	return [node], []
-
-def wtrl_op_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.literal(text, text, classes=["wtrl_op"])
-	return [node], []
-
-def wtrl_opt_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.literal(text, text, classes=["wtrl_opt"])
-	return [node], []
-
-def wtrl_pkg_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.literal(text, text, classes=["wtrl_pkg"])
-	return [node], []
-
-def wtrl_tag_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.literal(text, text, classes=["wtrl_tag"])
+def wtrl_cmd_role(para: RolePara) -> RoleResult:
+	node = nodes.literal(para.text, para.text, classes=["wtrl_cmd"])
 	return [node], []
 
 # inline, not literal
-def wtrl_term_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.inline(text, text, classes=["wtrl_term"])
+def wtrl_dfn_role(para: RolePara) -> RoleResult:
+	node = nodes.inline(para.text, para.text, classes=["wtrl_dfn"])
 	return [node], []
 
-def wtrl_url_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.literal(text, text, classes=["wtrl_url"])
+def wtrl_file_role(para: RolePara) -> RoleResult:
+	node = nodes.literal(para.text, para.text, classes=["wtrl_file"])
 	return [node], []
 
-def wtrl_type_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.literal(text, text, classes=["wtrl_type"])
+def wtrl_func_role(para: RolePara) -> RoleResult:
+	node = nodes.literal(para.text, para.text, classes=["wtrl_func"])
 	return [node], []
 
-def wtrl_value_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.literal(text, text, classes=["wtrl_value"])
+def wtrl_key_role(para: RolePara) -> RoleResult:
+	node = nodes.literal(para.text, para.text, classes=["wtrl_key"])
 	return [node], []
 
-def wtrl_var_role(name: str, rawtext: str, text: str, lineno: int, inliner: InlinerProtocol, options: Mapping[str,Any] | None=None, content: list[str] | None=None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	node = nodes.literal(text, text, classes=["wtrl_var"])
+# inline, not literal
+def wtrl_label_role(para: RolePara) -> RoleResult:
+	node = nodes.inline(para.text, para.text, classes=["wtrl_label"])
 	return [node], []
 
-from typing import Any, Mapping, List, Tuple
-from docutils import nodes
+def wtrl_lit_role(para: RolePara) -> RoleResult:
+	node = nodes.literal(para.text, para.text, classes=["wtrl_lit"])
+	return [node], []
 
-def wtrl_var_type_role(name: str,rawtext: str,text: str,lineno: int,inliner: InlinerProtocol,options: Mapping[str, Any] | None = None,content: list[str] | None = None) -> tuple[List[nodes.Node], list[nodes.Node]]:
-	if ":" not in text:
-		msg = inliner.reporter.error(
-		 f"wtrl_var_type expects 'var:type', got '{text}'",
-		 line=lineno,
+def wtrl_mod_role(para: RolePara) -> RoleResult:
+	node = nodes.literal(para.text, para.text, classes=["wtrl_mod"])
+	return [node], []
+
+# inline, not literal
+def wtrl_norm_role(para: RolePara) -> RoleResult:
+	node = nodes.inline(para.text, para.text, classes=["wtrl_norm"])
+	return [node], []
+
+def wtrl_op_role(para: RolePara) -> RoleResult:
+	node = nodes.literal(para.text, para.text, classes=["wtrl_op"])
+	return [node], []
+
+def wtrl_opt_role(para: RolePara) -> RoleResult:
+	node = nodes.literal(para.text, para.text, classes=["wtrl_opt"])
+	return [node], []
+
+def wtrl_pkg_role(para: RolePara) -> RoleResult:
+	node = nodes.literal(para.text, para.text, classes=["wtrl_pkg"])
+	return [node], []
+
+def wtrl_tag_role(para: RolePara) -> RoleResult:
+	node = nodes.literal(para.text, para.text, classes=["wtrl_tag"])
+	return [node], []
+
+# inline, not literal
+def wtrl_term_role(para: RolePara) -> RoleResult:
+	node = nodes.inline(para.text, para.text, classes=["wtrl_term"])
+	return [node], []
+
+def wtrl_url_role(para: RolePara) -> RoleResult:
+	node = nodes.literal(para.text, para.text, classes=["wtrl_url"])
+	return [node], []
+
+def wtrl_type_role(para: RolePara) -> RoleResult:
+	node = nodes.literal(para.text, para.text, classes=["wtrl_type"])
+	return [node], []
+
+def wtrl_value_role(para: RolePara) -> RoleResult:
+	node = nodes.literal(para.text, para.text, classes=["wtrl_value"])
+	return [node], []
+
+def wtrl_var_role(para: RolePara) -> RoleResult:
+	node = nodes.literal(para.text, para.text, classes=["wtrl_var"])
+	return [node], []
+
+def wtrl_var_type_role(para: RolePara) -> RoleResult:
+	r"""
+	Preamble:
+		profile:
+			function
+		normative_sections:
+			Contract, Parameters, Returns, Raises
+	Contract:
+		general:
+			|Must| parse the text in |var|`para.text` as a variable name and type separated by a colon.
+			|Must| create a list of |type|`docutils.nodes.Node` representing the variable name, the colon, and the type with appropriate CSS classes.
+			|May| report an error if the text does not contain a colon or if either the variable name or type is empty.
+	Parameters:
+		para:
+			|class|`RolePara` instance containing the role parameters.
+	Returns:
+		A tuple containing a list of |type|`docutils.nodes.Node` representing the variable name and type,
+		and a list of system messages (errors, warnings, etc.) that |may| have been generated during processing.
+	Raises:
+	Notes:
+		Examples:
+			* |var_type|`n: int`
+			* |var_type|`q: float`
+			* |var_type|`para: RolePara`
+			* |var_type|`result: tuple[List[nodes.Node], list[nodes.Node]]`
+	"""
+	if ":" not in para.text:
+		msg = para.inliner.reporter.error(
+		 f"wtrl_var_type expects 'var:type', got '{para.text}'",
+		 line=para.lineno,
 		)
 		return [], [msg]
 
-	var, type_ = (s.strip() for s in text.split(":", 1))
+	var, type_ = (s.strip() for s in para.text.split(":", 1))
 	if not var or not type_:
-		msg = inliner.reporter.error(
-		 f"wtrl_var_type expects 'var:type' with non-empty var and type, got '{text}'",
-		 line=lineno,
+		msg = para.inliner.reporter.error(
+		 f"wtrl_var_type expects 'var:type' with non-empty var and type, got '{para.text}'",
+		 line=para.lineno,
 		)
 		return [], [msg]
 
@@ -2725,7 +2811,6 @@ def _add_static_path(config: Any, path : str) -> None:
 def _add_css_files(app: Any) -> None:
 	app.add_css_file("common_styles.css")
 	app.add_css_file("waterloo_base.css")
-#	app.add_css_file("alabaster_waterloo.css")
 
 def on_source_read(app: Any, docname: str, source: List[str]) -> None:
 	pass
@@ -2792,7 +2877,8 @@ def setup(app: Any) -> dict[str, Any]:
 	 "wtrl_var_type":wtrl_var_type_role,
 	 }
 	for name,func in role_map.items():
-		roles.register_local_role(name,cast(RoleHandler,func))
+	# use lambda here to capture the function in the current scope, otherwise it will always use the last function due to late binding in closures.
+		roles.register_local_role(name, lambda	name, rawtext, text, lineno, inliner, options=None, content=None, func=func: func(RolePara(name=name, rawtext=rawtext, text=text, lineno=lineno, inliner=inliner, options=options, content=content)))
 
 	return {
 	 "version": _extension_version(),

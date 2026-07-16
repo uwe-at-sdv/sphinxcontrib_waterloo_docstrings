@@ -5,6 +5,8 @@ Format:
 - VERSION [YYYY-MM-DD]: Summary.
 
 #----- extend here --------------------------------------------#
+- 0.4.3 [2026-07-16]:
+	* More self-referential documentation.
 - 0.4.2 [2026-07-16]:
 	* Working on the self-referential documentation
 - 0.4.1 [2026-07-16]:
