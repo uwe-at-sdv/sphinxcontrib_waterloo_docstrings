@@ -1044,6 +1044,14 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 		out.append(node_paragraph)
 		return out
 
+	def append_term_paragraphs(node_parent: nodes.Element, term_nodes: Sequence[nodes.Node], items: Sequence[str]) -> None:
+		node_term = nodes.paragraph(classes=["wtrl-dfn-term"])
+		node_term.extend(term_nodes)
+		node_parent += node_term
+		for paragraph in build_paragraphs_from_items(items):
+			paragraph["classes"].append("wtrl-dfn-content")
+			node_parent += paragraph
+
 	objname = mod_docitem.get_obj_name(obj)
 	objname_q = mod_docitem.get_obj_fully_qualified_name(obj)
 	anchor = mod_docitem.build_anchor(obj)
@@ -1155,16 +1163,12 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 				node_entry += node2_bullet_list
 
 		elif label in ("Definitions","Terminology"):
-			dl = nodes.definition_list(classes=["wtrl-dfn-list"])
 			if label == "Definitions":
 				obj_definitions = cast(mod_docitem.docitem_definitions,item_section)
 				if obj_definitions.inherited():
-# We would like to link to the module doc
+# We would like to link to the module doc.
 					direct_module = mod_docitem.get_obj_direct_module(obj)
-					dli = nodes.definition_list_item()
 # Label "<Inherited terms>"
-					dt = nodes.term()
-
 					if direct_module:
 						node_inh = _build_internal_ref(
 							ctx,
@@ -1172,20 +1176,18 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 							"<Terms inherited from module>",
 							"wtrl_label",
 						)
-						dt += node_inh
+						term_nodes: List[nodes.Node] = [node_inh]
 					else:
-						dt.extend(ctx.parse(dt, 0, ctx.add_role_label("<Terms inherited from module>")))
-					dli += dt
-					dd = nodes.definition()
-					p = nodes.paragraph()
-					p.extend(ctx.parse(p, 0, ", ".join([ctx.add_role_dfn(inh) for inh in obj_definitions.inherited()])))
-					dd += p
-					dli += dd
-					dl += dli
+						node_label = nodes.inline()
+						node_label.extend(ctx.parse(node_label, 0, ctx.add_role_label("<Terms inherited from module>")))
+						term_nodes = [node_label]
+					append_term_paragraphs(
+						node_entry,
+						term_nodes,
+						[", ".join([ctx.add_role_dfn(inh) for inh in obj_definitions.inherited()])],
+					)
 
-			if label == "Definitions":
 				seen: Dict[Any,List[str]] = {}
-				term_str = ""
 # Collect terms having the same content (we have a DAG, not a tree!)
 				for term, item_subsection in item_section.items().items():
 					if item_subsection in seen:
@@ -1196,36 +1198,21 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 				for item_subsection,terms in seen.items():
 					if not terms:
 						continue
-					dli = nodes.definition_list_item()
 # Term
-					dt = nodes.term()
+					node_term = nodes.inline()
 					if len(terms) > 1:
-						dt.extend(ctx.parse(dt, 0, ctx.add_role_dfn(terms[0] + " [" + ", ".join(terms[1:]) + "]")))
+						node_term.extend(ctx.parse(node_term, 0, ctx.add_role_dfn(terms[0] + " [" + ", ".join(terms[1:]) + "]")))
 					else:
-						dt.extend(ctx.parse(dt, 0, ctx.add_role_dfn(terms[0])))
-					dli += dt
-						# Definition
-					dd = nodes.definition()
+						node_term.extend(ctx.parse(node_term, 0, ctx.add_role_dfn(terms[0])))
 # Content
-					for paragraph in build_paragraphs_from_items(item_subsection.items()):
-						dd += paragraph
-					dli += dd
-					dl += dli
+					append_term_paragraphs(node_entry, [node_term], item_subsection.items())
 			else:
 				for term, item_subsection in item_section.items().items():
-					dli = nodes.definition_list_item()
 # Term
-					dt = nodes.term()
-					dt.extend(ctx.parse(dt, 0, ctx.add_role_dfn(term)))
-					dli += dt
-						# Definition
-					dd = nodes.definition()
+					node_term = nodes.inline()
+					node_term.extend(ctx.parse(node_term, 0, ctx.add_role_dfn(term)))
 # Content
-					for paragraph in build_paragraphs_from_items(item_subsection.items()):
-						dd += paragraph
-					dli += dd
-					dl += dli
-			node_entry += dl
+					append_term_paragraphs(node_entry, [node_term], item_subsection.items())
 # Both a freeform. "Description" is non-normative. "Returns" is normative,
 # yet we msut provide tools  like itemization and enumeration in order to
 # resolve the inner structure of the returned object, therefore freeform.
@@ -1245,13 +1232,16 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 					node_entry += paragraph
 # Factory: List of function names, each with a line-by-line executable contract.
 		elif label in ("Factory"):
-			node_bullet_list = build_bullet_list_from_section_items(
-				item_section.items(),
-				lambda p, lbl: render_linked_factory_entry(
-					p, lbl, objname, "wtrl_func", ctx.add_role_func
-				),
-			)
-			node_entry += node_bullet_list
+			if False:
+				pass
+			else:
+				for label1, item_subsection in item_section.items().items():
+					node_label_paragraph = nodes.paragraph()
+					render_linked_factory_entry(node_label_paragraph,label1,objname,"wtrl_func",ctx.add_role_func)
+					node_entry += node_label_paragraph
+# Iterate over logical lines in the exception class' content and add each bullet list as sibling node.
+					node_entry += build_bullet_list_from_subsection_items(item_subsection.items())
+
 # New in 0.1.1: Parameters and Class/Method/Function_overview are rendered as freeform, like Public_...
 # The reason for parameters is that we must have tools like itemization and enumeration
 # in order to resolve the inner structure of single parameters.
@@ -1259,12 +1249,8 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 # to enforce a line-by-line executable conract style for non-normative sections.
 # From an aesthetic point of view we get rid of many bullets of non-items.
 		elif label in ("Public_constants", "Public_variables", "Public_types", "Parameters", "Class_overview", "Method_overview", "Function_overview"):
-# Bullet list where each item is the name of a public constant/variable plus some free-form content.
-			node_bullet_list = nodes.bullet_list()
 			for label1, item_subsection in item_section.items().items():
-# The list item.
-				node_list_item = nodes.list_item()
-# First paragraph of the list item: clickable constant/variable label.
+# First paragraph of the entry group: clickable constant/variable label.
 				node_label_paragraph = nodes.paragraph()
 # Add a clickable label. Pass "Public_constants"/"Public_variables"/"Public_types" as label for warnings.
 				if label in ("Public_constants", "Public_variables"):
@@ -1275,29 +1261,28 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 				elif label in ("Parameters",):
 					render_plain_entry(node_label_paragraph,label1,"wtrl_var",ctx.add_role_var,label)
 				elif label in ("Class_overview",):
-					render_plain_entry(node_label_paragraph,label1,"wtrl_type",ctx.add_role_type,label)
+					render_plain_entry(node_label_paragraph,label1,"wtrl_class",ctx.add_role_class,label)
 				elif label in ("Method_overview",):
 					render_plain_entry(node_label_paragraph,label1,"wtrl_func",ctx.add_role_func,label)
 				elif label in ("Function_overview",):
 					render_plain_entry(node_label_paragraph,label1,"wtrl_func",ctx.add_role_func,label)
-				node_list_item += node_label_paragraph
-# Iterate over logical lines in the public constant's/variable's content and add each paragraph as sibling node in the list item.
+				node_entry += node_label_paragraph
+# Iterate over logical lines in the public constant's/variable's content and add each paragraph as sibling node.
 				for paragraph in build_paragraphs_from_items(item_subsection.items()):
 					paragraph["classes"].append("wtrl-freeform-paragraph-content")
-					node_list_item += paragraph
-				node_bullet_list += node_list_item
-			node_entry += node_bullet_list
+					node_entry += paragraph
 
 		elif label in ("Raises"):
 # For section "Raises" we enforce the line-by-line style and interpret the content as an executable contract.
 			if len(item_section.items()) == 0:
 				node_entry.extend(parse_text(node1_paragraph,"|empty|"))
 			else:
-				node_bullet_list = build_bullet_list_from_section_items(
-					item_section.items(),
-					lambda p, lbl: render_linked_raises_entry_label(p, lbl),
-				)
-				node_entry += node_bullet_list
+				for label1, item_subsection in item_section.items().items():
+					node_label_paragraph = nodes.paragraph()
+					render_plain_entry(node_label_paragraph,label1,"wtrl_class",ctx.add_role_class,"Raises")
+					node_entry += node_label_paragraph
+# Iterate over logical lines in the exception class' content and add each bullet list as sibling node.
+					node_entry += build_bullet_list_from_subsection_items(item_subsection.items())
 		elif label in ("Derived_from"):
 			node1_paragraph = nodes.paragraph()
 			render_linked_derived_from_entries(

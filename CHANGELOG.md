@@ -5,6 +5,8 @@ Format:
 - VERSION [YYYY-MM-DD]: Summary.
 
 #----- extend here --------------------------------------------#
+- 0.4.0 [2026-07-16]:
+	* We're moving from bullet lists to paragraphs at subsection level.
 - 0.3.3 [2026-07-15]:
 	* Packaging test
 - 0.3.2 [2026-07-15]:

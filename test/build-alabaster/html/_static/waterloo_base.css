@@ -4,45 +4,6 @@
 
 /*===== Status messages for push and pop =====================*/
 
-.wtrl-current-module-message {
-	border: 1px #bbb solid;
-	border-radius: 0.4em;
-	padding-left:1em;
-	padding-right:1em;
-	padding-top:0.5em;
-	padding-bottom:0.5em;
-	}
-.wtrl-current-module-push {
-	}
-.wtrl-current-module-pop {
-	}
-
-.wtrl-current-class-message {
-	border: 1px #bbb solid;
-	border-radius: 0.4em;
-	padding-left:1em;
-	padding-right:1em;
-	padding-top:0.5em;
-	padding-bottom:0.5em;
-	}
-.wtrl-current-class-push {
-	}
-.wtrl-current-class-pop {
-	}
-
-.wtrl-current-scope-message {
-	border: 1px #bbb solid;
-	border-radius: 0.4em;
-	padding-left:1em;
-	padding-right:1em;
-	padding-top:0.5em;
-	padding-bottom:0.5em;
-	}
-.wtrl-current-scope-push {
-	}
-.wtrl-current-scope-pop {
-	}
-
 
 /*----- Signatures -------------------------------------------*/
 
@@ -407,6 +368,26 @@ table.wtrl-box > thead > tr > th p.wtrl-obj-kind {
 table.wtrl-box > thead > tr > th p.wtrl-obj-qid
 	{
 	font-family:monospace;
+	}
+table.wtrl-box > thead.wtrl-box-head-module > tr > th p.wtrl-obj-qid
+	{
+	color:var(--sdv-mod-color);
+	}
+table.wtrl-box > thead.wtrl-box-head-class > tr > th p.wtrl-obj-qid
+	{
+	color:var(--sdv-class-color);
+	}
+table.wtrl-box > thead.wtrl-box-head-function > tr > th p.wtrl-obj-qid
+	{
+	color:var(--sdv-func-color);
+	}
+table.wtrl-box > thead.wtrl-box-head-method > tr > th p.wtrl-obj-qid
+	{
+	color:var(--sdv-func-color);
+	}
+table.wtrl-box > thead.wtrl-box-head-inherited_method > tr > th p.wtrl-obj-qid
+	{
+	color:var(--sdv-func-color);
 	}
 
 /* Coloured background depending on object "kind".
