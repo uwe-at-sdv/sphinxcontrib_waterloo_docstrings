@@ -11,4 +11,6 @@ Sphinx: Waterloo Docstrings documentation
 	:caption: Contents:
 	:numbered:
 
+	introduction.rst
+	functionality.rst
 	reference.rst
