@@ -1,4 +1,4 @@
-"""
+r"""
 Preamble:
 	profile:
 		module
@@ -68,16 +68,37 @@ Public_functions:
 	wtrl_build_autodoc_function_nodes,
 	wtrl_build_autodoc_class_nodes,
 	wtrl_build_autodoc_class_full_nodes,
+
 	wtrl_build_push_current_module_nodes,
 	wtrl_build_push_current_class_nodes,
 	wtrl_build_push_current_scope_nodes,
 	wtrl_build_pop_current_module_nodes,
 	wtrl_build_pop_current_class_nodes,
 	wtrl_build_pop_current_scope_nodes,
+
 	wtrl_build_method_signature_nodes,
 	wtrl_build_function_signature_nodes,
 	wtrl_build_method_signature_block_nodes,
-	wtrl_build_function_signature_block_nodes
+	wtrl_build_function_signature_block_nodes,
+
+	wtrl_attr_role,
+	wtrl_class_role,
+	wtrl_cmd_role,
+	wtrl_dfn_role,
+	wtrl_file_role,
+	wtrl_func_role,
+	wtrl_label_role,
+	wtrl_lit_role,
+	wtrl_mod_role,
+	wtrl_norm_role,
+	wtrl_op_role,
+	wtrl_opt_role,
+	wtrl_tag_role,
+	wtrl_type_role,
+	wtrl_value_role,
+	wtrl_var_role,
+	wtrl_var_type_role
+
 Function_overview:
 	build_sphinx_nodes:
 		Build a list of Docutils nodes from a docstring tree.
@@ -107,6 +128,59 @@ Function_overview:
 		Implementation of directive |attr|`.. wtrl_pop_current_class::`
 	wtrl_build_pop_current_scope_nodes:
 		Implementation of directive |attr|`.. wtrl_pop_current_scope::`
+
+	wtrl_build_method_signature_nodes:
+		Implementation of directive |attr|`.. wtrl_method_signature::`
+		Render a method signature with optional class context and inline markup.
+		Rendering in a single line can be inconvenient for long signatures; consider using |func|`wtrl_build_method_signature_block_nodes`.
+	wtrl_build_function_signature_nodes:
+		Implementation of directive |attr|`.. wtrl_function_signature::`
+		Render a function signature with inline markup.
+		Rendering in a single line can be inconvenient for long signatures; consider using |func|`wtrl_build_function_signature_block_nodes`.
+	wtrl_build_method_signature_block_nodes:
+		Implementation of directive |attr|`.. wtrl_method_signature_block::`
+		Render a method signature with optional class context and inline markup in a block layout.
+	wtrl_build_function_signature_block_nodes:
+		Implementation of directive |attr|`.. wtrl_function_signature_block::`
+		Render a function signature with inline markup in a block layout.
+
+	wtrl_attr_role:
+		Implementation of role |attr|`:wtrl_attr:`
+	wtrl_class_role:
+		Implementation of role |attr|`:wtrl_class:`
+	wtrl_cmd_role:
+		Implementation of role |attr|`:wtrl_cmd:`
+	wtrl_dfn_role:
+		Implementation of role |attr|`:wtrl_dfn:`
+	wtrl_file_role:
+		Implementation of role |attr|`:wtrl_file:`
+	wtrl_func_role:
+		Implementation of role |attr|`:wtrl_func:`
+	wtrl_label_role:
+		Implementation of role |attr|`:wtrl_label:`
+	wtrl_lit_role:
+		Implementation of role |attr|`:wtrl_lit:`
+	wtrl_mod_role:
+		Implementation of role |attr|`:wtrl_mod:`
+	wtrl_norm_role:
+		Implementation of role |attr|`:wtrl_norm:`
+	wtrl_op_role:
+		Implementation of role |attr|`:wtrl_op:`
+	wtrl_opt_role:
+		Implementation of role |attr|`:wtrl_opt:`
+	wtrl_tag_role:
+		Implementation of role |attr|`:wtrl_tag:`
+	wtrl_type_role:
+		Implementation of role |attr|`:wtrl_type:`
+	wtrl_value_role:
+		Implementation of role |attr|`:wtrl_value:`
+	wtrl_var_role:
+		Implementation of role |attr|`:wtrl_var:`
+	wtrl_var_type_role:
+		Implementation of role |attr|`:wtrl_var_type:`
+Notes:
+	Last reviewed:
+		2026-07-16
 """
 
 from __future__ import annotations
@@ -711,14 +785,13 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 		Linking:
 			Internal links are created using anchor ids from |func|`build_anchor`.
 			Built-in exceptions in section |label|`Raises` are intentionally rendered as plain text without internal links.
-		Last review:
+		Last reviewed:
 			2026-02-15
 		"""
 	if not _is_doc_visible_in_current_scope(ctx, doc):
 # Scope-aware rendering omits invisible objects entirely. If later
 # we need author-facing placeholders, this is the early return to adapt.
 		return []
-	node_root: List[nodes.Node] = []
 	def parse_text(parent: nodes.Element, text: str) -> List[nodes.Node]:
 		return ctx.parse(parent, 0, resolve_markup(text, ctx))
 
@@ -884,38 +957,6 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 					warnings.warn(f"See_also entry '{content_s}' cannot be resolved for linking: {warn_exc}",RuntimeWarning)
 				parent.extend(ctx.parse(parent,0,ctx.add_role_var(content_s)))
 
-	def render_linked_raises_entry_label(parent: nodes.paragraph, exc_name: str) -> None:
-		exc_obj: object | None = None
-		last_exc: Exception | None = None
-		for cand in (exc_name, objname + "." + exc_name):
-			try:
-				exc_obj, _, _, _ = resolve_qualified_name(ctx, cand)
-				break
-			except Exception as exc:
-				last_exc = exc
-				continue
-		if exc_obj is None:
-			# Built-in exceptions are valid and expected, but typically not part of local anchors.
-			bi = getattr(builtins, exc_name, None)
-			if isinstance(bi, type) and issubclass(bi, BaseException):
-				parent.extend(ctx.parse(parent,0,ctx.add_role_type(exc_name)))
-				return
-			warnings.warn(f"Raises entry '{exc_name}' cannot be resolved: {last_exc}",RuntimeWarning)
-			parent.extend(ctx.parse(parent,0,ctx.add_role_type(exc_name)))
-			return
-		if not isinstance(exc_obj, type) or not issubclass(exc_obj, BaseException):
-			warnings.warn(f"Raises entry '{exc_name}' resolves to non-exception object.",RuntimeWarning)
-			parent.extend(ctx.parse(parent,0,ctx.add_role_type(exc_name)))
-			return
-		# For builtins we keep plain styled text (usually no local anchor target).
-		if getattr(exc_obj, "__module__", "") == "builtins":
-			parent.extend(ctx.parse(parent,0,ctx.add_role_type(exc_name)))
-			return
-		if not _is_target_obj_visible_in_current_scope(ctx, exc_obj):
-			render_out_of_scope_entry(parent, exc_name, ctx.add_role_type)
-			return
-		parent += _build_internal_ref(ctx, exc_obj, exc_name, "wtrl_type")
-
 # Contract.*
 	RE_DOC_BULLET_LIST = re.compile(r"^[-+*#]\s")
 	def build_bullet_list_from_subsection_items(items: Iterable[str]) -> nodes.bullet_list:
@@ -924,18 +965,6 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 			node_list_item = nodes.list_item()
 			node_paragraph = nodes.paragraph()
 			node_paragraph.extend(parse_text(node_paragraph, content))
-			node_list_item += node_paragraph
-			node_bullet_list += node_list_item
-		return node_bullet_list
-
-# Factory, Method_overview, Function_overview, Class_overview, Public_types, Public_constants, Public_variables, Parameters, Raises,
-	def build_bullet_list_from_section_items(section_items: Mapping[str, Any],render_label: Callable[[nodes.paragraph, str], None]) -> nodes.bullet_list:
-		node_bullet_list = nodes.bullet_list()
-		for label1, item_subsection in section_items.items():
-			node_list_item = nodes.list_item()
-			node_paragraph = nodes.paragraph()
-			render_label(node_paragraph, str(label1))
-			node_paragraph += build_bullet_list_from_subsection_items(item_subsection.items())
 			node_list_item += node_paragraph
 			node_bullet_list += node_list_item
 		return node_bullet_list
@@ -1233,9 +1262,11 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 # Factory: List of function names, each with a line-by-line executable contract.
 		elif label in ("Factory"):
 			if False:
-				pass
+				node_entry.extend(parse_text(node1_paragraph,"|empty|"))
 			else:
+# The table cell is an alternating sequence of paragraphs and bulletlists.
 				for label1, item_subsection in item_section.items().items():
+# Wrap factory label in a paragraph
 					node_label_paragraph = nodes.paragraph()
 					render_linked_factory_entry(node_label_paragraph,label1,objname,"wtrl_func",ctx.add_role_func)
 					node_entry += node_label_paragraph
