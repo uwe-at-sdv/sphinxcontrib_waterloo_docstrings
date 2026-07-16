@@ -2878,7 +2878,7 @@ def setup(app: Any) -> dict[str, Any]:
 	 }
 	for name,func in role_map.items():
 	# use lambda here to capture the function in the current scope, otherwise it will always use the last function due to late binding in closures.
-		roles.register_local_role(name, lambda	name, rawtext, text, lineno, inliner, options=None, content=None, func=func: func(RolePara(name=name, rawtext=rawtext, text=text, lineno=lineno, inliner=inliner, options=options, content=content)))
+		roles.register_local_role(name, cast(RoleHandler,lambda	name, rawtext, text, lineno, inliner, options=None, content=None, func=func: func(RolePara(name=name, rawtext=rawtext, text=text, lineno=lineno, inliner=inliner, options=options, content=content))))
 
 	return {
 	 "version": _extension_version(),
