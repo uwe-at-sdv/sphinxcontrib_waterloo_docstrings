@@ -2871,12 +2871,12 @@ def wtrl_term_role(para: RolePara) -> RoleResult:
 	node = nodes.inline(para.text, para.text, classes=["wtrl_term"])
 	return [node], []
 
-def wtrl_url_role(para: RolePara) -> RoleResult:
-	node = nodes.literal(para.text, para.text, classes=["wtrl_url"])
-	return [node], []
-
 def wtrl_type_role(para: RolePara) -> RoleResult:
 	node = nodes.literal(para.text, para.text, classes=["wtrl_type"])
+	return [node], []
+
+def wtrl_url_role(para: RolePara) -> RoleResult:
+	node = nodes.literal(para.text, para.text, classes=["wtrl_url"])
 	return [node], []
 
 def wtrl_value_role(para: RolePara) -> RoleResult:
