@@ -295,7 +295,7 @@ def _emit_diagnostics(tr: mod_docitem.tracer, app: SphinxAppProtocol | Any, qnam
 		if not errors:
 			return []
 
-		generated_nodes = []
+		generated_nodes: list[nodes.Node] = []
 
 		for err in errors:
 			rule_id = err.get("rule-id", "UNKNOWN-RULE")
