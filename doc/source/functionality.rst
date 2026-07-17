@@ -4,6 +4,8 @@ Directives
 Roles
 =====
 
+.. wtrl_autodoc_module:: doc_roles
+
 CSS Customization
 =================
 

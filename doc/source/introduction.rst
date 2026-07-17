@@ -4,6 +4,31 @@ Introduction
 Diese Extension stellt Direktiven und Roles bereit,
 mit denen man Docstrings im Waterloo-Format in HTML rendern kann.
 
+Project status
+--------------
+
+We use :wtrl_cmd:`mypy` for static typechecking. The source file(s)
+
+.. literalinclude:: type_checking_files.txt
+	:language: none
+
+are validated on a regular basis. The current status is
+
+.. literalinclude:: type_checking_report.txt
+	:language: none
+
+Our :wtrl_lit:`mypy`-configuration is:
+
+.. literalinclude:: ../../mypy.ini
+	:language: ini
+
+Exceptions from typechecking are:
+
+.. literalinclude:: type_checking_exceptions.txt
+	:language: none
+
+
+
 Installation
 ============
 
@@ -87,15 +112,4 @@ the default Waterloo favicon:
 .. code:: python
 
 	html_favicon = '_static/favicon.ico'
-
-Configuration
-=============
-
-Diagnostics
------------
-
-* diagnostics_color: bool, default False - Render WTRL diagnostics in color.
-* verbose_current_object: bool default False - druckt zu Beginn des Renderings den qualifizierten Identifier in die Sphinxausgabe.
-* verbose_state_change: bool default True - druckt Meldung bei wtrl_{push|pop}_current_{scope|module|class}
-
 

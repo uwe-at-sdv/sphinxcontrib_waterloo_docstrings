@@ -12,5 +12,6 @@ Sphinx: Waterloo Docstrings documentation
 	:numbered:
 
 	introduction.rst
+	configuration.rst
 	functionality.rst
 	reference.rst
