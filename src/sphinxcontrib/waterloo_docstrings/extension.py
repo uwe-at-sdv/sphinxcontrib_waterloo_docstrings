@@ -266,11 +266,15 @@ RoleHandler: TypeAlias = Callable[..., tuple[Sequence[nodes.reference], Sequence
 #===== Constants ==============================================#
 
 
-def _emit_diagnostics(tr: mod_docitem.tracer, app: SphinxAppProtocol | Any, qname: str, lineno: int) -> None:
+def _emit_diagnostics(tr: mod_docitem.tracer, app: SphinxAppProtocol | Any, qname: str, lineno: int) -> list[nodes.Node]:
+	try:
+		print(tr.build_json(tr.Severity.INFO))
+	except Exception as e:
+		print(e)
 	if tr.has_errors():
 		header = f"while parsing object `{qname}`:"
 		details = str(tr)
-		if app.config.diagnostics_color:
+		if app.config.wtrl_diagnostics_color:
 			# If colours are used, we render the tracer in our own colors.
 			log_msg = f"{header}\n{details}"
 			logger.error(log_msg, location=(app.env.docname, lineno), color="reset")
@@ -278,6 +282,88 @@ def _emit_diagnostics(tr: mod_docitem.tracer, app: SphinxAppProtocol | Any, qnam
 			# Othewise we strip the colors.
 			log_msg = f"{header}\n{tr.strip_ansi_escape_sequences(details)}"
 			logger.error(log_msg, location=(app.env.docname, lineno))
+
+#		clean_details = tr.strip_ansi_escape_sequences(str(tr))
+#		error_box = nodes.error(f"Waterloo Error: {header}")
+#		literal_block = nodes.literal_block(clean_details, clean_details)
+#		error_box.append(literal_block)
+#		return [error_box]
+
+		json_data = tr.build_json(tr.Severity.INFO)
+		errors = json_data.get("__WTRL_ERROR__", [])
+
+		if not errors:
+			return []
+
+		generated_nodes = []
+
+		for err in errors:
+			rule_id = err.get("rule-id", "UNKNOWN-RULE")
+			origin = err.get("origin", "general")
+			msg = err.get("msg", "")
+			hint = err.get("hint", "")
+
+			# 1. Titel im Konstruktor uebergeben, damit das Theme die Box richtig baut
+			error_box = nodes.error(f"Waterlint Diagnostics")
+
+			# RuleID
+			msg_para = nodes.paragraph()
+			msg_para.append(nodes.inline(text="RuleID: ", classes=["wtrl_label"]))
+			msg_para.append(nodes.inline(text=f"{rule_id}"))
+			error_box.append(msg_para)
+
+			# Origin
+			msg_para = nodes.paragraph()
+			msg_para.append(nodes.inline(text="Origin: ", classes=["wtrl_label"]))
+			msg_para.append(nodes.inline(text=f"{origin}"))
+			error_box.append(msg_para)
+
+			# Summary
+			msg_para = nodes.paragraph()
+			msg_para.append(nodes.inline(text="Summary: ", classes=["wtrl_label"]))
+			msg_para.append(nodes.inline(text=f"{msg}"))
+			error_box.append(msg_para)
+
+			# 2. Container als generischen 'container' (wird zu <div> statt <p>),
+			# da er Block-Elemente wie literal_block aufnehmen soll
+			node_content = nodes.container()
+            
+			if "found" in err or "expected" in err:
+				for key in ["found", "expected"]:
+					if key in err and err[key]:
+						content_text = "\n".join(err[key]).replace("\t", "    ")
+
+						# Das Label packen wir in einen eigenen Absatz, damit es vor dem Block steht
+						label_para = nodes.paragraph()
+						label_para.append(nodes.inline(text=key.capitalize() + ":", classes=["wtrl_label"]))
+						node_content.append(label_para)
+						
+						# Jetzt steht der literal_block (Block-Element) sauber ausserhalb des Absatzes
+						node_lit = nodes.literal_block(content_text, content_text)
+						node_content.append(node_lit)
+						
+			if hint:
+				# Sauber getrennter Absatz fuer den Hint
+				hint_para = nodes.paragraph()
+				hint_para.append(nodes.inline(text="Hint: ", classes=["wtrl_label"]))
+				node_content.append(hint_para)
+				
+				# Der Hint als eigener Codeblock (Block-Element)
+				hint_lit = nodes.literal_block(hint, hint)
+				node_content.append(hint_lit)
+
+			# Wir haengen den Container in die Error-Box
+			error_box.append(node_content)
+			generated_nodes.append(error_box)
+
+	if app.config.wtrl_diagnostics_embed:
+		return generated_nodes
+	else:
+		return []
+
+
+
+
 
 
 class context:
@@ -1113,7 +1199,7 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 	objname_q = mod_docitem.get_obj_fully_qualified_name(obj)
 	anchor = mod_docitem.build_anchor(obj)
 
-	if ctx.config and ctx.config.verbose_current_object:
+	if ctx.config and ctx.config.wtrl_verbose_current_object:
 		logger.info(f"Waterloo: now processing '{objname_q}'")
 
 
@@ -1973,7 +2059,7 @@ Raises:
 			di_mod.parse(tr,tree_mod)
 			mod_docitem.validate_docstring(tr,module_obj, di_mod, session=session)
 		except BaseException as e:
-			_emit_diagnostics(tr,app,qname,lineno)
+			return _emit_diagnostics(tr,app,qname,lineno)
 		return build_sphinx_nodes(ctx, module_obj, di_mod)
 
 def wtrl_build_autodoc_function_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
@@ -2024,16 +2110,14 @@ Raises:
 		try:
 			tree_meth = mod_docitem.parse_indent_docstring(tr,func_doc_txt, session)
 		except BaseException as e:
-			_emit_diagnostics(tr,app,qname,lineno)
-			raise
+			return _emit_diagnostics(tr,app,qname,lineno)
 		if mod_docitem.get_profile_of_tree(mod_docitem.tracer(),tree_meth) in ("function","method"):
 			try:
 				di_meth = mod_docitem.docitem_docstring_method()
 				di_meth.parse(tr,tree_meth)
 				mod_docitem.validate_docstring(tr,function_obj, di_meth, session=session)
 			except BaseException as e:
-				_emit_diagnostics(tr,app,qname,lineno)
-				raise
+				return _emit_diagnostics(tr,app,qname,lineno)
 			return build_sphinx_nodes(ctx, function_obj, di_meth)
 		else:
 			try:
@@ -2041,8 +2125,7 @@ Raises:
 				di_inhmeth.parse(tr,tree_meth)
 				mod_docitem.validate_docstring(tr,function_obj, di_inhmeth, session=session)
 			except BaseException as e:
-				_emit_diagnostics(tr,app,qname,lineno)
-				raise
+				return _emit_diagnostics(tr,app,qname,lineno)
 			return build_sphinx_nodes(ctx, function_obj, di_inhmeth)
 
 def wtrl_build_autodoc_class_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
@@ -2094,8 +2177,7 @@ Raises:
 			di_node.parse(tr,tree_mod)
 			mod_docitem.validate_docstring(tr,obj, di_node, session=session)
 		except BaseException as e:
-			_emit_diagnostics(tr,app,qname,lineno)
-			raise
+			return _emit_diagnostics(tr,app,qname,lineno)
 		return build_sphinx_nodes(ctx, obj,di_node)
 
 def wtrl_build_autodoc_class_full_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
@@ -2145,8 +2227,7 @@ Raises:
 		try:
 			return build_sphinx_nodes_full(ctx, obj, session=session)
 		except Exception as e:
-			_emit_diagnostics(tr,app,qname,lineno)
-			raise
+			return _emit_diagnostics(tr,app,qname,lineno)
 
 def _make_context_admonition(inliner: InlinerProtocol, lineno: int, title: str, msg: str, classes: list[str]) -> nodes.admonition:
 	node_adm = nodes.admonition(classes=["admonition", *classes])
@@ -2200,7 +2281,7 @@ def wtrl_build_push_current_module_nodes(app: SphinxAppProtocol | Any, inliner: 
 		mod_obj, _, _, _ = resolve_qualified_name(ctx, qname)
 		if not mod_docitem.is_obj_module(mod_obj):
 			raise RuntimeError(f"{qname} does not resolve to a module.")
-		if app.config and app.config.verbose_state_change:
+		if app.config and app.config.wtrl_verbose_state_change:
 			logger.info(f"Waterloo: pushing current module '{qname}'")
 		push_current_module(qname, env=ctx.env)
 		msg = f"Classes and functions below this point implicitly belong to package/module {ctx.add_role_mod(qname)}. "
@@ -2250,7 +2331,7 @@ def wtrl_build_push_current_class_nodes(app: SphinxAppProtocol | Any, inliner: I
 		cls_obj, _, _, _ = resolve_qualified_name(ctx, qname)
 		if not mod_docitem.is_obj_class(cls_obj):
 			raise RuntimeError(f"{qname} does not resolve to a class.")
-		if app.config and app.config.verbose_state_change:
+		if app.config and app.config.wtrl_verbose_state_change:
 			logger.info(f"Waterloo: pushing current class '{qname}'")
 		push_current_class(qname, env=ctx.env)
 		msg = f"Methods below this point implicitly belong to class {ctx.add_role_class(qname)}."
@@ -2295,7 +2376,7 @@ def wtrl_build_push_current_scope_nodes(app: SphinxAppProtocol | Any, inliner: I
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	tr = ctx.tr
 	with mod_docitem.traced_section(tr, scope_tag):
-		if app.config and app.config.verbose_state_change:
+		if app.config and app.config.wtrl_verbose_state_change:
 			logger.info(f"Waterloo: pushing current scope '{scope_tag}'")
 		push_current_scope(scope_tag, env=ctx.env)
 		msg = f"Scope below this point is set to {ctx.add_role_var(scope_tag)}."
@@ -2351,7 +2432,7 @@ def wtrl_build_pop_current_module_nodes(app: SphinxAppProtocol | Any, inliner: I
 		text_top = get_current_module(ctx.env)
 		if text_top != qname:
 			raise RuntimeError(f"module stack push/pop mismatch, expected {text_top} got {qname}.")
-		if app.config and app.config.verbose_state_change:
+		if app.config and app.config.wtrl_verbose_state_change:
 			logger.info(f"Waterloo: popping current module '{qname}'")
 		pop_current_module(ctx.env)
 		if has_current_module(ctx.env):
@@ -2411,7 +2492,7 @@ def wtrl_build_pop_current_class_nodes(app: SphinxAppProtocol | Any, inliner: In
 		text_top = get_current_class(ctx.env)
 		if text_top != qname:
 			raise RuntimeError(f"class stack push/pop mismatch, expected {text_top} got {qname}.")
-		if app.config and app.config.verbose_state_change:
+		if app.config and app.config.wtrl_verbose_state_change:
 			logger.info(f"Waterloo: popping current class '{qname}'")
 		pop_current_class(ctx.env)
 		if has_current_class(ctx.env):
@@ -2470,7 +2551,7 @@ def wtrl_build_pop_current_scope_nodes(app: SphinxAppProtocol | Any, inliner: In
 			raise RuntimeError(f"Unknown scope '{scope_tag}'. Expected one of {list(mod_docitem.SCOPE_TAG_MAP.keys())}.")
 		if text_top_scope !=  mod_docitem.SCOPE_TAG_MAP[scope_tag]:
 			raise RuntimeError(f"scope stack push/pop mismatch, expected {text_top_scope} got {scope_tag}.")
-		if app.config and app.config.verbose_state_change:
+		if app.config and app.config.wtrl_verbose_state_change:
 			logger.info(f"Waterloo: popping current scope '{scope_tag}'")
 		pop_current_scope(env=ctx.env)
 		if has_current_scope(ctx.env):
@@ -2875,9 +2956,10 @@ def setup(app: Any) -> dict[str, Any]:
 # We cannot be sure if it exists, but that's how it is named.
 	app.add_config_value("docitem_context_config",None,"env")
 
-	app.add_config_value('diagnostics_color', False, 'env')
-	app.add_config_value('verbose_current_object', False, 'env')
-	app.add_config_value('verbose_state_change', True, 'env')
+	app.add_config_value('wtrl_diagnostics_embed', False, 'env')
+	app.add_config_value('wtrl_diagnostics_color', False, 'env')
+	app.add_config_value('wtrl_verbose_current_object', False, 'env')
+	app.add_config_value('wtrl_verbose_state_change', True, 'env')
 
 # Add a hook, so that we know when the builder is ready.
 	app.connect("config-inited", lambda app, config: _add_static_path(config, ext_static))

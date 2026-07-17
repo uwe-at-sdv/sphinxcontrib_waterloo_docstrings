@@ -20,9 +20,10 @@ extensions = [
 	"sphinxcontrib.waterloo_docstrings",
 	]
 
-diagnostics_color = True
-verbose_current_object = True
-verbose_state_change = True
+wtrl_diagnostics_color = True
+wtrl_diagnostics_embed = True
+wtrl_verbose_current_object = True
+wtrl_verbose_state_change = True
 
 
 templates_path = ['_templates']

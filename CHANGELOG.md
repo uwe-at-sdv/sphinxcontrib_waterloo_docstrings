@@ -5,6 +5,8 @@ Format:
 - VERSION [YYYY-MM-DD]: Summary.
 
 #----- extend here --------------------------------------------#
+- 0.5.1 [2026-07-17]:
+	* Error messages embedded in document; Configuration wtrl_diagnostics_embed
 - 0.5.0 [2026-07-17]:
 	* Reasonable diagnostic; Verbosity as configuration
 - 0.4.3 [2026-07-16]:
