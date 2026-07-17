@@ -54,6 +54,11 @@ Function :wtrl_func:`build_sphinx_nodes_full`
 
 .. wtrl_autodoc_function:: build_sphinx_nodes_full
 
+Class :wtrl_class:`context`
+.............................................
+
+.. wtrl_autodoc_class:: context
+
 
 Directives for docstring rendering
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

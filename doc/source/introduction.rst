@@ -7,7 +7,9 @@ mit denen man Docstrings im Waterloo-Format in HTML rendern kann.
 Installation
 ============
 
-pip install sphinxcontrib-waterloo-docstrings
+.. code:: bash
+
+	pip install sphinxcontrib-waterloo-docstrings
 
 
 Quick Start
@@ -76,8 +78,6 @@ to typographical accuracy, but provide more space for the table of contents.
 For theme :wtrl_mod:`Furo`
 --------------------------
 
-
-
 Favicon
 =======
 
@@ -87,4 +87,15 @@ the default Waterloo favicon:
 .. code:: python
 
 	html_favicon = '_static/favicon.ico'
+
+Configuration
+=============
+
+Diagnostics
+-----------
+
+* diagnostics_color: bool, default False - Render WTRL diagnostics in color.
+* verbose_current_object: bool default False - druckt zu Beginn des Renderings den qualifizierten Identifier in die Sphinxausgabe.
+* verbose_state_change: bool default True - druckt Meldung bei wtrl_{push|pop}_current_{scope|module|class}
+
 

@@ -204,8 +204,12 @@ from docutils.parsers.rst import Directive
 from docutils.parsers.rst.directives.admonitions import BaseAdmonition
 from typing import no_type_check
 from sphinx.util.nodes import make_refnode
+from sphinx.util import logging
+from sphinx.util import console
 
 import sdv.doc.waterloo.docitem as mod_docitem
+
+logger = logging.getLogger(__name__)
 
 #===== Typechecking ===========================================#
 
@@ -237,11 +241,13 @@ class InlinerProtocol(Protocol):
 
 
 class SphinxEnvProtocol(Protocol):
+	docname: str
 	docitem_context_configurator: Dict[str, Any] | None
 
 
 class SphinxAppProtocol(Protocol):
 	env: SphinxEnvProtocol
+	config: Any
 	docitem_context_configurator: Dict[str, Any] | None
 
 
@@ -260,6 +266,18 @@ RoleHandler: TypeAlias = Callable[..., tuple[Sequence[nodes.reference], Sequence
 #===== Constants ==============================================#
 
 
+def _emit_diagnostics(tr: mod_docitem.tracer, app: SphinxAppProtocol | Any, qname: str, lineno: int) -> None:
+	if tr.has_errors():
+		header = f"while parsing object `{qname}`:"
+		details = str(tr)
+		if app.config.diagnostics_color:
+			# If colours are used, we render the tracer in our own colors.
+			log_msg = f"{header}\n{details}"
+			logger.error(log_msg, location=(app.env.docname, lineno), color="reset")
+		else:
+			# Othewise we strip the colors.
+			log_msg = f"{header}\n{tr.strip_ansi_escape_sequences(details)}"
+			logger.error(log_msg, location=(app.env.docname, lineno))
 
 
 class context:
@@ -281,8 +299,9 @@ Contract:
 	def __init__(self,parse_inline : Callable[[nodes.Element, int, str], List[nodes.Node]],lineno: int) -> None:
 		self.parse = parse_inline
 		self.i_line = lineno
-# See make_context. We extract env from the SphinxApp instance.
-		self.env = None
+# See make_context. We extract env and config from the SphinxApp instance.
+		self.env: Any = None
+		self.config: Any = None
 		self.wtrl_validated_doc_cache: dict[int, mod_docitem.docitem_docstring_base | None] = {}
 		self.add_role_attr = lambda t:f":wtrl_attr:`{t}`"
 		self.add_role_class = lambda t:f":wtrl_class:`{t}`"
@@ -375,6 +394,7 @@ Contract:
 def make_context(app: SphinxAppProtocol | Any, parse_inline: Callable[[nodes.Element, int, str], List[nodes.Node]], lineno: int) -> context:
 	ctx = context(parse_inline, lineno)
 	ctx.env = getattr(app, "env", None)
+	ctx.config = getattr(app, "config", None)
 	configurator = getattr(app, "docitem_context_configurator", None)
 	if configurator is None:
 		configurator = getattr(app.env, "docitem_context_configurator", None)
@@ -544,10 +564,8 @@ def _get_scope_stack(env: Any | None) -> List[mod_docitem.Scope]:
 def push_current_module(qualified_module_name : str, env: Any | None = None) -> None:
 	stack = _get_module_stack(env)
 	stack.append(qualified_module_name)
-	print(f"push_current_module: {stack[-1]}")
 def pop_current_module(env: Any | None = None) -> None:
 	stack = _get_module_stack(env)
-	print(f"pop_current_module: {stack[-1]}")
 	del stack[-1]
 def get_current_module(env: Any | None = None) -> str:
 	return _get_module_stack(env)[-1]
@@ -558,10 +576,8 @@ def has_current_module(env: Any | None = None) -> bool:
 def push_current_class(qualified_class_name : str, env: Any | None = None) -> None:
 	stack = _get_class_stack(env)
 	stack.append(qualified_class_name)
-	print(f"push_current_class: {stack[-1]}")
 def pop_current_class(env: Any | None = None) -> None:
 	stack = _get_class_stack(env)
-	print(f"pop_current_class: {stack[-1]}")
 	del stack[-1]
 def get_current_class(env: Any | None = None) -> str:
 	return _get_class_stack(env)[-1]
@@ -1096,6 +1112,11 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 	objname = mod_docitem.get_obj_name(obj)
 	objname_q = mod_docitem.get_obj_fully_qualified_name(obj)
 	anchor = mod_docitem.build_anchor(obj)
+
+	if ctx.config and ctx.config.verbose_current_object:
+		logger.info(f"Waterloo: now processing '{objname_q}'")
+
+
 # Required for inter-page references.
 	_register_anchor(ctx, obj, anchor)
 
@@ -1400,7 +1421,7 @@ def build_sphinx_nodes_full(ctx : context, class_obj: Any, session: mod_docitem.
 		RuntimeError:
 			|Must| raise if something goes wrong parsing a docstring.
 		BaseException:
-			|Must| forward exceptions from Sphinx
+			|May| forward exceptions from Sphinx
 	"""
 # Tracer
 	tr = ctx.tr
@@ -1945,11 +1966,14 @@ Raises:
 		mod_doc_txt = mod_docitem.get_obj_docstring(module_obj)
 		if not mod_doc_txt:
 			raise RuntimeError(f"{qname} has no docstring.")
-
-		tree_mod = mod_docitem.parse_indent_docstring(tr,mod_doc_txt, session)
-		di_mod = mod_docitem.docitem_docstring_module()
-		di_mod.parse(tr,tree_mod)
-		mod_docitem.validate_docstring(tr,module_obj, di_mod, session=session)
+# Todo: think about diagnostics channel.
+		try:
+			tree_mod = mod_docitem.parse_indent_docstring(tr,mod_doc_txt, session)
+			di_mod = mod_docitem.docitem_docstring_module()
+			di_mod.parse(tr,tree_mod)
+			mod_docitem.validate_docstring(tr,module_obj, di_mod, session=session)
+		except BaseException as e:
+			_emit_diagnostics(tr,app,qname,lineno)
 		return build_sphinx_nodes(ctx, module_obj, di_mod)
 
 def wtrl_build_autodoc_function_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
@@ -1997,16 +2021,28 @@ Raises:
 		if not func_doc_txt:
 			raise RuntimeError(f"{qname} has no docstring.")
 
-		tree_meth = mod_docitem.parse_indent_docstring(tr,func_doc_txt, session)
+		try:
+			tree_meth = mod_docitem.parse_indent_docstring(tr,func_doc_txt, session)
+		except BaseException as e:
+			_emit_diagnostics(tr,app,qname,lineno)
+			raise
 		if mod_docitem.get_profile_of_tree(mod_docitem.tracer(),tree_meth) in ("function","method"):
-			di_meth = mod_docitem.docitem_docstring_method()
-			di_meth.parse(tr,tree_meth)
-			mod_docitem.validate_docstring(tr,function_obj, di_meth, session=session)
+			try:
+				di_meth = mod_docitem.docitem_docstring_method()
+				di_meth.parse(tr,tree_meth)
+				mod_docitem.validate_docstring(tr,function_obj, di_meth, session=session)
+			except BaseException as e:
+				_emit_diagnostics(tr,app,qname,lineno)
+				raise
 			return build_sphinx_nodes(ctx, function_obj, di_meth)
 		else:
-			di_inhmeth = mod_docitem.docitem_docstring_inherited_method()
-			di_inhmeth.parse(tr,tree_meth)
-			mod_docitem.validate_docstring(tr,function_obj, di_inhmeth, session=session)
+			try:
+				di_inhmeth = mod_docitem.docitem_docstring_inherited_method()
+				di_inhmeth.parse(tr,tree_meth)
+				mod_docitem.validate_docstring(tr,function_obj, di_inhmeth, session=session)
+			except BaseException as e:
+				_emit_diagnostics(tr,app,qname,lineno)
+				raise
 			return build_sphinx_nodes(ctx, function_obj, di_inhmeth)
 
 def wtrl_build_autodoc_class_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
@@ -2052,11 +2088,14 @@ Raises:
 		class_doc_txt = mod_docitem.get_obj_docstring(obj)
 		if not class_doc_txt:
 			raise RuntimeError(f"{qname} has no docstring.")
-
-		tree_mod = mod_docitem.parse_indent_docstring(tr,class_doc_txt, session)
-		di_node = mod_docitem.docitem_docstring_class()
-		di_node.parse(tr,tree_mod)
-		mod_docitem.validate_docstring(tr,obj, di_node, session=session)
+		try:
+			tree_mod = mod_docitem.parse_indent_docstring(tr,class_doc_txt, session)
+			di_node = mod_docitem.docitem_docstring_class()
+			di_node.parse(tr,tree_mod)
+			mod_docitem.validate_docstring(tr,obj, di_node, session=session)
+		except BaseException as e:
+			_emit_diagnostics(tr,app,qname,lineno)
+			raise
 		return build_sphinx_nodes(ctx, obj,di_node)
 
 def wtrl_build_autodoc_class_full_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
@@ -2106,7 +2145,7 @@ Raises:
 		try:
 			return build_sphinx_nodes_full(ctx, obj, session=session)
 		except Exception as e:
-			print(tr.str_by_severity(mod_docitem.tracer.Severity.DEBUG),file=sys.stderr)
+			_emit_diagnostics(tr,app,qname,lineno)
 			raise
 
 def _make_context_admonition(inliner: InlinerProtocol, lineno: int, title: str, msg: str, classes: list[str]) -> nodes.admonition:
@@ -2161,6 +2200,8 @@ def wtrl_build_push_current_module_nodes(app: SphinxAppProtocol | Any, inliner: 
 		mod_obj, _, _, _ = resolve_qualified_name(ctx, qname)
 		if not mod_docitem.is_obj_module(mod_obj):
 			raise RuntimeError(f"{qname} does not resolve to a module.")
+		if app.config and app.config.verbose_state_change:
+			logger.info(f"Waterloo: pushing current module '{qname}'")
 		push_current_module(qname, env=ctx.env)
 		msg = f"Classes and functions below this point implicitly belong to package/module {ctx.add_role_mod(qname)}. "
 		return [_make_context_admonition(inliner, lineno, "Waterloo module context", msg, ["wtrl-current-module-message", "wtrl-current-module-push"])]
@@ -2209,6 +2250,8 @@ def wtrl_build_push_current_class_nodes(app: SphinxAppProtocol | Any, inliner: I
 		cls_obj, _, _, _ = resolve_qualified_name(ctx, qname)
 		if not mod_docitem.is_obj_class(cls_obj):
 			raise RuntimeError(f"{qname} does not resolve to a class.")
+		if app.config and app.config.verbose_state_change:
+			logger.info(f"Waterloo: pushing current class '{qname}'")
 		push_current_class(qname, env=ctx.env)
 		msg = f"Methods below this point implicitly belong to class {ctx.add_role_class(qname)}."
 		return [_make_context_admonition(inliner, lineno, "Waterloo class context", msg, ["wtrl-current-class-message", "wtrl-current-class-push"])]
@@ -2252,6 +2295,8 @@ def wtrl_build_push_current_scope_nodes(app: SphinxAppProtocol | Any, inliner: I
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	tr = ctx.tr
 	with mod_docitem.traced_section(tr, scope_tag):
+		if app.config and app.config.verbose_state_change:
+			logger.info(f"Waterloo: pushing current scope '{scope_tag}'")
 		push_current_scope(scope_tag, env=ctx.env)
 		msg = f"Scope below this point is set to {ctx.add_role_var(scope_tag)}."
 		return [_make_context_admonition(inliner, lineno, "Waterloo scope context", msg, ["wtrl-current-scope-message", "wtrl-current-scope-push"])]
@@ -2306,6 +2351,8 @@ def wtrl_build_pop_current_module_nodes(app: SphinxAppProtocol | Any, inliner: I
 		text_top = get_current_module(ctx.env)
 		if text_top != qname:
 			raise RuntimeError(f"module stack push/pop mismatch, expected {text_top} got {qname}.")
+		if app.config and app.config.verbose_state_change:
+			logger.info(f"Waterloo: popping current module '{qname}'")
 		pop_current_module(ctx.env)
 		if has_current_module(ctx.env):
 			new_top = get_current_module(ctx.env)
@@ -2364,6 +2411,8 @@ def wtrl_build_pop_current_class_nodes(app: SphinxAppProtocol | Any, inliner: In
 		text_top = get_current_class(ctx.env)
 		if text_top != qname:
 			raise RuntimeError(f"class stack push/pop mismatch, expected {text_top} got {qname}.")
+		if app.config and app.config.verbose_state_change:
+			logger.info(f"Waterloo: popping current class '{qname}'")
 		pop_current_class(ctx.env)
 		if has_current_class(ctx.env):
 			new_top = get_current_class(ctx.env)
@@ -2421,6 +2470,8 @@ def wtrl_build_pop_current_scope_nodes(app: SphinxAppProtocol | Any, inliner: In
 			raise RuntimeError(f"Unknown scope '{scope_tag}'. Expected one of {list(mod_docitem.SCOPE_TAG_MAP.keys())}.")
 		if text_top_scope !=  mod_docitem.SCOPE_TAG_MAP[scope_tag]:
 			raise RuntimeError(f"scope stack push/pop mismatch, expected {text_top_scope} got {scope_tag}.")
+		if app.config and app.config.verbose_state_change:
+			logger.info(f"Waterloo: popping current scope '{scope_tag}'")
 		pop_current_scope(env=ctx.env)
 		if has_current_scope(ctx.env):
 			new_scope = get_current_scope(ctx.env)
@@ -2823,6 +2874,11 @@ def setup(app: Any) -> dict[str, Any]:
 # conf.py defines "docitem_context_config" and we tell the app instance.
 # We cannot be sure if it exists, but that's how it is named.
 	app.add_config_value("docitem_context_config",None,"env")
+
+	app.add_config_value('diagnostics_color', False, 'env')
+	app.add_config_value('verbose_current_object', False, 'env')
+	app.add_config_value('verbose_state_change', True, 'env')
+
 # Add a hook, so that we know when the builder is ready.
 	app.connect("config-inited", lambda app, config: _add_static_path(config, ext_static))
 	app.connect("config-inited", _inject_wtrl_prolog)

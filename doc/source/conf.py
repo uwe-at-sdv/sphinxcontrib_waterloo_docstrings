@@ -20,6 +20,11 @@ extensions = [
 	"sphinxcontrib.waterloo_docstrings",
 	]
 
+diagnostics_color = True
+verbose_current_object = True
+verbose_state_change = True
+
+
 templates_path = ['_templates']
 exclude_patterns = []
 

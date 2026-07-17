@@ -5,6 +5,8 @@ Format:
 - VERSION [YYYY-MM-DD]: Summary.
 
 #----- extend here --------------------------------------------#
+- 0.5.0 [2026-07-17]:
+	* Reasonable diagnostic; Verbosity as configuration
 - 0.4.3 [2026-07-16]:
 	* More self-referential documentation.
 - 0.4.2 [2026-07-16]:
