@@ -753,6 +753,29 @@ def _is_target_obj_visible_in_current_scope(ctx: context, obj: object) -> bool:
 #==============================================================#
 
 # Official markup resolver: converts |role|`text` into :wtrl_role:`text`
+WTRL_TOKEN_REPLACEMENTS: Final[Mapping[str, str]] = {
+	"Must": ":wtrl_norm:`Must`",
+	"must": ":wtrl_norm:`must`",
+	"Must_not": ":wtrl_norm:`Must not`",
+	"must_not": ":wtrl_norm:`must not`",
+	"Should": ":wtrl_norm:`Should`",
+	"should": ":wtrl_norm:`should`",
+	"Should_not": ":wtrl_norm:`Should not`",
+	"should_not": ":wtrl_norm:`should not`",
+	"May": ":wtrl_norm:`May`",
+	"may": ":wtrl_norm:`may`",
+	"Self": ":wtrl_value:`Self`",
+	"None": ":wtrl_value:`None`",
+	"True": ":wtrl_value:`True`",
+	"False": ":wtrl_value:`False`",
+	"empty": ":wtrl_value:`<empty>`",
+}
+
+RE_WTRL_NAKED_TOKEN_COMPILED: Final[re.Pattern[str]] = re.compile(
+	r"(?<!\\)\|(" + "|".join(re.escape(k) for k in WTRL_TOKEN_REPLACEMENTS) + r")\|"
+)
+
+
 def resolve_markup(text : str, ctx: context) -> str:
 	def _resolve_wtrl_ref_uri(qname: str) -> str | None:
 # Resolve object
@@ -846,8 +869,18 @@ def resolve_markup(text : str, ctx: context) -> str:
 # Sphinx internal reference.
 			return f":ref:`{body}`"
 		return f":wtrl_{role}:`{body}`"
-	s =  mod_docitem.RE_WTRL_MARKUP_BACKTICK_COMPILED.sub(_repl, text)
-	return cast(str, s)
+
+	def _replace_naked_tokens(segment: str) -> str:
+		return RE_WTRL_NAKED_TOKEN_COMPILED.sub(lambda m: WTRL_TOKEN_REPLACEMENTS[m.group(1)], segment)
+
+	out: List[str] = []
+	i_pos = 0
+	for m in mod_docitem.RE_WTRL_MARKUP_BACKTICK_COMPILED.finditer(text):
+		out.append(_replace_naked_tokens(text[i_pos:m.start()]))
+		out.append(_repl(m))
+		i_pos = m.end()
+	out.append(_replace_naked_tokens(text[i_pos:]))
+	return "".join(out)
 
 def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstring_base) -> List[nodes.Node]:
 	"""
@@ -2709,43 +2742,6 @@ def on_builder_inited(app: Any) -> None:
 		return
 	app.docitem_context_configurator = cfg
 
-WTRL_PROLOG = r"""
-.. |Must| replace:: :wtrl_norm:`Must`
-.. |must| replace:: :wtrl_norm:`must`
-.. |Must_not| replace:: :wtrl_norm:`Must not`
-.. |must_not| replace:: :wtrl_norm:`must not`
-.. |Should| replace:: :wtrl_norm:`Should`
-.. |should| replace:: :wtrl_norm:`should`
-.. |Should_not| replace:: :wtrl_norm:`Should not`
-.. |should_not| replace:: :wtrl_norm:`should not`
-.. |May| replace:: :wtrl_norm:`May`
-.. |may| replace:: :wtrl_norm:`may`
-.. |Self| replace:: :wtrl_value:`Self`
-.. |None| replace:: :wtrl_value:`None`
-.. |True| replace:: :wtrl_value:`True`
-.. |False| replace:: :wtrl_value:`False`
-.. |empty| replace:: :wtrl_value:`<empty>`
-"""
-
-MARKUP_WHITELIST = frozenset({
-	"Must","must","Must_not","must_not",
-	"Should","should","Should_not","should_not",
-	"May","may","May_not","may_not",
-	"Self","None","True","False",
-	"empty",
-	"LoII","LoIO","SSoT","BinNorm",
-	"SoSaC","SCaA","DrPrv","MVAuth"
-	})
-
-_SENTINEL = "\n.. wtrl-prolog:begin\n"
-
-def _inject_wtrl_prolog(app: Any, config :Any) -> None:
-# idempotent: nicht doppelt einfuegen
-	current = getattr(config, "rst_prolog", "") or ""
-	if "wtrl-prolog:begin" in current:
-		return
-	config.rst_prolog = current + _SENTINEL + WTRL_PROLOG + "\n.. wtrl-prolog:end\n"
-
 #----- helpers ------------------------------------------------#
 
 # Not in use
@@ -2963,7 +2959,6 @@ def setup(app: Any) -> dict[str, Any]:
 
 # Add a hook, so that we know when the builder is ready.
 	app.connect("config-inited", lambda app, config: _add_static_path(config, ext_static))
-	app.connect("config-inited", _inject_wtrl_prolog)
 	app.connect("builder-inited", on_builder_inited)
 	app.connect("builder-inited", _add_css_files)
 #	app.connect("source-read", on_source_read)

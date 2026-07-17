@@ -43,9 +43,11 @@ Notes:
 		* Code: |lit|`\|func\|`print``, |lit|`\|MyClass.my_method\|`ABC``
 		* Semantics: A function name, or function call syntax.
 		* Example: "Call |func|`update` after configuring."
-		* Note: It is a matter of taste how callable class objects should be marked, with |class|`obj`|op|`()` or |func|`obj`|op|`()`.\
-		A more concise way for the combination class/method is to wrap the class name separately: |class|`MyClass`|op|`.`|func|`my_method`\
-		which is written like |lit|`\|class\|\`MyClass\`\|op\|\`.\`\|func\|\`my_method\``.
+		* Note: It is a matter of taste how callable class objects should be marked, with |class|`obj`|op|`()` or |func|`obj`|op|`()`.
+		* Caveat: A more concise way for the combination class/method is to wrap the class name separately: |class|`MyClass`|op|`.`|func|`my_method`\
+		which is written like |lit|`\|class\|\`MyClass\`\|op\|\`.\`\|func\|\`my_method\``. Note however that the monochrome\
+		method is easier to process for an LLM, since more markup means more "noise". There seems to be a "sweet spot"\
+		for the amount of markup to be applied ideally.
 	Key:
 		* Rendering: |key|`Q`, |key|`CTRL` + |key|`Z`
 		* Code: |lit|`|key|`Q``, |lit|`|key|`CTRL`` |lit|`+` |lit|`|key|`Z``
@@ -102,8 +104,8 @@ Notes:
 		* Semantics: Refer to a term defined in the |label|`Definitions` section.
 		* Example: "Following our definition of a |term|`Unicorn` we can easily conclude that..."
 	Type:
-		* Rendering: |dfn|`float`, |dfn|`BaseException`
-		* Code: |lit|`\|dfn\|`float``, |lit|`\|dfn\|`BaseException``
+		* Rendering: |type|`float`, |type|`BaseException`
+		* Code: |lit|`\|type\|`float``, |lit|`\|type\|`BaseException``
 		* Semantics: A type. This overlaps with the |lit|`\|class\|` role.
 		* Example: "All parameters \|must\| have type |type|`int` or |type|`float`.
 	URL:

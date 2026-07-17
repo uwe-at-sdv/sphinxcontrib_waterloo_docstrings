@@ -18,7 +18,6 @@ ROOT_DIR = CONF_DIR.parents[1]
 
 # For our examples
 examples = str((ROOT_DIR / "examples-python").resolve())
-print("PATH: ", examples)
 sys.path.insert(0, examples)
 
 # -- Syntax Highlighting -----------------------------------------------------
@@ -52,7 +51,7 @@ exclude_patterns = []
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'furo'
+html_theme = 'alabaster'
 html_static_path = ['_static']
 
 html_theme_options = {
@@ -73,7 +72,7 @@ html_favicon = '_static/favicon.ico'
 html_static_path = ['_static']
 
 html_css_files = [
-#	'waterloo_alabaster.css',
+	'waterloo_alabaster.css',
 	'wtrl_doc_custom.css',
 	]
 
