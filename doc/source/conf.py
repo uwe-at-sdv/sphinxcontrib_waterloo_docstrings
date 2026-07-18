@@ -5,20 +5,8 @@
 
 # -- Path setup --------------------------------------------------------------
 
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
-#
-import os
-import sys
+# For wtrl_basedirs
 from pathlib import Path
-
-CONF_DIR = Path(__file__).resolve().parent
-ROOT_DIR = CONF_DIR.parents[1]
-
-# For our examples
-examples = str((ROOT_DIR / "examples-python").resolve())
-sys.path.insert(0, examples)
 
 # -- Syntax Highlighting -----------------------------------------------------
 from python_waterloo_lexer import PythonWaterlooLexer
@@ -41,6 +29,18 @@ wtrl_diagnostics_color = True
 wtrl_diagnostics_embed = True
 wtrl_verbose_current_object = True
 wtrl_verbose_state_change = True
+
+# Configure base directories of documented modules.
+# Installed modules are found automatically because they
+# are already in sys.path. For our examples we add the
+# base dir explicitly. This conf.py is located in
+# ${REPO}/doc/source, and the examples are located in
+# ${REPO}/examples-python, so that's two up, one down.
+CONF_DIR = Path(__file__).resolve().parent
+path_to_examples = str((CONF_DIR / ".." / ".." / "examples-python").resolve())
+wtrl_basedirs = [
+	path_to_examples
+	]
 
 
 templates_path = ['_templates']

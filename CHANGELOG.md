@@ -5,6 +5,8 @@ Format:
 - VERSION [YYYY-MM-DD]: Summary.
 
 #----- extend here --------------------------------------------#
+- 0.6.1 [2026-07-18]:
+	* Configuration "wtrl_basedirs" added.
 - 0.6.0 [2026-07-18]:
 	* Large extension.py split into submodules.
 - 0.5.3 [2026-07-17]:

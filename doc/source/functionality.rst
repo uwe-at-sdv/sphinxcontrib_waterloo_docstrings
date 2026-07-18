@@ -1,6 +1,71 @@
 Directives
 ==========
 
+Es gibt drei Familien von Direktiven, die im folgenden besprochen werden,
+
+* Direktiven zum Rendern von Docstrings
+* Direktiven mit denen man den Zustand des Compilers aendern kann
+* Direktiven zum Rendern von Signaturen
+
+Docstring rendering directives
+------------------------------
+
+State changing directives
+-------------------------
+
+Signature rendering directives
+------------------------------
+
+.. wtrl_push_current_module:: sphinxcontrib.waterloo_docstrings
+
+We render the function :wtrl_func:`resolve_qualified_name` from this extension
+for demonstration and testing purposes.
+A function signature is rendered as inline element by the following directive:
+
+.. code:: rst
+
+	.. wtrl_function_signature:: extension.resolve_qualified_name
+
+which leads to
+
+.. wtrl_function_signature:: extension.resolve_qualified_name
+
+This might be sufficient for small signatures, yet in general
+a block element is more appropriate:
+
+.. code:: rst
+
+	.. wtrl_function_signature_block:: extension.resolve_qualified_name
+
+.. wtrl_function_signature_block:: extension.resolve_qualified_name
+
+.. wtrl_pop_current_module:: sphinxcontrib.waterloo_docstrings
+
+For methods we have similar directives. As an example we render
+the signature of a method in the tracer class from module :wtrl_mod:`docitem_helper`
+in package :wtrl_pkg:`sdv.doc.waterloo`:
+
+.. code:: rst
+
+	.. wtrl_method_signature:: sdv.doc.waterloo.docitem_helper.tracer.build_json
+
+which leads to
+
+.. wtrl_method_signature:: sdv.doc.waterloo.docitem_helper.tracer.build_json
+
+or in block representation:
+
+.. code:: rst
+
+	.. wtrl_method_signature_block:: sdv.doc.waterloo.docitem_helper.tracer.build_json
+
+which leads to
+
+.. wtrl_method_signature_block:: sdv.doc.waterloo.docitem_helper.tracer.build_json
+
+
+
+
 Roles
 =====
 

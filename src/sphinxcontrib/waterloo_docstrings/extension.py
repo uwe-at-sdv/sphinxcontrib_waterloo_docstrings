@@ -287,10 +287,16 @@ def on_source_read(app: Any, docname: str, source: List[str]) -> None:
 	pass
 
 def on_builder_inited(app: Any) -> None:
+	for path in app.config.wtrl_basedirs:
+		path_s = str(Path(path).resolve())
+		if path_s not in sys.path:
+			sys.path.insert(0, path_s)
+
 	cfg = app.config.docitem_context_config
 	if cfg is None:
 		return
 	app.docitem_context_configurator = cfg
+
 
 #----- Setup --------------------------------------------------#
 
@@ -307,12 +313,13 @@ def setup(app: Any) -> dict[str, Any]:
 	app.add_config_value('wtrl_diagnostics_color', False, 'env')
 	app.add_config_value('wtrl_verbose_current_object', False, 'env')
 	app.add_config_value('wtrl_verbose_state_change', True, 'env')
+	app.add_config_value('wtrl_basedirs', [], 'env')
 
 # Add a hook, so that we know when the builder is ready.
 	app.connect("config-inited", lambda app, config: _add_static_path(config, ext_static))
 	app.connect("builder-inited", on_builder_inited)
 	app.connect("builder-inited", _add_css_files)
-#	app.connect("source-read", on_source_read)
+	app.connect("source-read", on_source_read)
 
 # Set up directives defined in wtrl_directives.py.
 	setup_directives(app)
@@ -329,8 +336,5 @@ def setup(app: Any) -> dict[str, Any]:
 
 #===== Autotesting document consistency =======================#
 if __name__ == "__main__":
-	tr = mod_docitem.tracer()
-	with mod_docitem.traced_section(tr, "__main__"):
-		mod_docitem.validate_docstring(tr,context,top=None, session=mod_docitem.DocSession())
-		mod_docitem.validate_class_coverage(tr,context)
-		mod_docitem.validate_module_coverage(tr,sys.modules[__name__])
+	# Print version number of the installed extension.
+	print(f"Waterloo Sphinx extension version: {_extension_version()}")
