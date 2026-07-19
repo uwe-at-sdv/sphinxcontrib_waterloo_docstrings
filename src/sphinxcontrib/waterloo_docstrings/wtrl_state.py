@@ -179,7 +179,10 @@ def wtrl_build_push_current_module_nodes(app: SphinxAppProtocol | Any, inliner: 
 			logger.info(f"Waterloo: pushing current module '{qname}'")
 		push_current_module(qname, env=ctx.env)
 		msg = f"Classes and functions below this point implicitly belong to package/module {ctx.add_role_mod(qname)}. "
-		return [_make_context_admonition(inliner, lineno, "Waterloo module context", msg, ["wtrl-current-module-message", "wtrl-current-module-push"])]
+		if app.config.wtrl_verbose_state_change:
+			return [_make_context_admonition(inliner, lineno, "Waterloo module context", msg, ["wtrl-current-module-message", "wtrl-current-module-push"])]
+		else:
+			return []
 
 def wtrl_build_push_current_class_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
 	"""
@@ -229,7 +232,10 @@ def wtrl_build_push_current_class_nodes(app: SphinxAppProtocol | Any, inliner: I
 			logger.info(f"Waterloo: pushing current class '{qname}'")
 		push_current_class(qname, env=ctx.env)
 		msg = f"Methods below this point implicitly belong to class {ctx.add_role_class(qname)}."
-		return [_make_context_admonition(inliner, lineno, "Waterloo class context", msg, ["wtrl-current-class-message", "wtrl-current-class-push"])]
+		if app.config.wtrl_verbose_state_change:
+			return [_make_context_admonition(inliner, lineno, "Waterloo class context", msg, ["wtrl-current-class-message", "wtrl-current-class-push"])]
+		else:
+			return []
 
 def wtrl_build_push_current_scope_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, scope_tag: str) -> list[nodes.Node]:
 	"""
@@ -274,7 +280,10 @@ def wtrl_build_push_current_scope_nodes(app: SphinxAppProtocol | Any, inliner: I
 			logger.info(f"Waterloo: pushing current scope '{scope_tag}'")
 		push_current_scope(scope_tag, env=ctx.env)
 		msg = f"Scope below this point is set to {ctx.add_role_var(scope_tag)}."
-		return [_make_context_admonition(inliner, lineno, "Waterloo scope context", msg, ["wtrl-current-scope-message", "wtrl-current-scope-push"])]
+		if app.config.wtrl_verbose_state_change:
+			return [_make_context_admonition(inliner, lineno, "Waterloo scope context", msg, ["wtrl-current-scope-message", "wtrl-current-scope-push"])]
+		else:
+			return []
 
 def wtrl_build_pop_current_module_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
 	"""
@@ -334,7 +343,10 @@ def wtrl_build_pop_current_module_nodes(app: SphinxAppProtocol | Any, inliner: I
 			msg = f"Default module qualifier {ctx.add_role_mod(text_top)} ends here. New default: {ctx.add_role_mod(new_top)}. "
 		else:
 			msg = f"Default module qualifier {ctx.add_role_mod(text_top)} ends here. No default module active. "
-		return [_make_context_admonition(inliner, lineno, "Waterloo module context", msg, ["wtrl-current-module-message", "wtrl-current-module-pop"])]
+		if app.config.wtrl_verbose_state_change:
+			return [_make_context_admonition(inliner, lineno, "Waterloo module context", msg, ["wtrl-current-module-message", "wtrl-current-module-pop"])]
+		else:
+			return []
 
 def wtrl_build_pop_current_class_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
 	"""
@@ -394,7 +406,10 @@ def wtrl_build_pop_current_class_nodes(app: SphinxAppProtocol | Any, inliner: In
 			msg = f"Default class qualifier {ctx.add_role_var(text_top)} ends here. New default: {ctx.add_role_class(new_top)}. "
 		else:
 			msg = f"Default class qualifier {ctx.add_role_var(text_top)} ends here. No default class active. "
-		return [_make_context_admonition(inliner, lineno, "Waterloo class context", msg, ["wtrl-current-class-message", "wtrl-current-class-pop"])]
+		if app.config.wtrl_verbose_state_change:
+			return [_make_context_admonition(inliner, lineno, "Waterloo class context", msg, ["wtrl-current-class-message", "wtrl-current-class-pop"])]
+		else:
+			return []
 
 def wtrl_build_pop_current_scope_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, scope_tag: str) -> list[nodes.Node]:
 	"""
@@ -453,7 +468,10 @@ def wtrl_build_pop_current_scope_nodes(app: SphinxAppProtocol | Any, inliner: In
 			msg = f"Scope qualifier {ctx.add_role_var(scope_tag)} ends here. New current scope: {ctx.add_role_var(mod_docitem.Scope(new_scope).name.lower())}. "
 		else:
 			msg = f"Scope qualifier {ctx.add_role_var(scope_tag)} ends here. No current scope active. "
-		return [_make_context_admonition(inliner, lineno, "Waterloo scope context", msg, ["wtrl-current-scope-message", "wtrl-current-scope-pop"])]
+		if app.config.wtrl_verbose_state_change:
+			return [_make_context_admonition(inliner, lineno, "Waterloo scope context", msg, ["wtrl-current-scope-message", "wtrl-current-scope-pop"])]
+		else:
+			return []
 
 def resolve_qualified_name(ctx: context | None, qname: str) -> tuple[object, str, str, list[str]]:
 	"""

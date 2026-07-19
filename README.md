@@ -5,7 +5,7 @@
 # Sphinx-Contrib Waterloo Docstrings
 
 ![License](https://img.shields.io/badge/license-BSD--2--Clause-blue)
-![Version](https://img.shields.io/badge/version-0.6.1-orange)
+![Version](https://img.shields.io/badge/version-0.6.2-orange)
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![Sphinx](https://img.shields.io/badge/Sphinx-extension-0A507A)
 [![PyPI](https://img.shields.io/badge/PyPI-sphinxcontrib--waterloo--docstrings-3775A9?logo=pypi&logoColor=white)](https://pypi.org/project/sphinxcontrib-waterloo-docstrings/)

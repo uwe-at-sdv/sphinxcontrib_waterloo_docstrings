@@ -190,8 +190,10 @@ from typing import Any, List, TypeAlias
 import sys
 from pathlib import Path
 
+from docutils import nodes
 from typing import no_type_check
 from sphinx.util.nodes import make_refnode
+from sphinx.util import logging
 
 import sdv.doc.waterloo.docitem as mod_docitem
 
@@ -214,6 +216,10 @@ from sphinxcontrib.waterloo_docstrings.wtrl_state import (
 	)
 from sphinxcontrib.waterloo_docstrings.wtrl_directives import (
 	setup_directives
+	)
+from sphinxcontrib.waterloo_docstrings.wtrl_markup import (
+	setup_markup_roles,
+	wtrl_pending_ref,
 	)
 # Functions. We must import these, since the are auto-documented.
 from sphinxcontrib.waterloo_docstrings.wtrl_roles import (
@@ -259,6 +265,9 @@ from sphinxcontrib.waterloo_docstrings.wtrl_autodoc import (
 	wtrl_build_autodoc_class_full_nodes
 	)
 
+# Leave here for experimenting and debugging, even if unused.
+logger = logging.getLogger(__name__)
+
 #===== Typechecking ===========================================#
 
 Struct: TypeAlias = Any
@@ -297,6 +306,42 @@ def on_builder_inited(app: Any) -> None:
 		return
 	app.docitem_context_configurator = cfg
 
+def on_doctree_resolved(app: Any, doctree: Any, docname: str) -> None:
+	index = getattr(app.env, "wtrl_anchor_index", None)
+	n_pending = 0
+	n_resolved = 0
+	for node in list(doctree.findall(wtrl_pending_ref)):
+		n_pending += 1
+		label = node.get("wtrl_label", node.astext())
+		target_fqn = node.get("wtrl_target_fqn")
+		target_anchor = node.get("wtrl_target_anchor")
+		if (
+			isinstance(index, dict)
+			and isinstance(target_fqn, str)
+			and isinstance(target_anchor, str)
+		):
+			loc = index.get(target_fqn)
+			if (
+				isinstance(loc, tuple)
+				and len(loc) == 2
+				and isinstance(loc[0], str)
+				and isinstance(loc[1], str)
+			):
+				target_docname, target_id = loc
+				node_ref = make_refnode(
+					app.builder,
+					docname,
+					target_docname,
+					target_id,
+					nodes.inline("", str(label)),
+					title=target_fqn,
+				)
+				node_ref["classes"] = ["wtrl_ref"]
+				node.replace_self(node_ref)
+				n_resolved += 1
+				continue
+		node.replace_self(nodes.inline(str(label), str(label), classes=["wtrl_ref", "wtrl_ref_unresolved"]))
+	logger.info(f"DOCTREE-RESOLVED {docname} pending-refs={n_pending} resolved={n_resolved}")
 
 #----- Setup --------------------------------------------------#
 
@@ -319,6 +364,7 @@ def setup(app: Any) -> dict[str, Any]:
 	app.connect("config-inited", lambda app, config: _add_static_path(config, ext_static))
 	app.connect("builder-inited", on_builder_inited)
 	app.connect("builder-inited", _add_css_files)
+	app.connect("doctree-resolved", on_doctree_resolved)
 	app.connect("source-read", on_source_read)
 
 # Set up directives defined in wtrl_directives.py.
@@ -326,6 +372,7 @@ def setup(app: Any) -> dict[str, Any]:
 
 # Set up roles defined in wtrl_roles.py.
 	setup_roles(app)
+	setup_markup_roles(app)
 
 	return {
 	 "version": _extension_version(),
