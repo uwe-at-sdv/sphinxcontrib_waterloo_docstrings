@@ -34,6 +34,6 @@ The Sphinx extension documentation is published at:
 
 The Sphinx extension showcase is published under:
 
-- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/furo/>
-- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/alabaster/>
-- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/classic/>
+- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/showcase/furo/>
+- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/showcase/alabaster/>
+- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/showcase/classic/>

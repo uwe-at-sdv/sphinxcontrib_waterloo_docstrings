@@ -5,6 +5,8 @@ Format:
 - VERSION [YYYY-MM-DD]: Summary.
 
 #----- extend here --------------------------------------------#
+- 0.7.4 [2026-07-21]:
+	* Test workflow documentation
 - 0.7.3 [2026-07-20]:
 	* Migration to separate repo, next steps: README, gh-pages
 - 0.7.2 [2026-07-20]:

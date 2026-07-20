@@ -1,4 +1,4 @@
-name: Publish Sphinx showcase to gh-pages
+name: Publish Sphinx documentation to gh-pages
 
 on:
   workflow_dispatch:
@@ -9,8 +9,8 @@ permissions:
   contents: write
 
 jobs:
-  publish-showcase:
-    name: Build and publish Sphinx showcase
+  publish-docs:
+    name: Build and publish Sphinx documentation
     runs-on: ubuntu-latest
 
     steps:
@@ -25,12 +25,16 @@ jobs:
         with:
           python-version: "3.14"
 
-      - name: Install showcase dependencies
+      - name: Install documentation dependencies
         working-directory: sphinx
         run: |
           python -m pip install --upgrade pip
           python -m pip install --upgrade '.[sphinx]'
-          python -m pip install --upgrade furo
+          python -m pip install --upgrade furo python-waterloo-lexer
+
+      - name: Build project documentation
+        working-directory: sphinx/doc
+        run: make clean html
 
       - name: Build supported showcase themes
         working-directory: sphinx/test
@@ -52,14 +56,15 @@ jobs:
             git -C ../gh-pages rm -rf .
           fi
 
-      - name: Update gh-pages showcase directories
+      - name: Update gh-pages documentation
         run: |
           find gh-pages -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
           touch gh-pages/.nojekyll
-          cp -a sphinx/test/build-furo/html/. gh-pages/
-          cp -a sphinx/test/build-furo/html gh-pages/furo
-          cp -a sphinx/test/build-alabaster/html gh-pages/alabaster
-          cp -a sphinx/test/build-classic/html gh-pages/classic
+          cp -a sphinx/doc/build/html/. gh-pages/
+          mkdir -p gh-pages/showcase
+          cp -a sphinx/test/build-furo/html gh-pages/showcase/furo
+          cp -a sphinx/test/build-alabaster/html gh-pages/showcase/alabaster
+          cp -a sphinx/test/build-classic/html gh-pages/showcase/classic
 
       - name: Commit and push gh-pages update
         working-directory: gh-pages
@@ -68,8 +73,8 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A .
           if git diff --cached --quiet; then
-            echo "No Sphinx showcase changes to publish."
+            echo "No Sphinx documentation changes to publish."
             exit 0
           fi
-          git commit -m "Publish Sphinx showcase"
+          git commit -m "Publish Sphinx documentation"
           git push origin HEAD:gh-pages
