@@ -3,9 +3,9 @@ name: Run do_mypy_simple
 on:
   workflow_dispatch:
   push:
-    branches: [ sphinx ]
+    branches: [ main ]
   pull_request:
-    branches: [ sphinx ]
+    branches: [ main ]
 
 jobs:
   mypy:
