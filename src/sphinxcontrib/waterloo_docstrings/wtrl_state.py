@@ -131,6 +131,21 @@ def _make_context_admonition(inliner: InlinerProtocol, lineno: int, title: str, 
 	node_adm += node_par
 	return node_adm
 
+def _emit_state_error_admonition(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, msg: str) -> list[nodes.Node]:
+	logger.error(msg, location=(app.env.docname, lineno))
+
+	if not app.config.wtrl_diagnostics_admonitions_enabled:
+		return []
+
+	error_box = nodes.error("Waterloo directive diagnostics", classes=["wtrl-state-error"])
+
+	msg_para = nodes.paragraph()
+	msg_para.append(nodes.inline(text="Summary: ", classes=["wtrl_label"]))
+	msg_para.extend(parse_inline(inliner, msg_para, lineno, msg))
+	error_box.append(msg_para)
+
+	return [error_box]
+
 def wtrl_build_push_current_module_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
 	"""
 	Preamble:
@@ -329,12 +344,24 @@ def wtrl_build_pop_current_module_nodes(app: SphinxAppProtocol | Any, inliner: I
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	tr = ctx.tr
 	with mod_docitem.traced_section(tr, qname):
+		if not has_current_module(ctx.env):
+			return _emit_state_error_admonition(
+				app,
+				inliner,
+				lineno,
+				"Cannot pop current module: stack is empty.",
+				)
+		text_top = get_current_module(ctx.env)
+		if text_top != qname:
+			return _emit_state_error_admonition(
+				app,
+				inliner,
+				lineno,
+				f"Module stack push/pop mismatch: expected {text_top}, got {qname}.",
+				)
 		mod_obj, _, _, _ = resolve_qualified_name(ctx, qname)
 		if not mod_docitem.is_obj_module(mod_obj):
 			raise RuntimeError(f"{qname} does not resolve to a module.")
-		text_top = get_current_module(ctx.env)
-		if text_top != qname:
-			raise RuntimeError(f"module stack push/pop mismatch, expected {text_top} got {qname}.")
 		if app.config and app.config.wtrl_state_change_logging_enabled:
 			logger.info(f"Waterloo: popping current module '{qname}'")
 		pop_current_module(ctx.env)
@@ -392,12 +419,24 @@ def wtrl_build_pop_current_class_nodes(app: SphinxAppProtocol | Any, inliner: In
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	tr = ctx.tr
 	with mod_docitem.traced_section(tr, qname):
+		if not has_current_class(ctx.env):
+			return _emit_state_error_admonition(
+				app,
+				inliner,
+				lineno,
+				"Cannot pop current class: stack is empty.",
+				)
+		text_top = get_current_class(ctx.env)
+		if text_top != qname:
+			return _emit_state_error_admonition(
+				app,
+				inliner,
+				lineno,
+				f"Class stack push/pop mismatch: expected {text_top}, got {qname}.",
+				)
 		cls_obj, _, _, _ = resolve_qualified_name(ctx, qname)
 		if not mod_docitem.is_obj_class(cls_obj):
 			raise RuntimeError(f"{qname} does not resolve to a class.")
-		text_top = get_current_class(ctx.env)
-		if text_top != qname:
-			raise RuntimeError(f"class stack push/pop mismatch, expected {text_top} got {qname}.")
 		if app.config and app.config.wtrl_state_change_logging_enabled:
 			logger.info(f"Waterloo: popping current class '{qname}'")
 		pop_current_class(ctx.env)
@@ -454,12 +493,27 @@ def wtrl_build_pop_current_scope_nodes(app: SphinxAppProtocol | Any, inliner: In
 	tr = ctx.tr
 	with mod_docitem.traced_section(tr, scope_tag):
 		if not has_current_scope(ctx.env):
-			raise RuntimeError("Cannot pop current scope: stack is empty.")
+			return _emit_state_error_admonition(
+				app,
+				inliner,
+				lineno,
+				"Cannot pop current scope: stack is empty.",
+				)
 		text_top_scope = get_current_scope(ctx.env)
 		if scope_tag not in mod_docitem.SCOPE_TAG_MAP:
-			raise RuntimeError(f"Unknown scope '{scope_tag}'. Expected one of {list(mod_docitem.SCOPE_TAG_MAP.keys())}.")
+			return _emit_state_error_admonition(
+				app,
+				inliner,
+				lineno,
+				f"Unknown scope '{scope_tag}'. Expected one of {list(mod_docitem.SCOPE_TAG_MAP.keys())}.",
+				)
 		if text_top_scope !=  mod_docitem.SCOPE_TAG_MAP[scope_tag]:
-			raise RuntimeError(f"scope stack push/pop mismatch, expected {text_top_scope} got {scope_tag}.")
+			return _emit_state_error_admonition(
+				app,
+				inliner,
+				lineno,
+				f"Scope stack push/pop mismatch: expected {text_top_scope.name.lower()}, got {scope_tag}.",
+				)
 		if app.config and app.config.wtrl_state_change_logging_enabled:
 			logger.info(f"Waterloo: popping current scope '{scope_tag}'")
 		pop_current_scope(env=ctx.env)

@@ -25,10 +25,14 @@ extensions = [
 	"sphinxcontrib.waterloo_docstrings",
 	]
 
-wtrl_diagnostics_color = True
-wtrl_diagnostics_embed = True
-wtrl_verbose_current_object = True
-wtrl_verbose_state_change = True
+wtrl_diagnostics_admonitions_enabled = True
+wtrl_diagnostics_logging_enabled = True
+wtrl_diagnostics_color_enabled = True
+wtrl_current_object_logging_enabled = False
+wtrl_scope_filtered_object_placeholders_enabled = True
+wtrl_state_change_admonitions_enabled = True
+wtrl_state_change_logging_enabled = True
+
 
 # Configure base directories of documented modules.
 # Installed modules are found automatically because they
