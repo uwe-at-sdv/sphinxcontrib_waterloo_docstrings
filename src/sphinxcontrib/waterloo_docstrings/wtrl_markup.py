@@ -45,11 +45,35 @@ WTRL_TOKEN_REPLACEMENTS: Final[Mapping[str, str]] = {
 RE_WTRL_NAKED_TOKEN_COMPILED: Final[re.Pattern[str]] = re.compile(
 	r"(?<!\\)\|(" + "|".join(re.escape(k) for k in WTRL_TOKEN_REPLACEMENTS) + r")\|"
 )
+RE_WTRL_MARKUP_START_COMPILED: Final[re.Pattern[str]] = re.compile(
+	r"(?<!\\)\|" + mod_docitem.WTRL_MARKUP_ROLES + r"\|`"
+)
 RE_RST_ANGLE_REF_COMPILED: Final[re.Pattern[str]] = re.compile(
 	r"^\s*([^<>`]+?)\s*<\s*([^>\s]+)\s*>\s*$"
 )
 
 WTRL_STD_REF_ROLE = XRefRole(warn_dangling=True)
+RST_TEXT_ESCAPE_CHARS: Final[frozenset[str]] = frozenset("\\`*_|:<>")
+RST_ROLE_BODY_ESCAPE_CHARS: Final[frozenset[str]] = frozenset("\\`")
+
+def _escape_chars(text: str, chars: frozenset[str]) -> str:
+	return "".join("\\" + ch if ch in chars else ch for ch in text)
+
+def escape_rst_text_segment(text: str) -> str:
+	return _escape_chars(text, RST_TEXT_ESCAPE_CHARS)
+
+def escape_rst_role_body(text: str) -> str:
+	return _escape_chars(text, RST_ROLE_BODY_ESCAPE_CHARS)
+
+def _find_role_body_end(text: str, role: str, body_start: int) -> tuple[int, str] | None:
+	if role == "lit":
+		i_double = text.find("``", body_start)
+		if i_double >= 0:
+			return i_double + 1, text[body_start:i_double + 1]
+	i_single = text.find("`", body_start)
+	if i_single < 0:
+		return None
+	return i_single, text[body_start:i_single]
 
 #----- begin helper for resolving forward references ---------#
 
@@ -148,21 +172,36 @@ def setup_markup_roles(app: Any) -> None:
 	)
 
 def resolve_markup(text : str, ctx: context) -> str:
-	def _repl(m: re.Match[str]) -> str:
-		role = m.group(1)
-		body = m.group(2)
+	def _repl(role: str, body: str) -> str:
 		if role == "ref":
 			return f":wtrl_ref:`{body}`"
-		return f":wtrl_{role}:`{body}`"
+		return f":wtrl_{role}:`{escape_rst_role_body(body)}`"
 
-	def _replace_naked_tokens(segment: str) -> str:
-		return RE_WTRL_NAKED_TOKEN_COMPILED.sub(lambda m: WTRL_TOKEN_REPLACEMENTS[m.group(1)], segment)
+	def _resolve_text_segment(segment: str) -> str:
+		seg_out: List[str] = []
+		i_seg = 0
+		for m_seg in RE_WTRL_NAKED_TOKEN_COMPILED.finditer(segment):
+			seg_out.append(escape_rst_text_segment(segment[i_seg:m_seg.start()]))
+			seg_out.append(WTRL_TOKEN_REPLACEMENTS[m_seg.group(1)])
+			i_seg = m_seg.end()
+		seg_out.append(escape_rst_text_segment(segment[i_seg:]))
+		return "".join(seg_out)
 
 	out: List[str] = []
 	i_pos = 0
-	for m in mod_docitem.RE_WTRL_MARKUP_BACKTICK_COMPILED.finditer(text):
-		out.append(_replace_naked_tokens(text[i_pos:m.start()]))
-		out.append(_repl(m))
-		i_pos = m.end()
-	out.append(_replace_naked_tokens(text[i_pos:]))
+	while True:
+		m = RE_WTRL_MARKUP_START_COMPILED.search(text, i_pos)
+		if m is None:
+			break
+		role = m.group(1)
+		body_start = m.end()
+		body_end = _find_role_body_end(text, role, body_start)
+		if body_end is None:
+			i_pos = body_start
+			continue
+		i_end, body = body_end
+		out.append(_resolve_text_segment(text[i_pos:m.start()]))
+		out.append(_repl(role, body))
+		i_pos = i_end + 1
+	out.append(_resolve_text_segment(text[i_pos:]))
 	return "".join(out)

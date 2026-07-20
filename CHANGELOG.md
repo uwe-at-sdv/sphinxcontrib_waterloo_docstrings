@@ -5,6 +5,8 @@ Format:
 - VERSION [YYYY-MM-DD]: Summary.
 
 #----- extend here --------------------------------------------#
+- 0.7.0 [2026-07-20]:
+	* Documentation; Escaping of critical characters.
 - 0.6.2 [2026-07-19]:
 	* Documentation; Resolving forward references
 - 0.6.1 [2026-07-18]:

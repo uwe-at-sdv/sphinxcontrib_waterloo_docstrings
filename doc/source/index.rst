@@ -14,4 +14,6 @@ Sphinx: Waterloo Docstrings documentation
 	introduction.rst
 	configuration.rst
 	functionality.rst
+	roles.rst
+	misc.rst
 	reference.rst
