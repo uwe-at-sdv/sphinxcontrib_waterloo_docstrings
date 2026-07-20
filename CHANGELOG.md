@@ -5,6 +5,8 @@ Format:
 - VERSION [YYYY-MM-DD]: Summary.
 
 #----- extend here --------------------------------------------#
+- 0.7.5 [2026-07-21]:
+	* Migration: finalizing
 - 0.7.4 [2026-07-21]:
 	* Test workflow documentation
 - 0.7.3 [2026-07-20]:

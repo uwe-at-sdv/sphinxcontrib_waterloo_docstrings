@@ -1,5 +1,0 @@
-* Ueber Theme alabaster nachdenken. Von WTRL trennen und nur WTRL nach _static packen.
-* Vereinfachen: table.wtrl-box th .wtrl_label span.pre
-  + Vermutlich generieren wir hier ein ueberlomplizierte Sphinxhierarchie
-  + Eigentlich brauchen wir nur einmal th fuer das Label und einmal th fuer das ausfloesbare Objekt.
-

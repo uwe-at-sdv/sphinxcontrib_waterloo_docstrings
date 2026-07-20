@@ -32,9 +32,9 @@ jobs:
           python -m pip install --upgrade '.[sphinx]'
           python -m pip install --upgrade furo python-waterloo-lexer
 
-      - name: Build project documentation
-        working-directory: sphinx/doc
-        run: make clean
+#      - name: Build project documentation
+#        working-directory: sphinx/doc
+#        run: make clean html
 
       - name: Build supported showcase themes
         working-directory: sphinx/test
