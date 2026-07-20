@@ -2,10 +2,12 @@
 <html class="no-js" lang="en" data-content_root="./">
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#"><link rel="search" title="Search" href="search.html">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="7. Directives (todo)" href="directives.html"><link rel="prev" title="1. Introduction" href="introduction.html">
 
-    <link rel="shortcut icon" href="_static/favicon.ico"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - Sphinx: Waterloo Docstrings documentation</title>
-<link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
+    <link rel="shortcut icon" href="_static/favicon.ico"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>6. Configuration - Sphinx: Waterloo Docstrings documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/common_styles.css?v=0f4247c0" />
     <link rel="stylesheet" type="text/css" href="_static/waterloo_base.css?v=5c09bd6f" />
@@ -173,7 +175,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -192,13 +194,13 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html#installation">2. Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html#quick-start">3. Quick Start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html#html-theme-options">4. HTML-Theme-Options</a></li>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html#favicon">5. Favicon</a></li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">6. Configuration</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">6. Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="directives.html">7. Directives (todo)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="roles.html">8. Roles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="customization.html">9. CSS Customization</a></li>
@@ -224,7 +226,13 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          <div class="theme-toggle-container theme-toggle-content">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/configuration.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
               <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
@@ -232,15 +240,41 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          
-<section class="genindex-section">
-  <h1 id="index">Index</h1>
-  <div class="genindex-jumpbox"></div>
+          <section id="configuration">
+<h1><span class="section-number">6. </span>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h1>
+<section id="path-setup">
+<h2><span class="section-number">6.1. </span>Path setup<a class="headerlink" href="#path-setup" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># If extensions (or modules to document with autodoc) are in another directory,</span>
+<span class="c1"># add these directories to sys.path here. If the directory is relative to the</span>
+<span class="c1"># documentation root, use os.path.abspath to make it absolute, like shown here.</span>
+<span class="c1">#</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">CONF_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span>
+<span class="n">ROOT_DIR</span> <span class="o">=</span> <span class="n">CONF_DIR</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># For our examples</span>
+<span class="n">examples</span> <span class="o">=</span> <span class="nb">str</span><span class="p">((</span><span class="n">ROOT_DIR</span> <span class="o">/</span> <span class="s2">&quot;examples-python&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">examples</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="diagnostics">
+<h2><span class="section-number">6.2. </span>Diagnostics<a class="headerlink" href="#diagnostics" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="wtrl_var docutils literal notranslate"><span class="pre">wtrl_diagnostics_color</span></code>: bool, default False - Render WTRL diagnostics in document.</p></li>
+<li><p><code class="wtrl_var docutils literal notranslate"><span class="pre">wtrl_diagnostics_embed</span></code>: bool, default False - Render WTRL diagnostics in color.</p></li>
+<li><p><code class="wtrl_var docutils literal notranslate"><span class="pre">wtrl_verbose_current_object</span></code>: bool default False - druckt zu Beginn des Renderings den qualifizierten Identifier in die Sphinxausgabe.</p></li>
+<li><p><code class="wtrl_var docutils literal notranslate"><span class="pre">wtrl_verbose_state_change</span></code>: bool default True - druckt Meldung bei wtrl_{push|pop}_current_{scope|module|class}</p></li>
+</ul>
+</section>
 </section>
 
         </article>
@@ -248,8 +282,26 @@
       <footer>
         
         <div class="related-pages">
-          
-          
+          <a class="next-page" href="directives.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">7. </span>Directives (todo)</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="introduction.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><span class="section-number">1. </span>Introduction</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -268,8 +320,28 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">6. Configuration</a><ul>
+<li><a class="reference internal" href="#path-setup">6.1. Path setup</a></li>
+<li><a class="reference internal" href="#diagnostics">6.2. Diagnostics</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

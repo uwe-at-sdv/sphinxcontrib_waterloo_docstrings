@@ -1,0 +1,776 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="11. Admonitions" href="admonitions.html"><link rel="prev" title="9. CSS Customization" href="customization.html">
+
+    <link rel="shortcut icon" href="_static/favicon.ico"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>10. Miscellaneaous - Sphinx: Waterloo Docstrings documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="_static/common_styles.css?v=0f4247c0" />
+    <link rel="stylesheet" type="text/css" href="_static/waterloo_base.css?v=5c09bd6f" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="_static/wtrl_doc_custom.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Sphinx: Waterloo Docstrings  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  <span class="sidebar-brand-text">Sphinx: Waterloo Docstrings  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html#installation">2. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html#quick-start">3. Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html#html-theme-options">4. HTML-Theme-Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html#favicon">5. Favicon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">6. Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="directives.html">7. Directives (todo)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="roles.html">8. Roles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization.html">9. CSS Customization</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">10. Miscellaneaous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="admonitions.html">11. Admonitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">12. Reference</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/misc.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="miscellaneaous">
+<span id="chapter-misc"></span><h1><span class="section-number">10. </span>Miscellaneaous<a class="headerlink" href="#miscellaneaous" title="Link to this heading">¶</a></h1>
+<section id="escaping">
+<h2><span class="section-number">10.1. </span>Escaping<a class="headerlink" href="#escaping" title="Link to this heading">¶</a></h2>
+<p>In diesem Abschnitt testen wir, wie spezielle reST-Zeichen
+im Sphinx-Backend behandelt werden. Das Ziel ist, zu vermeiden,
+dass die Waterloo-Syntax durch das Backend beeinflusst wird.
+Intern bedeutet das, dass wir kritische reST-Zeichen escapen muessen.
+Unser Testmodul ist:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="gh">Preamble:</span>
+<span class="sd">    </span><span class="gu">profile:</span>
+<span class="sd">        </span><span class="no">module</span>
+<span class="sd">    </span><span class="gu">normative_sections:</span>
+<span class="sd">        </span><span class="no">Contract</span>
+<span class="gh">Contract:</span>
+<span class="sd">    </span><span class="gu">general:</span>
+<span class="sd">        </span><span class="k">|Must|</span><span class="sd"> demonstrate how critical characters are rendered in Sphinx.</span>
+<span class="gh">Notes:</span>
+<span class="sd">    </span><span class="gh">Backtick:</span>
+<span class="sd">        ` `` ``` ````</span>
+<span class="sd">        Inline literal candidates: ``abc`` ```abc``` ``</span><span class="k">|lit|</span><span class="l">`abc`</span><span class="sd">```</span>
+<span class="sd">    </span><span class="gh">Backslash:</span>
+<span class="sd">        \ \\ \\\ \\\\ - Escaped markup starts: \|abc| \</span><span class="k">|lit|</span><span class="l">`ABC`</span><span class="sd"> \:ref:`chapter_misc`</span>
+<span class="sd">    </span><span class="gh">Pipe:</span>
+<span class="sd">        | || ||| |||| |abc|</span>
+<span class="sd">        Waterloo-like role names as plain text: |lit| |ref| |url| |var_type|</span>
+<span class="sd">    </span><span class="gh">Colon:</span>
+<span class="sd">        : :: ::: :::: :abc: :123: :abc:`def`</span>
+<span class="sd">        Sphinx-like roles: :ref:`chapter_misc` :py:func:`print` :unknown:`abc`</span>
+<span class="sd">    </span><span class="gh">Asterisk:</span>
+<span class="sd">        (begin) * ** *** **** *abc* **abc** a*b c**d</span>
+<span class="sd">    </span><span class="gh">Underscore:</span>
+<span class="sd">        _ __ ___ abc_ _abc abc_def abc__def</span>
+<span class="sd">    </span><span class="gh">Angle brackets:</span>
+<span class="sd">        &lt; &gt; &lt;&gt; &lt;abc&gt; &lt;abc def&gt; label &lt;target&gt; label &lt;https://example.org/a:b?c=d#e&gt;</span>
+<span class="sd">    </span><span class="gh">Brackets:</span>
+<span class="sd">        [abc] (abc) {abc} [a[b]c] (a(b)c) {a{b}c}</span>
+<span class="sd">    </span><span class="gh">Inline URLs:</span>
+<span class="sd">        https://example.org/a:b?c=d#e mailto:person@example.org file:///tmp/demo.txt</span>
+<span class="sd">    </span><span class="gh">HTML-like text:</span>
+<span class="sd">        &lt;span class=&quot;x&quot;&gt;text&lt;/span&gt; &lt;br/&gt; &lt;input name=&quot;x:y&quot;/&gt;</span>
+<span class="sd">    </span><span class="gh">Quoted tokens:</span>
+<span class="sd">        &quot;Token&quot; &#39;Token&#39; `Token` &quot;|abc|&quot; &#39;|abc|&#39; `|abc|`</span>
+<span class="sd">    </span><span class="gh">Mixed Waterloo markup:</span>
+<span class="sd">        </span><span class="k">|lit|</span><span class="l">`abc:def`</span><span class="sd">ghi`` </span><span class="k">|url|</span><span class="sx">`https://example.org/a:b`</span><span class="sd"> </span><span class="k">|var_type|</span><span class="nc">`name:float`</span>
+<span class="sd">    </span><span class="gh">Malformed Waterloo markup:</span>
+<span class="sd">        </span><span class="k">|lit|</span><span class="l">`abc |lit|abc`</span><span class="sd"> </span><span class="k">|lit|</span><span class="l">`abc`</span><span class="sd">` </span><span class="k">|ref|</span><span class="err">`label &lt;target`</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Der Docstring wird folgendermassen gerendert:</p>
+<div class="table-wrapper wtrl-box docutils container" id="wtrl-mod-10:doc_escape">
+<table class="wtrl-box docutils align-default" id="wtrl-mod-10:doc_escape">
+<tbody>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Preamble</span></p></td>
+<td><p><span class="wtrl_label">normative sections</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_label">Contract</span></p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Contract</span></p></td>
+<td><p><span class="wtrl_label">general</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">Must</span> demonstrate how critical characters are rendered in Sphinx.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Notes</span></p></td>
+<td><p class="wtrl-note-title rubric">Backtick</p>
+<p class="wtrl-freeform-paragraph-content">` `` ``` ```` Inline literal candidates: ``abc`` ```abc``` ``:wtrl_lit:<cite>abc`</cite>``</p>
+<p class="wtrl-note-title rubric">Backslash</p>
+<p class="wtrl-freeform-paragraph-content">\ \\ \\\ \\\\ - Escaped markup starts: \|abc| \|lit|`ABC` \:ref:`chapter_misc`</p>
+<p class="wtrl-note-title rubric">Pipe</p>
+<p class="wtrl-freeform-paragraph-content">| || ||| |||| |abc| Waterloo-like role names as plain text: |lit| |ref| |url| |var_type|</p>
+<p class="wtrl-note-title rubric">Colon</p>
+<p class="wtrl-freeform-paragraph-content">: :: ::: :::: :abc: :123: :abc:`def` Sphinx-like roles: :ref:`chapter_misc` :py:func:`print` :unknown:`abc`</p>
+<p class="wtrl-note-title rubric">Asterisk</p>
+<p class="wtrl-freeform-paragraph-content">(begin) * ** *** **** *abc* **abc** a*b c**d</p>
+<p class="wtrl-note-title rubric">Underscore</p>
+<p class="wtrl-freeform-paragraph-content">_ __ ___ abc_ _abc abc_def abc__def</p>
+<p class="wtrl-note-title rubric">Angle brackets</p>
+<p class="wtrl-freeform-paragraph-content">&lt; &gt; &lt;&gt; &lt;abc&gt; &lt;abc def&gt; label &lt;target&gt; label &lt;https://example.org/a:b?c=d#e&gt;</p>
+<p class="wtrl-note-title rubric">Brackets</p>
+<p class="wtrl-freeform-paragraph-content">[abc] (abc) {abc} [a[b]c] (a(b)c) {a{b}c}</p>
+<p class="wtrl-note-title rubric">Inline URLs</p>
+<p class="wtrl-freeform-paragraph-content">https://example.org/a:b?c=d#e mailto:<a class="reference external" href="mailto:person&#37;&#52;&#48;example&#46;org">person<span>&#64;</span>example<span>&#46;</span>org</a> file:///tmp/demo.txt</p>
+<p class="wtrl-note-title rubric">HTML-like text</p>
+<p class="wtrl-freeform-paragraph-content">&lt;span class=”x”&gt;text&lt;/span&gt; &lt;br/&gt; &lt;input name=”x:y”/&gt;</p>
+<p class="wtrl-note-title rubric">Quoted tokens</p>
+<p class="wtrl-freeform-paragraph-content">“Token” ‘Token’ `Token` “|abc|” ‘|abc|’ `|abc|`</p>
+<p class="wtrl-note-title rubric">Mixed Waterloo markup</p>
+<p class="wtrl-freeform-paragraph-content"><code class="wtrl_lit docutils literal notranslate"><span class="pre">abc:def`ghi`</span></code> <code class="wtrl_url docutils literal notranslate"><span class="pre">https://example.org/a:b</span></code> <span class="wtrl_var_type"><span class="wtrl_var">name</span><span class="wtrl_op">: </span><span class="wtrl_type">float</span></span></p>
+<p class="wtrl-note-title rubric">Malformed Waterloo markup</p>
+<p class="wtrl-freeform-paragraph-content"><code class="wtrl_lit docutils literal notranslate"><span class="pre">abc</span> <span class="pre">|lit|abc`</span> <span class="pre">|lit|`abc`</span></code> <code class="xref std std-ref wtrl_ref docutils literal notranslate"><span class="pre">label</span> <span class="pre">&lt;target</span></code></p>
+</td>
+</tr>
+</tbody>
+<thead class="wtrl-box-head-module">
+<tr class="row-even"><th class="head"><span class="wtrl-obj-kind">«Module»</span></th>
+<th class="head"><p class="wtrl-obj-qid">doc_escape</p></th>
+</tr>
+</thead>
+</table>
+</div>
+<p>Bestimmte Randfaelle wie in Sektion “Malformed Waterloo”
+sind erwartbar auch in der Browserdarstellung problematisch.
+Das tritt in der Praxis jedoch nur in dem exotischen Metafall auf,
+dass man “falsche” Waterloo-Syntax in einem Docstring erklaeren
+moechte.</p>
+</section>
+<section id="itemization">
+<h2><span class="section-number">10.2. </span>Itemization<a class="headerlink" href="#itemization" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">myfunc</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="gh">    Preamble:</span>
+<span class="sd">        </span><span class="gu">profile:</span>
+<span class="sd">            </span><span class="no">function</span>
+<span class="sd">        </span><span class="gu">normative_sections:</span>
+<span class="sd">            </span><span class="no">Definitions</span><span class="sd">, </span><span class="no">Contract</span><span class="sd">, </span><span class="no">Parameters</span><span class="sd">, </span><span class="no">Returns</span><span class="sd">, </span><span class="no">Raises</span>
+<span class="sd">        </span><span class="gu">status:</span>
+<span class="sd">            </span><span class="no">stable</span>
+<span class="sd">        </span><span class="gu">scope:</span>
+<span class="sd">            </span><span class="no">public</span>
+<span class="gh">    Description:</span>
+<span class="sd">        This function exists only as a compact rendering showcase.</span>
+<span class="sd">        Text-like Waterloo sections fall into two rendering groups.</span>
+<span class="sd">        </span><span class="k">*</span><span class="sd"> Contract-style sections are rendered as bullet lists by default.</span>
+<span class="sd">        </span><span class="k">+</span><span class="sd"> This group includes </span><span class="k">|label|</span><span class="gu">`Contract.general`</span><span class="sd">, </span><span class="k">|label|</span><span class="gu">`Contract.requires`</span><span class="sd">, </span><span class="k">|label|</span><span class="gu">`Contract.ensures`</span><span class="sd">, </span><span class="k">|label|</span><span class="gu">`Contract.invariants`</span><span class="sd">, and </span><span class="k">|label|</span><span class="gu">`Raises`</span><span class="sd">.</span>
+<span class="sd">        </span><span class="k">+</span><span class="sd"> Entries in these sections are logical lines and do not support nested visual list levels.</span>
+<span class="sd">        </span><span class="k">*</span><span class="sd"> Free-form sections support explicit visual list markers.</span>
+<span class="sd">        </span><span class="k">+</span><span class="sd"> This group includes </span><span class="k">|label|</span><span class="gu">`Description`</span><span class="sd">, </span><span class="k">|label|</span><span class="gu">`Notes`</span><span class="sd">, </span><span class="k">|label|</span><span class="gu">`Definitions`</span><span class="sd">, </span><span class="k">|label|</span><span class="gu">`Terminology`</span><span class="sd">, </span><span class="k">|label|</span><span class="gu">`Parameters`</span><span class="sd">, and </span><span class="k">|label|</span><span class="gu">`Returns`</span><span class="sd">.</span>
+<span class="sd">        </span><span class="k">#</span><span class="sd"> Enumeration can be mixed into the same explicit marker hierarchy.</span>
+<span class="sd">        </span><span class="k">#</span><span class="sd"> Consecutive enumeration entries form one visual enumeration block.</span>
+<span class="sd">        </span><span class="k">+</span><span class="sd"> After enumeration, itemization can continue at the previous level.</span>
+<span class="sd">        </span><span class="k">*</span><span class="sd"> The surrounding section remains ordinary free-form text.</span>
+<span class="gh">    Notes:</span>
+<span class="sd">        </span><span class="gh">Format:</span>
+<span class="sd">            The Waterloo Docstrings </span><span class="k">|ref|</span><span class="s">`</span><span class="nn">standard document</span><span class="s"> &lt;</span><span class="nt">https://uwe-at-sdv.github.io/sdv_doc_waterloo/</span><span class="s">&gt;`</span><span class="sd"> describes the syntax for itemization and enumeration.</span>
+<span class="sd">            Nested visual lists are expressed with explicit list markers, not by adding indentation.</span>
+<span class="sd">            The markers </span><span class="k">|lit|</span><span class="l">`*`</span><span class="sd">, </span><span class="k">|lit|</span><span class="l">`+`</span><span class="sd">, and </span><span class="k">|lit|</span><span class="l">`-`</span><span class="sd"> express itemization levels.</span>
+<span class="sd">            The marker </span><span class="k">|lit|</span><span class="l">`#`</span><span class="sd"> expresses enumeration.</span>
+<span class="sd">            Indentation remains reserved for the logical structure of the docstring.</span>
+<span class="sd">        </span><span class="gh">General note:</span>
+<span class="sd">            Subsections in </span><span class="k">|label|</span><span class="gu">`Notes`</span><span class="sd"> are rendered as free-form text.</span>
+<span class="sd">            The free-form renderer supports explicit itemization and enumeration.</span>
+<span class="sd">            </span><span class="k">*</span><span class="sd"> An item</span>
+<span class="sd">            </span><span class="k">+</span><span class="sd"> A sub-item</span>
+<span class="sd">            </span><span class="k">#</span><span class="sd"> A sub-sub-item</span>
+<span class="sd">            </span><span class="k">#</span><span class="sd"> Another sub-sub-item</span>
+<span class="sd">            </span><span class="k">+</span><span class="sd"> Another sub-item</span>
+<span class="sd">            </span><span class="k">*</span><span class="sd"> Another item</span>
+<span class="gh">    Contract:</span>
+<span class="sd">        </span><span class="gu">general:</span>
+<span class="sd">            </span><span class="k">|Must|</span><span class="sd"> demonstrate which sections are rendered as contract-style bullet lists.</span>
+<span class="sd">            </span><span class="k">|Must|</span><span class="sd"> demonstrate which sections are rendered as free-form text.</span>
+<span class="sd">            </span><span class="k">|Must|</span><span class="sd"> keep contract entries as logical lines, not as nested visual lists.</span>
+<span class="sd">        </span><span class="gu">requires:</span>
+<span class="sd">            </span><span class="k">|var|</span><span class="nv">`a`</span><span class="sd"> </span><span class="k">|must|</span><span class="sd"> be even.</span>
+<span class="sd">            </span><span class="k">|var|</span><span class="nv">`b`</span><span class="sd"> </span><span class="k">|must|</span><span class="sd"> be larger than </span><span class="k">|value|</span><span class="no">`0`</span><span class="sd">.</span>
+<span class="sd">            </span><span class="k">|var|</span><span class="nv">`c`</span><span class="sd"> </span><span class="k">|must|</span><span class="sd"> be a string in lowercase.</span>
+<span class="sd">        </span><span class="gu">ensures:</span>
+<span class="sd">            The function </span><span class="k">|must|</span><span class="sd"> return </span><span class="kc">|None|</span><span class="sd">.</span>
+<span class="sd">            The function </span><span class="k">|must|</span><span class="sd"> leave its inputs unchanged.</span>
+<span class="sd">        </span><span class="gu">invariants:</span>
+<span class="sd">            The showcase </span><span class="k">|must|</span><span class="sd"> remain deterministic.</span>
+<span class="gh">    Definitions:</span>
+<span class="sd">        </span><span class="ge">ExampleTerm:</span>
+<span class="sd">            Definitions are free-form text.</span>
+<span class="sd">            The renderer supports explicit itemization in definition content.</span>
+<span class="sd">            </span><span class="k">*</span><span class="sd"> An item</span>
+<span class="sd">            </span><span class="k">+</span><span class="sd"> A sub-item</span>
+<span class="sd">            </span><span class="k">-</span><span class="sd"> A sub-sub-item</span>
+<span class="sd">            </span><span class="k">-</span><span class="sd"> Another sub-sub-item</span>
+<span class="sd">            </span><span class="k">+</span><span class="sd"> Another sub-item</span>
+<span class="sd">            </span><span class="k">*</span><span class="sd"> Another item</span>
+<span class="gh">    Terminology:</span>
+<span class="sd">        </span><span class="ge">Example term:</span>
+<span class="sd">            Terminology is free-form text.</span>
+<span class="sd">            The renderer supports explicit itemization in terminology content.</span>
+<span class="sd">            </span><span class="k">*</span><span class="sd"> An item</span>
+<span class="sd">            </span><span class="k">+</span><span class="sd"> A sub-item</span>
+<span class="sd">            </span><span class="k">-</span><span class="sd"> A sub-sub-item</span>
+<span class="sd">            </span><span class="k">-</span><span class="sd"> Another sub-sub-item</span>
+<span class="sd">            </span><span class="k">+</span><span class="sd"> Another sub-item</span>
+<span class="sd">            </span><span class="k">*</span><span class="sd"> Another item</span>
+<span class="gh">    Parameters:</span>
+<span class="sd">        </span><span class="nv">a:</span>
+<span class="sd">            Parameter descriptions are free-form text.</span>
+<span class="sd">            The renderer supports explicit itemization in parameter content.</span>
+<span class="sd">            </span><span class="k">*</span><span class="sd"> An item</span>
+<span class="sd">            </span><span class="k">+</span><span class="sd"> A sub-item</span>
+<span class="sd">            </span><span class="k">-</span><span class="sd"> A sub-sub-item</span>
+<span class="sd">            </span><span class="k">-</span><span class="sd"> Another sub-sub-item</span>
+<span class="sd">            </span><span class="k">+</span><span class="sd"> Another sub-item</span>
+<span class="sd">            </span><span class="k">*</span><span class="sd"> Another item</span>
+<span class="sd">        </span><span class="nv">b:</span>
+<span class="sd">            Enumeration is available as a visual list form.</span>
+<span class="sd">            Numbering uses a single marker, not nested numeric labels such as </span><span class="k">|lit|</span><span class="l">`1.1`</span><span class="sd">.</span>
+<span class="sd">            </span><span class="k">#</span><span class="sd"> First enumerated item</span>
+<span class="sd">            </span><span class="k">*</span><span class="sd"> A sub-item</span>
+<span class="sd">            </span><span class="k">*</span><span class="sd"> Another sub-item</span>
+<span class="sd">            </span><span class="k">#</span><span class="sd"> Second enumerated item</span>
+<span class="sd">        </span><span class="nv">c:</span>
+<span class="sd">            Enumeration can appear below itemization levels.</span>
+<span class="sd">            </span><span class="k">*</span><span class="sd"> An item</span>
+<span class="sd">            </span><span class="k">+</span><span class="sd"> A sub-item</span>
+<span class="sd">            </span><span class="k">#</span><span class="sd"> A sub-sub-item</span>
+<span class="sd">            </span><span class="k">#</span><span class="sd"> Another sub-sub-item</span>
+<span class="sd">            </span><span class="k">+</span><span class="sd"> Another sub-item</span>
+<span class="sd">            </span><span class="k">*</span><span class="sd"> Another item</span>
+<span class="gh">    Returns:</span>
+<span class="sd">        The Returns section is free-form text.</span>
+<span class="sd">        The renderer supports explicit itemization and enumeration in return descriptions.</span>
+<span class="sd">        </span><span class="k">*</span><span class="sd"> An item</span>
+<span class="sd">        </span><span class="k">+</span><span class="sd"> A sub-item</span>
+<span class="sd">        </span><span class="k">#</span><span class="sd"> A sub-sub-item</span>
+<span class="sd">        </span><span class="k">#</span><span class="sd"> Another sub-sub-item</span>
+<span class="sd">        </span><span class="k">+</span><span class="sd"> Another sub-item</span>
+<span class="sd">        </span><span class="k">*</span><span class="sd"> Another item</span>
+<span class="gh">    Raises:</span>
+<span class="sd">        </span><span class="ne">BaseException:</span>
+<span class="sd">            The </span><span class="k">|label|</span><span class="gu">`Raises`</span><span class="sd"> section is rendered as a contract-style bullet list by default.</span>
+<span class="sd">            Entries in this subsection are logical lines, not nested visual lists.</span>
+<span class="sd">            </span><span class="k">|Must|</span><span class="sd"> raise if </span><span class="k">|lit|</span><span class="l">`&lt;condition 1&gt;`</span>
+<span class="sd">            </span><span class="k">|Should|</span><span class="sd"> raise if </span><span class="k">|lit|</span><span class="l">`&lt;condition 2&gt;`</span>
+<span class="sd">            </span><span class="k">|May|</span><span class="sd"> raise if </span><span class="k">|lit|</span><span class="l">`&lt;condition 3&gt;`</span>
+<span class="gh">    See_also:</span>
+<span class="sd">        </span><span class="nv">list.of.qualified.identifiers</span><span class="sd">, </span><span class="nv">therefore.no.itemization.or.enumeration</span>
+<span class="sd">    </span><span class="nv">&quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<div class="table-wrapper wtrl-box docutils container" id="wtrl-func-15:doc_enumeration-6:myfunc">
+<table class="wtrl-box docutils align-default" id="wtrl-func-15:doc_enumeration-6:myfunc">
+<tbody>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
+<td><div class="wtrl-signature-head line"><span class="wtrl_mod">doc_enumeration</span><span class="wtrl_op">.</span><span class="wtrl_func">myfunc</span><span class="wtrl_op">(</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">a</span><span class="wtrl_op">: </span><span class="wtrl_type">int</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">b</span><span class="wtrl_op">: </span><span class="wtrl_type">float</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">c</span><span class="wtrl_op">: </span><span class="wtrl_type">str</span></div>
+<div class="wtrl-signature-ret line"><span class="wtrl_op">)</span><span class="wtrl_op"> -&gt; </span><span class="wtrl_type">None</span></div>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Preamble</span></p></td>
+<td><p><span class="wtrl_label">normative sections</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_label">Definitions</span>, <span class="wtrl_label">Contract</span>, <span class="wtrl_label">Parameters</span>, <span class="wtrl_label">Returns</span>, <span class="wtrl_label">Raises</span></p></li>
+</ul>
+<p><span class="wtrl_label">status</span></p>
+<ul class="simple">
+<li><p><code class="wtrl_value docutils literal notranslate"><span class="pre">stable</span></code></p></li>
+</ul>
+<p><span class="wtrl_label">scope</span></p>
+<ul class="simple">
+<li><p><code class="wtrl_value docutils literal notranslate"><span class="pre">public</span></code></p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Description</span></p></td>
+<td><p>This function exists only as a compact rendering showcase. Text-like Waterloo sections fall into two rendering groups.<ul class="simple">
+<li><p>Contract-style sections are rendered as bullet lists by default.</p>
+<ul>
+<li><p>This group includes <span class="wtrl_label">Contract.general</span>, <span class="wtrl_label">Contract.requires</span>, <span class="wtrl_label">Contract.ensures</span>, <span class="wtrl_label">Contract.invariants</span>, and <span class="wtrl_label">Raises</span>.</p></li>
+<li><p>Entries in these sections are logical lines and do not support nested visual list levels.</p></li>
+</ul>
+</li>
+<li><p>Free-form sections support explicit visual list markers.</p>
+<ul>
+<li><p>This group includes <span class="wtrl_label">Description</span>, <span class="wtrl_label">Notes</span>, <span class="wtrl_label">Definitions</span>, <span class="wtrl_label">Terminology</span>, <span class="wtrl_label">Parameters</span>, and <span class="wtrl_label">Returns</span>.</p>
+<ol class="arabic simple" start="1">
+<li><p>Enumeration can be mixed into the same explicit marker hierarchy.</p></li>
+<li><p>Consecutive enumeration entries form one visual enumeration block.</p></li>
+</ol>
+</li>
+<li><p>After enumeration, itemization can continue at the previous level.</p></li>
+</ul>
+</li>
+<li><p>The surrounding section remains ordinary free-form text.</p></li>
+</ul>
+</p></td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Notes</span></p></td>
+<td><p class="wtrl-note-title rubric">Format</p>
+<p class="wtrl-freeform-paragraph-content">The Waterloo Docstrings <a class="wtrl_ref reference external" href="https://uwe-at-sdv.github.io/sdv_doc_waterloo/"><span>standard document</span></a> describes the syntax for itemization and enumeration. Nested visual lists are expressed with explicit list markers, not by adding indentation. The markers <code class="wtrl_lit docutils literal notranslate"><span class="pre">*</span></code>, <code class="wtrl_lit docutils literal notranslate"><span class="pre">+</span></code>, and <code class="wtrl_lit docutils literal notranslate"><span class="pre">-</span></code> express itemization levels. The marker <code class="wtrl_lit docutils literal notranslate"><span class="pre">#</span></code> expresses enumeration. Indentation remains reserved for the logical structure of the docstring.</p>
+<p class="wtrl-note-title rubric">General note</p>
+<p class="wtrl-freeform-paragraph-content">Subsections in <span class="wtrl_label">Notes</span> are rendered as free-form text. The free-form renderer supports explicit itemization and enumeration.<ul class="simple">
+<li><p>An item</p>
+<ul>
+<li><p>A sub-item</p>
+<ol class="arabic simple" start="1">
+<li><p>A sub-sub-item</p></li>
+<li><p>Another sub-sub-item</p></li>
+</ol>
+</li>
+<li><p>Another sub-item</p></li>
+</ul>
+</li>
+<li><p>Another item</p></li>
+</ul>
+</p>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Contract</span></p></td>
+<td><p><span class="wtrl_label">general</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">Must</span> demonstrate which sections are rendered as contract-style bullet lists.</p></li>
+<li><p><span class="wtrl_norm">Must</span> demonstrate which sections are rendered as free-form text.</p></li>
+<li><p><span class="wtrl_norm">Must</span> keep contract entries as logical lines, not as nested visual lists.</p></li>
+</ul>
+<p><span class="wtrl_label">requires</span></p>
+<ul class="simple">
+<li><p><code class="wtrl_var docutils literal notranslate"><span class="pre">a</span></code> <span class="wtrl_norm">must</span> be even.</p></li>
+<li><p><code class="wtrl_var docutils literal notranslate"><span class="pre">b</span></code> <span class="wtrl_norm">must</span> be larger than <code class="wtrl_value docutils literal notranslate"><span class="pre">0</span></code>.</p></li>
+<li><p><code class="wtrl_var docutils literal notranslate"><span class="pre">c</span></code> <span class="wtrl_norm">must</span> be a string in lowercase.</p></li>
+</ul>
+<p><span class="wtrl_label">ensures</span></p>
+<ul class="simple">
+<li><p>The function <span class="wtrl_norm">must</span> return <code class="wtrl_value docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p>The function <span class="wtrl_norm">must</span> leave its inputs unchanged.</p></li>
+</ul>
+<p><span class="wtrl_label">invariants</span></p>
+<ul class="simple">
+<li><p>The showcase <span class="wtrl_norm">must</span> remain deterministic.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Definitions</span></p></td>
+<td><p class="wtrl-dfn-term"><span><span class="wtrl_dfn">ExampleTerm</span></span></p>
+<p class="wtrl-dfn-content">Definitions are free-form text. The renderer supports explicit itemization in definition content.<ul class="simple">
+<li><p>An item</p>
+<ul>
+<li><p>A sub-item</p>
+<ul>
+<li><p>A sub-sub-item</p></li>
+<li><p>Another sub-sub-item</p></li>
+</ul>
+</li>
+<li><p>Another sub-item</p></li>
+</ul>
+</li>
+<li><p>Another item</p></li>
+</ul>
+</p>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Terminology</span></p></td>
+<td><p class="wtrl-dfn-term"><span><span class="wtrl_dfn">Example term</span></span></p>
+<p class="wtrl-dfn-content">Terminology is free-form text. The renderer supports explicit itemization in terminology content.<ul class="simple">
+<li><p>An item</p>
+<ul>
+<li><p>A sub-item</p>
+<ul>
+<li><p>A sub-sub-item</p></li>
+<li><p>Another sub-sub-item</p></li>
+</ul>
+</li>
+<li><p>Another sub-item</p></li>
+</ul>
+</li>
+<li><p>Another item</p></li>
+</ul>
+</p>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Parameters</span></p></td>
+<td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">a</span></code></p>
+<p class="wtrl-freeform-paragraph-content">Parameter descriptions are free-form text. The renderer supports explicit itemization in parameter content.<ul class="simple">
+<li><p>An item</p>
+<ul>
+<li><p>A sub-item</p>
+<ul>
+<li><p>A sub-sub-item</p></li>
+<li><p>Another sub-sub-item</p></li>
+</ul>
+</li>
+<li><p>Another sub-item</p></li>
+</ul>
+</li>
+<li><p>Another item</p></li>
+</ul>
+</p>
+<p><code class="wtrl_var docutils literal notranslate"><span class="pre">b</span></code></p>
+<p class="wtrl-freeform-paragraph-content">Enumeration is available as a visual list form. Numbering uses a single marker, not nested numeric labels such as <code class="wtrl_lit docutils literal notranslate"><span class="pre">1.1</span></code>.<ol class="arabic simple" start="1">
+<li><p>First enumerated item</p>
+<ul class="simple">
+<li><p>A sub-item</p></li>
+<li><p>Another sub-item</p></li>
+</ul>
+</li>
+<li><p>Second enumerated item</p></li>
+</ol>
+</p>
+<p><code class="wtrl_var docutils literal notranslate"><span class="pre">c</span></code></p>
+<p class="wtrl-freeform-paragraph-content">Enumeration can appear below itemization levels.<ul class="simple">
+<li><p>An item</p>
+<ul>
+<li><p>A sub-item</p>
+<ol class="arabic simple" start="1">
+<li><p>A sub-sub-item</p></li>
+<li><p>Another sub-sub-item</p></li>
+</ol>
+</li>
+<li><p>Another sub-item</p></li>
+</ul>
+</li>
+<li><p>Another item</p></li>
+</ul>
+</p>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Returns</span></p></td>
+<td><p>The Returns section is free-form text. The renderer supports explicit itemization and enumeration in return descriptions.<ul class="simple">
+<li><p>An item</p>
+<ul>
+<li><p>A sub-item</p>
+<ol class="arabic simple" start="1">
+<li><p>A sub-sub-item</p></li>
+<li><p>Another sub-sub-item</p></li>
+</ol>
+</li>
+<li><p>Another sub-item</p></li>
+</ul>
+</li>
+<li><p>Another item</p></li>
+</ul>
+</p></td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Raises</span></p></td>
+<td><p><code class="wtrl_class docutils literal notranslate"><span class="pre">BaseException</span></code></p>
+<ul class="simple">
+<li><p>The <span class="wtrl_label">Raises</span> section is rendered as a contract-style bullet list by default.</p></li>
+<li><p>Entries in this subsection are logical lines, not nested visual lists.</p></li>
+<li><p><span class="wtrl_norm">Must</span> raise if <code class="wtrl_lit docutils literal notranslate"><span class="pre">&lt;condition</span> <span class="pre">1&gt;</span></code></p></li>
+<li><p><span class="wtrl_norm">Should</span> raise if <code class="wtrl_lit docutils literal notranslate"><span class="pre">&lt;condition</span> <span class="pre">2&gt;</span></code></p></li>
+<li><p><span class="wtrl_norm">May</span> raise if <code class="wtrl_lit docutils literal notranslate"><span class="pre">&lt;condition</span> <span class="pre">3&gt;</span></code></p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">See also</span></p></td>
+<td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">list.of.qualified.identifiers</span></code>, <code class="wtrl_var docutils literal notranslate"><span class="pre">therefore.no.itemization.or.enumeration</span></code></p></td>
+</tr>
+</tbody>
+<thead class="wtrl-box-head-function">
+<tr class="row-even"><th class="head"><span class="wtrl-obj-kind">«Function»</span></th>
+<th class="head"><p class="wtrl-obj-qid">myfunc</p></th>
+</tr>
+</thead>
+</table>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="admonitions.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">11. </span>Admonitions</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="customization.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><span class="section-number">9. </span>CSS Customization</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, Uwe
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">10. Miscellaneaous</a><ul>
+<li><a class="reference internal" href="#escaping">10.1. Escaping</a></li>
+<li><a class="reference internal" href="#itemization">10.2. Itemization</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>

@@ -2,10 +2,12 @@
 <html class="no-js" lang="en" data-content_root="./">
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#"><link rel="search" title="Search" href="search.html">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="12. Reference" href="reference.html"><link rel="prev" title="10. Miscellaneaous" href="misc.html">
 
-    <link rel="shortcut icon" href="_static/favicon.ico"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - Sphinx: Waterloo Docstrings documentation</title>
-<link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
+    <link rel="shortcut icon" href="_static/favicon.ico"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>11. Admonitions - Sphinx: Waterloo Docstrings documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/common_styles.css?v=0f4247c0" />
     <link rel="stylesheet" type="text/css" href="_static/waterloo_base.css?v=5c09bd6f" />
@@ -173,7 +175,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -192,7 +194,7 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html#installation">2. Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html#quick-start">3. Quick Start</a></li>
@@ -203,7 +205,7 @@
 <li class="toctree-l1"><a class="reference internal" href="roles.html">8. Roles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="customization.html">9. CSS Customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="misc.html">10. Miscellaneaous</a></li>
-<li class="toctree-l1"><a class="reference internal" href="admonitions.html">11. Admonitions</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">11. Admonitions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">12. Reference</a></li>
 </ul>
 
@@ -224,7 +226,13 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          <div class="theme-toggle-container theme-toggle-content">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/admonitions.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
               <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
@@ -232,15 +240,140 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          
-<section class="genindex-section">
-  <h1 id="index">Index</h1>
-  <div class="genindex-jumpbox"></div>
+          <section id="admonitions">
+<span id="id1"></span><h1><span class="section-number">11. </span>Admonitions<a class="headerlink" href="#admonitions" title="Link to this heading">¶</a></h1>
+<section id="error-admonitions">
+<h2><span class="section-number">11.1. </span>Error admonitions<a class="headerlink" href="#error-admonitions" title="Link to this heading">¶</a></h2>
+<section id="inappropriate-directive">
+<h3><span class="section-number">11.1.1. </span>Inappropriate directive<a class="headerlink" href="#inappropriate-directive" title="Link to this heading">¶</a></h3>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<p><span class="wtrl_label">Object: </span><span>doc_errors</span></p>
+<p><span class="wtrl_label">Summary: </span><span>doc_errors does not resolve to a class.</span></p>
+</div>
+<p>Pop on empty stack</p>
+<div class="wtrl-state-error admonition error">
+<p class="admonition-title">Error</p>
+<p><span class="wtrl_label">Summary: </span>Cannot pop current module: stack is empty.</p>
+</div>
+<p>Push/pop mismatch</p>
+<div class="admonition wtrl-current-module-message wtrl-current-module-push">
+<p class="admonition-title">Waterloo module context</p>
+<p>Classes and functions below this point implicitly belong to package/module <code class="wtrl_mod docutils literal notranslate"><span class="pre">doc_errors</span></code>. </p>
+</div>
+<div class="wtrl-state-error admonition error">
+<p class="admonition-title">Error</p>
+<p><span class="wtrl_label">Summary: </span>Module stack push/pop mismatch: expected doc_errors, got doc_errors_wrong.</p>
+</div>
+</section>
+<section id="non-existing-object">
+<h3><span class="section-number">11.1.2. </span>Non-existing object<a class="headerlink" href="#non-existing-object" title="Link to this heading">¶</a></h3>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<p><span class="wtrl_label">Object: </span><span>doc_errors.X_does_not_exist</span></p>
+<p><span class="wtrl_label">Summary: </span><span>doc_errors.X_does_not_exist cannot be resolved: Could not resolve qualified name ‘doc_errors.X_does_not_exist’ with module/class context doc_errors/None.</span></p>
+</div>
+</section>
+<section id="missing-docstring">
+<h3><span class="section-number">11.1.3. </span>Missing docstring<a class="headerlink" href="#missing-docstring" title="Link to this heading">¶</a></h3>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<p><span class="wtrl_label">Object: </span><span>doc_errors.X_no_docstring</span></p>
+<p><span class="wtrl_label">Summary: </span><span>doc_errors.X_no_docstring has no docstring.</span></p>
+</div>
+</section>
+<section id="empty-docstring">
+<h3><span class="section-number">11.1.4. </span>Empty docstring<a class="headerlink" href="#empty-docstring" title="Link to this heading">¶</a></h3>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<p><span class="wtrl_label">Object: </span><span>doc_errors.X_empty_docstring</span></p>
+<p><span class="wtrl_label">Summary: </span><span>doc_errors.X_empty_docstring has no docstring.</span></p>
+</div>
+</section>
+<section id="not-a-waterloo-docstring">
+<h3><span class="section-number">11.1.5. </span>Not a Waterloo Docstring<a class="headerlink" href="#not-a-waterloo-docstring" title="Link to this heading">¶</a></h3>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<p><span class="wtrl_label">RuleID: </span><span>PRSR-003</span></p>
+<p><span class="wtrl_label">Origin: </span><span>parsing</span></p>
+<p><span class="wtrl_label">Summary: </span><span>missing colon in section or subsection label: expected a label ending with ‘:’, but found ‘Some text that is not a Waterloo Docstring.’.</span></p>
+<div class="docutils container">
+<p><span class="wtrl_label">Found:</span></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Some</span> <span class="n">text</span> <span class="n">that</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">a</span> <span class="n">Waterloo</span> <span class="n">Docstring</span><span class="o">.</span>
+</pre></div>
+</div>
+<p><span class="wtrl_label">Expected:</span></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">a</span> <span class="n">section</span> <span class="ow">or</span> <span class="n">subsection</span> <span class="n">label</span> <span class="n">ending</span> <span class="k">with</span> <span class="s1">&#39;:&#39;</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p><span class="wtrl_label">Hint: </span></p>
+<pre class="literal-block">[&quot;Append ':' to the label.&quot;]</pre>
+</div>
+</div>
+</section>
+<section id="parsing-or-validation-error">
+<h3><span class="section-number">11.1.6. </span>Parsing or validation error<a class="headerlink" href="#parsing-or-validation-error" title="Link to this heading">¶</a></h3>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<p><span class="wtrl_label">RuleID: </span><span>CON-023</span></p>
+<p><span class="wtrl_label">Origin: </span><span>validation</span></p>
+<p><span class="wtrl_label">Summary: </span><span>Subsection ‘general’ does not exist.</span></p>
+<div class="docutils container">
+<p><span class="wtrl_label">Found:</span></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Contract</span><span class="p">:</span>
+</pre></div>
+</div>
+<p><span class="wtrl_label">Expected:</span></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Contract</span><span class="p">:</span>
+    <span class="n">general</span><span class="p">:</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<p><span class="wtrl_label">Hint: </span></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">waterlint</span> <span class="n">explain</span><span class="o">-</span><span class="n">subsection</span> <span class="o">--</span><span class="n">label</span> <span class="n">Contract</span><span class="o">.</span><span class="n">general</span> <span class="o">--</span><span class="n">profile</span> <span class="k">class</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="info-admonitions">
+<h2><span class="section-number">11.2. </span>Info admonitions<a class="headerlink" href="#info-admonitions" title="Link to this heading">¶</a></h2>
+<section id="out-of-scope">
+<h3><span class="section-number">11.2.1. </span>Out of scope<a class="headerlink" href="#out-of-scope" title="Link to this heading">¶</a></h3>
+<div class="wtrl_scope_filtered_object admonition note">
+<p class="admonition-title">Note</p>
+<p>Skipping <code class="wtrl_class docutils literal notranslate"><span class="pre">X_not_in_public_scope</span></code> because of the current Waterloo scope.</p>
+</div>
+</section>
+</section>
+<section id="other-admonitions">
+<h2><span class="section-number">11.3. </span>Other admonitions<a class="headerlink" href="#other-admonitions" title="Link to this heading">¶</a></h2>
+<section id="state-change">
+<h3><span class="section-number">11.3.1. </span>State change<a class="headerlink" href="#state-change" title="Link to this heading">¶</a></h3>
+<div class="admonition wtrl-current-module-message wtrl-current-module-push">
+<p class="admonition-title">Waterloo module context</p>
+<p>Classes and functions below this point implicitly belong to package/module <code class="wtrl_mod docutils literal notranslate"><span class="pre">doc_errors</span></code>. </p>
+</div>
+<div class="admonition wtrl-current-class-message wtrl-current-class-push">
+<p class="admonition-title">Waterloo class context</p>
+<p>Methods below this point implicitly belong to class <code class="wtrl_class docutils literal notranslate"><span class="pre">doc_errors.X_no_docstring</span></code>.</p>
+</div>
+<div class="admonition wtrl-current-class-message wtrl-current-class-pop">
+<p class="admonition-title">Waterloo class context</p>
+<p>Default class qualifier <code class="wtrl_var docutils literal notranslate"><span class="pre">doc_errors.X_no_docstring</span></code> ends here. No default class active. </p>
+</div>
+<div class="admonition wtrl-current-module-message wtrl-current-module-pop">
+<p class="admonition-title">Waterloo module context</p>
+<p>Default module qualifier <code class="wtrl_mod docutils literal notranslate"><span class="pre">doc_errors</span></code> ends here. New default: <code class="wtrl_mod docutils literal notranslate"><span class="pre">doc_errors</span></code>. </p>
+</div>
+</section>
+</section>
 </section>
 
         </article>
@@ -248,8 +381,26 @@
       <footer>
         
         <div class="related-pages">
-          
-          
+          <a class="next-page" href="reference.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">12. </span>Reference</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="misc.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><span class="section-number">10. </span>Miscellaneaous</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -268,8 +419,43 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">11. Admonitions</a><ul>
+<li><a class="reference internal" href="#error-admonitions">11.1. Error admonitions</a><ul>
+<li><a class="reference internal" href="#inappropriate-directive">11.1.1. Inappropriate directive</a></li>
+<li><a class="reference internal" href="#non-existing-object">11.1.2. Non-existing object</a></li>
+<li><a class="reference internal" href="#missing-docstring">11.1.3. Missing docstring</a></li>
+<li><a class="reference internal" href="#empty-docstring">11.1.4. Empty docstring</a></li>
+<li><a class="reference internal" href="#not-a-waterloo-docstring">11.1.5. Not a Waterloo Docstring</a></li>
+<li><a class="reference internal" href="#parsing-or-validation-error">11.1.6. Parsing or validation error</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#info-admonitions">11.2. Info admonitions</a><ul>
+<li><a class="reference internal" href="#out-of-scope">11.2.1. Out of scope</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#other-admonitions">11.3. Other admonitions</a><ul>
+<li><a class="reference internal" href="#state-change">11.3.1. State change</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

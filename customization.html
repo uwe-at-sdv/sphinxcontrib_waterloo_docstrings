@@ -2,10 +2,12 @@
 <html class="no-js" lang="en" data-content_root="./">
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#"><link rel="search" title="Search" href="search.html">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="10. Miscellaneaous" href="misc.html"><link rel="prev" title="8. Roles" href="roles.html">
 
-    <link rel="shortcut icon" href="_static/favicon.ico"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - Sphinx: Waterloo Docstrings documentation</title>
-<link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
+    <link rel="shortcut icon" href="_static/favicon.ico"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>9. CSS Customization - Sphinx: Waterloo Docstrings documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/common_styles.css?v=0f4247c0" />
     <link rel="stylesheet" type="text/css" href="_static/waterloo_base.css?v=5c09bd6f" />
@@ -173,7 +175,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -192,7 +194,7 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html#installation">2. Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html#quick-start">3. Quick Start</a></li>
@@ -201,7 +203,7 @@
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">6. Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="directives.html">7. Directives (todo)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="roles.html">8. Roles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="customization.html">9. CSS Customization</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">9. CSS Customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="misc.html">10. Miscellaneaous</a></li>
 <li class="toctree-l1"><a class="reference internal" href="admonitions.html">11. Admonitions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">12. Reference</a></li>
@@ -224,7 +226,13 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          <div class="theme-toggle-container theme-toggle-content">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/customization.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
               <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
@@ -232,15 +240,28 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          
-<section class="genindex-section">
-  <h1 id="index">Index</h1>
-  <div class="genindex-jumpbox"></div>
+          <section id="css-customization">
+<span id="customization"></span><h1><span class="section-number">9. </span>CSS Customization<a class="headerlink" href="#css-customization" title="Link to this heading">¶</a></h1>
+<section id="tested-themes">
+<h2><span class="section-number">9.1. </span>Tested themes<a class="headerlink" href="#tested-themes" title="Link to this heading">¶</a></h2>
+<p>We test our default styles with the following themes:</p>
+<ul class="simple">
+<li><p><code class="wtrl_mod docutils literal notranslate"><span class="pre">classic</span></code></p></li>
+<li><p><code class="wtrl_mod docutils literal notranslate"><span class="pre">alabaster</span></code></p></li>
+<li><p><code class="wtrl_mod docutils literal notranslate"><span class="pre">furo</span></code></p></li>
+</ul>
+</section>
+<section id="common-styles-css">
+<h2><span class="section-number">9.2. </span><code class="wtrl_file docutils literal notranslate"><span class="pre">common_styles.css</span></code><a class="headerlink" href="#common-styles-css" title="Link to this heading">¶</a></h2>
+</section>
+<section id="waterloo-base-css">
+<h2><span class="section-number">9.3. </span><code class="wtrl_file docutils literal notranslate"><span class="pre">waterloo_base.css</span></code><a class="headerlink" href="#waterloo-base-css" title="Link to this heading">¶</a></h2>
+</section>
 </section>
 
         </article>
@@ -248,8 +269,26 @@
       <footer>
         
         <div class="related-pages">
-          
-          
+          <a class="next-page" href="misc.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">10. </span>Miscellaneaous</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="roles.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><span class="section-number">8. </span>Roles</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -268,8 +307,29 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">9. CSS Customization</a><ul>
+<li><a class="reference internal" href="#tested-themes">9.1. Tested themes</a></li>
+<li><a class="reference internal" href="#common-styles-css">9.2. <code class="wtrl_file docutils literal notranslate"><span class="pre">common_styles.css</span></code></a></li>
+<li><a class="reference internal" href="#waterloo-base-css">9.3. <code class="wtrl_file docutils literal notranslate"><span class="pre">waterloo_base.css</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

@@ -2,10 +2,12 @@
 <html class="no-js" lang="en" data-content_root="./">
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#"><link rel="search" title="Search" href="search.html">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="6. Configuration" href="configuration.html"><link rel="prev" title="Sphinx: Waterloo Docstrings documentation" href="index.html">
 
-    <link rel="shortcut icon" href="_static/favicon.ico"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - Sphinx: Waterloo Docstrings documentation</title>
-<link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
+    <link rel="shortcut icon" href="_static/favicon.ico"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>1. Introduction - Sphinx: Waterloo Docstrings documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/common_styles.css?v=0f4247c0" />
     <link rel="stylesheet" type="text/css" href="_static/waterloo_base.css?v=5c09bd6f" />
@@ -173,7 +175,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -192,12 +194,12 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="introduction.html#installation">2. Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="introduction.html#quick-start">3. Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="introduction.html#html-theme-options">4. HTML-Theme-Options</a></li>
-<li class="toctree-l1"><a class="reference internal" href="introduction.html#favicon">5. Favicon</a></li>
+<ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#installation">2. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#quick-start">3. Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#html-theme-options">4. HTML-Theme-Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#favicon">5. Favicon</a></li>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">6. Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="directives.html">7. Directives (todo)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="roles.html">8. Roles</a></li>
@@ -224,7 +226,13 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          <div class="theme-toggle-container theme-toggle-content">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/introduction.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
               <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
@@ -232,15 +240,124 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          
-<section class="genindex-section">
-  <h1 id="index">Index</h1>
-  <div class="genindex-jumpbox"></div>
+          <section id="introduction">
+<span id="chapter-introduction"></span><h1><span class="section-number">1. </span>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h1>
+<p>Diese Extension stellt Direktiven und Roles bereit,
+mit denen man Docstrings im Waterloo-Format in HTML rendern kann.</p>
+<section id="project-status">
+<h2><span class="section-number">1.1. </span>Project status<a class="headerlink" href="#project-status" title="Link to this heading">¶</a></h2>
+<p>We use <code class="wtrl_cmd docutils literal notranslate"><span class="pre">mypy</span></code> for static typechecking. The source file(s)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sphinxcontrib/waterloo_docstrings/wtrl_protocol.py
+sphinxcontrib/waterloo_docstrings/wtrl_parse.py
+sphinxcontrib/waterloo_docstrings/wtrl_state.py
+sphinxcontrib/waterloo_docstrings/wtrl_markup.py
+sphinxcontrib/waterloo_docstrings/wtrl_signature.py
+sphinxcontrib/waterloo_docstrings/wtrl_autodoc.py
+sphinxcontrib/waterloo_docstrings/__init__.py
+sphinxcontrib/waterloo_docstrings/wtrl_context.py
+sphinxcontrib/waterloo_docstrings/wtrl_directives.py
+sphinxcontrib/waterloo_docstrings/extension.py
+sphinxcontrib/waterloo_docstrings/wtrl_roles.py
+</pre></div>
+</div>
+<p>are validated on a regular basis. The current status is</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Success: no issues found in 11 source files
+</pre></div>
+</div>
+<p>Our <code class="wtrl_lit docutils literal notranslate"><span class="pre">mypy</span></code>-configuration is:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[mypy]</span>
+<span class="na">python_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">3.10</span>
+<span class="na">ignore_missing_imports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">True</span>
+<span class="na">follow_imports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">silent</span>
+<span class="na">strict_optional</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">True</span>
+<span class="na">show_error_codes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">True</span>
+<span class="na">warn_unused_ignores</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">True</span>
+<span class="na">disallow_untyped_defs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">True</span>
+<span class="na">allow_redefinition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">False</span>
+<span class="na">no_implicit_optional</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">True</span>
+<span class="na">warn_return_any</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">True</span>
+<span class="na">disallow_any_generics</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">True</span>
+<span class="na">warn_unreachable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">True</span>
+<span class="na">warn_unused_configs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">True</span>
+<span class="na">warn_redundant_casts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">True</span>
+<span class="na">strict_equality</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">True</span>
+</pre></div>
+</div>
+<p>Exceptions from typechecking are:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="installation">
+<h1><span class="section-number">2. </span>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h1>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>sphinxcontrib-waterloo-docstrings
+</pre></div>
+</div>
+</section>
+<section id="quick-start">
+<h1><span class="section-number">3. </span>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">¶</a></h1>
+<p>Do this</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sphinx-quickstart
+</pre></div>
+</div>
+<p>and fill in what you need for yout test.</p>
+<p>In conf.py</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="c1"># begin your other extensions</span>
+        <span class="o">...</span>
+        <span class="c1"># end your other extensions</span>
+        <span class="s2">&quot;sphinxcontrib.waterloo_docstrings&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+</pre></div>
+</div>
+<p>Run this command which generates a simple demo chapter:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wtrl_quickstart
+</pre></div>
+</div>
+<p>Then</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>html
+</pre></div>
+</div>
+<p>or in order to clean caches if there are any:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>clean<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>html
+</pre></div>
+</div>
+</section>
+<section id="html-theme-options">
+<h1><span class="section-number">4. </span>HTML-Theme-Options<a class="headerlink" href="#html-theme-options" title="Link to this heading">¶</a></h1>
+<section id="for-theme-alabaster">
+<h2><span class="section-number">4.1. </span>For theme <code class="wtrl_mod docutils literal notranslate"><span class="pre">Alabaster</span></code><a class="headerlink" href="#for-theme-alabaster" title="Link to this heading">¶</a></h2>
+<section id="additional-css">
+<h3><span class="section-number">4.1.1. </span>Additional CSS<a class="headerlink" href="#additional-css" title="Link to this heading">¶</a></h3>
+<p>Our modest modifications to the Alabaster theme, which make no claim
+to typographical accuracy, but provide more space for the table of contents.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">html_css_files</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="c1"># begin your other style sheets</span>
+        <span class="o">...</span>
+        <span class="c1"># end your other style sheets</span>
+        <span class="s1">&#39;waterloo_alabaster.css&#39;</span><span class="p">,</span>
+        <span class="p">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="for-theme-furo">
+<h2><span class="section-number">4.2. </span>For theme <code class="wtrl_mod docutils literal notranslate"><span class="pre">Furo</span></code><a class="headerlink" href="#for-theme-furo" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+<section id="favicon">
+<h1><span class="section-number">5. </span>Favicon<a class="headerlink" href="#favicon" title="Link to this heading">¶</a></h1>
+<p>If you don’t feel like designing you own one, maybe add
+the default Waterloo favicon:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">html_favicon</span> <span class="o">=</span> <span class="s1">&#39;_static/favicon.ico&#39;</span>
+</pre></div>
+</div>
 </section>
 
         </article>
@@ -248,8 +365,26 @@
       <footer>
         
         <div class="related-pages">
-          
-          
+          <a class="next-page" href="configuration.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">6. </span>Configuration</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Home</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -268,8 +403,38 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">1. Introduction</a><ul>
+<li><a class="reference internal" href="#project-status">1.1. Project status</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#installation">2. Installation</a></li>
+<li><a class="reference internal" href="#quick-start">3. Quick Start</a></li>
+<li><a class="reference internal" href="#html-theme-options">4. HTML-Theme-Options</a><ul>
+<li><a class="reference internal" href="#for-theme-alabaster">4.1. For theme <code class="wtrl_mod docutils literal notranslate"><span class="pre">Alabaster</span></code></a><ul>
+<li><a class="reference internal" href="#additional-css">4.1.1. Additional CSS</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#for-theme-furo">4.2. For theme <code class="wtrl_mod docutils literal notranslate"><span class="pre">Furo</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#favicon">5. Favicon</a></li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
