@@ -5,6 +5,8 @@ Format:
 - VERSION [YYYY-MM-DD]: Summary.
 
 #----- extend here --------------------------------------------#
+- 0.7.3 [2026-07-20]:
+	* Migration to separate repo, next steps: README, gh-pages
 - 0.7.2 [2026-07-20]:
 	* Documentation; Admonitions for state push/pop mismatch.
 - 0.7.1 [2026-07-20]:

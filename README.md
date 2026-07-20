@@ -5,7 +5,7 @@
 # Sphinx-Contrib Waterloo Docstrings
 
 ![License](https://img.shields.io/badge/license-BSD--2--Clause-blue)
-![Version](https://img.shields.io/badge/version-0.7.2-orange)
+![Version](https://img.shields.io/badge/version-0.7.3-orange)
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![Sphinx](https://img.shields.io/badge/Sphinx-extension-0A507A)
 [![WTRL](https://img.shields.io/badge/%28%E2%9A%96%29-Waterloo--Docstrings-932725)](https://github.com/uwe-at-sdv/sdv_doc_waterloo)
@@ -41,15 +41,15 @@ documentation structures.
 
 ## Documentation showcase
 
-The public project documentation is published at:
+The Sphinx extension documentation is published at:
 
-- <https://uwe-at-sdv.github.io/sdv_doc_waterloo/>
+- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/>
 
 The Sphinx extension showcase is published under:
 
-- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/sphinx/furo/>
-- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/sphinx/alabaster/>
-- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/sphinx/classic/>
+- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/furo/>
+- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/alabaster/>
+- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/classic/>
 
 ## Install from source
 

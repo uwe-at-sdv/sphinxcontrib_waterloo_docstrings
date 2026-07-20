@@ -28,12 +28,12 @@ documentation structures.
 
 ## Documentation showcase
 
-The public project documentation is published at:
+The Sphinx extension documentation is published at:
 
-- <https://uwe-at-sdv.github.io/sdv_doc_waterloo/>
+- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/>
 
 The Sphinx extension showcase is published under:
 
-- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/sphinx/furo/>
-- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/sphinx/alabaster/>
-- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/sphinx/classic/>
+- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/furo/>
+- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/alabaster/>
+- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/classic/>
