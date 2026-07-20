@@ -34,7 +34,7 @@ jobs:
 
       - name: Build project documentation
         working-directory: sphinx/doc
-        run: make clean html
+        run: make clean
 
       - name: Build supported showcase themes
         working-directory: sphinx/test
