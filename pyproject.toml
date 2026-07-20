@@ -37,9 +37,9 @@ dependencies = [
 	]
 
 [project.urls]
-Homepage = "https://github.com/uwe-at-sdv/sdv_doc_waterloo"
-Source = "https://github.com/uwe-at-sdv/sdv_doc_waterloo/tree/sphinx"
-Issues = "https://github.com/uwe-at-sdv/sdv_doc_waterloo/issues"
+Homepage = "https://github.com/uwe-at-sdv/sphinxcontrib_waterloo_docstrings"
+Source = "https://github.com/uwe-at-sdv/sphinxcontrib_waterloo_docstrings"
+Issues = "https://github.com/uwe-at-sdv/sphinxcontrib_waterloo_docstrings/issues"
 
 [project.optional-dependencies]
 sphinx = [

@@ -11,7 +11,7 @@
 [![WTRL](https://img.shields.io/badge/%28%E2%9A%96%29-Waterloo--Docstrings-932725)](https://github.com/uwe-at-sdv/sdv_doc_waterloo)
 [![PyPI](https://img.shields.io/badge/PyPI-sphinxcontrib--waterloo--docstrings-3775A9?logo=pypi&logoColor=white)](https://pypi.org/project/sphinxcontrib-waterloo-docstrings/)
 
-# This branch is under development
+This repository is under development.
 
 The `sphinxcontrib-waterloo-docstrings` package provides the Sphinx rendering
 layer for Waterloo Docstrings.
@@ -45,11 +45,11 @@ The public project documentation is published at:
 
 - <https://uwe-at-sdv.github.io/sdv_doc_waterloo/>
 
-The Sphinx extension showcase is planned under:
+The Sphinx extension showcase is published under:
 
-- <https://uwe-at-sdv.github.io/sdv_doc_waterloo/sphinx/furo/>
-- <https://uwe-at-sdv.github.io/sdv_doc_waterloo/sphinx/alabaster/>
-- <https://uwe-at-sdv.github.io/sdv_doc_waterloo/sphinx/classic/>
+- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/sphinx/furo/>
+- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/sphinx/alabaster/>
+- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/sphinx/classic/>
 
 ## Install from source
 
@@ -65,10 +65,10 @@ For development, use an editable install:
 pip install -e .
 ```
 
-Install directly from the `sphinx` branch:
+Install directly from the GitHub repository:
 
 ```bash
-pip install "git+https://github.com/uwe-at-sdv/sdv_doc_waterloo.git@sphinx"
+pip install "git+https://github.com/uwe-at-sdv/sphinxcontrib_waterloo_docstrings.git"
 ```
 
 ## Build the theme showcase

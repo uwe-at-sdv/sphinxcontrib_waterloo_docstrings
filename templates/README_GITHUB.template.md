@@ -20,10 +20,10 @@ For development, use an editable install:
 pip install -e .
 ```
 
-Install directly from the `sphinx` branch:
+Install directly from the GitHub repository:
 
 ```bash
-pip install "git+https://github.com/uwe-at-sdv/sdv_doc_waterloo.git@sphinx"
+pip install "git+https://github.com/uwe-at-sdv/sphinxcontrib_waterloo_docstrings.git"
 ```
 
 ## Build the theme showcase

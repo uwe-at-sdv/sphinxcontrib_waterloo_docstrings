@@ -1,4 +1,4 @@
-# This branch is under development
+This repository is under development.
 
 The `sphinxcontrib-waterloo-docstrings` package provides the Sphinx rendering
 layer for Waterloo Docstrings.
@@ -32,8 +32,8 @@ The public project documentation is published at:
 
 - <https://uwe-at-sdv.github.io/sdv_doc_waterloo/>
 
-The Sphinx extension showcase is planned under:
+The Sphinx extension showcase is published under:
 
-- <https://uwe-at-sdv.github.io/sdv_doc_waterloo/sphinx/furo/>
-- <https://uwe-at-sdv.github.io/sdv_doc_waterloo/sphinx/alabaster/>
-- <https://uwe-at-sdv.github.io/sdv_doc_waterloo/sphinx/classic/>
+- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/sphinx/furo/>
+- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/sphinx/alabaster/>
+- <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/sphinx/classic/>
