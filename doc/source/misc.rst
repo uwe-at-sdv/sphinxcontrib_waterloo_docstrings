@@ -14,6 +14,7 @@ Unser Testmodul ist:
 
 .. literalinclude:: ../../examples-python/doc_escape.py
 	:language: python
+	:tab-width: 4
 
 Der Docstring wird folgendermassen gerendert:
 
@@ -21,6 +22,17 @@ Der Docstring wird folgendermassen gerendert:
 
 Bestimmte Randfaelle wie in Sektion "Malformed Waterloo"
 sind erwartbar auch in der Browserdarstellung problematisch.
-Das tritt in der Prax jedoch nur in dem exotischen Metafall auf,
+Das tritt in der Praxis jedoch nur in dem exotischen Metafall auf,
 dass man "falsche" Waterloo-Syntax in einem Docstring erklaeren
 moechte.
+
+Itemization
+-----------
+
+.. literalinclude:: ../../examples-python/doc_enumeration.py
+	:language: python
+	:tab-width: 4
+
+.. wtrl_autodoc_function:: doc_enumeration.myfunc
+
+

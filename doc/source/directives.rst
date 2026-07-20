@@ -209,33 +209,3 @@ or in block representation:
 which leads to
 
 .. wtrl_method_signature_block:: sdv.doc.waterloo.docitem_helper.tracer.build_json
-
-
-
-
-
-
-CSS Customization
-=================
-
-Tested themes
--------------
-
-We test our default styles with the following themes:
-
-* :wtrl_mod:`classic`
-* :wtrl_mod:`alabaster`
-* :wtrl_mod:`furo`
-
-:wtrl_file:`common_styles.css`
-------------------------------
-
-:wtrl_file:`waterloo_base.css`
-------------------------------
-
-
-
-
-
-
-

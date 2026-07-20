@@ -200,7 +200,7 @@ import sdv.doc.waterloo.docitem as mod_docitem
 from sphinxcontrib.waterloo_docstrings.wtrl_context import (
 	context,
 	)
-# We must import these, since the are auto-documented.
+# We must import these, since they are auto-documented.
 from sphinxcontrib.waterloo_docstrings.wtrl_state import (
 	resolve_qualified_name,
 	wtrl_build_push_current_module_nodes,
@@ -221,7 +221,7 @@ from sphinxcontrib.waterloo_docstrings.wtrl_markup import (
 	setup_markup_roles,
 	wtrl_pending_ref,
 	)
-# Functions. We must import these, since the are auto-documented.
+# Functions. We must import these, since they are auto-documented.
 from sphinxcontrib.waterloo_docstrings.wtrl_roles import (
 	wtrl_attr_role,
 	wtrl_class_role,
@@ -248,14 +248,14 @@ from sphinxcontrib.waterloo_docstrings.wtrl_roles import (
 from sphinxcontrib.waterloo_docstrings.wtrl_roles import (
 	setup_roles
 	)
-# We must import these, since the are auto-documented.
+# We must import these, since they are auto-documented.
 from sphinxcontrib.waterloo_docstrings.wtrl_signature import (
 	wtrl_build_method_signature_nodes,
 	wtrl_build_function_signature_nodes,
 	wtrl_build_method_signature_block_nodes,
 	wtrl_build_function_signature_block_nodes,
 	)
-# We must import these, since the are auto-documented.
+# We must import these, since they are auto-documented.
 from sphinxcontrib.waterloo_docstrings.wtrl_autodoc import (
 	build_sphinx_nodes,
 	build_sphinx_nodes_full,
@@ -354,10 +354,19 @@ def setup(app: Any) -> dict[str, Any]:
 # We cannot be sure if it exists, but that's how it is named.
 	app.add_config_value("docitem_context_config",None,"env")
 
-	app.add_config_value('wtrl_diagnostics_embed', False, 'env')
-	app.add_config_value('wtrl_diagnostics_color', False, 'env')
-	app.add_config_value('wtrl_verbose_current_object', False, 'env')
-	app.add_config_value('wtrl_verbose_state_change', True, 'env')
+# We try to establish a naming convention:
+# * Which component is affected
+# * How the component is affected
+# * Which values are possible (e.g. enabled/disabled -> boolean, etc.)
+	app.add_config_value('wtrl_diagnostics_admonitions_enabled', True, 'env')
+	app.add_config_value('wtrl_diagnostics_logging_enabled', True, 'env')
+	app.add_config_value('wtrl_diagnostics_color_enabled', False, 'env')
+	app.add_config_value('wtrl_current_object_logging_enabled', False, 'env')
+# It can be very confusing not to see objects that are filtered out by the current scope, so default is True.
+	app.add_config_value('wtrl_scope_filtered_object_placeholders_enabled', True, 'env')
+# push and pop directives.
+	app.add_config_value('wtrl_state_change_admonitions_enabled', True, 'env')
+	app.add_config_value('wtrl_state_change_logging_enabled', True, 'env')
 	app.add_config_value('wtrl_basedirs', [], 'env')
 
 # Add a hook, so that we know when the builder is ready.

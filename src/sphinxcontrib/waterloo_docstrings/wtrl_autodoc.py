@@ -35,7 +35,30 @@ from sphinxcontrib.waterloo_docstrings.wtrl_signature import (
 
 logger = logging.getLogger(__name__)
 
-def _emit_diagnostics(tr: mod_docitem.tracer, app: SphinxAppProtocol | Any, qname: str, lineno: int) -> list[nodes.Node]:
+def _emit_runtime_diagnostics(app: SphinxAppProtocol | Any, qname: str, lineno: int, msg: str) -> list[nodes.Node]:
+	header = f"while building autodoc directive for `{qname}`:"
+	log_msg = f"{header}\n{msg}"
+	logger.error(log_msg, location=(app.env.docname, lineno))
+
+	if not app.config.wtrl_diagnostics_admonitions_enabled:
+		return []
+
+	error_box = nodes.error("Waterloo directive diagnostics")
+
+	qname_para = nodes.paragraph()
+	qname_para.append(nodes.inline(text="Object: ", classes=["wtrl_label"]))
+	qname_para.append(nodes.inline(text=qname))
+	error_box.append(qname_para)
+
+	msg_para = nodes.paragraph()
+	msg_para.append(nodes.inline(text="Summary: ", classes=["wtrl_label"]))
+	msg_para.append(nodes.inline(text=msg))
+	error_box.append(msg_para)
+
+	return [error_box]
+
+def _emit_tracer_diagnostics(tr: mod_docitem.tracer, app: SphinxAppProtocol | Any, qname: str, lineno: int) -> list[nodes.Node]:
+	generated_nodes: list[nodes.Node] = []
 	try:
 		print(tr.build_json(tr.Severity.INFO))
 	except Exception as e:
@@ -43,14 +66,15 @@ def _emit_diagnostics(tr: mod_docitem.tracer, app: SphinxAppProtocol | Any, qnam
 	if tr.has_errors():
 		header = f"while parsing object `{qname}`:"
 		details = str(tr)
-		if app.config.wtrl_diagnostics_color:
-			# If colours are used, we render the tracer in our own colors.
-			log_msg = f"{header}\n{details}"
-			logger.error(log_msg, location=(app.env.docname, lineno), color="reset")
-		else:
-			# Othewise we strip the colors.
-			log_msg = f"{header}\n{tr.strip_ansi_escape_sequences(details)}"
-			logger.error(log_msg, location=(app.env.docname, lineno))
+		if app.config.wtrl_diagnostics_logging_enabled:
+			if app.config.wtrl_diagnostics_color_enabled:
+				# If colours are used, we render the tracer in our own colors.
+				log_msg = f"{header}\n{details}"
+				logger.error(log_msg, location=(app.env.docname, lineno), color="reset")
+			else:
+				# Othewise we strip the colors.
+				log_msg = f"{header}\n{tr.strip_ansi_escape_sequences(details)}"
+				logger.error(log_msg, location=(app.env.docname, lineno))
 
 #		clean_details = tr.strip_ansi_escape_sequences(str(tr))
 #		error_box = nodes.error(f"Waterloo Error: {header}")
@@ -63,8 +87,6 @@ def _emit_diagnostics(tr: mod_docitem.tracer, app: SphinxAppProtocol | Any, qnam
 
 		if not errors:
 			return []
-
-		generated_nodes: list[nodes.Node] = []
 
 		for err in errors:
 			rule_id = err.get("rule-id", "UNKNOWN-RULE")
@@ -127,7 +149,7 @@ def _emit_diagnostics(tr: mod_docitem.tracer, app: SphinxAppProtocol | Any, qnam
 
 	# The nodes we return here become part of the document,
 	# so the returned list depends on the configuration.
-	if app.config.wtrl_diagnostics_embed:
+	if app.config.wtrl_diagnostics_admonitions_enabled:
 		return generated_nodes
 	else:
 		return []
@@ -248,11 +270,11 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 			Built-in exceptions in section |label|`Raises` are intentionally rendered as plain text without internal links.
 		Last reviewed:
 			2026-02-15
-		"""
+	"""
 	if not _is_doc_visible_in_current_scope(ctx, doc):
-# Scope-aware rendering omits invisible objects entirely. If later
-# we need author-facing placeholders, this is the early return to adapt.
-# Ok, we definitely need placeholders...
+		if not ctx.config.wtrl_scope_filtered_object_placeholders_enabled:
+			return []
+
 		obj_name = mod_docitem.get_obj_name(obj)
 		if mod_docitem.is_obj_module(obj):
 			obj_name_markup = ":wtrl_mod:"
@@ -260,11 +282,18 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 			obj_name_markup = ":wtrl_class:"
 		elif mod_docitem.is_obj_function(obj):
 			obj_name_markup = ":wtrl_func:"
+		else:
+			obj_name_markup = ":wtrl_var:"
+
+		node_note = nodes.note(classes=["wtrl_scope_filtered_object"])
 		node_paragraph = nodes.paragraph()
-		node_omit_note = nodes.inline()
-		node_omit_note.extend(ctx.parse(node_omit_note, 0, f"Note: Skipping {obj_name_markup}`{obj_name}` because of scope rule."))
-		node_paragraph += node_omit_note
-		return [node_paragraph]
+		node_paragraph.extend(ctx.parse(
+			node_paragraph,
+			0,
+			f"Skipping {obj_name_markup}`{obj_name}` because of the current Waterloo scope.",
+			))
+		node_note += node_paragraph
+		return [node_note]
 	def parse_text(parent: nodes.Element, text: str) -> List[nodes.Node]:
 		return ctx.parse(parent, 0, resolve_markup(text, ctx))
 
@@ -563,7 +592,7 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 	objname_q = mod_docitem.get_obj_fully_qualified_name(obj)
 	anchor = mod_docitem.build_anchor(obj)
 
-	if ctx.config and ctx.config.wtrl_verbose_current_object:
+	if ctx.config and ctx.config.wtrl_current_object_logging_enabled:
 		logger.info(f"Waterloo: now processing '{objname_q}'")
 
 
@@ -1040,12 +1069,16 @@ Raises:
 	tr = ctx.tr
 	session = mod_docitem.DocSession()
 	with mod_docitem.traced_section(tr, qname):
-		module_obj, _, _, _ = resolve_qualified_name(ctx, qname)
+		try:
+			module_obj, _, _, _ = resolve_qualified_name(ctx, qname)
+		except Exception as e:
+# Catch expected resolver failures, but do not mask hard process-control exceptions.
+			return _emit_runtime_diagnostics(app, qname, lineno, f"{qname} cannot be resolved: {str(e)}")
 		if not mod_docitem.is_obj_module(module_obj):
-			raise RuntimeError(f"{qname} does not resolve to a module.")
+			return _emit_runtime_diagnostics(app, qname, lineno, f"{qname} does not resolve to a module.")
 		mod_doc_txt = mod_docitem.get_obj_docstring(module_obj)
-		if not mod_doc_txt:
-			raise RuntimeError(f"{qname} has no docstring.")
+		if not mod_doc_txt or not mod_doc_txt.strip():
+			return _emit_runtime_diagnostics(app, qname, lineno, f"{qname} has no docstring.")
 # Todo: think about diagnostics channel.
 		try:
 			tree_mod = mod_docitem.parse_indent_docstring(tr,mod_doc_txt, session)
@@ -1053,7 +1086,7 @@ Raises:
 			di_mod.parse(tr,tree_mod)
 			mod_docitem.validate_docstring(tr,module_obj, di_mod, session=session)
 		except BaseException as e:
-			return _emit_diagnostics(tr,app,qname,lineno)
+			return _emit_tracer_diagnostics(tr,app,qname,lineno)
 		return build_sphinx_nodes(ctx, module_obj, di_mod)
 
 def wtrl_build_autodoc_function_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
@@ -1094,24 +1127,28 @@ Raises:
 	session = mod_docitem.DocSession()
 
 	with mod_docitem.traced_section(tr, qname):
-		function_obj, _, _, _ = resolve_qualified_name(ctx, qname)
+		try:
+			function_obj, _, _, _ = resolve_qualified_name(ctx, qname)
+		except Exception as e:
+# Catch expected resolver failures, but do not mask hard process-control exceptions.
+			return _emit_runtime_diagnostics(app, qname, lineno, f"{qname} cannot be resolved: {str(e)}")
 		if not callable(function_obj):
-			raise RuntimeError(f"{qname} does not resolve to a callable.")
+			return _emit_runtime_diagnostics(app, qname, lineno, f"{qname} does not resolve to a callable.")
 		func_doc_txt = mod_docitem.get_obj_docstring(function_obj)
-		if not func_doc_txt:
-			raise RuntimeError(f"{qname} has no docstring.")
+		if not func_doc_txt or not func_doc_txt.strip():
+			return _emit_runtime_diagnostics(app, qname, lineno, f"{qname} has no docstring.")
 
 		try:
 			tree_meth = mod_docitem.parse_indent_docstring(tr,func_doc_txt, session)
 		except BaseException as e:
-			return _emit_diagnostics(tr,app,qname,lineno)
+			return _emit_tracer_diagnostics(tr,app,qname,lineno)
 		if mod_docitem.get_profile_of_tree(mod_docitem.tracer(),tree_meth) in ("function","method"):
 			try:
 				di_meth = mod_docitem.docitem_docstring_method()
 				di_meth.parse(tr,tree_meth)
 				mod_docitem.validate_docstring(tr,function_obj, di_meth, session=session)
 			except BaseException as e:
-				return _emit_diagnostics(tr,app,qname,lineno)
+				return _emit_tracer_diagnostics(tr,app,qname,lineno)
 			return build_sphinx_nodes(ctx, function_obj, di_meth)
 		else:
 			try:
@@ -1119,7 +1156,7 @@ Raises:
 				di_inhmeth.parse(tr,tree_meth)
 				mod_docitem.validate_docstring(tr,function_obj, di_inhmeth, session=session)
 			except BaseException as e:
-				return _emit_diagnostics(tr,app,qname,lineno)
+				return _emit_tracer_diagnostics(tr,app,qname,lineno)
 			return build_sphinx_nodes(ctx, function_obj, di_inhmeth)
 
 def wtrl_build_autodoc_class_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
@@ -1159,19 +1196,23 @@ Raises:
 	tr = ctx.tr
 	session = mod_docitem.DocSession()
 	with mod_docitem.traced_section(tr, qname):
-		obj, _, _, _ = resolve_qualified_name(ctx, qname)
+		try:
+			obj, _, _, _ = resolve_qualified_name(ctx, qname)
+		except Exception as e:
+# Catch expected resolver failures, but do not mask hard process-control exceptions.
+			return _emit_runtime_diagnostics(app, qname, lineno, f"{qname} cannot be resolved: {str(e)}")
 		if not mod_docitem.is_obj_class(obj):
-			raise RuntimeError(f"{qname} is not a class.")
+			return _emit_runtime_diagnostics(app, qname, lineno, f"{qname} does not resolve to a class.")
 		class_doc_txt = mod_docitem.get_obj_docstring(obj)
-		if not class_doc_txt:
-			raise RuntimeError(f"{qname} has no docstring.")
+		if not class_doc_txt or not class_doc_txt.strip():
+			return _emit_runtime_diagnostics(app, qname, lineno, f"{qname} has no docstring.")
 		try:
 			tree_mod = mod_docitem.parse_indent_docstring(tr,class_doc_txt, session)
 			di_node = mod_docitem.docitem_docstring_class()
 			di_node.parse(tr,tree_mod)
 			mod_docitem.validate_docstring(tr,obj, di_node, session=session)
 		except BaseException as e:
-			return _emit_diagnostics(tr,app,qname,lineno)
+			return _emit_tracer_diagnostics(tr,app,qname,lineno)
 		return build_sphinx_nodes(ctx, obj,di_node)
 
 def wtrl_build_autodoc_class_full_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
@@ -1212,13 +1253,19 @@ Raises:
 	tr = ctx.tr
 	session = mod_docitem.DocSession()
 	with mod_docitem.traced_section(tr, qname):
-		obj, _, _, _ = resolve_qualified_name(ctx, qname)
+		try:
+			obj, _, _, _ = resolve_qualified_name(ctx, qname)
+		except Exception as e:
+# Catch expected resolver failures, but do not mask hard process-control exceptions.
+			return _emit_runtime_diagnostics(app, qname, lineno, f"{qname} cannot be resolved: {str(e)}")
 		if not mod_docitem.is_obj_class(obj):
-			raise RuntimeError(f"{qname} is not a class.")
+			return _emit_runtime_diagnostics(app, qname, lineno, f"{qname} does not resolve to a class.")
 		class_doc_txt = mod_docitem.get_obj_docstring(obj)
-		if not class_doc_txt:
-			raise RuntimeError(f"{qname} has no docstring.")
+		if not class_doc_txt or not class_doc_txt.strip():
+			return _emit_runtime_diagnostics(app, qname, lineno, f"{qname} has no docstring.")
 		try:
 			return build_sphinx_nodes_full(ctx, obj, session=session)
+		except RuntimeError as e:
+			return _emit_runtime_diagnostics(app, qname, lineno, str(e))
 		except Exception as e:
-			return _emit_diagnostics(tr,app,qname,lineno)
+			return _emit_tracer_diagnostics(tr,app,qname,lineno)

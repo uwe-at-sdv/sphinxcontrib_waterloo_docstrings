@@ -175,11 +175,11 @@ def wtrl_build_push_current_module_nodes(app: SphinxAppProtocol | Any, inliner: 
 		mod_obj, _, _, _ = resolve_qualified_name(ctx, qname)
 		if not mod_docitem.is_obj_module(mod_obj):
 			raise RuntimeError(f"{qname} does not resolve to a module.")
-		if app.config and app.config.wtrl_verbose_state_change:
+		if app.config and app.config.wtrl_state_change_logging_enabled:
 			logger.info(f"Waterloo: pushing current module '{qname}'")
 		push_current_module(qname, env=ctx.env)
 		msg = f"Classes and functions below this point implicitly belong to package/module {ctx.add_role_mod(qname)}. "
-		if app.config.wtrl_verbose_state_change:
+		if app.config.wtrl_state_change_admonitions_enabled:
 			return [_make_context_admonition(inliner, lineno, "Waterloo module context", msg, ["wtrl-current-module-message", "wtrl-current-module-push"])]
 		else:
 			return []
@@ -228,11 +228,11 @@ def wtrl_build_push_current_class_nodes(app: SphinxAppProtocol | Any, inliner: I
 		cls_obj, _, _, _ = resolve_qualified_name(ctx, qname)
 		if not mod_docitem.is_obj_class(cls_obj):
 			raise RuntimeError(f"{qname} does not resolve to a class.")
-		if app.config and app.config.wtrl_verbose_state_change:
+		if app.config and app.config.wtrl_state_change_logging_enabled:
 			logger.info(f"Waterloo: pushing current class '{qname}'")
 		push_current_class(qname, env=ctx.env)
 		msg = f"Methods below this point implicitly belong to class {ctx.add_role_class(qname)}."
-		if app.config.wtrl_verbose_state_change:
+		if app.config.wtrl_state_change_admonitions_enabled:
 			return [_make_context_admonition(inliner, lineno, "Waterloo class context", msg, ["wtrl-current-class-message", "wtrl-current-class-push"])]
 		else:
 			return []
@@ -276,11 +276,11 @@ def wtrl_build_push_current_scope_nodes(app: SphinxAppProtocol | Any, inliner: I
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	tr = ctx.tr
 	with mod_docitem.traced_section(tr, scope_tag):
-		if app.config and app.config.wtrl_verbose_state_change:
+		if app.config and app.config.wtrl_state_change_logging_enabled:
 			logger.info(f"Waterloo: pushing current scope '{scope_tag}'")
 		push_current_scope(scope_tag, env=ctx.env)
 		msg = f"Scope below this point is set to {ctx.add_role_var(scope_tag)}."
-		if app.config.wtrl_verbose_state_change:
+		if app.config.wtrl_state_change_admonitions_enabled:
 			return [_make_context_admonition(inliner, lineno, "Waterloo scope context", msg, ["wtrl-current-scope-message", "wtrl-current-scope-push"])]
 		else:
 			return []
@@ -335,7 +335,7 @@ def wtrl_build_pop_current_module_nodes(app: SphinxAppProtocol | Any, inliner: I
 		text_top = get_current_module(ctx.env)
 		if text_top != qname:
 			raise RuntimeError(f"module stack push/pop mismatch, expected {text_top} got {qname}.")
-		if app.config and app.config.wtrl_verbose_state_change:
+		if app.config and app.config.wtrl_state_change_logging_enabled:
 			logger.info(f"Waterloo: popping current module '{qname}'")
 		pop_current_module(ctx.env)
 		if has_current_module(ctx.env):
@@ -343,7 +343,7 @@ def wtrl_build_pop_current_module_nodes(app: SphinxAppProtocol | Any, inliner: I
 			msg = f"Default module qualifier {ctx.add_role_mod(text_top)} ends here. New default: {ctx.add_role_mod(new_top)}. "
 		else:
 			msg = f"Default module qualifier {ctx.add_role_mod(text_top)} ends here. No default module active. "
-		if app.config.wtrl_verbose_state_change:
+		if app.config.wtrl_state_change_admonitions_enabled:
 			return [_make_context_admonition(inliner, lineno, "Waterloo module context", msg, ["wtrl-current-module-message", "wtrl-current-module-pop"])]
 		else:
 			return []
@@ -398,7 +398,7 @@ def wtrl_build_pop_current_class_nodes(app: SphinxAppProtocol | Any, inliner: In
 		text_top = get_current_class(ctx.env)
 		if text_top != qname:
 			raise RuntimeError(f"class stack push/pop mismatch, expected {text_top} got {qname}.")
-		if app.config and app.config.wtrl_verbose_state_change:
+		if app.config and app.config.wtrl_state_change_logging_enabled:
 			logger.info(f"Waterloo: popping current class '{qname}'")
 		pop_current_class(ctx.env)
 		if has_current_class(ctx.env):
@@ -406,7 +406,7 @@ def wtrl_build_pop_current_class_nodes(app: SphinxAppProtocol | Any, inliner: In
 			msg = f"Default class qualifier {ctx.add_role_var(text_top)} ends here. New default: {ctx.add_role_class(new_top)}. "
 		else:
 			msg = f"Default class qualifier {ctx.add_role_var(text_top)} ends here. No default class active. "
-		if app.config.wtrl_verbose_state_change:
+		if app.config.wtrl_state_change_admonitions_enabled:
 			return [_make_context_admonition(inliner, lineno, "Waterloo class context", msg, ["wtrl-current-class-message", "wtrl-current-class-pop"])]
 		else:
 			return []
@@ -460,7 +460,7 @@ def wtrl_build_pop_current_scope_nodes(app: SphinxAppProtocol | Any, inliner: In
 			raise RuntimeError(f"Unknown scope '{scope_tag}'. Expected one of {list(mod_docitem.SCOPE_TAG_MAP.keys())}.")
 		if text_top_scope !=  mod_docitem.SCOPE_TAG_MAP[scope_tag]:
 			raise RuntimeError(f"scope stack push/pop mismatch, expected {text_top_scope} got {scope_tag}.")
-		if app.config and app.config.wtrl_verbose_state_change:
+		if app.config and app.config.wtrl_state_change_logging_enabled:
 			logger.info(f"Waterloo: popping current scope '{scope_tag}'")
 		pop_current_scope(env=ctx.env)
 		if has_current_scope(ctx.env):
@@ -468,7 +468,7 @@ def wtrl_build_pop_current_scope_nodes(app: SphinxAppProtocol | Any, inliner: In
 			msg = f"Scope qualifier {ctx.add_role_var(scope_tag)} ends here. New current scope: {ctx.add_role_var(mod_docitem.Scope(new_scope).name.lower())}. "
 		else:
 			msg = f"Scope qualifier {ctx.add_role_var(scope_tag)} ends here. No current scope active. "
-		if app.config.wtrl_verbose_state_change:
+		if app.config.wtrl_state_change_admonitions_enabled:
 			return [_make_context_admonition(inliner, lineno, "Waterloo scope context", msg, ["wtrl-current-scope-message", "wtrl-current-scope-pop"])]
 		else:
 			return []

@@ -93,11 +93,9 @@ Notes:
 		* Example: "We recommend to install Sphinx theme |pkg|`furo`."
 		* Example: "Import module |pkg|`sdv.doc.waterloo`|op|`.`|mod|`docitem_helper`..."
 	Tag:
-		* Rendering: |tag|`abc`, |tag|`ABC`
-		* Code: |lit|`|tag|`abc``, |lit|`|tag|`ABC``
-		* Semantics: A tag in XML; maybe the key a compound object in JSON or a section marker in TOML.
-		* Note: Do not use this yet. We will remove the angle brackets in the near future\
-		in order to broaden the range of applications.
+		* Rendering: |tag|`<abc>`, or <|tag|`ABC` |attr|`attr` = |value|`"value"`>
+		* Code: |lit|`|tag|`<abc>``, or <|lit|`|tag|`ABC` |attr|`attr` = |value|`"value"``>
+		* Semantics: A tag in XML; maybe the key of a compound object in JSON or a section marker in TOML.
 	Term:
 		* Rendering: |term|`Unicorn`
 		* Code: |lit|`|term|`Unicorn``
@@ -111,8 +109,9 @@ Notes:
 	URL:
 		* Rendering: |url|`https://github.com`
 		* Code: |lit|`|url|`https://github.com``
-		* Semantics: An URL
-		* Example: "Download the package from |url|`https://github.com/acme-software/fancy_stuff`."
+		* Semantics: A non-clickable URL
+		* Example: "The Schema ID is |url|`https://sci-d-vis.com/schema/wtrl-json-0.1.0.schema.json`."
+		* Note: For clickable URLs, use the |ref| role instead.
 	Value:
 		* Rendering: |value|`12345`, |value|`"ABC"`
 		* Code: |lit|`|value|`12345``, |lit|`|value|`"ABC"``
