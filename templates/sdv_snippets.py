@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 """Interpreter fuer die Snippet-Sprache (siehe snippets_syntax.txt).
 
+# Version: 1.2.0
+# - 1.2.0 [2026-07-21]	Function write returns content.
+# - 1.1.0 [2026-07-21]	Function lit for literals.
+# - 1.0.0 [2026-07-21]	initial
+
 Ein Snippet-Dokument ist gueltiges JSON. Jeder Knoten ist entweder
 ein String-Literal oder ein Dict mit genau einem $-Schluessel (= Funktion).
-Auswertung ist ein Tree-Walk; jeder Knoten evaluiert zu einem String,
-ausser $write (Seiteneffekt, liefert None).
+Auswertung ist ein Tree-Walk; jeder Knoten evaluiert zu einem String.
 
 Aufruf:
     python sdv_snippets.py <snippet.json> [--option wert ...]
@@ -52,8 +56,9 @@ class Interp:
         return self._resolve(self.eval(a["path"])).read_text().rstrip("\n")
 
     def fn_write(self, a):
-        self._resolve(self.eval(a["path"])).write_text(self.eval(a["content"]) + "\n")
-        return None
+        content = self.eval(a["content"])
+        self._resolve(self.eval(a["path"])).write_text(content + "\n")
+        return content
 
     def fn_opt(self, a):
         name = self.eval(a["arg"])
@@ -75,6 +80,11 @@ class Interp:
             if not k.startswith("$"):
                 s = s.replace(k, self.eval(v))
         return s
+
+    def fn_lit(self, a):
+        if not isinstance(a, str):
+            raise SyntaxError(f"$lit erwartet ein String-Literal: {a!r}")
+        return a
 
 
 def run(doc: dict, opts: dict[str, str], doc_dir: pathlib.Path):

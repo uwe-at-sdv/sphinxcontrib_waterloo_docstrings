@@ -2,7 +2,7 @@
 "$basedir":STRING_VALUE
 
 # Erzeuge ein File (truncate) und schreibe content.
-# Gib nichts zurueck.
+# Gib content zurueck.
 "$write":{
 	"path":STRING_VALUE,
 	"content":STRING_VALUE
@@ -12,6 +12,11 @@
 "$read":{
 	"path":STRING_VALUE,
 	}
+
+# Gib STRING_LITERAL unveraendert als String zurueck.
+# Nuetzlich, wenn an einer Position syntaktisch ein Funktionsaufruf
+# gebraucht wird, z.B. als Subjekt von $replace.
+"$lit":STRING_LITERAL
 
 # Suche in STRING_VALUE_1 nach STRING_LITERAL und gib den
 # String zurueck bei dem es durch STRING_VALUE_2 ersetzt ist.
