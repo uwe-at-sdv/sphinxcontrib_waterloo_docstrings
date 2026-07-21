@@ -1,13 +1,15 @@
+.. _chapter_reference:
+
 Reference
 =========
 
-In this chapter we present the self-referential documentation
-of the sphinx extension, by means of the sphinx extension.
-For state changes we have added notes indicating the reequired reST-code.
-Note that state changes require the fully qualified name of the module/class
-to be push to/popped from the state stack.
+This chapter presents the self-referential documentation of the Sphinx
+extension by means of the Sphinx extension itself. For state changes, the
+examples include notes that show the required reST code. Note that state
+changes require the fully qualified name of the module or class that is pushed
+to or popped from the state stack.
 
-The code for the following state change is
+The code for the following state change is:
 
 .. code:: rst
 
@@ -15,7 +17,7 @@ The code for the following state change is
 
 .. wtrl_push_current_scope:: core
 
-The code for the following state change is
+The code for the following state change is:
 
 .. code:: rst
 
@@ -26,9 +28,15 @@ The code for the following state change is
 Module :wtrl_mod:`extension`
 ----------------------------
 
+The code for the following docstring representation is:
+
+.. code:: rst
+
+	.. wtrl_autodoc_module:: extension
+
 .. wtrl_autodoc_module:: extension
 
-The code for the following state change is
+The code for the following state change is:
 
 .. code:: rst
 
@@ -41,6 +49,12 @@ Helper
 
 Function :wtrl_func:`resolve_qualified_name`
 ............................................
+
+The code for the following docstring representation is
+
+.. code:: rst
+
+	.. wtrl_autodoc_function:: resolve_qualified_name
 
 .. wtrl_autodoc_function:: resolve_qualified_name
 
@@ -129,10 +143,10 @@ Function :wtrl_func:`wtrl_attr_role`
 Similar roles
 .............
 
-There are around 15 more role implementations like :wtrl_func:`wtrl_attr_role`,
-which only differ in the CSS class passed and the :wtrl_pkg:`docutil` node classes
-:wtrl_class:`literal` vs :wtrl_class:`inline`. We skip these here in order
-to keep the document at low redundancy.
+There are around 15 more role implementations like :wtrl_func:`wtrl_attr_role`.
+They differ only in the CSS class passed and in the :wtrl_pkg:`docutils` node
+classes :wtrl_class:`literal` versus :wtrl_class:`inline`. We omit them here
+to keep the document low in redundancy.
 
 Function :wtrl_func:`wtrl_var_type_role`
 ........................................
@@ -142,7 +156,7 @@ Function :wtrl_func:`wtrl_var_type_role`
 
 
 
-The code for the following state change is
+The code for the following state change is:
 
 .. code:: rst
 

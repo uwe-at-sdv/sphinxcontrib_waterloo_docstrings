@@ -6,19 +6,19 @@ Roles
 Semantic Markup
 ---------------
 
-Das folgende Modul demonstriert, wie man Roles in Docstrings verwendet.
-Die Schreibweise innerhalb von Docstrings ist allgemein :wtrl_lit:`|role|\`par\``, also
-der Name der Role in Pipedelimitern gefolgt von einem stringwertigen Parameter
-von Backticks umrahmt.
+The following module demonstrates how to use roles in docstrings.
+The general Waterloo notation inside docstrings is
+:wtrl_lit:`|role|\`par\``, that is, the role name in pipe delimiters followed
+by a string-valued parameter enclosed in backticks.
 
 .. wtrl_autodoc_module:: doc_roles
 
-Der Waterloo-Compiler uebersetzt diese Roles in normale reST-Roles.
-Diese Roles kann man auch im Fliesstext verwenden. Thematisch
-gibt es dabei Ueberschneidungen mit dem Grundbestand von Sphinx.
-Es bleibt dem Autor ueberlassen, welche Roles er verwenden moechte.
-Fuer die Maschinenlesbarkeit ist nur entscheidend, dass die spezielle
-Notation von Waterloo in Docstrings verwendet wird.
+The Waterloo renderer converts these roles into ordinary reST roles.
+You can also use these roles in running text. Some of them overlap
+conceptually with the standard Sphinx role set. It is up to the author to
+choose the roles that best express the intended meaning. For machine
+readability, the important part is simply that the Waterloo notation is used
+inside docstrings.
 
 .. list-table::
 	:header-rows: 1
@@ -73,10 +73,11 @@ Notation von Waterloo in Docstrings verwendet wird.
 Normativity and value tokens
 ----------------------------
 
-The Waterloo Docstring format offers a certain set of normativity keywords inspired by
-RFC-2119 (omitting however MAY NOT, since this is semantically ambiguous).
-Also, there is a small set of values in tokenzied form. The following module rendering
-gives a comprehensive overview on these tokens.
+The Waterloo Docstring format offers a fixed set of normativity keywords
+inspired by RFC 2119. `MAY NOT` is intentionally omitted because it is
+semantically ambiguous in this context. The format also defines a small set of
+values in tokenized form. The following module rendering gives a compact
+overview of these tokens.
 
 .. wtrl_autodoc_module:: doc_normativity_and_value_tokens
 
@@ -84,25 +85,26 @@ gives a comprehensive overview on these tokens.
 Cross referencing
 -----------------
 
-Mit den folgenden Klassen des Module :wtrl_mod:`doc_cross_referencing` in :wtrl_file:`${REPO}/examples-python`
-testen wir umfassend die diversen Faelle von Cross-References.
+The following classes from the module :wtrl_mod:`doc_cross_referencing` in
+:wtrl_file:`${REPO}/examples-python` demonstrate the different forms of
+cross-references.
 
-* Referenzen auf andere Objekte innerhalb des Moduls
-	* Mittels Identifier
-	* Mittels Qualified Identifier (Modul + Objekt)
-* Referenzen auf andere Objekte ausserhalb des Moduls
-	* Mittels Fully Qualified Identifier (Package + Modul + Objekt)
-* Referenzen auf Label im umgebenden Sphinx-Dokument
-	* im selben File
-	* in einem anderen File
-* Referenzen auf Web-Seiten (HTTP / HTTPS)
-* Referenzen auf nicht-existente Targets
+* References to other objects within the module
+	* By identifier
+	* By qualified identifier (module + object)
+* References to other objects outside the module
+	* By fully qualified identifier (package + module + object)
+* References to labels in the surrounding Sphinx document
+	* in the same file
+	* in a different file
+* References to web pages (HTTP / HTTPS)
+* References to non-existent targets
 
-Beachte, auf welche Weise die Referenz aufgebaut wird:
+Pay attention to how the reference target is written:
 
-* :wtrl_lit:`|ref|`Label <wtrl://...>`` -- Schema :wtrl_lit:`wtrl://` fuer Objekte mit Waterloo Docstrings.
-* :wtrl_lit:`|ref|`label <http[s]://...>`` -- Schema :wtrl_lit:`http://` oder :wtrl_lit:`https://` fuer Webseiten
-* :wtrl_lit:`|ref|`Label <...>`` -- ohne Schema, fuer Referenzen innerhalb des Projekts
+* :wtrl_lit:`|ref|`Label <wtrl://...>`` -- use :wtrl_lit:`wtrl://` for Waterloo docstring objects.
+* :wtrl_lit:`|ref|`label <http[s]://...>`` -- use :wtrl_lit:`http://` or :wtrl_lit:`https://` for web pages.
+* :wtrl_lit:`|ref|`Label <...>`` -- omit the scheme for references within the project.
 
 
 .. wtrl_push_current_module:: doc_cross_referencing

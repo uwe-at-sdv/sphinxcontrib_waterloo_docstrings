@@ -1,30 +1,28 @@
 .. _chapter_misc:
 
-Miscellaneaous
-==============
+Miscellaneous
+=============
 
 Escaping
 --------
 
-In diesem Abschnitt testen wir, wie spezielle reST-Zeichen
-im Sphinx-Backend behandelt werden. Das Ziel ist, zu vermeiden,
-dass die Waterloo-Syntax durch das Backend beeinflusst wird.
-Intern bedeutet das, dass wir kritische reST-Zeichen escapen muessen.
-Unser Testmodul ist:
+In this section we test how special reST characters are handled by the
+Sphinx backend. The goal is to avoid letting the backend influence the
+Waterloo syntax. Internally, this means that we have to escape critical
+reST characters. Our test module is:
 
 .. literalinclude:: ../../examples-python/doc_escape.py
 	:language: python
 	:tab-width: 4
 
-Der Docstring wird folgendermassen gerendert:
+The docstring is rendered as follows:
 
 .. wtrl_autodoc_module:: doc_escape
 
-Bestimmte Randfaelle wie in Sektion "Malformed Waterloo"
-sind erwartbar auch in der Browserdarstellung problematisch.
-Das tritt in der Praxis jedoch nur in dem exotischen Metafall auf,
-dass man "falsche" Waterloo-Syntax in einem Docstring erklaeren
-moechte.
+Certain edge cases, such as the section "Malformed Waterloo", are expected to
+be problematic in the browser rendering as well. In practice, that only
+matters in the unusual meta-case where you want to explain "wrong" Waterloo
+syntax in a docstring.
 
 Itemization
 -----------
@@ -34,5 +32,4 @@ Itemization
 	:tab-width: 4
 
 .. wtrl_autodoc_function:: doc_enumeration.myfunc
-
 

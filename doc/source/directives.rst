@@ -1,21 +1,45 @@
 .. _chapter_directives:
 
-Directives (todo)
-=================
+Directives
+==========
 
-Es gibt drei Familien von Direktiven, die im folgenden besprochen werden,
+There are three families of directives, which are discussed below:
 
-* Direktiven zum Rendern von Docstrings
-* Direktiven mit denen man den Zustand des Kontextes aendern kann innerhalb dessen das Dokument kompiliert wird.
-* Direktiven zum Rendern von Signaturen
+* Directives for rendering docstrings
+* Directives that allow you to modify the state of the context during document compilation.
+* Directives for rendering signatures
 
-Docstring rendering directives (todo)
--------------------------------------
+Docstring rendering directives
+------------------------------
+
+The directives for rendering docstrings are:
+
+* :wtrl_func:`.. wtrl_autodoc_module::` :wtrl_var:`<module-identifier>`
+* :wtrl_func:`.. wtrl_autodoc_class::` :wtrl_var:`<class-identifier>`
+* :wtrl_func:`.. wtrl_autodoc_function::` :wtrl_var:`<function-identifier>`
+* :wtrl_func:`.. wtrl_autodoc_method::` :wtrl_var:`<method-identifier>`
+
+and the special directive
+
+* :wtrl_func:`.. wtrl_autodoc_class_full::` :wtrl_var:`<class-identifier>`
+
+The argument is a plain, partially or fully qualified identifier.
+In combination with the :ref:`state changing directives <section_state_changing_directives>`
+a plain or partially qualified identifier is sufficient. The extension module
+:ref:`reference <chapter_reference>` demonstrates the effect of these directives.
+Also, please have a look at the showcases for
+
+* `the classic theme <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/showcase/classic/>`_
+* `the alabaster theme <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/showcase/alabaster/>`_
+* `the furo theme <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/showcase/furo/>`_
+
+
+.. _section_state_changing_directives:
 
 State changing directives
 -------------------------
 
-Die zustandsaendernden Direktiven sind:
+The state changing directives are:
 
 * :wtrl_func:`.. wtrl_push_current_module::` :wtrl_var:`<module-identifier>`
 * :wtrl_func:`.. wtrl_pop_current_module::` :wtrl_var:`<module-identifier>`
@@ -24,16 +48,16 @@ Die zustandsaendernden Direktiven sind:
 * :wtrl_func:`.. wtrl_push_current_scope::` :wtrl_var:`<scope-symbol>`
 * :wtrl_func:`.. wtrl_pop_current_scope::` :wtrl_var:`<scope-symbol>`
 
-Diese Direktiven legen einen Wert auf den Module-, Class- oder Scope-Stack
-oder entfernen den obersten Wert. Beim Entfernen wird als Konsistenztest
-die Angabe des zu entfernenden Werts verlangt.
+These directives push a value onto the module, class, or scope stack or remove
+the top value. When removing a value, a consistency check requires that the
+value to be removed be specified.
 
 
 Module and class stack
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Die zustandsaendernden Direktiven dienen dazu, bei langen Listen von Render-Direktiven
-die Nennung der Identifier zu vereinfachen. Statt Klassen so zu dokumentieren
+The state-changing directives are used to simplify the listing of identifiers
+in long lists of render directives. Instead of documenting classes as follows
 
 .. code:: rst
 
@@ -45,8 +69,9 @@ die Nennung der Identifier zu vereinfachen. Statt Klassen so zu dokumentieren
 
 	.. wtrl_autodoc_class:: sdv.doc.waterloo.docitem_helper.cls<n>
 	
-legt man fest, dass :wtrl_mod:`sdv.doc.waterloo.docitem_helper` bis auf weiteres das Default-Modul ist,
-bezueglich dessen Klassennamen aufgeloest werden:
+you specify that, in this example, :wtrl_mod:`sdv.doc.waterloo.docitem_helper`
+is the default module until the next state change, and that its class names are
+resolved as follows:
 
 .. code:: rst
 
@@ -62,17 +87,17 @@ bezueglich dessen Klassennamen aufgeloest werden:
 
 	.. wtrl_pop_current_module:: sdv.doc.waterloo.docitem_helper
 
-Im Dokument werden diese Zustandwechsel so dargestellt.
+In the document, these state changes are represented as follows:
 
 .. wtrl_push_current_module:: sdv.doc.waterloo.docitem_helper
 
-und
+and
 
 .. wtrl_pop_current_module:: sdv.doc.waterloo.docitem_helper
 
-Intern werden die Modul-Identifier in einem Stack verwaltet. Einen solchen Stack gibt
-es auch fuer Klassen, so dass man auch bei der Dokumentation von Methoden und eingebetteten
-Klassen etwas weniger Redundanz hat. Statt
+Internally, the module identifiers are managed in a stack. A similar stack
+also exists for classes, so there is slightly less redundancy when documenting
+methods and nested classes. Instead of
 
 .. code:: rst
 
@@ -84,11 +109,13 @@ Klassen etwas weniger Redundanz hat. Statt
 
 	.. wtrl_autodoc_method:: sdv.doc.waterloo.docitem_helper.tracer.meth<n>
 
-schreibt man	
+you write	
 
 .. code:: rst
 
-	.. wtrl_push_current_class:: sdv.doc.waterloo.docitem_helper.tracer
+	.. wtrl_push_current_module:: sdv.doc.waterloo.docitem_helper
+
+	.. wtrl_push_current_class:: tracer
 
 	.. wtrl_autodoc_method:: meth0
 
@@ -98,64 +125,72 @@ schreibt man
 	
 	.. wtrl_autodoc_method:: meth<n>
 
-	.. wtrl_pop_current_module:: sdv.doc.waterloo.docitem_helper.tracer
+	.. wtrl_pop_current_class:: tracer
 
-Analog zum Modulstack werden Aenderungen im Dokument dargestellt:
+	.. wtrl_pop_current_module:: sdv.doc.waterloo.docitem_helper
 
-.. wtrl_push_current_class:: sdv.doc.waterloo.docitem_helper.tracer
+Changes in the document are displayed in a manner analogous to the module and
+class stacks:
 
-und
+.. wtrl_push_current_module:: sdv.doc.waterloo.docitem_helper
 
-.. wtrl_pop_current_class:: sdv.doc.waterloo.docitem_helper.tracer
+.. wtrl_push_current_class:: tracer
+
+and
+
+.. wtrl_pop_current_class:: tracer
+
+.. wtrl_pop_current_module:: sdv.doc.waterloo.docitem_helper
 
 Scope stack
 ~~~~~~~~~~~
 
-Die dritte Direktive in dieser Familie dient dazu, den Scope festzulegen.
-Dokumentationen aus Waterloo Docstrings koennen auf eine bestimmte Zielgruppe
-zugeschnitten werden, die durch den Scope zum Ausdruck gebracht wird.
-(siehe <Link zum Waterloo-Standard-Dokument>)
+The third directive in this family is used to define the scope. Documentation
+generated from Waterloo docstrings can be tailored to a specific target
+audience, which is expressed by the scope, as specified in the Waterloo
+`standard document <https://uwe-at-sdv.github.io/sdv_doc_waterloo/>`_.
 
-Durch die Direktive
+The directive
 
 .. code:: rst
 
 	.. wtrl_push_current_scope:: public
 
-als Beispiel wird festgelegt, dass ab jetzt nur noch Objekte mit dem Scope :wtrl_value:`public`
-dargestellt werden. Die Scopes bilden eine (partielle geordnete) Hierarchie
+specifies, as an example, that from now on only objects with the scope
+:wtrl_value:`public` will be displayed. The scopes form a partially ordered
+hierarchy
 
 .. code:: text
 
 	core > extension > public
 
-wie im folgenden klar weden sollte. Der Aufruf
+as should become clear below. The call
 
 .. code:: rst
 
 	.. wtrl_push_current_scope:: extension
 
-zeigt alle Objekte, die mit :wtrl_value:`extension` oder :wtrl_value:`public` markiert sind.
-Der Aufruf
+pushes the scope down one level. The call
 
 .. code:: rst
 
 	.. wtrl_push_current_scope:: core
 
-zeigt alle Objekte, also :wtrl_value:`core`, :wtrl_value:`extension` und :wtrl_value:`public`.
-Auch diese Zustandswechsel werden im Dokument dargestellt.
+displays all objects marked with :wtrl_value:`extension` or
+:wtrl_value:`public`. These state changes are also displayed in the document.
 
 .. wtrl_push_current_scope:: extension
 
 .. wtrl_pop_current_scope:: extension
 
-In der Praxis wird man oft den Scope zu Beginn des Dokuments festlegen und danach nicht mehr aendern.
+In practice, you will often set the scope at the beginning of the document and
+leave it unchanged afterward.
 
 
-Directives for rendering callable signature
--------------------------------------------
+Directives for rendering callable signatures
+--------------------------------------------
 
-Die Direktiven zum Rendern von Signaturen sind:
+The directives for rendering signatures are:
 
 * :wtrl_func:`.. wtrl_function_signature::` :wtrl_var:`<function-identifier>`
 * :wtrl_func:`.. wtrl_function_signature_block::` :wtrl_var:`<function-identifier>`
@@ -188,9 +223,9 @@ a block element is more appropriate:
 
 .. wtrl_pop_current_module:: sphinxcontrib.waterloo_docstrings
 
-For methods we have similar directives. As an example we render
-the signature of a method in the tracer class from module :wtrl_mod:`docitem_helper`
-in package :wtrl_pkg:`sdv.doc.waterloo`:
+For methods we have similar directives. As an example we render the signature
+of a method in the tracer class from module :wtrl_mod:`docitem_helper` in
+package :wtrl_pkg:`sdv.doc.waterloo`:
 
 .. code:: rst
 

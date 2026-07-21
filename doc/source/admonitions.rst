@@ -1,10 +1,12 @@
-.. _admonitions:
+.. _chapter_admonitions:
 
 Admonitions
 ===========
 
 Error admonitions
 -----------------
+
+The following examples show how the renderer reports misuse or invalid input.
 
 Inappropriate directive
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -51,6 +53,10 @@ Parsing or validation error
 Info admonitions
 ----------------
 
+The following example shows an informational admonition emitted by the renderer.
+
+.. _subsection_out_of_scope:
+
 Out of scope
 ~~~~~~~~~~~~
 
@@ -59,13 +65,15 @@ Out of scope
 Other admonitions
 -----------------
 
+The following example shows a state-change admonition.
+
 State change
 ~~~~~~~~~~~~
 
 .. wtrl_push_current_module:: doc_errors
 
-.. wtrl_push_current_class:: doc_errors.X_no_docstring
+.. wtrl_push_current_class:: X_no_docstring
 
-.. wtrl_pop_current_class:: doc_errors.X_no_docstring
+.. wtrl_pop_current_class:: X_no_docstring
 
 .. wtrl_pop_current_module:: doc_errors

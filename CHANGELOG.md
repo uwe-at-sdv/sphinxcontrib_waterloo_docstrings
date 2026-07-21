@@ -5,6 +5,8 @@ Format:
 - VERSION [YYYY-MM-DD]: Summary.
 
 #----- extend here --------------------------------------------#
+- 0.7.8 [2026-07-21]:
+	* Documentation
 - 0.7.7 [2026-07-21]:
 	* Bugfix bugfix workflow
 - 0.7.6 [2026-07-21]:
