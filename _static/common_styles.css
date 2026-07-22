@@ -1,0 +1,215 @@
+/*
+We define common styles across languages. Ideally these coincide
+more or less with those used in markup2. This is possible because
+we are moving away from highlight and implement our own stuff.
+Although highlight is brilliant, we prefer the inhouse solution
+becaues it allows more control and has a well-known C++ API.
+
+Current state [2023-08-08]
+- glsl
+- cpp
+- minil
+- xml
+- python
+*/
+
+:root {
+    /* 1. Etwas kleinere Schrift macht die Box kompakter und hebt sie optisch an */
+    --font-size--code: 0.875em;
+
+    /* 2. Falls installiert: Furo bevorzugt eigentlich Fira Code oder JetBrains Mono.
+          Indem wir moderne Programmierschriften nach vorne stellen, nutzt Firefox 
+          bessere Schriftmetriken, falls du sie auf dem System hast. */
+    --font-stack--monospace: "JetBrains Mono", "Fira Code", "Fira Mono", "Menlo", "Consolas", monospace;
+}
+
+/* 3. Korrektur des Innenabstands (Padding) speziell fuer Firefox/Linux */
+code.docutils.literal {
+	vertical-align: 0.06em;
+	font-size:95%;
+}
+
+:root
+	{
+	--wtrl-plain-color:currentColor;
+
+/* light theme colors */
+/* begin-roles */
+	--wtrl-attr-color:#077;
+	--wtrl-class-color:#770000;
+	--wtrl-cmd-color:#996600;
+	--wtrl-dfn-color:currentColor;
+	--wtrl-file-color: #35f;
+	--wtrl-func-color:#3040ff;
+	--wtrl-key-color:currentColor;
+	--wtrl-label-color:currentColor;
+	--wtrl-lit-color:currentColor;
+	--wtrl-mod-color:#462;
+	--wtrl-norm-color:currentColor;
+	--wtrl-op-color:currentColor;
+	--wtrl-opt-color:currentColor;
+	--wtrl-pkg-color:#252;
+	--wtrl-tag-color:#900;
+	--wtrl-term-color:currentColor;
+	--wtrl-type-color:#770000;
+	--wtrl-url-color: #35f;;
+	--wtrl-value-color:#004400;
+	--wtrl-var-color:#a00;
+/* end-roles */
+
+/* font properties */
+	--wtrl-plain-font-weight:normal;
+	--wtrl-plain-font-style:normal;
+
+	--wtrl-attr-font-weight:normal;
+	--wtrl-attr-font-style:normal;
+
+	--wtrl-cmd-font-weight:normal;
+	--wtrl-cmd-font-style:normal;
+
+	--wtrl-class-font-weight:normal;
+	--wtrl-class-font-style:normal;
+
+	--wtrl-dfn-font-weight:normal;
+	--wtrl-dfn-font-style:italic;
+
+	--wtrl-file-font-weight: normal;
+	--wtrl-file-font-style: normal;
+
+	--wtrl-func-font-weight:normal;
+	--wtrl-func-font-style:normal;
+
+	--wtrl-key-font-weight:normal;
+	--wtrl-key-font-style:normal;
+
+	--wtrl-label-font-weight:normal;
+	--wtrl-label-font-style:oblique;
+
+	--wtrl-lit-font-weight:normal;
+	--wtrl-lit-font-style:normal;
+
+	--wtrl-mod-font-weight:normal;
+	--wtrl-mod-font-style:normal;
+
+	--wtrl-norm-font-weight:normal;
+	--wtrl-norm-font-style:italic;
+
+	--wtrl-op-font-weight:bold;
+	--wtrl-op-font-style:normal;
+
+	--wtrl-opt-font-weight:bold;
+	--wtrl-opt-font-style:normal;
+
+	--wtrl-pkg-font-weight:normal;
+	--wtrl-pkg-font-style:normal;
+
+	--wtrl-tag-font-weight:normal;
+	--wtrl-tag-font-style:normal;
+
+	--wtrl-term-font-weight:normal;
+	--wtrl-term-font-style:italic;
+
+	--wtrl-type-font-weight:normal;
+	--wtrl-type-font-style:normal;
+
+	--wtrl-url-font-weight: normal;
+	--wtrl-url-font-style: normal;
+
+	--wtrl-value-font-weight:normal;
+	--wtrl-value-font-style:normal;
+
+	--wtrl-var-font-weight:normal;
+	--wtrl-var-font-style:normal;
+
+/* future-use */
+	--wtrl-comment-color:#777;
+	--wtrl-comment-font-weight:normal;
+	--wtrl-comment-font-style:italic;
+
+	--wtrl-entity-color:#777;
+	--wtrl-entity-font-weight:bold;
+	--wtrl-entity-font-style:normal;
+	}
+
+:root {
+/* dark theme colors */
+	--wtrl-dark-foreground-color:var(--color-foreground-primary, currentColor);
+
+	--wtrl-dark-attr-color:#099;
+	--wtrl-dark-class-color:#e66;
+	--wtrl-dark-cmd-color:#cc8800;
+	--wtrl-dark-dfn-color:var(--wtrl-dark-foreground-color);
+	--wtrl-dark-file-color: #7af;
+	--wtrl-dark-func-color:#6090ff;
+	--wtrl-dark-key-color:var(--wtrl-dark-foreground-color);
+	--wtrl-dark-label-color:var(--wtrl-dark-foreground-color);
+	--wtrl-dark-lit-color:var(--wtrl-dark-foreground-color);
+	--wtrl-dark-mod-color:#8c4;
+	--wtrl-dark-norm-color:var(--wtrl-dark-foreground-color);
+	--wtrl-dark-op-color:var(--wtrl-dark-foreground-color);
+	--wtrl-dark-opt-color:var(--wtrl-dark-foreground-color);
+	--wtrl-dark-pkg-color:#8b8;
+	--wtrl-dark-tag-color:#e44;
+	--wtrl-dark-term-color:var(--wtrl-dark-foreground-color);
+	--wtrl-dark-type-color:#e66;
+	--wtrl-dark-url-color: #7af;
+	--wtrl-dark-value-color:#8c4;
+	--wtrl-dark-var-color:#f34;
+
+	--wtrl-dark-comment-color:#777;
+	--wtrl-dark-entity-color:#777;
+	}
+
+/* Furo stores the active theme on body, not on :root. */
+body[data-theme="dark"] {
+	--wtrl-attr-color:var(--wtrl-dark-attr-color);
+	--wtrl-class-color:var(--wtrl-dark-class-color);
+	--wtrl-cmd-color:var(--wtrl-dark-cmd-color);
+	--wtrl-file-color:var(--wtrl-dark-file-color);
+	--wtrl-func-color:var(--wtrl-dark-func-color);
+	--wtrl-key-color:var(--wtrl-dark-key-color);
+	--wtrl-label-color:var(--wtrl-dark-label-color);
+	--wtrl-lit-color:var(--wtrl-dark-lit-color);
+	--wtrl-mod-color:var(--wtrl-dark-mod-color);
+	--wtrl-norm-color:var(--wtrl-dark-norm-color);
+	--wtrl-op-color:var(--wtrl-dark-op-color);
+	--wtrl-opt-color:var(--wtrl-dark-opt-color);
+	--wtrl-pkg-color:var(--wtrl-dark-pkg-color);
+	--wtrl-tag-color:var(--wtrl-dark-tag-color);
+	--wtrl-term-color:var(--wtrl-dark-term-color);
+	--wtrl-type-color:var(--wtrl-dark-type-color);
+	--wtrl-url-color:var(--wtrl-dark-url-color);
+	--wtrl-value-color:var(--wtrl-dark-value-color);
+	--wtrl-var-color:var(--wtrl-dark-var-color);
+
+	--wtrl-comment-color:var(--wtrl-dark-comment-color);
+	--wtrl-entity-color:var(--wtrl-dark-entity-color);
+	}
+
+@media (prefers-color-scheme: dark) {
+	:root,
+	body[data-theme="auto"] {
+		--wtrl-attr-color:var(--wtrl-dark-attr-color);
+		--wtrl-class-color:var(--wtrl-dark-class-color);
+		--wtrl-cmd-color:var(--wtrl-dark-cmd-color);
+		--wtrl-file-color:var(--wtrl-dark-file-color);
+		--wtrl-func-color:var(--wtrl-dark-func-color);
+		--wtrl-key-color:var(--wtrl-dark-key-color);
+		--wtrl-label-color:var(--wtrl-dark-label-color);
+		--wtrl-lit-color:var(--wtrl-dark-lit-color);
+		--wtrl-mod-color:var(--wtrl-dark-mod-color);
+		--wtrl-norm-color:var(--wtrl-dark-norm-color);
+		--wtrl-op-color:var(--wtrl-dark-op-color);
+		--wtrl-opt-color:var(--wtrl-dark-opt-color);
+		--wtrl-pkg-color:var(--wtrl-dark-pkg-color);
+		--wtrl-tag-color:var(--wtrl-dark-tag-color);
+		--wtrl-term-color:var(--wtrl-dark-term-color);
+		--wtrl-type-color:var(--wtrl-dark-type-color);
+		--wtrl-url-color:var(--wtrl-dark-url-color);
+		--wtrl-value-color:var(--wtrl-dark-value-color);
+		--wtrl-var-color:var(--wtrl-dark-var-color);
+
+		--wtrl-comment-color:var(--wtrl-dark-comment-color);
+		--wtrl-entity-color:var(--wtrl-dark-entity-color);
+		}
+	}
