@@ -12,6 +12,7 @@ Sphinx: Waterloo Docstrings documentation
 	:numbered:
 
 	introduction.rst
+	getting_started.rst
 	configuration.rst
 	directives.rst
 	roles.rst

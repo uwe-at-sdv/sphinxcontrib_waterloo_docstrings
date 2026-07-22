@@ -1,21 +1,43 @@
-Configuration (todo: language)
-==============================
+.. _chapter_configuration:
 
-The configuration variables are set in the project's :wtrl_file:`conf.py` file. For this document, as an example, we have:
+Configuration
+=============
+
+The extension is configured through ordinary Sphinx configuration variables in
+the project's :wtrl_file:`conf.py` file. The values are read when Sphinx starts
+building the documentation, so changes normally require a fresh Sphinx build.
+
+This documentation uses the following Waterloo-specific settings:
 
 .. literalinclude:: ./conf.py
 	:start-after: start-config-variables
 	:end-before: end-config-variables
 
-The following is the complete list of implemented configuration variables.
+The following sections describe the implemented configuration variables.
 
-* :wtrl_var:`wtrl_diagnostics_admonitions_enabled` [Default: :wtrl_value:`True`] -- This variable specifies if improper use of directives and errors from validation
-  are rendered as admonitions in the target document. Chapter :ref:`Admonitions <chapter_admonitions>` gives an overview on these admonitions.
 
-* :wtrl_var:`wtrl_diagnostics_logging_enabled` [Default: :wtrl_value:`True`] -- Specifies if improper use of directives and errors from validation are logged
-  in Sphinx's standard logging channel. Example:
+Diagnostics
+-----------
 
-.. code:: raw
+These variables control how the extension reports invalid directive usage,
+failed object resolution, and Waterloo validation errors.
+
+* :wtrl_var:`wtrl_diagnostics_admonitions_enabled` [Default:
+  :wtrl_value:`True`] -- Controls whether diagnostic messages are rendered into
+  the generated document as admonitions. This is useful while authoring
+  documentation because the error appears close to the directive that caused
+  it. Chapter :ref:`Admonitions <chapter_admonitions>` shows examples of these
+  rendered diagnostics.
+
+* :wtrl_var:`wtrl_diagnostics_logging_enabled` [Default:
+  :wtrl_value:`True`] -- Controls whether diagnostics are also emitted through
+  Sphinx's standard logging channel. This is the build-terminal counterpart to
+  diagnostic admonitions and is usually the right place to look in automated
+  builds.
+
+  Example:
+
+  .. code:: text
 
 	----- Tracer-----8<---------------------------------------------
 	- Error [validation] - [doc_errors.X_bad_contract->Contract]
@@ -30,32 +52,62 @@ The following is the complete list of implemented configuration variables.
                 waterlint explain-subsection --label Contract.general --profile class
 	----- Tracer----->8---------------------------------------------
 
+* :wtrl_var:`wtrl_diagnostics_color_enabled` [Default:
+  :wtrl_value:`False`] -- Enables ANSI coloring for structured validation
+  diagnostics in the Sphinx log output. Leave this disabled when the build
+  output is captured by tools that do not preserve ANSI escape sequences.
 
-* :wtrl_var:`wtrl_diagnostics_color_enabled` [Default: :wtrl_value:`False`] -- Error messages from validation are often structured
-  and have a simple syntax highlighting, which can be enabled by this configuration variable. Leave :wtrl_value:`False` if  your terminal
-  or other Sphinx output channel does not render ANSI colors properly.
+* :wtrl_var:`wtrl_current_object_logging_enabled` [Default:
+  :wtrl_value:`False`] -- Logs the object currently being resolved, validated,
+  or rendered. This is mainly a debugging aid for large documents where a later
+  diagnostic does not make the active object obvious enough.
 
-* :wtrl_var:`wtrl_current_object_logging_enabled` [Default: :wtrl_value:`False`] -- If enabled, the object being processed (validation or rendering)
-  is shown in the logging. This might help debugging in case of problems.
 
-* :wtrl_var:`wtrl_scope_filtered_object_placeholders_enabled` [Default: :wtrl_value:`True`] -- Docstring rendering may be omitted if the docstring
-  is assigned a less open scope than the scope of the target document. By setting this configuration variable you will at least see a placeholder
-  in form of a simple admonition the target document. An example is shown in subsection :ref:`Out of scope <subsection_out_of_scope>`. Note that the scope
-  of the document is governed by an internal state which you can change by means of directives as described in section :ref:`State changing directives <section_state_changing_directives>`.
+State And Scope
+---------------
 
-* :wtrl_var:`wtrl_state_change_admonitions_enabled` [Default: :wtrl_value:`True`] -- Specifies if state changing directives (see :ref:`State changing directives <section_state_changing_directives>`)
-  are render into the target document. On one hand this might seem annoying, but for a normative docmentation it provides a certain degree of clarity.
+The Waterloo directives maintain a small build-time state: current module,
+current class, and current documentation scope. The following variables control
+how visible changes to that state are in the generated document and in the
+build log.
 
-* :wtrl_var:`wtrl_state_change_logging_enabled` [Default: :wtrl_value:`True`] -- Specifies if state changing directives are logged.
+* :wtrl_var:`wtrl_scope_filtered_object_placeholders_enabled` [Default:
+  :wtrl_value:`True`] -- Controls whether objects filtered out by scope are
+  represented by a small placeholder admonition. Without this placeholder the
+  object simply disappears from the rendered document. With the placeholder
+  enabled, the omission remains visible and easier to audit. An example is
+  shown in subsection :ref:`Out of scope <subsection_out_of_scope>`.
 
-* :wtrl_var:`wtrl_basedirs` [Default: :wtrl_value:`[]` -- empty list] -- This is the list of directories the extension will scan in order to resolve packages and modules.
-  For this document, as an example, our configuration in :wtrl_file:`conf.py` contains a snippet, which extracts the configuration's path and navigate over to the location of out examples:
+  The active scope is controlled by state-changing directives as described in
+  section :ref:`State changing directives <section_state_changing_directives>`.
 
-.. code:: python
+* :wtrl_var:`wtrl_state_change_admonitions_enabled` [Default:
+  :wtrl_value:`True`] -- Controls whether state-changing directives are rendered
+  into the generated document. This can look verbose in finished prose, but it
+  makes normative documentation easier to inspect because changes of module,
+  class, and scope are visible in the artifact itself.
+
+* :wtrl_var:`wtrl_state_change_logging_enabled` [Default:
+  :wtrl_value:`True`] -- Controls whether state-changing directives are logged
+  during the Sphinx build.
+
+
+Import Resolution
+-----------------
+
+* :wtrl_var:`wtrl_basedirs` [Default: :wtrl_value:`[]` -- empty list] -- Lists
+  directories that are added to :wtrl_mod:`sys.path` before Waterloo resolves
+  module and object identifiers. Each path is resolved to an absolute path and
+  inserted at the front of :wtrl_mod:`sys.path` if it is not already present.
+
+  Use this variable for local example modules, generated modules, or project
+  sources that are not installed in the Python environment used to run Sphinx.
+  For this documentation, :wtrl_file:`conf.py` computes the path to
+  :wtrl_file:`examples-python` relative to the configuration file:
+
+  .. code:: python
 
 	from pathlib import Path
-
-	...
 
 	CONF_DIR = Path(__file__).resolve().parent
 	path_to_examples = str((CONF_DIR / ".." / ".." / "examples-python").resolve())
@@ -63,7 +115,6 @@ The following is the complete list of implemented configuration variables.
 		path_to_examples
 		]
 
-.. note::
-
-	If you are documenting an installed Python module or objects therein, no particular entry in :wtrl_var:`wtrl_basedirs` is required.
-	The only condition is that the module must be resolvable in the current Python interpreter (the one you are running the Sphinx compiler in).
+  Installed packages usually do not need an entry in :wtrl_var:`wtrl_basedirs`.
+  They only need to be importable by the same Python interpreter that runs the
+  Sphinx build.

@@ -5,7 +5,7 @@
 # Sphinx-Contrib Waterloo Docstrings
 
 ![License](https://img.shields.io/badge/license-BSD--2--Clause-EEEAE0)
-![Version](https://img.shields.io/badge/version-0.7.8-D4AF37)
+![Version](https://img.shields.io/badge/version-0.7.9-D4AF37)
 ![Python](https://img.shields.io/badge/python-3.10%2B-3776AB)
 ![Sphinx](https://img.shields.io/badge/Sphinx-extension-0A507A)
 [![WTRL](https://img.shields.io/badge/%28%E2%9A%96%29-Waterloo--Docstrings-932725)](https://github.com/uwe-at-sdv/sdv_doc_waterloo)
