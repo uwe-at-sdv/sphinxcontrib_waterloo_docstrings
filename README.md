@@ -1,5 +1,5 @@
 <p align="center">
-	<img src="https://raw.githubusercontent.com/uwe-at-sdv/sdv_doc_waterloo/main/img/wtrl_logo_color.svg" alt="Waterloo Logo" width="220">
+	<img src="https://raw.githubusercontent.com/uwe-at-sdv/sphinxcontrib_waterloo_docstrings/main/img/wtrl_sphinx_logo_color.svg" alt="Waterloo Logo" width="220">
 </p>
 
 # Sphinx-Contrib Waterloo Docstrings
