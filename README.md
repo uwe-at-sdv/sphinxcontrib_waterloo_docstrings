@@ -5,13 +5,18 @@
 # Sphinx-Contrib Waterloo Docstrings
 
 ![License](https://img.shields.io/badge/license-BSD--2--Clause-EEEAE0)
-![Version](https://img.shields.io/badge/version-0.7.9-D4AF37)
+![Version](https://img.shields.io/badge/version-0.7.10-D4AF37)
 ![Python](https://img.shields.io/badge/python-3.10%2B-3776AB)
 ![Sphinx](https://img.shields.io/badge/Sphinx-extension-0A507A)
 [![WTRL](https://img.shields.io/badge/%28%E2%9A%96%29-Waterloo--Docstrings-932725)](https://github.com/uwe-at-sdv/sdv_doc_waterloo)
 [![PyPI](https://img.shields.io/badge/PyPI-sphinxcontrib--waterloo--docstrings-3775A9?logo=pypi&logoColor=white)](https://pypi.org/project/sphinxcontrib-waterloo-docstrings/)
 
-# This repository is under development.
+## Project Status
+
+The project is under development, but seems to do what it is supposed to do.
+feel free to dowload and try out.
+
+## About
 
 The `sphinxcontrib-waterloo-docstrings` package provides the Sphinx rendering
 layer for Waterloo Docstrings.

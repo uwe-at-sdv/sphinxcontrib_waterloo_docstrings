@@ -1,0 +1,27 @@
+  1. [Codex] Troubleshooting
+     Typische Fehler:
+      - Modul wird nicht gefunden → wtrl_basedirs
+      - Docstring wird nicht gerendert → kein Waterloo-Docstring / Validation-Fehler
+      - Styles fehlen → Extension nicht geladen / Static files
+      - Scope filtert Objekt weg
+        Das könnte später aus echten Nutzerproblemen entstehen.
+
+  2. [Codex] Compatibility / Tested Environment
+     Kurze Tabelle:
+      - Python-Versionen
+      - Sphinx-Version
+      - getestete Themes
+      - Abhängigkeit auf sdv-doc-waterloo
+        Im Moment steht das verteilt in pyproject.toml, customization.rst, introduction.rst. Für v1 nicht kritisch.
+
+  3. [Codex] Limitations
+     Nur falls du sie explizit kommunizieren willst:
+      - keine vollständige Autodoc-Ersetzung
+      - erwartet gültige Waterloo-Docstrings
+      - Theme-Unterstützung ist bewusst baseline-orientiert
+        Das ist teilweise schon in Introduction enthalten.
+
+  4. [Codex] Changelog / Release Notes
+     Für PyPI/GitHub oft praktisch, aber nicht zwingend innerhalb der Sphinx-Doku.
+
+  5. [Uwe] Weitere Objekte in der Referenz dokumentieren, bis es in sich geschlossen ist.

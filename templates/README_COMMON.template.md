@@ -1,4 +1,9 @@
-# This repository is under development.
+## Project Status
+
+The project is under development, but seems to do what it is supposed to do.
+feel free to dowload and try out.
+
+## About
 
 The `sphinxcontrib-waterloo-docstrings` package provides the Sphinx rendering
 layer for Waterloo Docstrings.

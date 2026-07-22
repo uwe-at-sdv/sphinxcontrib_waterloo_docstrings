@@ -32,9 +32,9 @@ jobs:
           python -m pip install --upgrade '.[sphinx]'
           python -m pip install --upgrade furo python-waterloo-lexer
 
-#      - name: Build project documentation
-#        working-directory: sphinx/doc
-#        run: make clean html
+      - name: Build project documentation
+        working-directory: sphinx/doc
+        run: make clean html
 
       - name: Build supported showcase themes
         working-directory: sphinx/test
@@ -60,7 +60,7 @@ jobs:
         run: |
           find gh-pages -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
           touch gh-pages/.nojekyll
-          # cp -a sphinx/doc/build/html/. gh-pages/
+          cp -a sphinx/doc/build/html/. gh-pages/
           mkdir -p gh-pages/showcase
           cp -a sphinx/test/build-furo/html gh-pages/showcase/furo
           cp -a sphinx/test/build-alabaster/html gh-pages/showcase/alabaster
