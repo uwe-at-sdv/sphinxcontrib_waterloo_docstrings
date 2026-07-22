@@ -5,6 +5,8 @@ Format:
 - VERSION [YYYY-MM-DD]: Summary.
 
 #----- extend here --------------------------------------------#
+- 0.7.11 [2026-07-22]:
+	* Logo
 - 0.7.10 [2026-07-22]:
 	* Documentation; Readme; Announce ready-to-try
 - 0.7.9 [2026-07-22]:
