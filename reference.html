@@ -277,7 +277,7 @@ to or popped from the state stack.</p>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Preamble</span></p></td>
 <td><p><span class="wtrl_label">normative sections</span></p>
 <ul class="simple">
-<li><p><span class="wtrl_label">Contract</span>, <span class="wtrl_label">Public classes</span>, <span class="wtrl_label">Public functions</span>, <span class="wtrl_label">Public types</span></p></li>
+<li><p><span class="wtrl_label">Contract</span>, <span class="wtrl_label">Public classes</span>, <span class="wtrl_label">Public functions</span>, <span class="wtrl_label">Public types</span>, <span class="wtrl_label">Public constants</span></p></li>
 </ul>
 </td>
 </tr>
@@ -406,14 +406,23 @@ to or popped from the state stack.</p>
 <p class="wtrl-freeform-paragraph-content">Aggregate type for the return value of role handler functions. <code class="wtrl_type docutils literal notranslate"><span class="pre">RoleResult</span></code> is a tuple of the form (nodes, messages) where nodes is a list of Docutils nodes and messages is a list of Docutils system messages.</p>
 </td>
 </tr>
-<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Notes</span></p></td>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Public constants</span></p></td>
+<td><p><a class="wtrl_var reference internal" href="#wtrl-obj-9:frozenset" title="frozenset"><span>RST_TEXT_ESCAPE_CHARS</span></a></p>
+<p class="wtrl-freeform-paragraph-content">A <code class="wtrl_type docutils literal notranslate"><span class="pre">frozenset</span></code> of characters that must be escaped in reStructuredText text segments to avoid unintended markup interpretation.</p>
+<p><a class="wtrl_var reference internal" href="#wtrl-obj-9:frozenset" title="frozenset"><span>RST_ROLE_BODY_ESCAPE_CHARS</span></a></p>
+<p class="wtrl-freeform-paragraph-content">A <code class="wtrl_type docutils literal notranslate"><span class="pre">frozenset</span></code> of characters that must be escaped in reStructuredText role bodies to avoid unintended markup interpretation.</p>
+<p><a class="wtrl_var reference internal" href="#wtrl-obj-4:dict" title="dict"><span>WTRL_TOKEN_REPLACEMENTS</span></a></p>
+<p class="wtrl-freeform-paragraph-content">A <code class="wtrl_type docutils literal notranslate"><span class="pre">Mapping</span></code> of Waterloo token strings to their corresponding reStructuredText role expansions. This mapping is used to convert tokens like <code class="wtrl_lit docutils literal notranslate"><span class="pre">Must</span></code> into the appropriate role.</p>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Notes</span></p></td>
 <td><p class="wtrl-note-title rubric">Last reviewed</p>
 <p class="wtrl-freeform-paragraph-content">2026-07-16</p>
 </td>
 </tr>
 </tbody>
 <thead class="wtrl-box-head-module">
-<tr class="row-odd"><th class="head"><span class="wtrl-obj-kind">«Module»</span></th>
+<tr class="row-even"><th class="head"><span class="wtrl-obj-kind">«Module»</span></th>
 <th class="head"><p class="wtrl-obj-qid">sphinxcontrib.waterloo_docstrings.extension</p></th>
 </tr>
 </thead>
@@ -499,8 +508,11 @@ to or popped from the state stack.</p>
 </table>
 </div>
 </section>
+<section id="function-resolve-markup">
+<h4><span class="section-number">9.1.1.2. </span>Function <code class="wtrl_func docutils literal notranslate"><span class="pre">resolve_markup</span></code><a class="headerlink" href="#function-resolve-markup" title="Link to this heading">¶</a></h4>
+</section>
 <section id="function-build-sphinx-nodes">
-<h4><span class="section-number">9.1.1.2. </span>Function <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes</span></code><a class="headerlink" href="#function-build-sphinx-nodes" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">9.1.1.3. </span>Function <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes</span></code><a class="headerlink" href="#function-build-sphinx-nodes" title="Link to this heading">¶</a></h4>
 <div class="table-wrapper wtrl-box docutils container" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_autodoc-18:build_sphinx_nodes">
 <table class="wtrl-box docutils align-default" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_autodoc-18:build_sphinx_nodes">
 <tbody>
@@ -595,7 +607,7 @@ to or popped from the state stack.</p>
 </div>
 </section>
 <section id="function-build-sphinx-nodes-full">
-<h4><span class="section-number">9.1.1.3. </span>Function <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes_full</span></code><a class="headerlink" href="#function-build-sphinx-nodes-full" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">9.1.1.4. </span>Function <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes_full</span></code><a class="headerlink" href="#function-build-sphinx-nodes-full" title="Link to this heading">¶</a></h4>
 <div class="table-wrapper wtrl-box docutils container" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_autodoc-23:build_sphinx_nodes_full">
 <table class="wtrl-box docutils align-default" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_autodoc-23:build_sphinx_nodes_full">
 <tbody>
@@ -686,7 +698,7 @@ to or popped from the state stack.</p>
 </div>
 </section>
 <section id="function-parse-inline">
-<h4><span class="section-number">9.1.1.4. </span>Function <code class="wtrl_func docutils literal notranslate"><span class="pre">parse_inline</span></code><a class="headerlink" href="#function-parse-inline" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">9.1.1.5. </span>Function <code class="wtrl_func docutils literal notranslate"><span class="pre">parse_inline</span></code><a class="headerlink" href="#function-parse-inline" title="Link to this heading">¶</a></h4>
 <div class="table-wrapper wtrl-box docutils container" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_parse-12:parse_inline">
 <table class="wtrl-box docutils align-default" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_parse-12:parse_inline">
 <tbody>
@@ -759,7 +771,7 @@ to or popped from the state stack.</p>
 </div>
 </section>
 <section id="class-context">
-<h4><span class="section-number">9.1.1.5. </span>Class <code class="wtrl_class docutils literal notranslate"><span class="pre">context</span></code><a class="headerlink" href="#class-context" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">9.1.1.6. </span>Class <code class="wtrl_class docutils literal notranslate"><span class="pre">context</span></code><a class="headerlink" href="#class-context" title="Link to this heading">¶</a></h4>
 <div class="table-wrapper wtrl-box docutils container" id="wtrl-cls-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_context-7:context">
 <table class="wtrl-box docutils align-default" id="wtrl-cls-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_context-7:context">
 <tbody>
@@ -2151,7 +2163,7 @@ to keep the document low in redundancy.</p>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Preamble</span></p></td>
 <td><p><span class="wtrl_label">normative sections</span></p>
 <ul class="simple">
-<li><p><span class="wtrl_label">Contract</span>, <span class="wtrl_label">Parameters</span>, <span class="wtrl_label">Returns</span>, <span class="wtrl_label">Raises</span></p></li>
+<li><p><span class="wtrl_label">Contract</span>, <span class="wtrl_label">Parameters</span>, <span class="wtrl_label">Returns</span>, <span class="wtrl_label">Raises</span>, <span class="wtrl_label">See also</span></p></li>
 </ul>
 <p><span class="wtrl_label">scope</span></p>
 <ul class="simple">
@@ -2168,7 +2180,7 @@ to keep the document low in redundancy.</p>
 <li><p><span class="wtrl_norm">Must</span> return a Docutils error system message if either the parsed variable name or type is empty.</p></li>
 <li><p><span class="wtrl_norm">Must</span> create a wrapper <code class="wtrl_type docutils literal notranslate"><span class="pre">docutils.nodes.inline</span></code> node with CSS class <code class="wtrl_value docutils literal notranslate"><span class="pre">wtrl_var_type</span></code> for valid input.</p></li>
 <li><p><span class="wtrl_norm">Must</span> add the variable name as a child inline node with CSS class <code class="wtrl_value docutils literal notranslate"><span class="pre">wtrl_var</span></code>.</p></li>
-<li><p><span class="wtrl_norm">Must</span> add the separator <code class="wtrl_lit docutils literal notranslate"><span class="pre">:</span> <span class="pre">`</span> <span class="pre">as</span> <span class="pre">a</span> <span class="pre">child</span> <span class="pre">inline</span> <span class="pre">node</span> <span class="pre">with</span> <span class="pre">CSS</span> <span class="pre">class</span> <span class="pre">:wtrl_value:`wtrl_op</span></code>.</p></li>
+<li><p><span class="wtrl_norm">Must</span> add a colon as a child inline node with CSS class <code class="wtrl_value docutils literal notranslate"><span class="pre">wtrl_op</span></code>.</p></li>
 <li><p><span class="wtrl_norm">Must</span> add the type as a child inline node with CSS class <code class="wtrl_value docutils literal notranslate"><span class="pre">wtrl_type</span></code>.</p></li>
 </ul>
 </td>
@@ -2188,7 +2200,10 @@ to keep the document low in redundancy.</p>
 </ul>
 </td>
 </tr>
-<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Notes</span></p></td>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">See also</span></p></td>
+<td><p><a class="wtrl_class reference internal" href="#wtrl-cls-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-8:RolePara" title="sphinxcontrib.waterloo_docstrings.wtrl_roles.RolePara"><span>RolePara</span></a>, <a class="wtrl_var reference internal" href="#wtrl-obj-8:builtins-5:tuple" title="builtins.tuple"><span>RoleResult</span></a></p></td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Notes</span></p></td>
 <td><p class="wtrl-note-title rubric">Structure</p>
 <p class="wtrl-freeform-paragraph-content">This role is intentionally different from the simple Waterloo roles because it exposes the variable name, separator, and type as separately styleable inline nodes.</p>
 <p class="wtrl-note-title rubric">Separator</p>
@@ -2207,7 +2222,7 @@ to keep the document low in redundancy.</p>
 </tr>
 </tbody>
 <thead class="wtrl-box-head-function">
-<tr class="row-even"><th class="head"><span class="wtrl-obj-kind">«Function»</span></th>
+<tr class="row-odd"><th class="head"><span class="wtrl-obj-kind">«Function»</span></th>
 <th class="head"><p class="wtrl-obj-qid">wtrl_var_type_role</p></th>
 </tr>
 </thead>
@@ -2293,10 +2308,11 @@ to keep the document low in redundancy.</p>
 <li><a class="reference internal" href="#module-extension">9.1. Module <code class="wtrl_mod docutils literal notranslate"><span class="pre">extension</span></code></a><ul>
 <li><a class="reference internal" href="#helper">9.1.1. Helper</a><ul>
 <li><a class="reference internal" href="#function-resolve-qualified-name">9.1.1.1. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">resolve_qualified_name</span></code></a></li>
-<li><a class="reference internal" href="#function-build-sphinx-nodes">9.1.1.2. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes</span></code></a></li>
-<li><a class="reference internal" href="#function-build-sphinx-nodes-full">9.1.1.3. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes_full</span></code></a></li>
-<li><a class="reference internal" href="#function-parse-inline">9.1.1.4. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">parse_inline</span></code></a></li>
-<li><a class="reference internal" href="#class-context">9.1.1.5. Class <code class="wtrl_class docutils literal notranslate"><span class="pre">context</span></code></a></li>
+<li><a class="reference internal" href="#function-resolve-markup">9.1.1.2. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">resolve_markup</span></code></a></li>
+<li><a class="reference internal" href="#function-build-sphinx-nodes">9.1.1.3. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes</span></code></a></li>
+<li><a class="reference internal" href="#function-build-sphinx-nodes-full">9.1.1.4. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes_full</span></code></a></li>
+<li><a class="reference internal" href="#function-parse-inline">9.1.1.5. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">parse_inline</span></code></a></li>
+<li><a class="reference internal" href="#class-context">9.1.1.6. Class <code class="wtrl_class docutils literal notranslate"><span class="pre">context</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#directives-for-docstring-rendering">9.1.2. Directives for docstring rendering</a></li>
