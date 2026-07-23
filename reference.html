@@ -7,7 +7,7 @@
 
     <link rel="shortcut icon" href="_static/favicon.ico"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>9. Reference - Sphinx: Waterloo Docstrings documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=47202671" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/common_styles.css?v=b66e391a" />
     <link rel="stylesheet" type="text/css" href="_static/waterloo_base.css?v=14299993" />
@@ -19,20 +19,20 @@
 
 <style>
   body {
-    --color-code-background: #f2f2f2;
-  --color-code-foreground: #1e1e1e;
+    --color-code-background: #ffffff;
+  --color-code-foreground: black;
   
   }
   @media not print {
     body[data-theme="dark"] {
-      --color-code-background: #202020;
-  --color-code-foreground: #d0d0d0;
+      --color-code-background: #282828;
+  --color-code-foreground: #dddddd;
   
     }
     @media (prefers-color-scheme: dark) {
       body:not([data-theme="light"]) {
-        --color-code-background: #202020;
-  --color-code-foreground: #d0d0d0;
+        --color-code-background: #282828;
+  --color-code-foreground: #dddddd;
   
       }
     }
@@ -271,146 +271,27 @@ to or popped from the state stack.</p>
 <div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">wtrl_autodoc_module</span><span class="p">::</span> extension
 </pre></div>
 </div>
-<div class="table-wrapper wtrl-box docutils container" id="wtrl-mod-13:sphinxcontrib-19:waterloo_docstrings-9:extension">
-<table class="wtrl-box docutils align-default" id="wtrl-mod-13:sphinxcontrib-19:waterloo_docstrings-9:extension">
-<tbody>
-<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Preamble</span></p></td>
-<td><p><span class="wtrl_label">normative sections</span></p>
-<ul class="simple">
-<li><p><span class="wtrl_label">Contract</span>, <span class="wtrl_label">Public classes</span>, <span class="wtrl_label">Public functions</span></p></li>
-</ul>
-</td>
-</tr>
-<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Description</span></p></td>
-<td><p>This module provides the Sphinx integration layer for the Waterloo documentation system.</p>
-<p>The implementation operates directly on Docutils nodes and defines custom Docutils roles to generate structured documentation output from Waterloo-style docstrings.</p>
-<p>Sphinx is used as the execution and rendering framework, but the internal data model is based on the Docutils abstract syntax tree (AST). All document structure, including sections, tables, lists, rubrics, and inline markup, is represented using Docutils node classes.</p>
-<p>The module introduces a configurable <code class="wtrl_type docutils literal notranslate"><span class="pre">context</span></code> object which encapsulates all project-specific presentation logic, including role expansion, symbol rendering, and HTML layout decisions. This context is configured by the target project via its <code class="wtrl_file docutils literal notranslate"><span class="pre">conf.py</span></code> and is intentionally decoupled from the core implementation.</p>
-<p>To support concise and unambiguous normative documentation, the module maintains explicit scope stacks with the semantics “current module” and “current class”. These scopes define the implicit ownership of subsequently documented functions and methods and are modified using dedicated Docutils roles or directives.</p>
-<p>The primary goal of this module is correctness, completeness, and reproducibility of normative documentation. Readability and visual presentation are considered secondary and are handled through configurable rendering layers.</p>
-</td>
-</tr>
-<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Terminology</span></p></td>
-<td><p class="wtrl-dfn-term"><span><span class="wtrl_dfn">Docutils node</span></span></p>
-<p class="wtrl-dfn-content">An element of the Docutils abstract syntax tree (AST), such as <code class="wtrl_type docutils literal notranslate"><span class="pre">paragraph</span></code>, <code class="wtrl_type docutils literal notranslate"><span class="pre">section</span></code>, or <code class="wtrl_type docutils literal notranslate"><span class="pre">literal</span></code>.</p>
-<p class="wtrl-dfn-term"><span><span class="wtrl_dfn">Docutils role</span></span></p>
-<p class="wtrl-dfn-content">An inline markup construct of the form ``:role:`content``` implemented using the Docutils role API. Custom roles provided by this module are registered via Sphinx but conceptually belong to Docutils.</p>
-<p class="wtrl-dfn-term"><span><span class="wtrl_dfn">Sphinx extension</span></span></p>
-<p class="wtrl-dfn-content">A Python module loaded by Sphinx to extend its parsing, transformation, or rendering behavior. This module is implemented as a Sphinx extension but operates primarily on Docutils data structures.</p>
-</td>
-</tr>
-<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Contract</span></p></td>
-<td><p><span class="wtrl_label">general</span></p>
-<ul class="simple">
-<li><p><span class="wtrl_norm">Must</span> provide classes and functions for buidling Docutils nodes from docstring trees.</p></li>
-<li><p><span class="wtrl_norm">Must</span> provide a default layout for HTML output from Sphinx.</p></li>
-<li><p><span class="wtrl_norm">Must</span> provide a class <code class="wtrl_type docutils literal notranslate"><span class="pre">context</span></code> which provides abstract roles to be configured by the target project’s <code class="wtrl_file docutils literal notranslate"><span class="pre">conf.py</span></code>.</p></li>
-<li><p><span class="wtrl_norm">Must</span> provide a function for building Docutils nodes from a module docstring in waterloo format.</p></li>
-<li><p><span class="wtrl_norm">Must</span> provide a function for building Docutils nodes from a function docstring in waterloo format.</p></li>
-<li><p><span class="wtrl_norm">Must</span> provide a function for building Docutils nodes from a class docstring in waterloo format.</p></li>
-<li><p><span class="wtrl_norm">Must</span> provide a function for building Docutils nodes from a class docstring and the class’ method docstrings in waterloo format.</p></li>
-<li><p><span class="wtrl_norm">Must</span> provide a Docutils role for rendering a function prototype.</p></li>
-<li><p><span class="wtrl_norm">Must</span> provide a Docutils role for rendering a method prototype.</p></li>
-<li><p><span class="wtrl_norm">Must</span> maintain a stack with semantics “current module” and <code class="wtrl_func docutils literal notranslate"><span class="pre">push</span></code>-, <code class="wtrl_func docutils literal notranslate"><span class="pre">pop</span></code>-, <code class="wtrl_func docutils literal notranslate"><span class="pre">get</span></code>-methods.</p></li>
-<li><p><span class="wtrl_norm">Must</span> maintain a stack with semantics “current class” and <code class="wtrl_func docutils literal notranslate"><span class="pre">push</span></code>-, <code class="wtrl_func docutils literal notranslate"><span class="pre">pop</span></code>-, <code class="wtrl_func docutils literal notranslate"><span class="pre">get</span></code>-methods.</p></li>
-<li><p><span class="wtrl_norm">Must</span> provide Docutils roles or directives for modifying these stacks.</p></li>
-</ul>
-</td>
-</tr>
-<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Public classes</span></p></td>
-<td><p><a class="wtrl_class reference internal" href="#wtrl-cls-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_context-7:context" title="sphinxcontrib.waterloo_docstrings.wtrl_context.context"><span>context</span></a></p></td>
-</tr>
-<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Class overview</span></p></td>
-<td><p><code class="wtrl_class docutils literal notranslate"><span class="pre">context</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Internal class, please ignore</p>
-</td>
-</tr>
-<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Public functions</span></p></td>
-<td><p><a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_autodoc-18:build_sphinx_nodes" title="sphinxcontrib.waterloo_docstrings.wtrl_autodoc.build_sphinx_nodes"><span>build_sphinx_nodes</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_autodoc-23:build_sphinx_nodes_full" title="sphinxcontrib.waterloo_docstrings.wtrl_autodoc.build_sphinx_nodes_full"><span>build_sphinx_nodes_full</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_state-22:resolve_qualified_name" title="sphinxcontrib.waterloo_docstrings.wtrl_state.resolve_qualified_name"><span>resolve_qualified_name</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_autodoc-31:wtrl_build_autodoc_module_nodes" title="sphinxcontrib.waterloo_docstrings.wtrl_autodoc.wtrl_build_autodoc_module_nodes"><span>wtrl_build_autodoc_module_nodes</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_autodoc-33:wtrl_build_autodoc_function_nodes" title="sphinxcontrib.waterloo_docstrings.wtrl_autodoc.wtrl_build_autodoc_function_nodes"><span>wtrl_build_autodoc_function_nodes</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_autodoc-30:wtrl_build_autodoc_class_nodes" title="sphinxcontrib.waterloo_docstrings.wtrl_autodoc.wtrl_build_autodoc_class_nodes"><span>wtrl_build_autodoc_class_nodes</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_autodoc-35:wtrl_build_autodoc_class_full_nodes" title="sphinxcontrib.waterloo_docstrings.wtrl_autodoc.wtrl_build_autodoc_class_full_nodes"><span>wtrl_build_autodoc_class_full_nodes</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_state-36:wtrl_build_push_current_module_nodes" title="sphinxcontrib.waterloo_docstrings.wtrl_state.wtrl_build_push_current_module_nodes"><span>wtrl_build_push_current_module_nodes</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_state-35:wtrl_build_push_current_class_nodes" title="sphinxcontrib.waterloo_docstrings.wtrl_state.wtrl_build_push_current_class_nodes"><span>wtrl_build_push_current_class_nodes</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_state-35:wtrl_build_push_current_scope_nodes" title="sphinxcontrib.waterloo_docstrings.wtrl_state.wtrl_build_push_current_scope_nodes"><span>wtrl_build_push_current_scope_nodes</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_state-35:wtrl_build_pop_current_module_nodes" title="sphinxcontrib.waterloo_docstrings.wtrl_state.wtrl_build_pop_current_module_nodes"><span>wtrl_build_pop_current_module_nodes</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_state-34:wtrl_build_pop_current_class_nodes" title="sphinxcontrib.waterloo_docstrings.wtrl_state.wtrl_build_pop_current_class_nodes"><span>wtrl_build_pop_current_class_nodes</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_state-34:wtrl_build_pop_current_scope_nodes" title="sphinxcontrib.waterloo_docstrings.wtrl_state.wtrl_build_pop_current_scope_nodes"><span>wtrl_build_pop_current_scope_nodes</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-14:wtrl_signature-33:wtrl_build_method_signature_nodes" title="sphinxcontrib.waterloo_docstrings.wtrl_signature.wtrl_build_method_signature_nodes"><span>wtrl_build_method_signature_nodes</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-14:wtrl_signature-35:wtrl_build_function_signature_nodes" title="sphinxcontrib.waterloo_docstrings.wtrl_signature.wtrl_build_function_signature_nodes"><span>wtrl_build_function_signature_nodes</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-14:wtrl_signature-39:wtrl_build_method_signature_block_nodes" title="sphinxcontrib.waterloo_docstrings.wtrl_signature.wtrl_build_method_signature_block_nodes"><span>wtrl_build_method_signature_block_nodes</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-14:wtrl_signature-41:wtrl_build_function_signature_block_nodes" title="sphinxcontrib.waterloo_docstrings.wtrl_signature.wtrl_build_function_signature_block_nodes"><span>wtrl_build_function_signature_block_nodes</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-14:wtrl_attr_role" title="sphinxcontrib.waterloo_docstrings.wtrl_roles.wtrl_attr_role"><span>wtrl_attr_role</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-15:wtrl_class_role" title="sphinxcontrib.waterloo_docstrings.wtrl_roles.wtrl_class_role"><span>wtrl_class_role</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-13:wtrl_cmd_role" title="sphinxcontrib.waterloo_docstrings.wtrl_roles.wtrl_cmd_role"><span>wtrl_cmd_role</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-13:wtrl_dfn_role" title="sphinxcontrib.waterloo_docstrings.wtrl_roles.wtrl_dfn_role"><span>wtrl_dfn_role</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-14:wtrl_file_role" title="sphinxcontrib.waterloo_docstrings.wtrl_roles.wtrl_file_role"><span>wtrl_file_role</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-14:wtrl_func_role" title="sphinxcontrib.waterloo_docstrings.wtrl_roles.wtrl_func_role"><span>wtrl_func_role</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-15:wtrl_label_role" title="sphinxcontrib.waterloo_docstrings.wtrl_roles.wtrl_label_role"><span>wtrl_label_role</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-13:wtrl_lit_role" title="sphinxcontrib.waterloo_docstrings.wtrl_roles.wtrl_lit_role"><span>wtrl_lit_role</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-13:wtrl_mod_role" title="sphinxcontrib.waterloo_docstrings.wtrl_roles.wtrl_mod_role"><span>wtrl_mod_role</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-14:wtrl_norm_role" title="sphinxcontrib.waterloo_docstrings.wtrl_roles.wtrl_norm_role"><span>wtrl_norm_role</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-12:wtrl_op_role" title="sphinxcontrib.waterloo_docstrings.wtrl_roles.wtrl_op_role"><span>wtrl_op_role</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-13:wtrl_opt_role" title="sphinxcontrib.waterloo_docstrings.wtrl_roles.wtrl_opt_role"><span>wtrl_opt_role</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-13:wtrl_tag_role" title="sphinxcontrib.waterloo_docstrings.wtrl_roles.wtrl_tag_role"><span>wtrl_tag_role</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-14:wtrl_type_role" title="sphinxcontrib.waterloo_docstrings.wtrl_roles.wtrl_type_role"><span>wtrl_type_role</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-15:wtrl_value_role" title="sphinxcontrib.waterloo_docstrings.wtrl_roles.wtrl_value_role"><span>wtrl_value_role</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-13:wtrl_var_role" title="sphinxcontrib.waterloo_docstrings.wtrl_roles.wtrl_var_role"><span>wtrl_var_role</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-18:wtrl_var_type_role" title="sphinxcontrib.waterloo_docstrings.wtrl_roles.wtrl_var_type_role"><span>wtrl_var_type_role</span></a></p></td>
-</tr>
-<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Function overview</span></p></td>
-<td><p><code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Build a list of Docutils nodes from a docstring tree.</p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes_full</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Build a list of Docutils nodes of a class object and its member functions from a docstring tree.</p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">resolve_qualified_name</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Analyze a qualified name and return the object it refers to plus resolved name components.</p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_autodoc_module_nodes</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">..</span> <span class="pre">wtrl_autodoc_module::</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_autodoc_function_nodes</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">..</span> <span class="pre">wtrl_autodoc_function::</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_autodoc_class_nodes</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">..</span> <span class="pre">wtrl_autodoc_class::</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_autodoc_class_full_nodes</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">..</span> <span class="pre">wtrl_autodoc_class_full::</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_push_current_module_nodes</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of directive <code class="wtrl_attr docutils literal notranslate"><span class="pre">..</span> <span class="pre">wtrl_push_current_module::</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_push_current_class_nodes</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of directive <code class="wtrl_attr docutils literal notranslate"><span class="pre">..</span> <span class="pre">wtrl_push_current_class::</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_push_current_scope_nodes</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of directive <code class="wtrl_attr docutils literal notranslate"><span class="pre">..</span> <span class="pre">wtrl_push_current_scope::</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_pop_current_module_nodes</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of directive <code class="wtrl_attr docutils literal notranslate"><span class="pre">..</span> <span class="pre">wtrl_pop_current_module::</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_pop_current_class_nodes</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of directive <code class="wtrl_attr docutils literal notranslate"><span class="pre">..</span> <span class="pre">wtrl_pop_current_class::</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_pop_current_scope_nodes</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of directive <code class="wtrl_attr docutils literal notranslate"><span class="pre">..</span> <span class="pre">wtrl_pop_current_scope::</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_method_signature_nodes</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of directive <code class="wtrl_attr docutils literal notranslate"><span class="pre">..</span> <span class="pre">wtrl_method_signature::</span></code> Render a method signature with optional class context and inline markup. Rendering in a single line can be inconvenient for long signatures; consider using <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_method_signature_block_nodes</span></code>.</p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_function_signature_nodes</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of directive <code class="wtrl_attr docutils literal notranslate"><span class="pre">..</span> <span class="pre">wtrl_function_signature::</span></code> Render a function signature with inline markup. Rendering in a single line can be inconvenient for long signatures; consider using <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_function_signature_block_nodes</span></code>.</p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_method_signature_block_nodes</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of directive <code class="wtrl_attr docutils literal notranslate"><span class="pre">..</span> <span class="pre">wtrl_method_signature_block::</span></code> Render a method signature with optional class context and inline markup in a block layout.</p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_function_signature_block_nodes</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of directive <code class="wtrl_attr docutils literal notranslate"><span class="pre">..</span> <span class="pre">wtrl_function_signature_block::</span></code> Render a function signature with inline markup in a block layout.</p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_attr_role</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">:wtrl_attr:</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_class_role</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">:wtrl_class:</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_cmd_role</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">:wtrl_cmd:</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_dfn_role</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">:wtrl_dfn:</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_file_role</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">:wtrl_file:</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_func_role</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">:wtrl_func:</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_label_role</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">:wtrl_label:</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_lit_role</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">:wtrl_lit:</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_mod_role</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">:wtrl_mod:</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_norm_role</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">:wtrl_norm:</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_op_role</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">:wtrl_op:</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_opt_role</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">:wtrl_opt:</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_tag_role</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">:wtrl_tag:</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_type_role</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">:wtrl_type:</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_value_role</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">:wtrl_value:</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_var_role</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">:wtrl_var:</span></code></p>
-<p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_var_type_role</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">:wtrl_var_type:</span></code></p>
-</td>
-</tr>
-<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Notes</span></p></td>
-<td><p class="wtrl-note-title rubric">Last reviewed</p>
-<p class="wtrl-freeform-paragraph-content">2026-07-16</p>
-</td>
-</tr>
-</tbody>
-<thead class="wtrl-box-head-module">
-<tr class="row-even"><th class="head"><span class="wtrl-obj-kind">«Module»</span></th>
-<th class="head"><p class="wtrl-obj-qid">sphinxcontrib.waterloo_docstrings.extension</p></th>
-</tr>
-</thead>
-</table>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<p><span class="wtrl_label">RuleID: </span><span>LQID-002</span></p>
+<p><span class="wtrl_label">Origin: </span><span>parsing</span></p>
+<p><span class="wtrl_label">Summary: </span><span>expected qualified identifier</span></p>
+<div class="docutils container">
+<p><span class="wtrl_label">Found:</span></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Public_functions</span><span class="p">:</span>
+    <span class="n">build_sphinx_nodes</span><span class="p">,</span> <span class="n">build_sphinx_nodes_full</span><span class="p">,</span> <span class="n">resolve_qualified_name</span><span class="p">,</span> <span class="n">wtrl_build_autodoc_module_nodes</span><span class="p">,</span> <span class="n">wtrl_build_autodoc_function_nodes</span><span class="p">,</span> <span class="n">wtrl_build_autodoc_class_nodes</span><span class="p">,</span> <span class="n">wtrl_build_autodoc_class_full_nodes</span><span class="p">,</span> <span class="n">wtrl_build_push_current_module_nodes</span><span class="p">,</span> <span class="n">wtrl_build_push_current_class_nodes</span><span class="p">,</span> <span class="n">wtrl_build_push_current_scope_nodes</span><span class="p">,</span> <span class="n">wtrl_build_pop_current_module_nodes</span><span class="p">,</span> <span class="n">wtrl_build_pop_current_class_nodes</span><span class="p">,</span> <span class="n">wtrl_build_pop_current_scope_nodes</span><span class="p">,</span> <span class="n">wtrl_build_method_signature_nodes</span><span class="p">,</span> <span class="n">wtrl_build_function_signature_nodes</span><span class="p">,</span> <span class="n">wtrl_build_method_signature_block_nodes</span><span class="p">,</span> <span class="n">wtrl_build_function_signature_block_nodes</span><span class="p">,</span> <span class="n">wtrl_attr_role</span><span class="p">,</span> <span class="n">wtrl_class_role</span><span class="p">,</span> <span class="n">wtrl_cmd_role</span><span class="p">,</span> <span class="n">wtrl_dfn_role</span><span class="p">,</span> <span class="n">wtrl_file_role</span><span class="p">,</span> <span class="n">wtrl_func_role</span><span class="p">,</span> <span class="n">wtrl_label_role</span><span class="p">,</span> <span class="n">wtrl_lit_role</span><span class="p">,</span> <span class="n">wtrl_mod_role</span><span class="p">,</span> <span class="n">wtrl_norm_role</span><span class="p">,</span> <span class="n">wtrl_op_role</span><span class="p">,</span> <span class="n">wtrl_opt_role</span><span class="p">,</span> <span class="n">wtrl_tag_role</span><span class="p">,</span> <span class="n">wtrl_type_role</span><span class="p">,</span> <span class="n">wtrl_value_role</span><span class="p">,</span> <span class="n">wtrl_var_role</span><span class="p">,</span> <span class="n">wtrl_var_type_role</span><span class="p">,</span> 
+</pre></div>
+</div>
+<p><span class="wtrl_label">Expected:</span></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Public_functions</span><span class="p">:</span>
+    <span class="o">&lt;</span><span class="n">qualified</span> <span class="n">identifier</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p><span class="wtrl_label">Hint: </span></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">waterlint</span> <span class="n">explain</span><span class="o">-</span><span class="n">subsection</span> <span class="o">--</span><span class="n">label</span> <span class="n">Public_functions</span> <span class="o">--</span><span class="n">profile</span> <span class="n">PROFILE</span>
+</pre></div>
+</div>
+</div>
 </div>
 <p>The code for the following state change is:</p>
 <div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">wtrl_push_current_module</span><span class="p">::</span> sphinxcontrib.waterloo_docstrings.extension
@@ -511,12 +392,18 @@ to or popped from the state stack.</p>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Contract</span></p></td>
 <td><p><span class="wtrl_label">general</span></p>
 <ul class="simple">
-<li><p><span class="wtrl_norm">Must</span> convert a parsed <code class="wtrl_type docutils literal notranslate"><span class="pre">docitem_docstring_module</span></code>, <code class="wtrl_type docutils literal notranslate"><span class="pre">docitem_docstring_class</span></code> or <code class="wtrl_type docutils literal notranslate"><span class="pre">docitem_docstring_method</span></code> into a list of docutils nodes.</p></li>
-<li><p><span class="wtrl_norm">Must</span> render section/key/value content into a two-column table with section labels on the left and content on the right.</p></li>
-<li><p><span class="wtrl_norm">Must</span> apply role-formatters provided by <code class="wtrl_type docutils literal notranslate"><span class="pre">context</span></code> (labels, types, vars, funcs, methods).</p></li>
-<li><p><span class="wtrl_norm">Must</span> assign a deterministic anchor id to the rendered table.</p></li>
-<li><p><span class="wtrl_norm">Must</span> render selected reference-like entries as internal links where targets can be resolved.</p></li>
-<li><p><span class="wtrl_norm">Must</span> keep unresolved reference entries visible as plain text fallback.</p></li>
+<li><p><span class="wtrl_norm">Must</span> convert a parsed Waterloo docstring into docutils nodes for Sphinx output.</p></li>
+<li><p><span class="wtrl_norm">Must</span> honor the current Waterloo scope before rendering the documented object.</p></li>
+<li><p><span class="wtrl_norm">Must</span> return an empty node list if the documented object is outside the current scope and scope-filter placeholders are disabled.</p></li>
+<li><p><span class="wtrl_norm">Must</span> render a note-style placeholder if the documented object is outside the current scope and scope-filter placeholders are enabled.</p></li>
+<li><p><span class="wtrl_norm">Must</span> assign a deterministic anchor id to the documentation box.</p></li>
+<li><p><span class="wtrl_norm">Must</span> register the anchor id for cross-document Waterloo references.</p></li>
+<li><p><span class="wtrl_norm">Must</span> render the docstring as a two-column documentation box with section labels on the left and rendered section content on the right.</p></li>
+<li><p><span class="wtrl_norm">Must</span> add a signature row for callable objects.</p></li>
+<li><p><span class="wtrl_norm">Must</span> preserve section-specific structure, for example executable-contract bullet lists, free-form paragraphs, grouped definitions, and public-object lists.</p></li>
+<li><p><span class="wtrl_norm">Must</span> resolve selected reference-like entries as internal links where targets can be resolved.</p></li>
+<li><p><span class="wtrl_norm">Must</span> mark resolvable but scope-filtered reference targets as out-of-scope entries.</p></li>
+<li><p><span class="wtrl_norm">Must</span> keep unresolved reference entries visible as role-rendered fallback text.</p></li>
 <li><p><span class="wtrl_norm">Must</span> emit runtime warnings for unresolved entries in sections where linkability is expected.</p></li>
 <li><p><span class="wtrl_norm">Must not</span> raise hard validation errors for unresolved references; semantic enforcement belongs to the validator.</p></li>
 </ul>
@@ -524,20 +411,28 @@ to or popped from the state stack.</p>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">ctx</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Rendering context providing inline parser and role-formatters.</p>
+<p class="wtrl-freeform-paragraph-content">Rendering context providing Sphinx state, configuration, inline parsing, and Waterloo role helpers.</p>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">obj</span></code></p>
-<p class="wtrl-freeform-paragraph-content">The documented object (module, class or method).</p>
+<p class="wtrl-freeform-paragraph-content">The documented Python object.</p>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">doc</span></code></p>
-<p class="wtrl-freeform-paragraph-content">Parsed docstring tree (representing one of the defined profiles).</p>
+<p class="wtrl-freeform-paragraph-content">Parsed Waterloo docstring tree for <code class="wtrl_var docutils literal notranslate"><span class="pre">obj</span></code>.</p>
 </td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Returns</span></p></td>
-<td><p>List of <code class="wtrl_type docutils literal notranslate"><span class="pre">docutils.nodes.Node</span></code> representing the rendered documentation table.</p></td>
+<td><p>List of <code class="wtrl_type docutils literal notranslate"><span class="pre">docutils.nodes.Node</span></code> representing the rendered documentation box or scope-filter placeholder.</p></td>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Raises</span></p></td>
-<td><p><code class="wtrl_class docutils literal notranslate"><span class="pre">RuntimeError</span></code></p>
+<td><p><code class="wtrl_class docutils literal notranslate"><span class="pre">NotImplementedError</span></code></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">May</span> raise if the docstring contains a section shape that is not supported by this renderer.</p></li>
+</ul>
+<p><code class="wtrl_class docutils literal notranslate"><span class="pre">RuntimeError</span></code></p>
 <ul class="simple">
 <li><p><span class="wtrl_norm">May</span> raise if unexpected section structure is encountered.</p></li>
+</ul>
+<p><code class="wtrl_class docutils literal notranslate"><span class="pre">ValueError</span></code></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">May</span> raise if free-form itemization starts with an invalid nested list structure.</p></li>
 </ul>
 <p><code class="wtrl_class docutils literal notranslate"><span class="pre">RuntimeWarning</span></code></p>
 <ul class="simple">
@@ -548,10 +443,12 @@ to or popped from the state stack.</p>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Notes</span></p></td>
 <td><p class="wtrl-note-title rubric">Usage</p>
 <p class="wtrl-freeform-paragraph-content">This function is typically not called directly. It is called by the various <code class="wtrl_func docutils literal notranslate"><span class="pre">autodoc</span></code> functions.</p>
+<p class="wtrl-note-title rubric">Scope filtering</p>
+<p class="wtrl-freeform-paragraph-content">Scope filtering is handled before the documentation box is built. When placeholders are enabled, skipped objects remain visible in the rendered document as lightweight notes.</p>
 <p class="wtrl-note-title rubric">Linking</p>
-<p class="wtrl-freeform-paragraph-content">Internal links are created using anchor ids from <code class="wtrl_func docutils literal notranslate"><span class="pre">build_anchor</span></code>. Built-in exceptions in section <span class="wtrl_label">Raises</span> are intentionally rendered as plain text without internal links.</p>
+<p class="wtrl-freeform-paragraph-content">Internal links are created using anchor ids from <code class="wtrl_func docutils literal notranslate"><span class="pre">build_anchor</span></code> and the Sphinx environment’s Waterloo anchor index. Built-in exceptions in section <span class="wtrl_label">Raises</span> are intentionally rendered as plain text without internal links.</p>
 <p class="wtrl-note-title rubric">Last reviewed</p>
-<p class="wtrl-freeform-paragraph-content">2026-02-15</p>
+<p class="wtrl-freeform-paragraph-content">2026-07-23</p>
 </td>
 </tr>
 </tbody>
@@ -586,77 +483,303 @@ to or popped from the state stack.</p>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Contract</span></p></td>
 <td><p><span class="wtrl_label">general</span></p>
 <ul class="simple">
-<li><p><span class="wtrl_norm">Must</span> analyze the docstring and methods of the class object.</p></li>
-<li><p><span class="wtrl_norm">Must</span> create a list of sphinx nodes, with elements as specified in the following and have the order as indicated:</p></li>
-<li><p>The list <span class="wtrl_norm">must</span> contain nodes representing the class’ docstring.</p></li>
-<li><p>The list <span class="wtrl_norm">must</span> contain nodes produced by <code class="wtrl_func docutils literal notranslate"><span class="pre">ctx.build_prolog_method_overview</span></code>.</p></li>
-<li><p>For each public method as indicated by the class’ normative docstring:</p></li>
-<li><p>1. The list <span class="wtrl_norm">must</span> contain nodes produced by <code class="wtrl_func docutils literal notranslate"><span class="pre">ctx.build_prolog_method_block</span></code>.</p></li>
-<li><p>2. The list <span class="wtrl_norm">must</span> contain nodes representing the class’ public method’s docstring.</p></li>
+<li><p><span class="wtrl_norm">Must</span> parse and validate the Waterloo docstring of <code class="wtrl_var docutils literal notranslate"><span class="pre">class_obj</span></code>.</p></li>
+<li><p><span class="wtrl_norm">Must</span> validate the class method coverage declared by the class docstring.</p></li>
+<li><p><span class="wtrl_norm">Must</span> return an empty node list if the class docstring is outside the current Waterloo scope.</p></li>
+<li><p><span class="wtrl_norm">Must</span> render the class docstring with <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes</span></code>.</p></li>
+<li><p><span class="wtrl_norm">Must</span> recursively render nested classes listed in <span class="wtrl_label">Public_classes</span> if they exist on <code class="wtrl_var docutils literal notranslate"><span class="pre">class_obj</span></code>.</p></li>
+<li><p><span class="wtrl_norm">Must</span> render public methods listed in <span class="wtrl_label">Public_methods</span> if they exist, resolve to function objects, have docstrings, validate successfully, and are visible in the current Waterloo scope.</p></li>
+<li><p><span class="wtrl_norm">Must</span> insert method block prolog nodes before rendered public methods.</p></li>
+<li><p><span class="wtrl_norm">Must</span> render documented property accessor methods for property entries listed in <span class="wtrl_label">Public_variables</span>.</p></li>
+<li><p><span class="wtrl_norm">Must</span> reuse <code class="wtrl_var docutils literal notranslate"><span class="pre">session</span></code> for parsing and validation work performed during the recursive render pass.</p></li>
+<li><p><span class="wtrl_norm">May</span> skip listed members that cannot be found, cannot be represented as function objects, or do not have docstrings.</p></li>
 </ul>
 </td>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">ctx</span></code></p>
-<p class="wtrl-freeform-paragraph-content">The context</p>
+<p class="wtrl-freeform-paragraph-content">Rendering context providing Sphinx state, configuration, diagnostics, inline parsing, and Waterloo role helpers.</p>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">class_obj</span></code></p>
-<p class="wtrl-freeform-paragraph-content">The class object to generate a sphinx documentation node list from.</p>
+<p class="wtrl-freeform-paragraph-content">The class object to render.</p>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">session</span></code></p>
-<p class="wtrl-freeform-paragraph-content">An object to store state and cache information across multiple calls to this function.</p>
+<p class="wtrl-freeform-paragraph-content">Session object used for parser and validator state shared across the recursive render pass.</p>
 </td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Returns</span></p></td>
-<td><p>A list of sphinx nodes representing the class and public member documentation.</p></td>
+<td><p>List of <code class="wtrl_type docutils literal notranslate"><span class="pre">docutils.nodes.Node</span></code> representing the class, nested classes, public methods, and documented property accessors.</p></td>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Raises</span></p></td>
 <td><p><code class="wtrl_class docutils literal notranslate"><span class="pre">RuntimeError</span></code></p>
 <ul class="simple">
-<li><p><span class="wtrl_norm">Must</span> raise if something goes wrong parsing a docstring.</p></li>
+<li><p><span class="wtrl_norm">Must</span> raise if <code class="wtrl_var docutils literal notranslate"><span class="pre">class_obj</span></code> has no docstring.</p></li>
+<li><p><span class="wtrl_norm">May</span> raise if parsing or validation of the class docstring fails.</p></li>
+<li><p><span class="wtrl_norm">May</span> raise if rendering the class docstring fails.</p></li>
+</ul>
+<p><code class="wtrl_class docutils literal notranslate"><span class="pre">NotImplementedError</span></code></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">May</span> forward unsupported section-shape errors from <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes</span></code>.</p></li>
+</ul>
+<p><code class="wtrl_class docutils literal notranslate"><span class="pre">ValueError</span></code></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">May</span> forward free-form itemization errors from <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes</span></code>.</p></li>
 </ul>
 <p><code class="wtrl_class docutils literal notranslate"><span class="pre">BaseException</span></code></p>
 <ul class="simple">
-<li><p><span class="wtrl_norm">May</span> forward exceptions from Sphinx</p></li>
+<li><p><span class="wtrl_norm">May</span> forward exceptions from Sphinx or the Waterloo parser/validator.</p></li>
 </ul>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Notes</span></p></td>
+<td><p class="wtrl-note-title rubric">Member errors</p>
+<p class="wtrl-freeform-paragraph-content">The current method-rendering branch is intentionally tolerant and may skip problematic methods instead of aborting the complete class rendering pass.</p>
+<p class="wtrl-note-title rubric">Scope filtering</p>
+<p class="wtrl-freeform-paragraph-content">Unlike <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes</span></code>, this helper currently omits an out-of-scope class without rendering a placeholder.</p>
+<p class="wtrl-note-title rubric">Last reviewed</p>
+<p class="wtrl-freeform-paragraph-content">2026-07-23</p>
 </td>
 </tr>
 </tbody>
 <thead class="wtrl-box-head-function">
-<tr class="row-odd"><th class="head"><span class="wtrl-obj-kind">«Function»</span></th>
+<tr class="row-even"><th class="head"><span class="wtrl-obj-kind">«Function»</span></th>
 <th class="head"><p class="wtrl-obj-qid">build_sphinx_nodes_full</p></th>
 </tr>
 </thead>
 </table>
 </div>
 </section>
+<section id="function-parse-inline">
+<h4><span class="section-number">9.1.1.4. </span>Function <code class="wtrl_func docutils literal notranslate"><span class="pre">parse_inline</span></code><a class="headerlink" href="#function-parse-inline" title="Link to this heading">¶</a></h4>
+<div class="table-wrapper wtrl-box docutils container" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_parse-12:parse_inline">
+<table class="wtrl-box docutils align-default" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_parse-12:parse_inline">
+<tbody>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
+<td><div class="wtrl-signature-head line"><span class="wtrl_mod">sphinxcontrib.waterloo_docstrings.wtrl_parse</span><span class="wtrl_op">.</span><span class="wtrl_func">parse_inline</span><span class="wtrl_op">(</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">inliner</span><span class="wtrl_op">: </span><span class="wtrl_type">InlinerProtocol</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">parent</span><span class="wtrl_op">: </span><span class="wtrl_type">nodes.Element</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">ln</span><span class="wtrl_op">: </span><span class="wtrl_type">int</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">txt</span><span class="wtrl_op">: </span><span class="wtrl_type">str</span></div>
+<div class="wtrl-signature-ret line"><span class="wtrl_op">)</span><span class="wtrl_op"> -&gt; </span><span class="wtrl_type">List[nodes.Node]</span></div>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Preamble</span></p></td>
+<td><p><span class="wtrl_label">normative sections</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_label">Contract</span>, <span class="wtrl_label">Parameters</span>, <span class="wtrl_label">Returns</span>, <span class="wtrl_label">Raises</span></p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Contract</span></p></td>
+<td><p><span class="wtrl_label">general</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">Must</span> parse inline reStructuredText content and preserve warning and error messages.</p></li>
+<li><p><span class="wtrl_norm">Must</span> append all generated messages to the parent element as child nodes.</p></li>
+<li><p><span class="wtrl_norm">Must</span> return all parsed content nodes without discarding messages.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Description</span></p></td>
+<td><p>This function wraps inliner.parse() to ensure that any warning or error messages generated during the parsing process are captured and added to the document tree instead of being silently discarded.</p></td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Parameters</span></p></td>
+<td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">inliner</span></code></p>
+<p class="wtrl-freeform-paragraph-content">An inline element parser implementing InlinerProtocol. <span class="wtrl_norm">Must</span> have a parse method and a document attribute with settings and reporter attributes.</p>
+<p><code class="wtrl_var docutils literal notranslate"><span class="pre">parent</span></code></p>
+<p class="wtrl-freeform-paragraph-content">The parent Element to which parsed content and messages will be appended.</p>
+<p><code class="wtrl_var docutils literal notranslate"><span class="pre">ln</span></code></p>
+<p class="wtrl-freeform-paragraph-content">The line number (integer) where the txt input begins in the source document.</p>
+<p><code class="wtrl_var docutils literal notranslate"><span class="pre">txt</span></code></p>
+<p class="wtrl-freeform-paragraph-content">The reStructuredText source string (str) to be parsed for inline markup.</p>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Returns</span></p></td>
+<td><p>List of parsed docutils.nodes.Node instances representing the content found in txt. The returned list is created from the parse output; warning and error messages are appended directly to parent and not returned as part of the list.</p></td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Raises</span></p></td>
+<td><p><code class="wtrl_class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<ul class="simple">
+<li><p>No exceptions are raised under normal conditions. Exceptions from underlying RST</p></li>
+<li><p>parsing or document handling <span class="wtrl_norm">may</span> propagate depending on the inliner implementation.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Notes</span></p></td>
+<td><p class="wtrl-note-title rubric">Key difference from direct inliner.parse() calls</p>
+<p class="wtrl-freeform-paragraph-content">This function always preserves document messages in the tree. Direct calls to inliner.parse() may discard messages, leading to silent data loss in warnings and error conditions.</p>
+</td>
+</tr>
+</tbody>
+<thead class="wtrl-box-head-function">
+<tr class="row-odd"><th class="head"><span class="wtrl-obj-kind">«Function»</span></th>
+<th class="head"><p class="wtrl-obj-qid">parse_inline</p></th>
+</tr>
+</thead>
+</table>
+</div>
+</section>
 <section id="class-context">
-<h4><span class="section-number">9.1.1.4. </span>Class <code class="wtrl_class docutils literal notranslate"><span class="pre">context</span></code><a class="headerlink" href="#class-context" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">9.1.1.5. </span>Class <code class="wtrl_class docutils literal notranslate"><span class="pre">context</span></code><a class="headerlink" href="#class-context" title="Link to this heading">¶</a></h4>
 <div class="table-wrapper wtrl-box docutils container" id="wtrl-cls-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_context-7:context">
 <table class="wtrl-box docutils align-default" id="wtrl-cls-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_context-7:context">
 <tbody>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Preamble</span></p></td>
 <td><p><span class="wtrl_label">normative sections</span></p>
 <ul class="simple">
-<li><p><span class="wtrl_label">Contract</span></p></li>
+<li><p><span class="wtrl_label">Contract</span>, <span class="wtrl_label">Factory</span>, <span class="wtrl_label">Public methods</span></p></li>
 </ul>
 </td>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Contract</span></p></td>
 <td><p><span class="wtrl_label">general</span></p>
 <ul class="simple">
-<li><p><span class="wtrl_norm">Must</span> be able to hold data from both the Sphinx environment and the user-defined configuration in <code class="wtrl_file docutils literal notranslate"><span class="pre">conf.py</span></code>.</p></li>
-<li><p><span class="wtrl_norm">Must</span> provide a method which allows configuration by means of a simple, documented data structure.</p></li>
-<li><p><span class="wtrl_norm">Must</span> provide access to role decorator functions which map plain text to decorated text (through base class).</p></li>
+<li><p><span class="wtrl_norm">Must</span> provide the shared rendering state used by Waterloo Sphinx node builders.</p></li>
+<li><p><span class="wtrl_norm">Must</span> store the Docutils/Sphinx inline parser callback used to turn resolved Waterloo markup into nodes.</p></li>
+<li><p><span class="wtrl_norm">Must</span> store the source line number used for diagnostics and inline parsing.</p></li>
+<li><p><span class="wtrl_norm">Must</span> provide slots for the active Sphinx environment and configuration object.</p></li>
+<li><p><span class="wtrl_norm">Must</span> provide a cache for validated Waterloo docstrings used by scope-aware link rendering.</p></li>
+<li><p><span class="wtrl_norm">Must</span> provide a tracer for diagnostics emitted while resolving or rendering Waterloo content.</p></li>
+<li><p><span class="wtrl_norm">Must</span> provide configurable prolog hook callables for method overview and method block rendering.</p></li>
+<li><p><span class="wtrl_norm">Must</span> provide access to Waterloo role helper functions through <code class="wtrl_class docutils literal notranslate"><span class="pre">context_roles</span></code>.</p></li>
+<li><p><span class="wtrl_norm">Must</span> provide a method for applying hook configuration from a simple dictionary.</p></li>
 </ul>
 <p><span class="wtrl_label">constructor</span></p>
 <ul class="simple">
-<li><p>Internal class, TBD later, complicated sphinx stuff.</p></li>
+<li><p><span class="wtrl_norm">Must</span> accept a callable for parsing inline text into a list of <code class="wtrl_class docutils literal notranslate"><span class="pre">nodes.Node</span></code> objects.</p></li>
+<li><p><span class="wtrl_norm">Must</span> accept a line number for error reporting.</p></li>
+<li><p><span class="wtrl_norm">Must</span> initialize <code class="wtrl_attr docutils literal notranslate"><span class="pre">env</span></code> and <code class="wtrl_attr docutils literal notranslate"><span class="pre">config</span></code> as unset placeholders.</p></li>
+<li><p><span class="wtrl_norm">Must</span> initialize default prolog hook callables.</p></li>
+<li><p><span class="wtrl_norm">Must</span> initialize an empty validated-docstring cache and a fresh tracer.</p></li>
 </ul>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Factory</span></p></td>
+<td><p><a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_context-12:make_context" title="sphinxcontrib.waterloo_docstrings.wtrl_context.make_context"><span>make_context</span></a></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">Must</span> create a <code class="wtrl_class docutils literal notranslate"><span class="pre">context</span></code> instance from a Sphinx application object, an inline parser callable, and a line number.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Public methods</span></p></td>
+<td><p><a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_context-7:context-32:set_build_prolog_method_overview" title="sphinxcontrib.waterloo_docstrings.wtrl_context.context.set_build_prolog_method_overview"><span>set_build_prolog_method_overview</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_context-7:context-29:set_build_prolog_method_block" title="sphinxcontrib.waterloo_docstrings.wtrl_context.context.set_build_prolog_method_block"><span>set_build_prolog_method_block</span></a>, <a class="wtrl_func reference internal" href="#wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_context-7:context-12:apply_config" title="sphinxcontrib.waterloo_docstrings.wtrl_context.context.apply_config"><span>apply_config</span></a></p></td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Notes</span></p></td>
+<td><p class="wtrl-note-title rubric">Context population</p>
+<p class="wtrl-freeform-paragraph-content">Call <code class="wtrl_func docutils literal notranslate"><span class="pre">make_context</span></code> instead of instantiating this class directly when Sphinx environment and configuration access are needed.</p>
+<p class="wtrl-note-title rubric">Last reviewed</p>
+<p class="wtrl-freeform-paragraph-content">2026-07-23</p>
+<p class="wtrl-note-title rubric">Todo</p>
+<p class="wtrl-freeform-paragraph-content">Methods like <code class="wtrl_func docutils literal notranslate"><span class="pre">build_prolog_method_overview</span></code> and <code class="wtrl_func docutils literal notranslate"><span class="pre">build_prolog_method_block</span></code> need to be reviewed.</p>
 </td>
 </tr>
 </tbody>
 <thead class="wtrl-box-head-class">
-<tr class="row-odd"><th class="head"><span class="wtrl-obj-kind">«Class»</span></th>
+<tr class="row-even"><th class="head"><span class="wtrl-obj-kind">«Class»</span></th>
 <th class="head"><p class="wtrl-obj-qid">context</p></th>
+</tr>
+</thead>
+</table>
+</div>
+<div class="table-wrapper wtrl-box docutils container" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_context-7:context-8:__init__">
+<table class="wtrl-box docutils align-default" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_context-7:context-8:__init__">
+<tbody>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
+<td><div class="wtrl-signature-head line"><span class="wtrl_mod">sphinxcontrib.waterloo_docstrings.wtrl_context</span><span class="wtrl_op">.</span><span class="wtrl_type">context</span><span class="wtrl_op">.</span><span class="wtrl_func">__init__</span><span class="wtrl_op">(</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">parse_inline</span><span class="wtrl_op">: </span><span class="wtrl_type">Callable[[nodes.Element, int, str], List[nodes.Node]]</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">lineno</span><span class="wtrl_op">: </span><span class="wtrl_type">int</span></div>
+<div class="wtrl-signature-ret line"><span class="wtrl_op">)</span><span class="wtrl_op"> -&gt; </span><span class="wtrl_type">None</span></div>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Preamble</span></p></td>
+<td><p><span class="wtrl_label">normative sections</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_label">Contract</span>, <span class="wtrl_label">Parameters</span>, <span class="wtrl_label">Returns</span>, <span class="wtrl_label">Raises</span></p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Contract</span></p></td>
+<td><p><span class="wtrl_label">general</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">Must</span> initialize the context with the given inline parser and line number.</p></li>
+<li><p><span class="wtrl_norm">Must</span> initialize the Sphinx environment <code class="wtrl_var docutils literal notranslate"><span class="pre">env</span></code> and configuration <code class="wtrl_var docutils literal notranslate"><span class="pre">config</span></code> placeholders as unset.</p></li>
+<li><p><span class="wtrl_norm">Must</span> initialize the validated-docstring cache <code class="wtrl_var docutils literal notranslate"><span class="pre">wtrl_validated_doc_cache</span></code> and tracer <code class="wtrl_var docutils literal notranslate"><span class="pre">tr</span></code>.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Parameters</span></p></td>
+<td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">parse_inline</span></code></p>
+<p class="wtrl-freeform-paragraph-content">A callable that takes a <code class="wtrl_class docutils literal notranslate"><span class="pre">nodes.Element</span></code> parent, an integer line number, and a string of inline text, and returns a list of <code class="wtrl_class docutils literal notranslate"><span class="pre">nodes.Node</span></code> objects.</p>
+<p><code class="wtrl_var docutils literal notranslate"><span class="pre">lineno</span></code></p>
+<p class="wtrl-freeform-paragraph-content">An integer line number within the source file.</p>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Returns</span></p></td>
+<td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">None</span></code></p></td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Raises</span></p></td>
+<td><code class="wtrl_value docutils literal notranslate"><span class="pre">&lt;empty&gt;</span></code></td>
+</tr>
+</tbody>
+<thead class="wtrl-box-head-method">
+<tr class="row-odd"><th class="head"><span class="wtrl-obj-kind">«Method»</span></th>
+<th class="head"><p class="wtrl-obj-qid">context.__init__</p></th>
+</tr>
+</thead>
+</table>
+</div>
+<div class="table-wrapper wtrl-box docutils container" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_context-12:make_context">
+<table class="wtrl-box docutils align-default" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_context-12:make_context">
+<tbody>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
+<td><div class="wtrl-signature-head line"><span class="wtrl_mod">sphinxcontrib.waterloo_docstrings.wtrl_context</span><span class="wtrl_op">.</span><span class="wtrl_func">make_context</span><span class="wtrl_op">(</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">app</span><span class="wtrl_op">: </span><span class="wtrl_type">SphinxAppProtocol | Any</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">parse_inline</span><span class="wtrl_op">: </span><span class="wtrl_type">Callable[[nodes.Element, int, str], List[nodes.Node]]</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">lineno</span><span class="wtrl_op">: </span><span class="wtrl_type">int</span></div>
+<div class="wtrl-signature-ret line"><span class="wtrl_op">)</span><span class="wtrl_op"> -&gt; </span><span class="wtrl_type">context</span></div>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Preamble</span></p></td>
+<td><p><span class="wtrl_label">normative sections</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_label">Contract</span>, <span class="wtrl_label">Parameters</span>, <span class="wtrl_label">Returns</span>, <span class="wtrl_label">Raises</span></p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Contract</span></p></td>
+<td><p><span class="wtrl_label">general</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">Must</span> create a <code class="wtrl_class docutils literal notranslate"><span class="pre">context</span></code> instance from a Sphinx application object, an inline parser callable, and a line number.</p></li>
+<li><p><span class="wtrl_norm">Must</span> extract the Sphinx environment and configuration from the application object and store them in the context.</p></li>
+<li><p><span class="wtrl_norm">Must</span> look for a <code class="wtrl_var docutils literal notranslate"><span class="pre">docitem_context_configurator</span></code> dictionary in the application object or the Sphinx environment.</p></li>
+<li><p><span class="wtrl_norm">Must</span> apply the configurator to the context if it is found.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Parameters</span></p></td>
+<td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">app</span></code></p>
+<p class="wtrl-freeform-paragraph-content">A Sphinx application object.</p>
+<p><code class="wtrl_var docutils literal notranslate"><span class="pre">parse_inline</span></code></p>
+<p class="wtrl-freeform-paragraph-content">A callable that takes a <code class="wtrl_class docutils literal notranslate"><span class="pre">nodes.Element</span></code> parent, an integer line number, and a string of inline text, and returns a list of <code class="wtrl_class docutils literal notranslate"><span class="pre">nodes.Node</span></code> objects.</p>
+<p><code class="wtrl_var docutils literal notranslate"><span class="pre">lineno</span></code></p>
+<p class="wtrl-freeform-paragraph-content">An integer line number within the source file.</p>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Returns</span></p></td>
+<td><p>A <code class="wtrl_class docutils literal notranslate"><span class="pre">context</span></code> instance with the Sphinx environment, configuration, and optional configurator applied.</p></td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Raises</span></p></td>
+<td><code class="wtrl_value docutils literal notranslate"><span class="pre">&lt;empty&gt;</span></code></td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Notes</span></p></td>
+<td><p class="wtrl-note-title rubric">Last reviewed</p>
+<p class="wtrl-freeform-paragraph-content">2026-07-23</p>
+<p class="wtrl-note-title rubric">Purpose</p>
+<p class="wtrl-freeform-paragraph-content">This factory function provides a convenient way to create a fully initialized rendering context with Sphinx environment and configuration details extracted from the application object. It also searches for and applies optional context configurators, allowing extensible customization of rendering behavior without modifying the context initialization logic directly.</p>
+<p class="wtrl-freeform-paragraph-content">Called whenever rendering content into the final document (e.g., HTML) at a specific source location (<code class="wtrl_var docutils literal notranslate"><span class="pre">lineno</span></code>).</p>
+</td>
+</tr>
+</tbody>
+<thead class="wtrl-box-head-function">
+<tr class="row-even"><th class="head"><span class="wtrl-obj-kind">«Function»</span></th>
+<th class="head"><p class="wtrl-obj-qid">make_context</p></th>
 </tr>
 </thead>
 </table>
@@ -687,14 +810,19 @@ to or popped from the state stack.</p>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Contract</span></p></td>
 <td><p><span class="wtrl_label">general</span></p>
 <ul class="simple">
-<li><p><span class="wtrl_norm">Must</span> resolve the dotted module name <code class="wtrl_var docutils literal notranslate"><span class="pre">text</span></code> to a Python module object taking into account the current module state.</p></li>
+<li><p><span class="wtrl_norm">Must</span> create a Waterloo rendering context for the active Sphinx application and source line.</p></li>
+<li><p><span class="wtrl_norm">Must</span> resolve the dotted module name <code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code> to a Python module object, taking the current Waterloo module state into account.</p></li>
+<li><p><span class="wtrl_norm">Must</span> return diagnostic nodes if <code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code> cannot be resolved.</p></li>
+<li><p><span class="wtrl_norm">Must</span> return diagnostic nodes if <code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code> does not resolve to a module.</p></li>
+<li><p><span class="wtrl_norm">Must</span> return diagnostic nodes if the resolved module has no non-empty docstring.</p></li>
 <li><p><span class="wtrl_norm">Must</span> parse and validate the module’s Waterloo docstring.</p></li>
-<li><p><span class="wtrl_norm">Must</span> render the parsed docstring into Docutils nodes using the configured context.</p></li>
+<li><p><span class="wtrl_norm">Must</span> return structured tracer diagnostic nodes if parsing or validation fails.</p></li>
+<li><p><span class="wtrl_norm">Must</span> render the parsed docstring with <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes</span></code>.</p></li>
 </ul>
 </td>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Description</span></p></td>
-<td><p>Implementation of directive <code class="wtrl_attr docutils literal notranslate"><span class="pre">:wtrl_autodoc_module:</span></code>.</p></td>
+<td><p>Implementation of directive <code class="wtrl_attr docutils literal notranslate"><span class="pre">..</span> <span class="pre">wtrl_autodoc_module::</span></code>.</p></td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">app</span></code></p>
@@ -708,24 +836,25 @@ to or popped from the state stack.</p>
 </td>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Returns</span></p></td>
-<td><p>The list of generated <code class="wtrl_type docutils literal notranslate"><span class="pre">docutils.nodes.Node</span></code> representing the module doumentation.</p></td>
+<td><p>List of generated <code class="wtrl_type docutils literal notranslate"><span class="pre">docutils.nodes.Node</span></code> representing the module documentation or a diagnostic replacement.</p></td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Raises</span></p></td>
-<td><p><code class="wtrl_class docutils literal notranslate"><span class="pre">RuntimeError</span></code></p>
+<td><p><code class="wtrl_class docutils literal notranslate"><span class="pre">BaseException</span></code></p>
 <ul class="simple">
-<li><p><span class="wtrl_norm">Must</span> raise if the qualified name cannot be resolved</p></li>
-<li><p><span class="wtrl_norm">Must</span> raise if parsing the docstring fails.</p></li>
-<li><p><span class="wtrl_norm">Must</span> raise if validating the docstring tree fails</p></li>
+<li><p><span class="wtrl_norm">May</span> forward unexpected exceptions from context creation, inline parsing, or <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes</span></code>.</p></li>
 </ul>
-<p><code class="wtrl_class docutils literal notranslate"><span class="pre">BaseException</span></code></p>
-<ul class="simple">
-<li><p><span class="wtrl_norm">May</span> raise if building the list of Docutils nodes fails.</p></li>
-</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Notes</span></p></td>
+<td><p class="wtrl-note-title rubric">Diagnostics</p>
+<p class="wtrl-freeform-paragraph-content">Expected directive failures are rendered into the document instead of being raised as hard Sphinx build errors.</p>
+<p class="wtrl-note-title rubric">Last reviewed</p>
+<p class="wtrl-freeform-paragraph-content">2026-07-23</p>
 </td>
 </tr>
 </tbody>
 <thead class="wtrl-box-head-function">
-<tr class="row-even"><th class="head"><span class="wtrl-obj-kind">«Function»</span></th>
+<tr class="row-odd"><th class="head"><span class="wtrl-obj-kind">«Function»</span></th>
 <th class="head"><p class="wtrl-obj-qid">wtrl_build_autodoc_module_nodes</p></th>
 </tr>
 </thead>
@@ -753,9 +882,14 @@ to or popped from the state stack.</p>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Contract</span></p></td>
 <td><p><span class="wtrl_label">general</span></p>
 <ul class="simple">
-<li><p><span class="wtrl_norm">Must</span> resolve the dotted class name <code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code> to a class taking into account the current module/class state.</p></li>
+<li><p><span class="wtrl_norm">Must</span> create a Waterloo rendering context for the active Sphinx application and source line.</p></li>
+<li><p><span class="wtrl_norm">Must</span> resolve the dotted class name <code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code> to a class, taking the current Waterloo module/class state into account.</p></li>
+<li><p><span class="wtrl_norm">Must</span> return diagnostic nodes if <code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code> cannot be resolved.</p></li>
+<li><p><span class="wtrl_norm">Must</span> return diagnostic nodes if <code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code> does not resolve to a class.</p></li>
+<li><p><span class="wtrl_norm">Must</span> return diagnostic nodes if the resolved class has no non-empty docstring.</p></li>
 <li><p><span class="wtrl_norm">Must</span> parse and validate the class’ Waterloo docstring.</p></li>
-<li><p><span class="wtrl_norm">Must</span> render the parsed docstring into Docutils nodes using the configured context.</p></li>
+<li><p><span class="wtrl_norm">Must</span> return structured tracer diagnostic nodes if parsing or validation fails.</p></li>
+<li><p><span class="wtrl_norm">Must</span> render the parsed docstring with <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes</span></code>.</p></li>
 </ul>
 </td>
 </tr>
@@ -774,24 +908,25 @@ to or popped from the state stack.</p>
 </td>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Returns</span></p></td>
-<td><p>List of generated <code class="wtrl_type docutils literal notranslate"><span class="pre">docutils.nodes.Node</span></code>.</p></td>
+<td><p>List of generated <code class="wtrl_type docutils literal notranslate"><span class="pre">docutils.nodes.Node</span></code> representing the class documentation or a diagnostic replacement.</p></td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Raises</span></p></td>
-<td><p><code class="wtrl_class docutils literal notranslate"><span class="pre">RuntimeError</span></code></p>
+<td><p><code class="wtrl_class docutils literal notranslate"><span class="pre">BaseException</span></code></p>
 <ul class="simple">
-<li><p><span class="wtrl_norm">Must</span> raise if the qualified name cannot be resolved.</p></li>
-<li><p><span class="wtrl_norm">Must</span> raise if parsing the docstring fails.</p></li>
-<li><p><span class="wtrl_norm">Must</span> raise if validating the docstring tree fails.</p></li>
+<li><p><span class="wtrl_norm">May</span> forward unexpected exceptions from context creation, inline parsing, or <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes</span></code>.</p></li>
 </ul>
-<p><code class="wtrl_class docutils literal notranslate"><span class="pre">BaseException</span></code></p>
-<ul class="simple">
-<li><p><span class="wtrl_norm">May</span> raise if building the list of Docutils nodes fails.</p></li>
-</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Notes</span></p></td>
+<td><p class="wtrl-note-title rubric">Diagnostics</p>
+<p class="wtrl-freeform-paragraph-content">Expected directive failures are rendered into the document instead of being raised as hard Sphinx build errors.</p>
+<p class="wtrl-note-title rubric">Last reviewed</p>
+<p class="wtrl-freeform-paragraph-content">2026-07-23</p>
 </td>
 </tr>
 </tbody>
 <thead class="wtrl-box-head-function">
-<tr class="row-even"><th class="head"><span class="wtrl-obj-kind">«Function»</span></th>
+<tr class="row-odd"><th class="head"><span class="wtrl-obj-kind">«Function»</span></th>
 <th class="head"><p class="wtrl-obj-qid">wtrl_build_autodoc_class_nodes</p></th>
 </tr>
 </thead>
@@ -819,9 +954,16 @@ to or popped from the state stack.</p>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Contract</span></p></td>
 <td><p><span class="wtrl_label">general</span></p>
 <ul class="simple">
-<li><p><span class="wtrl_norm">Must</span> resolve the dotted function name <code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code> to a callable taking into account the current module/class state.</p></li>
+<li><p><span class="wtrl_norm">Must</span> create a Waterloo rendering context for the active Sphinx application and source line.</p></li>
+<li><p><span class="wtrl_norm">Must</span> resolve the dotted function name <code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code> to a callable, taking the current Waterloo module/class state into account.</p></li>
+<li><p><span class="wtrl_norm">Must</span> return diagnostic nodes if <code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code> cannot be resolved.</p></li>
+<li><p><span class="wtrl_norm">Must</span> return diagnostic nodes if <code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code> does not resolve to a callable.</p></li>
+<li><p><span class="wtrl_norm">Must</span> return diagnostic nodes if the resolved callable has no non-empty docstring.</p></li>
 <li><p><span class="wtrl_norm">Must</span> parse and validate the function’s Waterloo docstring.</p></li>
-<li><p><span class="wtrl_norm">Must</span> render the parsed docstring into Docutils nodes using the configured context.</p></li>
+<li><p><span class="wtrl_norm">Must</span> return structured tracer diagnostic nodes if parsing or validation fails.</p></li>
+<li><p><span class="wtrl_norm">Must</span> render <code class="wtrl_value docutils literal notranslate"><span class="pre">function</span></code> and <code class="wtrl_value docutils literal notranslate"><span class="pre">method</span></code> profiles as method docstrings.</p></li>
+<li><p><span class="wtrl_norm">Must</span> render all other accepted callable profiles as inherited-method docstrings.</p></li>
+<li><p><span class="wtrl_norm">Must</span> render the parsed docstring with <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes</span></code>.</p></li>
 </ul>
 </td>
 </tr>
@@ -840,24 +982,25 @@ to or popped from the state stack.</p>
 </td>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Returns</span></p></td>
-<td><p>List of generated <code class="wtrl_type docutils literal notranslate"><span class="pre">docutils.nodes.Node</span></code>.</p></td>
+<td><p>List of generated <code class="wtrl_type docutils literal notranslate"><span class="pre">docutils.nodes.Node</span></code> representing the callable documentation or a diagnostic replacement.</p></td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Raises</span></p></td>
-<td><p><code class="wtrl_class docutils literal notranslate"><span class="pre">RuntimeError</span></code></p>
+<td><p><code class="wtrl_class docutils literal notranslate"><span class="pre">BaseException</span></code></p>
 <ul class="simple">
-<li><p><span class="wtrl_norm">Must</span> raise if the qualified name cannot be resolved.</p></li>
-<li><p><span class="wtrl_norm">Must</span> raise if parsing the docstring fails.</p></li>
-<li><p><span class="wtrl_norm">Must</span> raise if validating the docstring tree fails.</p></li>
+<li><p><span class="wtrl_norm">May</span> forward unexpected exceptions from context creation, inline parsing, or <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes</span></code>.</p></li>
 </ul>
-<p><code class="wtrl_class docutils literal notranslate"><span class="pre">BaseException</span></code></p>
-<ul class="simple">
-<li><p><span class="wtrl_norm">May</span> raise if building the list of Docutils nodes fails.</p></li>
-</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Notes</span></p></td>
+<td><p class="wtrl-note-title rubric">Diagnostics</p>
+<p class="wtrl-freeform-paragraph-content">Expected directive failures are rendered into the document instead of being raised as hard Sphinx build errors.</p>
+<p class="wtrl-note-title rubric">Last reviewed</p>
+<p class="wtrl-freeform-paragraph-content">2026-07-23</p>
 </td>
 </tr>
 </tbody>
 <thead class="wtrl-box-head-function">
-<tr class="row-even"><th class="head"><span class="wtrl-obj-kind">«Function»</span></th>
+<tr class="row-odd"><th class="head"><span class="wtrl-obj-kind">«Function»</span></th>
 <th class="head"><p class="wtrl-obj-qid">wtrl_build_autodoc_function_nodes</p></th>
 </tr>
 </thead>
@@ -885,10 +1028,14 @@ to or popped from the state stack.</p>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Contract</span></p></td>
 <td><p><span class="wtrl_label">general</span></p>
 <ul class="simple">
-<li><p><span class="wtrl_norm">Must</span> parse the class’s docstring and create a docstring tree.</p></li>
-<li><p><span class="wtrl_norm">Must</span> parse the class methods’ docstrings and create docstring trees.</p></li>
-<li><p><span class="wtrl_norm">Must</span> validate the docstring trees.</p></li>
-<li><p><span class="wtrl_norm">Must</span> convert the docstring trees into a list of Docutils nodes that represent the docstrings.</p></li>
+<li><p><span class="wtrl_norm">Must</span> create a Waterloo rendering context for the active Sphinx application and source line.</p></li>
+<li><p><span class="wtrl_norm">Must</span> resolve the dotted class name <code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code> to a class, taking the current Waterloo module/class state into account.</p></li>
+<li><p><span class="wtrl_norm">Must</span> return diagnostic nodes if <code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code> cannot be resolved.</p></li>
+<li><p><span class="wtrl_norm">Must</span> return diagnostic nodes if <code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code> does not resolve to a class.</p></li>
+<li><p><span class="wtrl_norm">Must</span> return diagnostic nodes if the resolved class has no non-empty docstring.</p></li>
+<li><p><span class="wtrl_norm">Must</span> delegate recursive class, nested-class, method, and property-accessor rendering to <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes_full</span></code>.</p></li>
+<li><p><span class="wtrl_norm">Must</span> return runtime diagnostic nodes if <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes_full</span></code> raises <code class="wtrl_type docutils literal notranslate"><span class="pre">RuntimeError</span></code>.</p></li>
+<li><p><span class="wtrl_norm">Must</span> return structured tracer diagnostic nodes if recursive rendering fails with another expected exception.</p></li>
 </ul>
 </td>
 </tr>
@@ -907,24 +1054,27 @@ to or popped from the state stack.</p>
 </td>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Returns</span></p></td>
-<td><p>List of generated <code class="wtrl_type docutils literal notranslate"><span class="pre">docutils.nodes.Node</span></code>.</p></td>
+<td><p>List of generated <code class="wtrl_type docutils literal notranslate"><span class="pre">docutils.nodes.Node</span></code> representing the recursively rendered class documentation or a diagnostic replacement.</p></td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Raises</span></p></td>
-<td><p><code class="wtrl_class docutils literal notranslate"><span class="pre">RuntimeError</span></code></p>
+<td><p><code class="wtrl_class docutils literal notranslate"><span class="pre">BaseException</span></code></p>
 <ul class="simple">
-<li><p><span class="wtrl_norm">Must</span> raise if the qualified name cannot be resolved.</p></li>
-<li><p><span class="wtrl_norm">Must</span> raise if parsing of any of the docstrings fails.</p></li>
-<li><p><span class="wtrl_norm">Must</span> raise if validating the docstring tree fails.</p></li>
+<li><p><span class="wtrl_norm">May</span> forward unexpected exceptions from context creation, inline parsing, or diagnostic rendering.</p></li>
 </ul>
-<p><code class="wtrl_class docutils literal notranslate"><span class="pre">BaseException</span></code></p>
-<ul class="simple">
-<li><p><span class="wtrl_norm">May</span> raise if building the list of Docutils nodes fails.</p></li>
-</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Notes</span></p></td>
+<td><p class="wtrl-note-title rubric">Diagnostics</p>
+<p class="wtrl-freeform-paragraph-content">Expected directive failures are rendered into the document instead of being raised as hard Sphinx build errors.</p>
+<p class="wtrl-note-title rubric">Recursion</p>
+<p class="wtrl-freeform-paragraph-content">The traversal policy is implemented by <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes_full</span></code>; this directive wrapper only resolves the top-level class and translates failures into Sphinx nodes.</p>
+<p class="wtrl-note-title rubric">Last reviewed</p>
+<p class="wtrl-freeform-paragraph-content">2026-07-23</p>
 </td>
 </tr>
 </tbody>
 <thead class="wtrl-box-head-function">
-<tr class="row-even"><th class="head"><span class="wtrl-obj-kind">«Function»</span></th>
+<tr class="row-odd"><th class="head"><span class="wtrl-obj-kind">«Function»</span></th>
 <th class="head"><p class="wtrl-obj-qid">wtrl_build_autodoc_class_full_nodes</p></th>
 </tr>
 </thead>
@@ -1880,7 +2030,8 @@ to keep the document low in redundancy.</p>
 <li><a class="reference internal" href="#function-resolve-qualified-name">9.1.1.1. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">resolve_qualified_name</span></code></a></li>
 <li><a class="reference internal" href="#function-build-sphinx-nodes">9.1.1.2. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes</span></code></a></li>
 <li><a class="reference internal" href="#function-build-sphinx-nodes-full">9.1.1.3. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes_full</span></code></a></li>
-<li><a class="reference internal" href="#class-context">9.1.1.4. Class <code class="wtrl_class docutils literal notranslate"><span class="pre">context</span></code></a></li>
+<li><a class="reference internal" href="#function-parse-inline">9.1.1.4. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">parse_inline</span></code></a></li>
+<li><a class="reference internal" href="#class-context">9.1.1.5. Class <code class="wtrl_class docutils literal notranslate"><span class="pre">context</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#directives-for-docstring-rendering">9.1.2. Directives for docstring rendering</a></li>

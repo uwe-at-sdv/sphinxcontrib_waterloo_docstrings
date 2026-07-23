@@ -10,8 +10,8 @@ building the documentation, so changes normally require a fresh Sphinx build.
 This documentation uses the following Waterloo-specific settings:
 
 .. literalinclude:: ./conf.py
-	:start-after: start-config-variables
-	:end-before: end-config-variables
+	:start-after: litinc-start-config-variables
+	:end-before: litinc-end-config-variables
 
 The following sections describe the implemented configuration variables.
 
@@ -118,3 +118,66 @@ Import Resolution
   Installed packages usually do not need an entry in :wtrl_var:`wtrl_basedirs`.
   They only need to be importable by the same Python interpreter that runs the
   Sphinx build.
+
+
+Sphinx Setup Hook
+-----------------
+
+Some Sphinx configuration cannot be expressed as plain configuration variables.
+For these cases Sphinx looks for a function named :wtrl_func:`setup` in
+:wtrl_file:`conf.py`. The Waterloo documentation uses this hook to register the
+Python-Waterloo Pygments lexer:
+
+.. code:: python
+
+	from python_waterloo_lexer import PythonWaterlooLexer
+
+	def setup(app: Any) -> dict[str, Any]:
+		app.add_lexer("python", PythonWaterlooLexer)
+		app.add_lexer("python-waterloo", PythonWaterlooLexer)
+
+The two calls serve different purposes.
+
+Registering the lexer as :wtrl_value:`python` replaces Sphinx's default Python
+highlighting for ordinary Python code blocks:
+
+.. code:: rst
+
+	.. code-block:: python
+
+This is convenient when most Python snippets in the documentation contain
+Waterloo docstrings or Waterloo inline markup. It also makes existing Python
+code blocks benefit from the Waterloo-aware lexer without changing the source
+files.
+
+Registering the lexer as :wtrl_value:`python-waterloo` creates an explicit
+language name:
+
+.. code:: rst
+
+	.. code-block:: python-waterloo
+
+This is the more conservative option. Use it when the documentation contains
+ordinary Python snippets that should keep Sphinx's default Python highlighting,
+and only selected examples should use the Waterloo-aware lexer.
+
+You can register either name or both names. Registering both is useful in
+documentation that mostly shows Waterloo-aware Python code but still wants an
+explicit :wtrl_value:`python-waterloo` language for examples and tests.
+
+Syntax highlighting colors are still controlled by Sphinx's ordinary Pygments
+configuration variables. With themes that support light and dark mode, such as
+Furo, configure both variants explicitly:
+
+.. code:: python
+
+	pygments_style = "autumn"
+	pygments_dark_style = "gruvbox-dark"
+
+The first value is used for the light color scheme. The second value is used
+for the dark color scheme. If only :wtrl_var:`pygments_style` is configured,
+the dark-mode output may use a Sphinx or theme fallback that does not match the
+style being tested in light mode.
+
+Examples of syntax highlighting with the Waterloo-aware lexer are shown in
+chapter :ref:`Miscellaneous <chapter_misc>`.

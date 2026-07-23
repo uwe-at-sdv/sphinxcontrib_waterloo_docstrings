@@ -68,10 +68,19 @@ Function :wtrl_func:`build_sphinx_nodes_full`
 
 .. wtrl_autodoc_function:: build_sphinx_nodes_full
 
+Function :wtrl_func:`parse_inline`
+.............................................
+
+.. wtrl_autodoc_function:: parse_inline
+
 Class :wtrl_class:`context`
 .............................................
 
 .. wtrl_autodoc_class:: context
+
+.. wtrl_autodoc_method:: context.__init__
+
+.. wtrl_autodoc_function:: make_context
 
 
 Directives for docstring rendering
