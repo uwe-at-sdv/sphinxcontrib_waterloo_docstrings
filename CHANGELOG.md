@@ -5,6 +5,8 @@ Format:
 - VERSION [YYYY-MM-DD]: Summary.
 
 #----- extend here --------------------------------------------#
+- 0.7.13 [2026-07-23]:
+	* Documentation; Docstrings.
 - 0.7.12 [2026-07-23]:
 	* Documentation; Docstring review.
 - 0.7.11 [2026-07-22]:

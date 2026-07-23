@@ -25,3 +25,13 @@ def test_parse_ref_body():
     label, target = markup.parse_ref_body("docitem_helper <wtrl://sdv.doc.waterloo.docitem_helper>")
     assert label == "docitem_helper"
     assert target == "wtrl://sdv.doc.waterloo.docitem_helper"
+
+def test_resolve_markup():
+    resolved = markup.resolve_markup("|Must|",None)
+    assert resolved == ":wtrl_norm:`Must`"
+    resolved = markup.resolve_markup("|attr|`something`",None)
+    assert resolved == ":wtrl_attr:`something`"
+    # Test escaping of special characters in reStructuredText segments and role bodies.
+    escaped = markup.resolve_markup(r"a\b`c*d_e|f:g<h>i", None)
+    assert escaped == r"a\\b\`c\*d\_e\|f\:g\<h\>i"
+
