@@ -239,37 +239,50 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 			Contract, Parameters, Returns, Raises
 	Contract:
 		general:
-			|Must| convert a parsed |type|`docitem_docstring_module`, |type|`docitem_docstring_class` or |type|`docitem_docstring_method` into a list of docutils nodes.
-			|Must| render section/key/value content into a two-column table with section labels on the left and content on the right.
-			|Must| apply role-formatters provided by |type|`context` (labels, types, vars, funcs, methods).
-			|Must| assign a deterministic anchor id to the rendered table.
-			|Must| render selected reference-like entries as internal links where targets can be resolved.
-			|Must| keep unresolved reference entries visible as plain text fallback.
+			|Must| convert a parsed Waterloo docstring into docutils nodes for Sphinx output.
+			|Must| honor the current Waterloo scope before rendering the documented object.
+			|Must| return an empty node list if the documented object is outside the current scope and scope-filter placeholders are disabled.
+			|Must| render a note-style placeholder if the documented object is outside the current scope and scope-filter placeholders are enabled.
+			|Must| assign a deterministic anchor id to the documentation box.
+			|Must| register the anchor id for cross-document Waterloo references.
+			|Must| render the docstring as a two-column documentation box with section labels on the left and rendered section content on the right.
+			|Must| add a signature row for callable objects.
+			|Must| preserve section-specific structure, for example executable-contract bullet lists, free-form paragraphs, grouped definitions, and public-object lists.
+			|Must| resolve selected reference-like entries as internal links where targets can be resolved.
+			|Must| mark resolvable but scope-filtered reference targets as out-of-scope entries.
+			|Must| keep unresolved reference entries visible as role-rendered fallback text.
 			|Must| emit runtime warnings for unresolved entries in sections where linkability is expected.
 			|Must_not| raise hard validation errors for unresolved references; semantic enforcement belongs to the validator.
 	Parameters:
 		ctx:
-			Rendering context providing inline parser and role-formatters.
+			Rendering context providing Sphinx state, configuration, inline parsing, and Waterloo role helpers.
 		obj:
-			The documented object (module, class or method).
+			The documented Python object.
 		doc:
-			Parsed docstring tree (representing one of the defined profiles).
+			Parsed Waterloo docstring tree for |var|`obj`.
 	Returns:
-		List of |type|`docutils.nodes.Node` representing the rendered documentation table.
+		List of |type|`docutils.nodes.Node` representing the rendered documentation box or scope-filter placeholder.
 	Raises:
+		NotImplementedError:
+			|May| raise if the docstring contains a section shape that is not supported by this renderer.
 		RuntimeError:
 			|May| raise if unexpected section structure is encountered.
+		ValueError:
+			|May| raise if free-form itemization starts with an invalid nested list structure.
 		RuntimeWarning:
 			|May| emit warnings for unresolved link targets (for example in |label|`Public_*`, |label|`Derived_from`, or normative |label|`See_also`).
 	Notes:
 		Usage:
 			This function is typically not called directly. It is called
 			by the various |func|`autodoc` functions.
+		Scope filtering:
+			Scope filtering is handled before the documentation box is built.
+			When placeholders are enabled, skipped objects remain visible in the rendered document as lightweight notes.
 		Linking:
-			Internal links are created using anchor ids from |func|`build_anchor`.
+			Internal links are created using anchor ids from |func|`build_anchor` and the Sphinx environment's Waterloo anchor index.
 			Built-in exceptions in section |label|`Raises` are intentionally rendered as plain text without internal links.
 		Last reviewed:
-			2026-02-15
+			2026-07-23
 	"""
 	if not _is_doc_visible_in_current_scope(ctx, doc):
 		if not ctx.config.wtrl_scope_filtered_object_placeholders_enabled:
@@ -287,10 +300,14 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 
 		node_note = nodes.note(classes=["wtrl_scope_filtered_object"])
 		node_paragraph = nodes.paragraph()
+		object_scopes = doc.scopes()
+		object_scopes_str = ", ".join(map(lambda s: f":wtrl_value:`{mod_docitem.scope_to_string.get(int(s), 'unknown')}`", object_scopes))
+		current_scopes = get_current_scope_set(ctx.env)
+		current_scopes_str = ", ".join(map(lambda s: f":wtrl_value:`{mod_docitem.scope_to_string.get(int(s), 'unknown')}`", current_scopes))
 		node_paragraph.extend(ctx.parse(
 			node_paragraph,
 			0,
-			f"Skipping {obj_name_markup}`{obj_name}` because of the current Waterloo scope.",
+			f"Scope filter: skipped {obj_name_markup}`{obj_name}` (object: {object_scopes_str}; active: {current_scopes_str}).",
 			))
 		node_note += node_paragraph
 		return [node_note]
@@ -880,27 +897,43 @@ def build_sphinx_nodes_full(ctx : context, class_obj: Any, session: mod_docitem.
 			Contract, Parameters, Returns, Raises
 	Contract:
 		general:
-			|Must| analyze the docstring and methods of the class object.
-			|Must| create a list of sphinx nodes, with elements as specified in the following and have the order as indicated:
-			The list |must| contain nodes representing the class' docstring.
-			The list |must| contain nodes produced by |func|`ctx.build_prolog_method_overview`.
-			For each public method as indicated by the class' normative docstring:
-			1. The list |must| contain nodes produced by |func|`ctx.build_prolog_method_block`.
-			2. The list |must| contain nodes representing the class' public method's docstring.
+			|Must| parse and validate the Waterloo docstring of |var|`class_obj`.
+			|Must| validate the class method coverage declared by the class docstring.
+			|Must| return an empty node list if the class docstring is outside the current Waterloo scope.
+			|Must| render the class docstring with |func|`build_sphinx_nodes`.
+			|Must| recursively render nested classes listed in |label|`Public_classes` if they exist on |var|`class_obj`.
+			|Must| render public methods listed in |label|`Public_methods` if they exist, resolve to function objects, have docstrings, validate successfully, and are visible in the current Waterloo scope.
+			|Must| insert method block prolog nodes before rendered public methods.
+			|Must| render documented property accessor methods for property entries listed in |label|`Public_variables`.
+			|Must| reuse |var|`session` for parsing and validation work performed during the recursive render pass.
+			|May| skip listed members that cannot be found, cannot be represented as function objects, or do not have docstrings.
 	Parameters:
 		ctx:
-			The context
+			Rendering context providing Sphinx state, configuration, diagnostics, inline parsing, and Waterloo role helpers.
 		class_obj:
-			The class object to generate a sphinx documentation node list from.
+			The class object to render.
 		session:
-			An object to store state and cache information across multiple calls to this function.
+			Session object used for parser and validator state shared across the recursive render pass.
 	Returns:
-		A list of sphinx nodes representing the class and public member documentation.
+		List of |type|`docutils.nodes.Node` representing the class, nested classes, public methods, and documented property accessors.
 	Raises:
 		RuntimeError:
-			|Must| raise if something goes wrong parsing a docstring.
+			|Must| raise if |var|`class_obj` has no docstring.
+			|May| raise if parsing or validation of the class docstring fails.
+			|May| raise if rendering the class docstring fails.
+		NotImplementedError:
+			|May| forward unsupported section-shape errors from |func|`build_sphinx_nodes`.
+		ValueError:
+			|May| forward free-form itemization errors from |func|`build_sphinx_nodes`.
 		BaseException:
-			|May| forward exceptions from Sphinx
+			|May| forward exceptions from Sphinx or the Waterloo parser/validator.
+	Notes:
+		Member errors:
+			The current method-rendering branch is intentionally tolerant and may skip problematic methods instead of aborting the complete class rendering pass.
+		Scope filtering:
+			Unlike |func|`build_sphinx_nodes`, this helper currently omits an out-of-scope class without rendering a placeholder.
+		Last reviewed:
+			2026-07-23
 	"""
 # Tracer
 	tr = ctx.tr
@@ -1041,11 +1074,16 @@ Preamble:
 		Contract, Parameters, Returns, Raises
 Contract:
 	general:
-		|Must| resolve the dotted module name |var|`text` to a Python module object taking into account the current module state.
+		|Must| create a Waterloo rendering context for the active Sphinx application and source line.
+		|Must| resolve the dotted module name |var|`qname` to a Python module object, taking the current Waterloo module state into account.
+		|Must| return diagnostic nodes if |var|`qname` cannot be resolved.
+		|Must| return diagnostic nodes if |var|`qname` does not resolve to a module.
+		|Must| return diagnostic nodes if the resolved module has no non-empty docstring.
 		|Must| parse and validate the module's Waterloo docstring.
-		|Must| render the parsed docstring into Docutils nodes using the configured context.
+		|Must| return structured tracer diagnostic nodes if parsing or validation fails.
+		|Must| render the parsed docstring with |func|`build_sphinx_nodes`.
 Description:
-	Implementation of directive |attr|`:wtrl_autodoc_module:`.
+	Implementation of directive |attr|`.. wtrl_autodoc_module::`.
 Parameters:
 	app:
 		The Sphinx application instance that carries configuration and environment state.
@@ -1056,14 +1094,15 @@ Parameters:
 	qname:
 		The qualified module name to build nodes for.
 Returns:
-	The list of generated |type|`docutils.nodes.Node` representing the module doumentation.
+	List of generated |type|`docutils.nodes.Node` representing the module documentation or a diagnostic replacement.
 Raises:
-	RuntimeError:
-		|Must| raise if the qualified name cannot be resolved
-		|Must| raise if parsing the docstring fails.
-		|Must| raise if validating the docstring tree fails
 	BaseException:
-		|May| raise if building the list of Docutils nodes fails.
+		|May| forward unexpected exceptions from context creation, inline parsing, or |func|`build_sphinx_nodes`.
+Notes:
+	Diagnostics:
+		Expected directive failures are rendered into the document instead of being raised as hard Sphinx build errors.
+	Last reviewed:
+		2026-07-23
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner,parent,ln,txt), lineno)
 	tr = ctx.tr
@@ -1098,9 +1137,16 @@ Preamble:
 		Contract, Parameters, Returns, Raises
 Contract:
 	general:
-		|Must| resolve the dotted function name |var|`qname` to a callable taking into account the current module/class state.
+		|Must| create a Waterloo rendering context for the active Sphinx application and source line.
+		|Must| resolve the dotted function name |var|`qname` to a callable, taking the current Waterloo module/class state into account.
+		|Must| return diagnostic nodes if |var|`qname` cannot be resolved.
+		|Must| return diagnostic nodes if |var|`qname` does not resolve to a callable.
+		|Must| return diagnostic nodes if the resolved callable has no non-empty docstring.
 		|Must| parse and validate the function's Waterloo docstring.
-		|Must| render the parsed docstring into Docutils nodes using the configured context.
+		|Must| return structured tracer diagnostic nodes if parsing or validation fails.
+		|Must| render |value|`function` and |value|`method` profiles as method docstrings.
+		|Must| render all other accepted callable profiles as inherited-method docstrings.
+		|Must| render the parsed docstring with |func|`build_sphinx_nodes`.
 Description:
 	Implementation of directive |attr|`.. wtrl_autodoc_function::`.
 Parameters:
@@ -1113,14 +1159,15 @@ Parameters:
 	qname:
 		The qualified function name to document.
 Returns:
-	List of generated |type|`docutils.nodes.Node`.
+	List of generated |type|`docutils.nodes.Node` representing the callable documentation or a diagnostic replacement.
 Raises:
-	RuntimeError:
-		|Must| raise if the qualified name cannot be resolved.
-		|Must| raise if parsing the docstring fails.
-		|Must| raise if validating the docstring tree fails.
 	BaseException:
-		|May| raise if building the list of Docutils nodes fails.
+		|May| forward unexpected exceptions from context creation, inline parsing, or |func|`build_sphinx_nodes`.
+Notes:
+	Diagnostics:
+		Expected directive failures are rendered into the document instead of being raised as hard Sphinx build errors.
+	Last reviewed:
+		2026-07-23
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	tr = ctx.tr
@@ -1168,9 +1215,14 @@ Preamble:
 		Contract, Parameters, Returns, Raises
 Contract:
 	general:
-		|Must| resolve the dotted class name |var|`qname` to a class taking into account the current module/class state.
+		|Must| create a Waterloo rendering context for the active Sphinx application and source line.
+		|Must| resolve the dotted class name |var|`qname` to a class, taking the current Waterloo module/class state into account.
+		|Must| return diagnostic nodes if |var|`qname` cannot be resolved.
+		|Must| return diagnostic nodes if |var|`qname` does not resolve to a class.
+		|Must| return diagnostic nodes if the resolved class has no non-empty docstring.
 		|Must| parse and validate the class' Waterloo docstring.
-		|Must| render the parsed docstring into Docutils nodes using the configured context.
+		|Must| return structured tracer diagnostic nodes if parsing or validation fails.
+		|Must| render the parsed docstring with |func|`build_sphinx_nodes`.
 Description:
 	Implementation of directive |attr|`.. wtrl_autodoc_class::`.
 Parameters:
@@ -1183,14 +1235,15 @@ Parameters:
 	qname:
 		The qualified class name to document.
 Returns:
-	List of generated |type|`docutils.nodes.Node`.
+	List of generated |type|`docutils.nodes.Node` representing the class documentation or a diagnostic replacement.
 Raises:
-	RuntimeError:
-		|Must| raise if the qualified name cannot be resolved.
-		|Must| raise if parsing the docstring fails.
-		|Must| raise if validating the docstring tree fails.
 	BaseException:
-		|May| raise if building the list of Docutils nodes fails.
+		|May| forward unexpected exceptions from context creation, inline parsing, or |func|`build_sphinx_nodes`.
+Notes:
+	Diagnostics:
+		Expected directive failures are rendered into the document instead of being raised as hard Sphinx build errors.
+	Last reviewed:
+		2026-07-23
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	tr = ctx.tr
@@ -1224,10 +1277,14 @@ Preamble:
 		Contract, Parameters, Returns, Raises
 Contract:
 	general:
-		|Must| parse the class's docstring and create a docstring tree.
-		|Must| parse the class methods' docstrings and create docstring trees.
-		|Must| validate the docstring trees.
-		|Must| convert the docstring trees into a list of Docutils nodes that represent the docstrings.
+		|Must| create a Waterloo rendering context for the active Sphinx application and source line.
+		|Must| resolve the dotted class name |var|`qname` to a class, taking the current Waterloo module/class state into account.
+		|Must| return diagnostic nodes if |var|`qname` cannot be resolved.
+		|Must| return diagnostic nodes if |var|`qname` does not resolve to a class.
+		|Must| return diagnostic nodes if the resolved class has no non-empty docstring.
+		|Must| delegate recursive class, nested-class, method, and property-accessor rendering to |func|`build_sphinx_nodes_full`.
+		|Must| return runtime diagnostic nodes if |func|`build_sphinx_nodes_full` raises |type|`RuntimeError`.
+		|Must| return structured tracer diagnostic nodes if recursive rendering fails with another expected exception.
 Description:
 	Implementation of directive |attr|`.. wtrl_autodoc_class_full::`.
 Parameters:
@@ -1240,14 +1297,17 @@ Parameters:
 	qname:
 		The qualified name of the class to be documented.
 Returns:
-	List of generated |type|`docutils.nodes.Node`.
+	List of generated |type|`docutils.nodes.Node` representing the recursively rendered class documentation or a diagnostic replacement.
 Raises:
-	RuntimeError:
-		|Must| raise if the qualified name cannot be resolved.
-		|Must| raise if parsing of any of the docstrings fails.
-		|Must| raise if validating the docstring tree fails.
 	BaseException:
-		|May| raise if building the list of Docutils nodes fails.
+		|May| forward unexpected exceptions from context creation, inline parsing, or diagnostic rendering.
+Notes:
+	Diagnostics:
+		Expected directive failures are rendered into the document instead of being raised as hard Sphinx build errors.
+	Recursion:
+		The traversal policy is implemented by |func|`build_sphinx_nodes_full`; this directive wrapper only resolves the top-level class and translates failures into Sphinx nodes.
+	Last reviewed:
+		2026-07-23
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	tr = ctx.tr

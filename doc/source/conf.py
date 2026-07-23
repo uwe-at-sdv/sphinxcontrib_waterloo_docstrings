@@ -3,6 +3,8 @@
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
+from typing import Any
+
 # -- Path setup --------------------------------------------------------------
 
 # For wtrl_basedirs
@@ -25,7 +27,7 @@ extensions = [
 	"sphinxcontrib.waterloo_docstrings",
 	]
 
-# start-config-variables
+# litinc-start-config-variables
 wtrl_diagnostics_admonitions_enabled = True
 wtrl_diagnostics_logging_enabled = True
 wtrl_diagnostics_color_enabled = True
@@ -33,7 +35,7 @@ wtrl_current_object_logging_enabled = False
 wtrl_scope_filtered_object_placeholders_enabled = True
 wtrl_state_change_admonitions_enabled = True
 wtrl_state_change_logging_enabled = True
-# end-config-variables
+# litinc-end-config-variables
 
 # Configure base directories of documented modules.
 # Installed modules are found automatically because they
@@ -49,7 +51,7 @@ wtrl_basedirs = [
 
 
 templates_path = ['_templates']
-exclude_patterns = []
+exclude_patterns: list[str] = []
 
 
 
@@ -81,12 +83,10 @@ html_css_files = [
 	'wtrl_doc_custom.css',
 	]
 
-def build_prolog_method_overview(ctx) -> List[nodes.Node]:
-	return [nodes.rubric(text="Public methods")]
-
-def build_prolog_method_block(ctx,parent : nodes.Node,class_obj,meth_obj : Callable) -> List[nodes.Node]:
-	return ctx.parse(parent,0,f":wtrl_method_signature:`{class_obj.__name__}.{meth_obj.__name__}`")
+pygments_style = 'autumn'
+pygments_dark_style = "gruvbox-dark"
 
 def setup(app: Any) -> dict[str, Any]:
 	app.add_lexer('python', PythonWaterlooLexer)
 	app.add_lexer('python-waterloo', PythonWaterlooLexer)
+	return {}

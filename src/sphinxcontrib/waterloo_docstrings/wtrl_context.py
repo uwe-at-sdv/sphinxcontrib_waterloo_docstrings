@@ -37,16 +37,60 @@ class context(context_roles):
 		profile:
 			class
 		normative_sections:
-			Contract
+			Contract, Factory, Public_methods
 	Contract:
 		general:
-			|Must| be able to hold data from both the Sphinx environment and the user-defined configuration in |file|`conf.py`.
-			|Must| provide a method which allows configuration by means of a simple, documented data structure.
-			|Must| provide access to role decorator functions which map plain text to decorated text (through base class).
+			|Must| provide the shared rendering state used by Waterloo Sphinx node builders.
+			|Must| store the Docutils/Sphinx inline parser callback used to turn resolved Waterloo markup into nodes.
+			|Must| store the source line number used for diagnostics and inline parsing.
+			|Must| provide slots for the active Sphinx environment and configuration object.
+			|Must| provide a cache for validated Waterloo docstrings used by scope-aware link rendering.
+			|Must| provide a tracer for diagnostics emitted while resolving or rendering Waterloo content.
+			|Must| provide configurable prolog hook callables for method overview and method block rendering.
+			|Must| provide access to Waterloo role helper functions through |class|`context_roles`.
+			|Must| provide a method for applying hook configuration from a simple dictionary.
 		constructor:
-			Internal class, TBD later, complicated sphinx stuff.
+			|Must| accept a callable for parsing inline text into a list of |class|`nodes.Node` objects.
+			|Must| accept a line number for error reporting.
+			|Must| initialize |attr|`env` and |attr|`config` as unset placeholders.
+			|Must| initialize default prolog hook callables.
+			|Must| initialize an empty validated-docstring cache and a fresh tracer.
+	Factory:
+		make_context:
+			|Must| create a |class|`context` instance from a Sphinx application object, an inline parser callable, and a line number.
+	Public_methods:
+		set_build_prolog_method_overview,
+		set_build_prolog_method_block,
+		apply_config
+	Notes:
+		Context population:
+			Call |func|`make_context` instead of instantiating this class directly when Sphinx environment and configuration access are needed.
+		Last reviewed:
+			2026-07-23
+		Todo:
+			Methods like |func|`build_prolog_method_overview` and |func|`build_prolog_method_block` need to be reviewed.
 	"""
 	def __init__(self,parse_inline : Callable[[nodes.Element, int, str], List[nodes.Node]],lineno: int) -> None:
+		r"""
+		Preamble:
+			profile:
+				method
+			normative_sections:
+				Contract, Parameters, Returns, Raises
+		Contract:
+			general:
+				|Must| initialize the context with the given inline parser and line number.
+				|Must| initialize the Sphinx environment |var|`env` and configuration |var|`config` placeholders as unset.
+				|Must| initialize the validated-docstring cache |var|`wtrl_validated_doc_cache` and tracer |var|`tr`.
+		Parameters:
+			parse_inline:
+				A callable that takes a |class|`nodes.Element` parent, an integer line number, and a string of inline text, and returns a list of |class|`nodes.Node` objects.
+			lineno:
+				An integer line number within the source file.
+		Returns:
+			|None|
+		Raises:
+		"""
 		super().__init__()
 		self.parse = parse_inline
 		self.i_line = lineno
@@ -71,6 +115,41 @@ class context(context_roles):
 			self.set_build_prolog_method_block(import_by_path(cfg["prolog_method_block"]))
 
 def make_context(app: SphinxAppProtocol | Any, parse_inline: Callable[[nodes.Element, int, str], List[nodes.Node]], lineno: int) -> context:
+	r"""
+	Preamble:
+		profile:
+			function
+		normative_sections:
+			Contract, Parameters, Returns, Raises
+	Contract:
+		general:
+			|Must| create a |class|`context` instance from a Sphinx application object, an inline parser callable, and a line number.
+			|Must| extract the Sphinx environment and configuration from the application object and store them in the context.
+			|Must| look for a |var|`docitem_context_configurator` dictionary in the application object or the Sphinx environment.
+			|Must| apply the configurator to the context if it is found.
+	Parameters:
+		app:
+			A Sphinx application object.
+		parse_inline:
+			A callable that takes a |class|`nodes.Element` parent, an integer line number, and a string of inline text, and returns a list of |class|`nodes.Node` objects.
+		lineno:
+			An integer line number within the source file.
+	Returns:
+		A |class|`context` instance with the Sphinx environment, configuration, and optional configurator applied.
+	Raises:
+	Notes:
+		Last reviewed:
+			2026-07-23
+		Purpose:
+			This factory function provides a convenient way to create a fully initialized
+			rendering context with Sphinx environment and configuration details extracted
+			from the application object. It also searches for and applies optional context
+			configurators, allowing extensible customization of rendering behavior without
+			modifying the context initialization logic directly.
+			|
+			Called whenever rendering content into the final document (e.g., HTML) at a
+			specific source location (|var|`lineno`).
+	"""
 	ctx = context(parse_inline, lineno)
 	ctx.env = getattr(app, "env", None)
 	ctx.config = getattr(app, "config", None)
@@ -84,6 +163,7 @@ def make_context(app: SphinxAppProtocol | Any, parse_inline: Callable[[nodes.Ele
 
 # Not sure if this function should be here. Pro:
 # Is tightly connected to the cache managed by the context.
+# Required by wtrl_state.py.
 def _get_validated_doc_for_object(
 	ctx: context,
 	obj: object,
@@ -114,5 +194,4 @@ def _get_validated_doc_for_object(
 		return None
 	cache[key] = doc
 	return doc
-
 

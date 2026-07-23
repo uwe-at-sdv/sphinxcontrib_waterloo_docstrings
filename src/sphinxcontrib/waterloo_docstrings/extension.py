@@ -97,7 +97,7 @@ Public_functions:
 	wtrl_type_role,
 	wtrl_value_role,
 	wtrl_var_role,
-	wtrl_var_type_role
+	wtrl_var_type_role,
 
 Function_overview:
 	build_sphinx_nodes:
@@ -199,6 +199,7 @@ import sdv.doc.waterloo.docitem as mod_docitem
 
 from sphinxcontrib.waterloo_docstrings.wtrl_context import (
 	context,
+	make_context
 	)
 # We must import these, since they are auto-documented.
 from sphinxcontrib.waterloo_docstrings.wtrl_state import (
@@ -220,6 +221,10 @@ from sphinxcontrib.waterloo_docstrings.wtrl_directives import (
 from sphinxcontrib.waterloo_docstrings.wtrl_markup import (
 	setup_markup_roles,
 	wtrl_pending_ref,
+	)
+# We must import these, since they are auto-documented.
+from sphinxcontrib.waterloo_docstrings.wtrl_parse import (
+	parse_inline
 	)
 # Functions. We must import these, since they are auto-documented.
 from sphinxcontrib.waterloo_docstrings.wtrl_roles import (

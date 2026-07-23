@@ -25,3 +25,9 @@
      Für PyPI/GitHub oft praktisch, aber nicht zwingend innerhalb der Sphinx-Doku.
 
   5. [Uwe] Weitere Objekte in der Referenz dokumentieren, bis es in sich geschlossen ist.
+
+  6. [Uwe] Docstrings durchsehen, da gibt es riesen Drifts
+    * wtrl_autodoc: ok
+    * wtrl_context: ok
+    * wtrl_directives: n/a
+    * wtrl_markup: n/a

@@ -10,6 +10,45 @@ from docutils.parsers.rst import states as rst_states
 
 # Inline-Parser, der *messages nicht wegwirft*
 def parse_inline(inliner: InlinerProtocol, parent: nodes.Element, ln: int, txt: str) -> List[nodes.Node]:
+	r"""
+	Preamble:
+		profile:
+			function
+		normative_sections:
+			Contract, Parameters, Returns, Raises
+	Contract:
+		general:
+			|Must| parse inline reStructuredText content and preserve warning and error messages.
+			|Must| append all generated messages to the parent element as child nodes.
+			|Must| return all parsed content nodes without discarding messages.
+	Description:
+		This function wraps inliner.parse() to ensure that any warning or error messages
+		generated during the parsing process are captured and added to the document tree
+		instead of being silently discarded.
+	Parameters:
+		inliner:
+			An inline element parser implementing InlinerProtocol. |Must| have a parse method
+			and a document attribute with settings and reporter attributes.
+		parent:
+			The parent Element to which parsed content and messages will be appended.
+		ln:
+			The line number (integer) where the txt input begins in the source document.
+		txt:
+			The reStructuredText source string (str) to be parsed for inline markup.
+	Returns:
+		List of parsed docutils.nodes.Node instances representing the content found in txt.
+		The returned list is created from the parse output; warning and error messages are
+		appended directly to parent and not returned as part of the list.
+	Raises:
+		Exception:
+			No exceptions are raised under normal conditions. Exceptions from underlying RST
+			parsing or document handling |may| propagate depending on the inliner implementation.
+	Notes:
+		Key difference from direct inliner.parse() calls:
+			This function always preserves document messages in the tree. Direct calls to
+			inliner.parse() may discard messages, leading to silent data loss in warnings
+			and error conditions.
+	"""
 	lang = languages.get_language(inliner.document.settings.language_code)
 
 	memo_factory = getattr(rst_states, "Struct")
