@@ -42,6 +42,20 @@ class context_roles:
 # Just in order to avoid endless repetition of the same parameters in the role functions below.
 @dataclass(frozen=True)
 class RolePara:
+	r"""
+	Preamble:
+		profile:
+			class
+		normative_sections:
+			Contract
+		scope:
+			extension
+	Contract:
+		general:
+			|Must| be a frozen dataclass that aggregates the parameters passed to Docutils role handler functions.
+		constructor:
+			Default
+	"""
 	name: str
 	rawtext: str
 	text: str
@@ -53,7 +67,7 @@ class RolePara:
 # This is a pair: the first list is the list of nodes to insert into the document,
 # and the second list is a list of system messages (errors, warnings, etc.)
 # that may have been generated during processing.
-RoleResult = tuple[List[nodes.Node], list[nodes.Node]]
+RoleResult: TypeAlias = tuple[List[nodes.Node], list[nodes.Node]]
 
 # Common role handler signature used by Docutils/Sphinx roles
 RoleHandler: TypeAlias = Callable[..., tuple[Sequence[nodes.reference], Sequence[nodes.reference]]]
@@ -71,21 +85,36 @@ def wtrl_attr_role(para: RolePara) -> RoleResult:
 		profile:
 			function
 		normative_sections:
-			Contract, Parameters, Returns, Raises
+			Contract, Parameters, Returns, Raises, See_also
+		scope:
+			extension
 	Contract:
 		general:
 			|Must| create a |type|`docutils.nodes.literal` node with the text in |var|`para.text` and the CSS class |value|`wtrl_attr`.
+			|Must| return the created node as the only generated document node.
+			|Must| return an empty list of system messages.
 	Parameters:
 		para:
-			|class|`RolePara` instance containing the role parameters.
+			|class|`RolePara` instance containing the normalized Docutils role parameters.
 	Returns:
-		A tuple containing a list with the created |type|`docutils.nodes.literal` node and an empty list of system messages.
+		A |type|`RoleResult` containing a one-element node list and an empty system-message list.
 	Raises:
 		BaseException:
 			|May| propagate exceptions from |type|`docutils`.
+	See_also:
+		RolePara, RoleResult
 	Notes:
+		Representative role:
+			This docstring documents the common implementation pattern used by the simple Waterloo roles in this module.
+			Most of these roles create either one |type|`docutils.nodes.literal` node or one |type|`docutils.nodes.inline` node, attach a semantic CSS class, and return no system messages.
+		Node kind:
+			Object-like roles such as |lit|`wtrl_attr`, |lit|`wtrl_func`, and |lit|`wtrl_type` use literal nodes.
+			Text-semantic roles such as |lit|`wtrl_dfn`, |lit|`wtrl_label`, |lit|`wtrl_norm`, and |lit|`wtrl_term` use inline nodes.
 		Examples:
-			* JSON: { \"|attr|`my_attribute`\": \"|value|`my_value`\" }
+			* |attr|`my_attribute`
+			* JSON-like text: { "|attr|`my_attribute`": "|value|`my_value`" }
+		Last reviewed:
+			2026-07-23
 	"""
 	node = nodes.literal(para.text, para.text, classes=["wtrl_attr"])
 	return [node], []
@@ -177,24 +206,39 @@ def wtrl_var_type_role(para: RolePara) -> RoleResult:
 			function
 		normative_sections:
 			Contract, Parameters, Returns, Raises
+		scope:
+			extension
 	Contract:
 		general:
-			|Must| parse the text in |var|`para.text` as a variable name and type separated by a colon.
-			|Must| create a list of |type|`docutils.nodes.Node` representing the variable name, the colon, and the type with appropriate CSS classes.
-			|May| report an error if the text does not contain a colon or if either the variable name or type is empty.
+			|Must| parse the text in |var|`para.text` as a variable name and type separated by the first colon.
+			|Must| strip surrounding whitespace from the parsed variable name and type.
+			|Must| return a Docutils error system message if |var|`para.text` does not contain a colon.
+			|Must| return a Docutils error system message if either the parsed variable name or type is empty.
+			|Must| create a wrapper |type|`docutils.nodes.inline` node with CSS class |value|`wtrl_var_type` for valid input.
+			|Must| add the variable name as a child inline node with CSS class |value|`wtrl_var`.
+			|Must| add the separator |lit|`: ` as a child inline node with CSS class |value|`wtrl_op`.
+			|Must| add the type as a child inline node with CSS class |value|`wtrl_type`.
 	Parameters:
 		para:
-			|class|`RolePara` instance containing the role parameters.
+			|class|`RolePara` instance containing the normalized Docutils role parameters.
 	Returns:
-		A tuple containing a list of |type|`docutils.nodes.Node` representing the variable name and type,
-		and a list of system messages (errors, warnings, etc.) that |may| have been generated during processing.
+		On valid input, a |type|`RoleResult` containing one wrapper node and an empty system-message list.
+		On invalid input, a |type|`RoleResult` containing no document nodes and one Docutils error system message.
 	Raises:
+		BaseException:
+			|May| propagate unexpected exceptions from |type|`docutils`.
 	Notes:
+		Structure:
+			This role is intentionally different from the simple Waterloo roles because it exposes the variable name, separator, and type as separately styleable inline nodes.
+		Separator:
+			Only the first colon separates variable and type. Additional colons remain part of the type text.
 		Examples:
 			* |var_type|`n: int`
 			* |var_type|`q: float`
 			* |var_type|`para: RolePara`
 			* |var_type|`result: tuple[List[nodes.Node], list[nodes.Node]]`
+		Last reviewed:
+			2026-07-23
 	"""
 	if ":" not in para.text:
 		msg = para.inliner.reporter.error(
@@ -248,4 +292,3 @@ def setup_roles(app: Any) -> None:
 		roles.register_local_role(name, cast(RoleHandler,
 			lambda	name, rawtext, text, lineno, inliner, options=None, content=None, func=func:
 				func(RolePara(name=name, rawtext=rawtext, text=text, lineno=lineno, inliner=inliner, options=options, content=content))))
-

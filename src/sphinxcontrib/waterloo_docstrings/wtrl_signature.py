@@ -260,7 +260,7 @@ Preamble:
 	normative_sections:
 		Contract, Parameters, Returns, Raises, See_also
 	scope:
-		core
+		extension
 Contract:
 	general:
 		|Must| create a list of |type|`docutil`-nodes representing the method signature as inline text.
@@ -282,7 +282,7 @@ See_also:
 	wtrl_build_function_signature_nodes, wtrl_build_method_signature_block_nodes
 Notes:
 	Last reviewed:
-		2026-07-16
+		2026-07-23
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	return render_signature_tokens_inline(ctx, qname)
@@ -295,7 +295,7 @@ Preamble:
 	normative_sections:
 		Contract, Parameters, Returns, Raises, See_also
 	scope:
-		core
+		extension
 Contract:
 	general:
 		|Must| create a list of |type|`docutil`-nodes representing the function signature as inline text.
@@ -317,7 +317,7 @@ See_also:
 	wtrl_build_method_signature_nodes, wtrl_build_function_signature_block_nodes
 Notes:
 	Last reviewed:
-		2026-07-16
+		2026-07-23
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	return render_signature_tokens_inline(ctx, qname, drop_self=False)
@@ -330,7 +330,7 @@ Preamble:
 	normative_sections:
 		Contract, Parameters, Returns, Raises, See_also
 	scope:
-		core
+		extension
 Contract:
 	general:
 		|Must| create a list of |type|`docutil`-nodes representing the method signature as paragraph with one parameter per line.
@@ -352,7 +352,7 @@ See_also:
 	wtrl_build_method_signature_nodes, wtrl_build_function_signature_block_nodes
 Notes:
 	Last reviewed:
-		2026-07-16
+		2026-07-23
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	return render_signature_tokens_multiline(ctx, qname)
@@ -365,7 +365,7 @@ Preamble:
 	normative_sections:
 		Contract, Parameters, Returns, Raises, See_also
 	scope:
-		core
+		extension
 Contract:
 	general:
 		|Must| create a list of |type|`docutil`-nodes representing the function signature as paragraph with one parameter per line.
@@ -387,7 +387,7 @@ See_also:
 	wtrl_build_method_signature_block_nodes, wtrl_build_function_signature_nodes
 Notes:
 	Last reviewed:
-		2026-07-16
+		2026-07-23
 	"""
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	return render_signature_tokens_multiline(ctx, qname, drop_self=False)

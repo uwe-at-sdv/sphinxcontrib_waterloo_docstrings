@@ -3,9 +3,7 @@ Preamble:
 	profile:
 		module
 	normative_sections:
-		Contract,
-		Public_classes,
-		Public_functions
+		Contract, Public_classes, Public_functions, Public_types
 Description:
 	This module provides the Sphinx integration layer for the Waterloo documentation system.
 	|
@@ -56,10 +54,14 @@ Contract:
 		|Must| maintain a stack with semantics "current class" and |func|`push`-, |func|`pop`-, |func|`get`-methods.
 		|Must| provide Docutils roles or directives for modifying these stacks.
 Public_classes:
-	context
+	context,
+	RolePara
 Class_overview:
 	context:
-		Internal class, please ignore
+		A class that encapsulates Sphinx and Docutils state, configuration, and rendering logic for Waterloo docstring processing.
+	RolePara:
+		Aggregate type for the parameters of role handler functions. |type|`RolePara` is a tuple\
+		of the form (role_name, rawtext, text, lineno, inliner, options, content).
 Public_functions:
 	build_sphinx_nodes,
 	build_sphinx_nodes_full,
@@ -97,7 +99,7 @@ Public_functions:
 	wtrl_type_role,
 	wtrl_value_role,
 	wtrl_var_role,
-	wtrl_var_type_role,
+	wtrl_var_type_role
 
 Function_overview:
 	build_sphinx_nodes:
@@ -178,6 +180,10 @@ Function_overview:
 		Implementation of role |attr|`:wtrl_var:`
 	wtrl_var_type_role:
 		Implementation of role |attr|`:wtrl_var_type:`
+Public_types:
+	RoleResult:
+		Aggregate type for the return value of role handler functions. |type|`RoleResult` is a tuple\
+		of the form (nodes, messages) where nodes is a list of Docutils nodes and messages is a list of Docutils system messages.
 Notes:
 	Last reviewed:
 		2026-07-16
@@ -226,6 +232,14 @@ from sphinxcontrib.waterloo_docstrings.wtrl_markup import (
 from sphinxcontrib.waterloo_docstrings.wtrl_parse import (
 	parse_inline
 	)
+# Types
+from sphinxcontrib.waterloo_docstrings.wtrl_roles import (
+	RolePara
+	)
+# Re-alias so that waterlint can find the type in this module's namespace.
+from sphinxcontrib.waterloo_docstrings.wtrl_roles import RoleResult as RoleResult_
+RoleResult: TypeAlias = RoleResult_
+
 # Functions. We must import these, since they are auto-documented.
 from sphinxcontrib.waterloo_docstrings.wtrl_roles import (
 	wtrl_attr_role,

@@ -31,3 +31,8 @@
     * wtrl_context: ok
     * wtrl_directives: n/a
     * wtrl_markup: n/a
+    * wtrl_parse: ok
+    * wtrl_protocol: n/a
+    * wtrl_roles: ok (dokumentiert als scope 'extension')
+    * wtrl_signature: ok (dokumentiert als scope 'extension')
+    * extension:
