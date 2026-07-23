@@ -16,6 +16,8 @@ def parse_inline(inliner: InlinerProtocol, parent: nodes.Element, ln: int, txt: 
 			function
 		normative_sections:
 			Contract, Parameters, Returns, Raises
+		scope:
+			extension
 	Contract:
 		general:
 			|Must| parse inline reStructuredText content and preserve warning and error messages.

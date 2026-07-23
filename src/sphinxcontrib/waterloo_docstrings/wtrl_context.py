@@ -38,6 +38,8 @@ class context(context_roles):
 			class
 		normative_sections:
 			Contract, Factory, Public_methods
+		scope:
+			extension
 	Contract:
 		general:
 			|Must| provide the shared rendering state used by Waterloo Sphinx node builders.
@@ -78,6 +80,8 @@ class context(context_roles):
 				method
 			normative_sections:
 				Contract, Parameters, Returns, Raises
+			scope:
+				extension
 		Contract:
 			general:
 				|Must| initialize the context with the given inline parser and line number.
@@ -122,6 +126,8 @@ def make_context(app: SphinxAppProtocol | Any, parse_inline: Callable[[nodes.Ele
 			function
 		normative_sections:
 			Contract, Parameters, Returns, Raises
+		scope:
+			extension
 	Contract:
 		general:
 			|Must| create a |class|`context` instance from a Sphinx application object, an inline parser callable, and a line number.

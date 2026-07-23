@@ -153,6 +153,8 @@ def wtrl_build_push_current_module_nodes(app: SphinxAppProtocol | Any, inliner: 
 			function
 		normative_sections:
 			Contract, Parameters, Returns, Raises, See_also
+		scope:
+			extension
 	Contract:
 		general:
 			|Must| push the qualified module name in |var|`text` to the module stack, which makes it the new current module.
@@ -206,6 +208,8 @@ def wtrl_build_push_current_class_nodes(app: SphinxAppProtocol | Any, inliner: I
 			function
 		normative_sections:
 			Contract, Parameters, Returns, Raises, See_also
+		scope:
+			extension
 	Contract:
 		general:
 			|Must| push the qualified class name in |var|`text` to the class stack, which makes it the new current class.
@@ -259,6 +263,8 @@ def wtrl_build_push_current_scope_nodes(app: SphinxAppProtocol | Any, inliner: I
 			function
 		normative_sections:
 			Contract, Parameters, Returns, Raises, See_also
+		scope:
+			extension
 	Contract:
 		general:
 			|Must| push the scope identifier in |var|`scope_tag` to the scope stack, which makes it the new current scope.
@@ -307,6 +313,8 @@ def wtrl_build_pop_current_module_nodes(app: SphinxAppProtocol | Any, inliner: I
 			function
 		normative_sections:
 			Contract, Parameters, Returns, Raises, See_also
+		scope:
+			extension
 	Contract:
 		general:
 			|Must| compare the qualified module name in |var|`qname` to the top of the module stack and raise an exception in case of mismatch.
@@ -382,6 +390,8 @@ def wtrl_build_pop_current_class_nodes(app: SphinxAppProtocol | Any, inliner: In
 			function
 		normative_sections:
 			Contract, Parameters, Returns, Raises, See_also
+		scope:
+			extension
 	Contract:
 		general:
 			|Must| compare the qualified class name in |var|`qname` to the top of the class stack and raise an exception in case of mismatch.
@@ -457,6 +467,8 @@ def wtrl_build_pop_current_scope_nodes(app: SphinxAppProtocol | Any, inliner: In
 			function
 		normative_sections:
 			Contract, Parameters, Returns, Raises, See_also
+		scope:
+			extension
 	Contract:
 		general:
 			|Must| compare the scope identifier name in |var|`qname` to the top of the scope stack and raise an exception in case of mismatch.
@@ -534,6 +546,8 @@ def resolve_qualified_name(ctx: context | None, qname: str) -> tuple[object, str
 			function
 		normative_sections:
 			Contract, Parameters, Returns, Raises
+		scope:
+			extension
 	Contract:
 		general:
 			|Must| resolve the qualified name |var|`qname` using current module/class context in |var|`ctx` when present.

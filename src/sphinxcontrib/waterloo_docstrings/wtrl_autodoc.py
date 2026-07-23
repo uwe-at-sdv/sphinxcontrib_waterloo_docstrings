@@ -237,6 +237,8 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 			function
 		normative_sections:
 			Contract, Parameters, Returns, Raises
+		scope:
+			extension
 	Contract:
 		general:
 			|Must| convert a parsed Waterloo docstring into docutils nodes for Sphinx output.
@@ -895,6 +897,8 @@ def build_sphinx_nodes_full(ctx : context, class_obj: Any, session: mod_docitem.
 			function
 		normative_sections:
 			Contract, Parameters, Returns, Raises
+		scope:
+			extension
 	Contract:
 		general:
 			|Must| parse and validate the Waterloo docstring of |var|`class_obj`.
@@ -1072,6 +1076,8 @@ Preamble:
 		function
 	normative_sections:
 		Contract, Parameters, Returns, Raises
+	scope:
+		extension
 Contract:
 	general:
 		|Must| create a Waterloo rendering context for the active Sphinx application and source line.
@@ -1135,6 +1141,8 @@ Preamble:
 		function
 	normative_sections:
 		Contract, Parameters, Returns, Raises
+	scope:
+		extension
 Contract:
 	general:
 		|Must| create a Waterloo rendering context for the active Sphinx application and source line.
@@ -1213,6 +1221,8 @@ Preamble:
 		function
 	normative_sections:
 		Contract, Parameters, Returns, Raises
+	scope:
+		extension
 Contract:
 	general:
 		|Must| create a Waterloo rendering context for the active Sphinx application and source line.
@@ -1275,6 +1285,8 @@ Preamble:
 		function
 	normative_sections:
 		Contract, Parameters, Returns, Raises
+	scope:
+		extension
 Contract:
 	general:
 		|Must| create a Waterloo rendering context for the active Sphinx application and source line.
