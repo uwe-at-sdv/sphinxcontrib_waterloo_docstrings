@@ -58,6 +58,11 @@ The code for the following docstring representation is
 
 .. wtrl_autodoc_function:: resolve_qualified_name
 
+Function :wtrl_func:`resolve_markup`
+........................................
+
+.. wtrl_autodoc_function:: resolve_markup
+
 Function :wtrl_func:`build_sphinx_nodes`
 ........................................
 

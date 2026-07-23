@@ -1181,37 +1181,49 @@ Notes:
 	tr = ctx.tr
 	session = mod_docitem.DocSession()
 
+	print("QNAME:", qname)
+
 	with mod_docitem.traced_section(tr, qname):
+		if qname == "resolve_markup": print("AAA")
 		try:
 			function_obj, _, _, _ = resolve_qualified_name(ctx, qname)
 		except Exception as e:
 # Catch expected resolver failures, but do not mask hard process-control exceptions.
 			return _emit_runtime_diagnostics(app, qname, lineno, f"{qname} cannot be resolved: {str(e)}")
+		if qname == "resolve_markup": print("BBB")
 		if not callable(function_obj):
 			return _emit_runtime_diagnostics(app, qname, lineno, f"{qname} does not resolve to a callable.")
 		func_doc_txt = mod_docitem.get_obj_docstring(function_obj)
+		if qname == "resolve_markup": print("CCC")
 		if not func_doc_txt or not func_doc_txt.strip():
 			return _emit_runtime_diagnostics(app, qname, lineno, f"{qname} has no docstring.")
 
+		if qname == "resolve_markup": print("DDD")
 		try:
 			tree_meth = mod_docitem.parse_indent_docstring(tr,func_doc_txt, session)
 		except BaseException as e:
 			return _emit_tracer_diagnostics(tr,app,qname,lineno)
+		if qname == "resolve_markup": print("EEE")
 		if mod_docitem.get_profile_of_tree(mod_docitem.tracer(),tree_meth) in ("function","method"):
+			if qname == "resolve_markup": print("EEE1")
 			try:
 				di_meth = mod_docitem.docitem_docstring_method()
 				di_meth.parse(tr,tree_meth)
 				mod_docitem.validate_docstring(tr,function_obj, di_meth, session=session)
 			except BaseException as e:
+				print("EXCEPTION:", e)
 				return _emit_tracer_diagnostics(tr,app,qname,lineno)
+			if qname == "resolve_markup": print("FFF1")
 			return build_sphinx_nodes(ctx, function_obj, di_meth)
 		else:
+			if qname == "resolve_markup": print("EEE2")
 			try:
 				di_inhmeth = mod_docitem.docitem_docstring_inherited_method()
 				di_inhmeth.parse(tr,tree_meth)
 				mod_docitem.validate_docstring(tr,function_obj, di_inhmeth, session=session)
 			except BaseException as e:
 				return _emit_tracer_diagnostics(tr,app,qname,lineno)
+			if qname == "resolve_markup": print("FFF2")
 			return build_sphinx_nodes(ctx, function_obj, di_inhmeth)
 
 def wtrl_build_autodoc_class_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:

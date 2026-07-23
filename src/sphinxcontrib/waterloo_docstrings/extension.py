@@ -3,7 +3,7 @@ Preamble:
 	profile:
 		module
 	normative_sections:
-		Contract, Public_classes, Public_functions, Public_types
+		Contract, Public_classes, Public_functions, Public_types, Public_constants
 Description:
 	This module provides the Sphinx integration layer for the Waterloo documentation system.
 	|
@@ -184,6 +184,14 @@ Public_types:
 	RoleResult:
 		Aggregate type for the return value of role handler functions. |type|`RoleResult` is a tuple\
 		of the form (nodes, messages) where nodes is a list of Docutils nodes and messages is a list of Docutils system messages.
+Public_constants:
+	RST_TEXT_ESCAPE_CHARS:
+		A |type|`frozenset` of characters that must be escaped in reStructuredText text segments to avoid unintended markup interpretation.
+	RST_ROLE_BODY_ESCAPE_CHARS:
+		A |type|`frozenset` of characters that must be escaped in reStructuredText role bodies to avoid unintended markup interpretation.
+	WTRL_TOKEN_REPLACEMENTS:
+		A |type|`Mapping` of Waterloo token strings to their corresponding reStructuredText role expansions.
+		This mapping is used to convert tokens like |lit|`Must` into the appropriate role.
 Notes:
 	Last reviewed:
 		2026-07-16
@@ -197,11 +205,8 @@ import sys
 from pathlib import Path
 
 from docutils import nodes
-from typing import no_type_check
 from sphinx.util.nodes import make_refnode
 from sphinx.util import logging
-
-import sdv.doc.waterloo.docitem as mod_docitem
 
 from sphinxcontrib.waterloo_docstrings.wtrl_context import (
 	context,
@@ -225,8 +230,12 @@ from sphinxcontrib.waterloo_docstrings.wtrl_directives import (
 	setup_directives
 	)
 from sphinxcontrib.waterloo_docstrings.wtrl_markup import (
+	RST_TEXT_ESCAPE_CHARS,
+	RST_ROLE_BODY_ESCAPE_CHARS,
+	WTRL_TOKEN_REPLACEMENTS,
 	setup_markup_roles,
 	wtrl_pending_ref,
+	resolve_markup
 	)
 # We must import these, since they are auto-documented.
 from sphinxcontrib.waterloo_docstrings.wtrl_parse import (

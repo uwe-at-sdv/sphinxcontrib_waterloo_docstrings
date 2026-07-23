@@ -172,6 +172,48 @@ def setup_markup_roles(app: Any) -> None:
 	)
 
 def resolve_markup(text : str, ctx: context) -> str:
+	r"""
+	Preamble:
+		profile:
+			function
+		normative_sections:
+			Contract, Parameters, Returns, Raises, See_also
+		scope:
+			extension
+	Contract:
+		general:
+			|Must| convert Waterloo inline markup syntax into reStructuredText role directives.
+			|Must| process both naked tokens and |role|`body` markup patterns.
+			|Must| escape special RST characters in text segments while preserving markup boundaries.
+			|Must| return the converted markup string ready for Sphinx processing.
+	Parameters:
+		text:
+			The source text containing Waterloo markup patterns to resolve.
+			Markup patterns include naked tokens (|Must|, |may|, |True|, |False|, etc.)
+			and structured marks (|tag|`body`, e.g., |type|`str`, |attr|`enabled`).
+		ctx:
+			The |type|`context` object providing scope information for markup resolution,
+			used by helper functions to resolve qualified names and check visibility.
+	Returns:
+		The input text with all recognized Waterloo markup patterns converted to Sphinx role syntax.
+		Text segments outside markup are escaped for RST special characters.
+		The returned string is ready for parsing by the Sphinx RST parser.
+	Raises:
+		Exception:
+			|May| propagate if context operations fail during markup resolution\
+			(e.g., qualified name resolution in nested contexts).
+	See_also:
+		RST_TEXT_ESCAPE_CHARS, RST_ROLE_BODY_ESCAPE_CHARS, WTRL_TOKEN_REPLACEMENTS
+	Notes:
+		Markup_conversion:
+			* Naked tokens like '|' + Must + '|' → :wtrl_norm:`Must`
+			* Structured markup like '|' + role + '|' + `body` → :wtrl_role:`body`.
+		Escaping:
+			Text segments outside markup use |var|`RST_TEXT_ESCAPE_CHARS` (backslash, backtick, asterisk, underscore, pipe, angles).
+			Role bodies use |var|`RST_ROLE_BODY_ESCAPE_CHARS` (backslash, backtick only).
+		Performance:
+			Uses compiled regex patterns for efficient token and markup boundary detection.
+	"""
 	def _repl(role: str, body: str) -> str:
 		if role == "ref":
 			return f":wtrl_ref:`{body}`"

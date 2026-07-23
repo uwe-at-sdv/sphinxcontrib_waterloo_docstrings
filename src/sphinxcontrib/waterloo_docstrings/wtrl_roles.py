@@ -205,7 +205,7 @@ def wtrl_var_type_role(para: RolePara) -> RoleResult:
 		profile:
 			function
 		normative_sections:
-			Contract, Parameters, Returns, Raises
+			Contract, Parameters, Returns, Raises, See_also
 		scope:
 			extension
 	Contract:
@@ -216,7 +216,7 @@ def wtrl_var_type_role(para: RolePara) -> RoleResult:
 			|Must| return a Docutils error system message if either the parsed variable name or type is empty.
 			|Must| create a wrapper |type|`docutils.nodes.inline` node with CSS class |value|`wtrl_var_type` for valid input.
 			|Must| add the variable name as a child inline node with CSS class |value|`wtrl_var`.
-			|Must| add the separator |lit|`: ` as a child inline node with CSS class |value|`wtrl_op`.
+			|Must| add a colon as a child inline node with CSS class |value|`wtrl_op`.
 			|Must| add the type as a child inline node with CSS class |value|`wtrl_type`.
 	Parameters:
 		para:
@@ -227,6 +227,8 @@ def wtrl_var_type_role(para: RolePara) -> RoleResult:
 	Raises:
 		BaseException:
 			|May| propagate unexpected exceptions from |type|`docutils`.
+	See_also:
+		RolePara, RoleResult
 	Notes:
 		Structure:
 			This role is intentionally different from the simple Waterloo roles because it exposes the variable name, separator, and type as separately styleable inline nodes.
