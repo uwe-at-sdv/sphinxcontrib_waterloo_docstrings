@@ -510,6 +510,78 @@ to or popped from the state stack.</p>
 </section>
 <section id="function-resolve-markup">
 <h4><span class="section-number">9.1.1.2. </span>Function <code class="wtrl_func docutils literal notranslate"><span class="pre">resolve_markup</span></code><a class="headerlink" href="#function-resolve-markup" title="Link to this heading">¶</a></h4>
+<div class="table-wrapper wtrl-box docutils container" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-11:wtrl_markup-14:resolve_markup">
+<table class="wtrl-box docutils align-default" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-11:wtrl_markup-14:resolve_markup">
+<tbody>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
+<td><div class="wtrl-signature-head line"><span class="wtrl_mod">sphinxcontrib.waterloo_docstrings.wtrl_markup</span><span class="wtrl_op">.</span><span class="wtrl_func">resolve_markup</span><span class="wtrl_op">(</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">text</span><span class="wtrl_op">: </span><span class="wtrl_type">str</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">ctx</span><span class="wtrl_op">: </span><span class="wtrl_type">context</span></div>
+<div class="wtrl-signature-ret line"><span class="wtrl_op">)</span><span class="wtrl_op"> -&gt; </span><span class="wtrl_type">str</span></div>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Preamble</span></p></td>
+<td><p><span class="wtrl_label">normative sections</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_label">Contract</span>, <span class="wtrl_label">Parameters</span>, <span class="wtrl_label">Returns</span>, <span class="wtrl_label">Raises</span>, <span class="wtrl_label">See also</span></p></li>
+</ul>
+<p><span class="wtrl_label">scope</span></p>
+<ul class="simple">
+<li><p><code class="wtrl_value docutils literal notranslate"><span class="pre">extension</span></code></p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Contract</span></p></td>
+<td><p><span class="wtrl_label">general</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">Must</span> convert Waterloo inline markup syntax into reStructuredText role directives.</p></li>
+<li><p><span class="wtrl_norm">Must</span> process both naked tokens and |role|`body` markup patterns.</p></li>
+<li><p><span class="wtrl_norm">Must</span> escape special RST characters in text segments while preserving markup boundaries.</p></li>
+<li><p><span class="wtrl_norm">Must</span> return the converted markup string ready for Sphinx processing.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Parameters</span></p></td>
+<td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">text</span></code></p>
+<p class="wtrl-freeform-paragraph-content">The source text containing Waterloo markup patterns to resolve. Markup patterns include naked tokens (<span class="wtrl_norm">Must</span>, <span class="wtrl_norm">may</span>, <code class="wtrl_value docutils literal notranslate"><span class="pre">True</span></code>, <code class="wtrl_value docutils literal notranslate"><span class="pre">False</span></code>, etc.) and structured marks (<code class="wtrl_tag docutils literal notranslate"><span class="pre">body</span></code>, e.g., <code class="wtrl_type docutils literal notranslate"><span class="pre">str</span></code>, <code class="wtrl_attr docutils literal notranslate"><span class="pre">enabled</span></code>).</p>
+<p><code class="wtrl_var docutils literal notranslate"><span class="pre">ctx</span></code></p>
+<p class="wtrl-freeform-paragraph-content">The <code class="wtrl_type docutils literal notranslate"><span class="pre">context</span></code> object providing scope information for markup resolution, used by helper functions to resolve qualified names and check visibility.</p>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Returns</span></p></td>
+<td><p>The input text with all recognized Waterloo markup patterns converted to Sphinx role syntax. Text segments outside markup are escaped for RST special characters. The returned string is ready for parsing by the Sphinx RST parser.</p></td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Raises</span></p></td>
+<td><p><code class="wtrl_class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">May</span> propagate if context operations fail during markup resolution (e.g., qualified name resolution in nested contexts).</p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">See also</span></p></td>
+<td><p><a class="wtrl_var reference internal" href="#wtrl-obj-9:frozenset" title="frozenset"><span>RST_TEXT_ESCAPE_CHARS</span></a>, <a class="wtrl_var reference internal" href="#wtrl-obj-9:frozenset" title="frozenset"><span>RST_ROLE_BODY_ESCAPE_CHARS</span></a>, <a class="wtrl_var reference internal" href="#wtrl-obj-4:dict" title="dict"><span>WTRL_TOKEN_REPLACEMENTS</span></a></p></td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Notes</span></p></td>
+<td><p class="wtrl-note-title rubric">Markup_conversion</p>
+<p class="wtrl-freeform-paragraph-content"><ul class="simple">
+<li><p>Naked tokens like ‘|’ + Must + ‘|’ → :wtrl_norm:`Must`</p></li>
+<li><p>Structured markup like ‘|’ + role + ‘|’ + `body` → :wtrl_role:`body`.</p></li>
+</ul>
+</p>
+<p class="wtrl-note-title rubric">Escaping</p>
+<p class="wtrl-freeform-paragraph-content">Text segments outside markup use <code class="wtrl_var docutils literal notranslate"><span class="pre">RST_TEXT_ESCAPE_CHARS</span></code> (backslash, backtick, asterisk, underscore, pipe, angles). Role bodies use <code class="wtrl_var docutils literal notranslate"><span class="pre">RST_ROLE_BODY_ESCAPE_CHARS</span></code> (backslash, backtick only).</p>
+<p class="wtrl-note-title rubric">Performance</p>
+<p class="wtrl-freeform-paragraph-content">Uses compiled regex patterns for efficient token and markup boundary detection.</p>
+</td>
+</tr>
+</tbody>
+<thead class="wtrl-box-head-function">
+<tr class="row-odd"><th class="head"><span class="wtrl-obj-kind">«Function»</span></th>
+<th class="head"><p class="wtrl-obj-qid">resolve_markup</p></th>
+</tr>
+</thead>
+</table>
+</div>
 </section>
 <section id="function-build-sphinx-nodes">
 <h4><span class="section-number">9.1.1.3. </span>Function <code class="wtrl_func docutils literal notranslate"><span class="pre">build_sphinx_nodes</span></code><a class="headerlink" href="#function-build-sphinx-nodes" title="Link to this heading">¶</a></h4>
