@@ -144,6 +144,11 @@ Function :wtrl_func:`wtrl_build_function_signature_block_nodes`
 Roles for semantic markup
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Helper classes
+..............
+
+.. wtrl_autodoc_class:: RolePara
+
 Function :wtrl_func:`wtrl_attr_role`
 ........................................
 
