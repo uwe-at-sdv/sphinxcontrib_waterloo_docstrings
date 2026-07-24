@@ -20,3 +20,4 @@ Sphinx: Waterloo Docstrings documentation
 	misc.rst
 	admonitions.rst
 	reference.rst
+	supplementary.rst

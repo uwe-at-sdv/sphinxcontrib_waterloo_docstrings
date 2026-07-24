@@ -316,24 +316,24 @@ table.wtrl-box > thead.wtrl-box-head-inherited_method > tr > th .wtrl-obj-kind {
 	color:var(--wtrl-func-color);
 	}
 
-table.wtrl-box > thead > tr > th p.wtrl-obj-qid {
+table.wtrl-box > thead > tr > th .wtrl-obj-qid {
 	font-family:monospace;
 	font-weight:bold;
 	}
 
-table.wtrl-box > thead.wtrl-box-head-module > tr > th p.wtrl-obj-qid {
+table.wtrl-box > thead.wtrl-box-head-module > tr > th .wtrl-obj-qid {
 	color:var(--wtrl-mod-color);
 	}
-table.wtrl-box > thead.wtrl-box-head-class > tr > th p.wtrl-obj-qid {
+table.wtrl-box > thead.wtrl-box-head-class > tr > th .wtrl-obj-qid {
 	color:var(--wtrl-class-color);
 	}
-table.wtrl-box > thead.wtrl-box-head-function > tr > th p.wtrl-obj-qid {
+table.wtrl-box > thead.wtrl-box-head-function > tr > th .wtrl-obj-qid {
 	color:var(--wtrl-func-color);
 	}
-table.wtrl-box > thead.wtrl-box-head-method > tr > th p.wtrl-obj-qid {
+table.wtrl-box > thead.wtrl-box-head-method > tr > th .wtrl-obj-qid {
 	color:var(--wtrl-func-color);
 	}
-table.wtrl-box > thead.wtrl-box-head-inherited_method > tr > th p.wtrl-obj-qid {
+table.wtrl-box > thead.wtrl-box-head-inherited_method > tr > th .wtrl-obj-qid {
 	color:var(--wtrl-func-color);
 	}
 
