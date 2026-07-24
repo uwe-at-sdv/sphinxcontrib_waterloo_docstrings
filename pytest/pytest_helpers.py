@@ -27,6 +27,7 @@ def test_parse_ref_body():
     assert target == "wtrl://sdv.doc.waterloo.docitem_helper"
 
 def test_resolve_markup():
+    # Not clean style to pass None here, but we just want to test the token replacement and escaping logic.
     resolved = markup.resolve_markup("|Must|",None)
     assert resolved == ":wtrl_norm:`Must`"
     resolved = markup.resolve_markup("|attr|`something`",None)

@@ -194,6 +194,9 @@ def resolve_markup(text : str, ctx: context) -> str:
 		ctx:
 			The |type|`context` object providing scope information for markup resolution,
 			used by helper functions to resolve qualified names and check visibility.
+			For currently simple roles this parameter is mostly structural, but reference
+			markup and future context-aware transformations require access to the active
+			Sphinx/Waterloo rendering state.
 	Returns:
 		The input text with all recognized Waterloo markup patterns converted to Sphinx role syntax.
 		Text segments outside markup are escaped for RST special characters.
@@ -211,6 +214,9 @@ def resolve_markup(text : str, ctx: context) -> str:
 		Escaping:
 			Text segments outside markup use |var|`RST_TEXT_ESCAPE_CHARS` (backslash, backtick, asterisk, underscore, pipe, angles).
 			Role bodies use |var|`RST_ROLE_BODY_ESCAPE_CHARS` (backslash, backtick only).
+		Context:
+			The context parameter keeps this function aligned with the node-building pipeline.
+			Most replacements are textual today, but |ref| markup, forward references, scope-sensitive rendering, and future role-specific normalization depend on contextual state.
 		Performance:
 			Uses compiled regex patterns for efficient token and markup boundary detection.
 	"""

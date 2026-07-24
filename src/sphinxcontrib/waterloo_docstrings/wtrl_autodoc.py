@@ -223,6 +223,52 @@ def _build_internal_ref(ctx: context, target_obj: object, link_text: str, css_cl
 	node_ref["classes"].append(css_class)
 	return node_ref
 
+def _build_internal_ref_var(ctx: context, fqn: str, kind: str, link_text: str, css_class: str) -> nodes.reference:
+	"""
+	Create an internal reference node for a resolved target object.
+
+	If Sphinx environment/builder context and anchor registry are available,
+	use ``make_refnode`` (supports cross-document links). Otherwise fall back
+	to a local ``refid`` reference.
+	"""
+	target_anchor = mod_docitem.build_anchor_from_fully_qualified_name(fqn,kind)
+	node_child = nodes.inline(link_text, link_text)
+	env = getattr(ctx, "env", None)
+	builder = getattr(getattr(env, "app", None), "builder", None)
+	from_docname = getattr(env, "docname", None)
+	index = getattr(env, "wtrl_anchor_index", None)
+	target_fqn = fqn
+
+	if (
+		builder is not None
+		and isinstance(from_docname, str)
+		and from_docname
+		and isinstance(index, dict)
+	):
+		target_docname: str = from_docname
+		target_id: str = target_anchor
+		loc = index.get(target_fqn)
+		if (
+			isinstance(loc, tuple)
+			and len(loc) == 2
+			and isinstance(loc[0], str)
+			and isinstance(loc[1], str)
+		):
+			target_docname, target_id = loc
+		node_ref = cast(nodes.reference, make_refnode(
+			builder,
+			from_docname,
+			target_docname,
+			target_id,
+			node_child,
+			title=target_fqn,
+		))
+	else:
+		node_ref = nodes.reference(link_text, link_text, refid=target_anchor)
+
+	node_ref["classes"].append(css_class)
+	return node_ref
+
 def _is_doc_visible_in_current_scope(ctx: context, doc: mod_docitem.docitem_docstring_base) -> bool:
 	"""
 	Return whether the documented object is visible under the current
@@ -388,6 +434,22 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 			warnings.warn(f"{warn_label} resolver_prefix '{resolver_prefix}': entry '{entry}' cannot be resolved for linking: {exc}",RuntimeWarning)
 			parent.extend(ctx.parse(parent,0,role_fn(entry)))
 
+# Call this for variable, constants, and types inside modules and classes.
+	def render_referentiable_public_entry(parent: nodes.paragraph, entry: str, resolver_prefix: str, css_class: str, role_fn: Callable[[str], str], warn_label: str) -> None:
+		try:
+# Interesting. The resolved object is not useful for us; instead we need the fully qualified name.
+			_ , module_part, _, tail_part = resolve_qualified_name(ctx, resolver_prefix + "." + entry)
+# Here we create an anchor, not link.
+			target_fqn_from_resolve = ((module_part + ".") if module_part else "") + ".".join(tail_part)
+			anchor = mod_docitem.build_anchor_from_fully_qualified_name(target_fqn_from_resolve,"obj")
+			parent["ids"] = [anchor]
+# Rendering the variable, constant or type is sufficient here, since we are inside the documentation box.
+			parent += ctx.parse(parent,0,role_fn(entry))
+		except Exception as exc:
+			warnings.warn(f"{warn_label} resolver_prefix '{resolver_prefix}': entry '{entry}' cannot be resolved for linking: {exc}",RuntimeWarning)
+# Render fallbacj with a developer hint.
+			parent.extend(ctx.parse(parent,0,role_fn(entry) + " (not referentiable)"))
+
 	def render_linked_public_entries(
 		parent: nodes.paragraph,
 		entries: Sequence[str],
@@ -449,6 +511,7 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 			if i_item > 0:
 				parent += nodes.Text(", ")
 			target_obj: object | None = None
+			target_fqn_from_resolve: str = "undefined"
 			last_exc: Exception | None = None
 			for cand in (
 				content_s,
@@ -458,7 +521,12 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 				if cand is None:
 					continue
 				try:
-					target_obj, _, _, _ = resolve_qualified_name(ctx, cand)
+					target_obj, module_part, head_part, tail_part = resolve_qualified_name(ctx, cand)
+# My homebrew version. I'm trying to replace the pipeline fqn->obj->anchor by fqn->anchor
+# because some objects like variables and constants do not know their module (or class?).
+# Before this we had no way to establish types, constants variables as refrentiable objects
+# in the target HTML, but using the simplified pipeline we have now.
+					target_fqn_from_resolve = ((module_part + ".") if module_part else "") + ".".join(tail_part)
 					last_exc = None
 					break
 				except Exception as exc:
@@ -466,13 +534,23 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 					target_obj = None
 			if target_obj is not None and is_target_obj_visible_in_current_scope(ctx, target_obj):
 				if mod_docitem.is_obj_module(target_obj):
-					parent += _build_internal_ref(ctx, target_obj, content_s, "wtrl_mod")
+					parent += _build_internal_ref_var(ctx, target_fqn_from_resolve, "module", content_s, "wtrl_mod")
 				elif mod_docitem.is_obj_class(target_obj):
-					parent += _build_internal_ref(ctx, target_obj, content_s, "wtrl_class")
+					parent += _build_internal_ref_var(ctx, target_fqn_from_resolve, "class", content_s, "wtrl_class")
 				elif mod_docitem.is_obj_function(target_obj):
-					parent += _build_internal_ref(ctx, target_obj, content_s, "wtrl_func")
+					parent += _build_internal_ref_var(ctx, target_fqn_from_resolve, "func", content_s, "wtrl_func")
 				else:
-					parent += _build_internal_ref(ctx, target_obj, content_s, "wtrl_var")
+					parent += _build_internal_ref_var(ctx, target_fqn_from_resolve, "obj", content_s, "wtrl_var")
+# old fqn->obj->anchor pipeline
+#				if mod_docitem.is_obj_module(target_obj):
+#					parent += _build_internal_ref(ctx, target_obj, content_s, "wtrl_mod")
+#				elif mod_docitem.is_obj_class(target_obj):
+#					parent += _build_internal_ref(ctx, target_obj, content_s, "wtrl_class")
+#				elif mod_docitem.is_obj_function(target_obj):
+#					parent += _build_internal_ref(ctx, target_obj, content_s, "wtrl_func")
+#				else:
+#					parent += _build_internal_ref(ctx, target_obj, content_s, "wtrl_var")
+				
 			elif target_obj is not None:
 				# Role var as fallback.
 				render_out_of_scope_entry(parent, content_s, ctx.add_role_var)
@@ -480,8 +558,7 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 				warn_exc: Exception = last_exc if last_exc is not None else ImportError(f"Could not resolve qualified name '{content_s}' with module/class context None/None.")
 				if is_normative:
 					warnings.warn(f"See_also entry '{content_s}' cannot be resolved for linking: {warn_exc}",RuntimeWarning)
-				# Role var as fallback.
-				parent.extend(ctx.parse(parent,0,ctx.add_role_var(content_s)))
+				parent += _build_internal_ref_var(ctx, target_fqn_from_resolve, "obj", content_s, "wtrl_type")
 
 # Contract.*
 	RE_DOC_BULLET_LIST = re.compile(r"^[-+*#]\s")
@@ -629,10 +706,13 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 
 	doc_items = cast(dict[str, Any], doc.items())
 	profile = cast(str, cast(Any, doc_items["Preamble"]).items()["profile"].items()[0])
+# Table head of the documentation box.
 	node_thead = nodes.thead(classes=["wtrl-box-head-" + profile])
 	node_hrow = nodes.row()
+# "Module", "Class", "Function" in Guillemots
 	node1_entry = nodes.entry()
 	node1_entry += nodes.inline(text="«" + profile.capitalize() + "»",classes=["wtrl-obj-kind"])
+# The qualified name
 	node2_entry = nodes.entry()
 	node2_entry += nodes.paragraph(text=objname,classes=["wtrl-obj-qid"])
 	node_hrow += node1_entry
@@ -811,28 +891,33 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 # to enforce a line-by-line executable conract style for non-normative sections.
 # From an aesthetic point of view we get rid of many bullets of non-items.
 		elif label in ("Public_constants", "Public_variables", "Public_types", "Parameters", "Class_overview", "Method_overview", "Function_overview"):
-			for label1, item_subsection in item_section.items().items():
+			if len(item_section.items()) == 0:
+				node_entry.extend(parse_text(node_entry,"|empty|"))
+			else:
+				for label1, item_subsection in item_section.items().items():
 # First paragraph of the entry group: clickable constant/variable label.
-				node_label_paragraph = nodes.paragraph()
-# Add a clickable label. Pass "Public_constants"/"Public_variables"/"Public_types" as label for warnings.
-				if label in ("Public_constants", "Public_variables"):
-					render_linked_public_entry(node_label_paragraph,label1,objname_q,"wtrl_var",ctx.add_role_var,label)
-				elif label in ("Public_types",):
-					render_linked_public_entry(node_label_paragraph,label1,objname_q,"wtrl_type",ctx.add_role_type,label)
+					node_label_paragraph = nodes.paragraph()
+# Add a referentiable label. Pass "Public_constants"/"Public_variables"/"Public_types" as label for warnings.
+# Referentiable because variables, constants, and types are documented inside the module or class box
+# as the Single Source of Truth. Other sections like "See also" can only link to this point.
+					if label in ("Public_constants", "Public_variables"):
+						render_referentiable_public_entry(node_label_paragraph,label1,objname_q,"wtrl_var",ctx.add_role_var,label)
+					elif label in ("Public_types",):
+						render_referentiable_public_entry(node_label_paragraph,label1,objname_q,"wtrl_type",ctx.add_role_type,label)
 # Add a label with semantic role |var|.
-				elif label in ("Parameters",):
-					render_plain_entry(node_label_paragraph,label1,"wtrl_var",ctx.add_role_var,label)
-				elif label in ("Class_overview",):
-					render_plain_entry(node_label_paragraph,label1,"wtrl_class",ctx.add_role_class,label)
-				elif label in ("Method_overview",):
-					render_plain_entry(node_label_paragraph,label1,"wtrl_func",ctx.add_role_func,label)
-				elif label in ("Function_overview",):
-					render_plain_entry(node_label_paragraph,label1,"wtrl_func",ctx.add_role_func,label)
-				node_entry += node_label_paragraph
+					elif label in ("Parameters",):
+						render_plain_entry(node_label_paragraph,label1,"wtrl_var",ctx.add_role_var,label)
+					elif label in ("Class_overview",):
+						render_plain_entry(node_label_paragraph,label1,"wtrl_class",ctx.add_role_class,label)
+					elif label in ("Method_overview",):
+						render_plain_entry(node_label_paragraph,label1,"wtrl_func",ctx.add_role_func,label)
+					elif label in ("Function_overview",):
+						render_plain_entry(node_label_paragraph,label1,"wtrl_func",ctx.add_role_func,label)
+					node_entry += node_label_paragraph
 # Iterate over logical lines in the public constant's/variable's content and add each paragraph as sibling node.
-				for paragraph in build_paragraphs_from_items(item_subsection.items()):
-					paragraph["classes"].append("wtrl-freeform-paragraph-content")
-					node_entry += paragraph
+					for paragraph in build_paragraphs_from_items(item_subsection.items()):
+						paragraph["classes"].append("wtrl-freeform-paragraph-content")
+						node_entry += paragraph
 
 		elif label in ("Raises"):
 # For section "Raises" we enforce the line-by-line style and interpret the content as an executable contract.
@@ -846,13 +931,17 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 # Iterate over logical lines in the exception class' content and add each bullet list as sibling node.
 					node_entry += build_bullet_list_from_subsection_items(item_subsection.items())
 		elif label in ("Derived_from"):
+# Build a paragraph and fill it either with "|empty|" or a list of entries.
 			node1_paragraph = nodes.paragraph()
-			render_linked_derived_from_entries(
-				node1_paragraph,
-				cast(Sequence[str], item_section.items()),
-				"wtrl_type",
-				ctx.add_role_type,
-			)
+			if len(item_section.items()) == 0:
+				node_entry.extend(parse_text(node1_paragraph,"|empty|"))
+			else:
+				render_linked_derived_from_entries(
+					node1_paragraph,
+					cast(Sequence[str], item_section.items()),
+					"wtrl_type",
+					ctx.add_role_type)
+# Append the paragraph to the table cell.
 			node_entry += node1_paragraph
 		elif label in ("See_also",):
 			node1_paragraph = nodes.paragraph()
@@ -860,25 +949,34 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 				node1_paragraph,
 				cast(Sequence[str], item_section.items()),
 				is_normative_section("See_also"),
-				mod_docitem.get_obj_name(obj) if mod_docitem.is_obj_module(obj) else getattr(obj, "__module__", None),
-			)
+				mod_docitem.get_obj_name(obj) if mod_docitem.is_obj_module(obj) else getattr(obj, "__module__", None))
 			node_entry += node1_paragraph
 # The following three, Public_classes/functions/methods have the
 # same structure, only different semantic roles and style classes.
 # The content is simply a list of resolvable clickable objects.
 		elif label in ("Public_classes",):
+# Build a paragraph and fill it either with "|empty|" or a list of entries.
 			node1_paragraph = nodes.paragraph()
-			render_linked_public_entries(
-				node1_paragraph,
-				cast(Sequence[str], item_section.items()),
-				objname_q, "wtrl_class", ctx.add_role_class, label)
+			if len(item_section.items()) == 0:
+				node_entry.extend(parse_text(node1_paragraph,"|empty|"))
+			else:
+				render_linked_public_entries(
+					node1_paragraph,
+					cast(Sequence[str], item_section.items()),
+					objname_q, "wtrl_class", ctx.add_role_class, label)
+# Append the paragraph to the table cell.
 			node_entry += node1_paragraph
 		elif label in ("Public_functions","Public_methods"):
+# Build a paragraph and fill it either with "|empty|" or a list of entries.
 			node1_paragraph = nodes.paragraph()
-			render_linked_public_entries(
-				node1_paragraph,
-				cast(Sequence[str], item_section.items()),
-				objname_q, "wtrl_func", ctx.add_role_func, label)
+			if len(item_section.items()) == 0:
+				node_entry.extend(parse_text(node1_paragraph,"|empty|"))
+			else:
+				render_linked_public_entries(
+					node1_paragraph,
+					cast(Sequence[str], item_section.items()),
+					objname_q, "wtrl_func", ctx.add_role_func, label)
+# Append the paragraph to the table cell.
 			node_entry += node1_paragraph
 # Catch-all. Scan HTML for "TBD" in order to detect bugs.
 		else:
@@ -1184,46 +1282,36 @@ Notes:
 	print("QNAME:", qname)
 
 	with mod_docitem.traced_section(tr, qname):
-		if qname == "resolve_markup": print("AAA")
 		try:
 			function_obj, _, _, _ = resolve_qualified_name(ctx, qname)
 		except Exception as e:
 # Catch expected resolver failures, but do not mask hard process-control exceptions.
 			return _emit_runtime_diagnostics(app, qname, lineno, f"{qname} cannot be resolved: {str(e)}")
-		if qname == "resolve_markup": print("BBB")
 		if not callable(function_obj):
 			return _emit_runtime_diagnostics(app, qname, lineno, f"{qname} does not resolve to a callable.")
 		func_doc_txt = mod_docitem.get_obj_docstring(function_obj)
-		if qname == "resolve_markup": print("CCC")
 		if not func_doc_txt or not func_doc_txt.strip():
 			return _emit_runtime_diagnostics(app, qname, lineno, f"{qname} has no docstring.")
 
-		if qname == "resolve_markup": print("DDD")
 		try:
 			tree_meth = mod_docitem.parse_indent_docstring(tr,func_doc_txt, session)
 		except BaseException as e:
 			return _emit_tracer_diagnostics(tr,app,qname,lineno)
-		if qname == "resolve_markup": print("EEE")
 		if mod_docitem.get_profile_of_tree(mod_docitem.tracer(),tree_meth) in ("function","method"):
-			if qname == "resolve_markup": print("EEE1")
 			try:
 				di_meth = mod_docitem.docitem_docstring_method()
 				di_meth.parse(tr,tree_meth)
 				mod_docitem.validate_docstring(tr,function_obj, di_meth, session=session)
 			except BaseException as e:
-				print("EXCEPTION:", e)
 				return _emit_tracer_diagnostics(tr,app,qname,lineno)
-			if qname == "resolve_markup": print("FFF1")
 			return build_sphinx_nodes(ctx, function_obj, di_meth)
 		else:
-			if qname == "resolve_markup": print("EEE2")
 			try:
 				di_inhmeth = mod_docitem.docitem_docstring_inherited_method()
 				di_inhmeth.parse(tr,tree_meth)
 				mod_docitem.validate_docstring(tr,function_obj, di_inhmeth, session=session)
 			except BaseException as e:
 				return _emit_tracer_diagnostics(tr,app,qname,lineno)
-			if qname == "resolve_markup": print("FFF2")
 			return build_sphinx_nodes(ctx, function_obj, di_inhmeth)
 
 def wtrl_build_autodoc_class_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
