@@ -35,6 +35,23 @@ from sphinxcontrib.waterloo_docstrings.wtrl_signature import (
 
 logger = logging.getLogger(__name__)
 
+def get_obj_css_class(obj: object) -> str:
+	if mod_docitem.is_obj_module(obj):
+		return "wtrl_mod"
+	elif mod_docitem.is_obj_class(obj):
+		return "wtrl_class"
+	elif mod_docitem.is_obj_function(obj):
+		return "wtrl_func"
+# This might be a little fragile, but we're using this for css
+# and the only side effect would be wrong color.
+	elif hasattr(obj,"__module__") and obj.__module__ == "typing":
+		return "wtrl_type"
+# A named value, but not a type.
+	else:
+		return "wtrl_var"
+
+		
+
 def _emit_runtime_diagnostics(app: SphinxAppProtocol | Any, qname: str, lineno: int, msg: str) -> list[nodes.Node]:
 	header = f"while building autodoc directive for `{qname}`:"
 	log_msg = f"{header}\n{msg}"
@@ -223,7 +240,7 @@ def _build_internal_ref(ctx: context, target_obj: object, link_text: str, css_cl
 	node_ref["classes"].append(css_class)
 	return node_ref
 
-def _build_internal_ref_var(ctx: context, fqn: str, kind: str, link_text: str, css_class: str) -> nodes.reference:
+def _build_internal_ref_var(ctx: context, fqn: str, kind: mod_docitem.AnchorKind_t, link_text: str, css_class: str) -> nodes.reference:
 	"""
 	Create an internal reference node for a resolved target object.
 
@@ -337,14 +354,7 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 			return []
 
 		obj_name = mod_docitem.get_obj_name(obj)
-		if mod_docitem.is_obj_module(obj):
-			obj_name_markup = ":wtrl_mod:"
-		elif mod_docitem.is_obj_class(obj):
-			obj_name_markup = ":wtrl_class:"
-		elif mod_docitem.is_obj_function(obj):
-			obj_name_markup = ":wtrl_func:"
-		else:
-			obj_name_markup = ":wtrl_var:"
+		obj_name_markup = get_obj_css_class(obj)
 
 		node_note = nodes.note(classes=["wtrl_scope_filtered_object"])
 		node_paragraph = nodes.paragraph()
@@ -355,7 +365,7 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 		node_paragraph.extend(ctx.parse(
 			node_paragraph,
 			0,
-			f"Scope filter: skipped {obj_name_markup}`{obj_name}` (object: {object_scopes_str}; active: {current_scopes_str}).",
+			f"Scope filter: skipped :{obj_name_markup}:`{obj_name}` (object: {object_scopes_str}; active: {current_scopes_str}).",
 			))
 		node_note += node_paragraph
 		return [node_note]
@@ -437,11 +447,12 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 # Call this for variable, constants, and types inside modules and classes.
 	def render_referentiable_public_entry(parent: nodes.paragraph, entry: str, resolver_prefix: str, css_class: str, role_fn: Callable[[str], str], warn_label: str) -> None:
 		try:
-# Interesting. The resolved object is not useful for us; instead we need the fully qualified name.
-			_ , module_part, _, tail_part = resolve_qualified_name(ctx, resolver_prefix + "." + entry)
+			target_obj, module_part, _, tail_part = resolve_qualified_name(ctx, resolver_prefix + "." + entry)
 # Here we create an anchor, not link.
 			target_fqn_from_resolve = ((module_part + ".") if module_part else "") + ".".join(tail_part)
+# Build anchor and register for inter-page references
 			anchor = mod_docitem.build_anchor_from_fully_qualified_name(target_fqn_from_resolve,"obj")
+			_register_anchor(ctx, target_obj, anchor)
 			parent["ids"] = [anchor]
 # Rendering the variable, constant or type is sufficient here, since we are inside the documentation box.
 			parent += ctx.parse(parent,0,role_fn(entry))
@@ -533,14 +544,8 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 					last_exc = exc
 					target_obj = None
 			if target_obj is not None and is_target_obj_visible_in_current_scope(ctx, target_obj):
-				if mod_docitem.is_obj_module(target_obj):
-					parent += _build_internal_ref_var(ctx, target_fqn_from_resolve, "module", content_s, "wtrl_mod")
-				elif mod_docitem.is_obj_class(target_obj):
-					parent += _build_internal_ref_var(ctx, target_fqn_from_resolve, "class", content_s, "wtrl_class")
-				elif mod_docitem.is_obj_function(target_obj):
-					parent += _build_internal_ref_var(ctx, target_fqn_from_resolve, "func", content_s, "wtrl_func")
-				else:
-					parent += _build_internal_ref_var(ctx, target_fqn_from_resolve, "obj", content_s, "wtrl_var")
+				parent += _build_internal_ref_var(ctx, target_fqn_from_resolve, mod_docitem.get_obj_anchor_kind(target_obj), content_s, get_obj_css_class(target_obj))
+
 # old fqn->obj->anchor pipeline
 #				if mod_docitem.is_obj_module(target_obj):
 #					parent += _build_internal_ref(ctx, target_obj, content_s, "wtrl_mod")
@@ -686,14 +691,12 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 
 	objname = mod_docitem.get_obj_name(obj)
 	objname_q = mod_docitem.get_obj_fully_qualified_name(obj)
+# Build anchor and register for inter-page references.
 	anchor = mod_docitem.build_anchor(obj)
+	_register_anchor(ctx, obj, anchor)
 
 	if ctx.config and ctx.config.wtrl_current_object_logging_enabled:
 		logger.info(f"Waterloo: now processing '{objname_q}'")
-
-
-# Required for inter-page references.
-	_register_anchor(ctx, obj, anchor)
 
 # Build table
 	node_table = nodes.table(classes=["wtrl-box"])
@@ -1278,8 +1281,6 @@ Notes:
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	tr = ctx.tr
 	session = mod_docitem.DocSession()
-
-	print("QNAME:", qname)
 
 	with mod_docitem.traced_section(tr, qname):
 		try:

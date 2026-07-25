@@ -5,6 +5,8 @@ Format:
 - VERSION [YYYY-MM-DD]: Summary.
 
 #----- extend here --------------------------------------------#
+- 0.7.15 [2026-07-25]:
+	* Bugfix anchors; Logo monochrome and variant matrix.
 - 0.7.14 [2026-07-25]:
 	* Variable, constants, and types are now referentiable and have a meaningful anchor.
 - 0.7.13 [2026-07-23]:
