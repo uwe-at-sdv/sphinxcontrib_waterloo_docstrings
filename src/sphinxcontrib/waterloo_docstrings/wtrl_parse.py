@@ -42,9 +42,8 @@ def parse_inline(inliner: InlinerProtocol, parent: nodes.Element, ln: int, txt: 
 		The returned list is created from the parse output; warning and error messages are
 		appended directly to parent and not returned as part of the list.
 	Raises:
-		Exception:
-			No exceptions are raised under normal conditions. Exceptions from underlying RST
-			parsing or document handling |may| propagate depending on the inliner implementation.
+		BaseException:
+			Exceptions from underlying RST parsing or document handling |may| propagate depending on the inliner implementation.
 	Notes:
 		Key difference from direct inliner.parse() calls:
 			This function always preserves document messages in the tree. Direct calls to

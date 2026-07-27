@@ -65,6 +65,10 @@ jobs:
           cp -a sphinx/test/build-furo/html gh-pages/showcase/furo
           cp -a sphinx/test/build-alabaster/html gh-pages/showcase/alabaster
           cp -a sphinx/test/build-classic/html gh-pages/showcase/classic
+          mkdir -p gh-pages/doc-json
+          mkdir -p gh-pages/doc-html5
+          cp -a doc/doc-json/wtrl-sphinx.wtrl.core.rfc-2119.json gh-pages/doc-json
+          cp -a doc/doc-html5/wtrl-sphinx.wtrl.core.rfc-2119.html gh-pages/doc-html5
 
       - name: Commit and push gh-pages update
         working-directory: gh-pages
