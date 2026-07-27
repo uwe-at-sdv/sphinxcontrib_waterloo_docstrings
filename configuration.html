@@ -10,7 +10,7 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=47202671" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/common_styles.css?v=b66e391a" />
-    <link rel="stylesheet" type="text/css" href="_static/waterloo_base.css?v=512472bd" />
+    <link rel="stylesheet" type="text/css" href="_static/waterloo_base.css?v=1910b4a6" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="_static/wtrl_doc_custom.css" />
     
@@ -256,6 +256,7 @@ building the documentation, so changes normally require a fresh Sphinx build.</p
 <span class="n">wtrl_scope_filtered_object_placeholders_enabled</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">wtrl_state_change_admonitions_enabled</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">wtrl_state_change_logging_enabled</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">wtrl_object_origin_display_mode</span> <span class="o">=</span> <span class="s2">&quot;short&quot;</span>
 </pre></div>
 </div>
 <p>The following sections describe the implemented configuration variables.</p>
@@ -327,8 +328,33 @@ class, and scope are visible in the artifact itself.</p></li>
 during the Sphinx build.</p></li>
 </ul>
 </section>
+<section id="render-details">
+<h2><span class="section-number">3.3. </span>Render details<a class="headerlink" href="#render-details" title="Link to this heading">¶</a></h2>
+<ul>
+<li><p><code class="wtrl_var docutils literal notranslate"><span class="pre">wtrl_object_origin_display_mode</span></code> [Default:
+<code class="wtrl_value docutils literal notranslate"><span class="pre">short</span></code>] – Controls whether the headline of a Waterloo
+documentation box shows the module where the documented object originates.
+This is useful when an object is rendered through an imported name or when a
+short local name would otherwise hide the defining module.</p>
+<p>The supported values are:</p>
+<ul class="simple">
+<li><p><code class="wtrl_value docutils literal notranslate"><span class="pre">omit</span></code> – do not render an origin note.</p></li>
+<li><p><code class="wtrl_value docutils literal notranslate"><span class="pre">short</span></code> – render the final module segment, for example
+<code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">MODULE</span></code>.</p></li>
+<li><p><code class="wtrl_value docutils literal notranslate"><span class="pre">long</span></code> – render the fully qualified module name, for example
+<code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">PKG.PATH.TO.MODULE</span></code>.</p></li>
+</ul>
+<p>The origin note is omitted automatically when the documented object is the
+module itself. Invalid values fall back to <code class="wtrl_value docutils literal notranslate"><span class="pre">short</span></code> and emit a
+Sphinx warning.</p>
+<p>Long object names and <code class="wtrl_value docutils literal notranslate"><span class="pre">long</span></code> origin notes can make the headline
+wrap. Use <code class="wtrl_value docutils literal notranslate"><span class="pre">short</span></code> or <code class="wtrl_value docutils literal notranslate"><span class="pre">omit</span></code> if compact output is more
+important than showing the full origin.</p>
+</li>
+</ul>
+</section>
 <section id="import-resolution">
-<h2><span class="section-number">3.3. </span>Import Resolution<a class="headerlink" href="#import-resolution" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">3.4. </span>Import Resolution<a class="headerlink" href="#import-resolution" title="Link to this heading">¶</a></h2>
 <ul>
 <li><p><code class="wtrl_var docutils literal notranslate"><span class="pre">wtrl_basedirs</span></code> [Default: <code class="wtrl_value docutils literal notranslate"><span class="pre">[]</span></code> – empty list] – Lists
 directories that are added to <code class="wtrl_mod docutils literal notranslate"><span class="pre">sys.path</span></code> before Waterloo resolves
@@ -354,7 +380,7 @@ Sphinx build.</p>
 </ul>
 </section>
 <section id="sphinx-setup-hook">
-<h2><span class="section-number">3.4. </span>Sphinx Setup Hook<a class="headerlink" href="#sphinx-setup-hook" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">3.5. </span>Sphinx Setup Hook<a class="headerlink" href="#sphinx-setup-hook" title="Link to this heading">¶</a></h2>
 <p>Some Sphinx configuration cannot be expressed as plain configuration variables.
 For these cases Sphinx looks for a function named <code class="wtrl_func docutils literal notranslate"><span class="pre">setup</span></code> in
 <code class="wtrl_file docutils literal notranslate"><span class="pre">conf.py</span></code>. The Waterloo documentation uses this hook to register the
@@ -461,8 +487,9 @@ chapter <a class="reference internal" href="misc.html#chapter-misc"><span class=
 <li><a class="reference internal" href="#">3. Configuration</a><ul>
 <li><a class="reference internal" href="#diagnostics">3.1. Diagnostics</a></li>
 <li><a class="reference internal" href="#state-and-scope">3.2. State And Scope</a></li>
-<li><a class="reference internal" href="#import-resolution">3.3. Import Resolution</a></li>
-<li><a class="reference internal" href="#sphinx-setup-hook">3.4. Sphinx Setup Hook</a></li>
+<li><a class="reference internal" href="#render-details">3.3. Render details</a></li>
+<li><a class="reference internal" href="#import-resolution">3.4. Import Resolution</a></li>
+<li><a class="reference internal" href="#sphinx-setup-hook">3.5. Sphinx Setup Hook</a></li>
 </ul>
 </li>
 </ul>

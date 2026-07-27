@@ -91,6 +91,30 @@ build log.
   :wtrl_value:`True`] -- Controls whether state-changing directives are logged
   during the Sphinx build.
 
+Render details
+--------------
+
+* :wtrl_var:`wtrl_object_origin_display_mode` [Default:
+  :wtrl_value:`short`] -- Controls whether the headline of a Waterloo
+  documentation box shows the module where the documented object originates.
+  This is useful when an object is rendered through an imported name or when a
+  short local name would otherwise hide the defining module.
+
+  The supported values are:
+
+  * :wtrl_value:`omit` -- do not render an origin note.
+  * :wtrl_value:`short` -- render the final module segment, for example
+    ``from MODULE``.
+  * :wtrl_value:`long` -- render the fully qualified module name, for example
+    ``from PKG.PATH.TO.MODULE``.
+
+  The origin note is omitted automatically when the documented object is the
+  module itself. Invalid values fall back to :wtrl_value:`short` and emit a
+  Sphinx warning.
+
+  Long object names and :wtrl_value:`long` origin notes can make the headline
+  wrap. Use :wtrl_value:`short` or :wtrl_value:`omit` if compact output is more
+  important than showing the full origin.
 
 Import Resolution
 -----------------
