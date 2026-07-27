@@ -1,7 +1,7 @@
 ## Project Status
 
 The project is under development, but seems to do what it is supposed to do.
-feel free to dowload and try out.
+Feel free to dowload and try out.
 
 ## About
 

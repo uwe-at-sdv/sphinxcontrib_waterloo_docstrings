@@ -61,10 +61,7 @@ class context(context_roles):
 		make_context:
 			|Must| create a |class|`context` instance from a Sphinx application object, an inline parser callable, and a line number.
 	Public_methods:
-		__init__,
-		set_build_prolog_method_overview,
-		set_build_prolog_method_block,
-		apply_config
+		__init__
 	Notes:
 		Context population:
 			Call |func|`make_context` instead of instantiating this class directly when Sphinx environment and configuration access are needed.

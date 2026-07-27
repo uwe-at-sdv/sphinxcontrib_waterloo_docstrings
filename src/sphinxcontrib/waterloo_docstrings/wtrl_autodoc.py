@@ -1,7 +1,7 @@
 from __future__ import annotations
-from typing import Any, Callable, Dict, Iterable, List, Sequence, Tuple, cast
+from typing import Any, Callable, Dict, Iterable, List, Literal, Sequence, Tuple, TypeAlias, cast
 
-import re,warnings,inspect
+import re,warnings,inspect,typing
 
 from docutils import nodes
 from sphinx.util import logging
@@ -34,6 +34,33 @@ from sphinxcontrib.waterloo_docstrings.wtrl_signature import (
 	)
 
 logger = logging.getLogger(__name__)
+
+ObjectOriginDisplayMode_t: TypeAlias = Literal["omit", "short", "long"]
+_OBJECT_ORIGIN_DISPLAY_MODES: tuple[ObjectOriginDisplayMode_t, ...] = ("omit", "short", "long")
+
+def _get_object_origin_display_mode(ctx: context) -> ObjectOriginDisplayMode_t:
+	mode = getattr(ctx.config, "wtrl_object_origin_display_mode", "short")
+	if mode in _OBJECT_ORIGIN_DISPLAY_MODES:
+		return cast(ObjectOriginDisplayMode_t, mode)
+	logger.warning(f"Invalid wtrl_object_origin_display_mode {mode!r}; using 'short'.")
+	return "short"
+
+def _format_annotation_text(ann: object) -> str:
+	if ann is None or ann is inspect.Signature.empty or ann is inspect.Parameter.empty:
+		return ""
+	text = ann if isinstance(ann, str) else (ann.__name__ if isinstance(ann, type) else str(ann))
+	text = str(text).replace("typing_extensions.", "").replace("typing.", "")
+	if text == "None":
+		return ""
+	return text
+
+def _member_annotation_text(obj: object, mem_name: str, ann: object) -> str:
+	if ann is typing.TypeAlias or ann == "TypeAlias" or ann == "typing.TypeAlias":
+		try:
+			return _format_annotation_text(getattr(obj, mem_name))
+		except Exception:
+			return ""
+	return _format_annotation_text(ann)
 
 def get_obj_css_class(obj: object) -> str:
 	if mod_docitem.is_obj_module(obj):
@@ -691,6 +718,7 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 
 	objname = mod_docitem.get_obj_name(obj)
 	objname_q = mod_docitem.get_obj_fully_qualified_name(obj)
+	obj_annotations = mod_docitem.get_obj_annotations(obj)
 # Build anchor and register for inter-page references.
 	anchor = mod_docitem.build_anchor(obj)
 	_register_anchor(ctx, obj, anchor)
@@ -715,9 +743,36 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 # "Module", "Class", "Function" in Guillemots
 	node1_entry = nodes.entry()
 	node1_entry += nodes.inline(text="«" + profile.capitalize() + "»",classes=["wtrl-obj-kind"])
-# The qualified name
+# The qualified name and its owner module
 	node2_entry = nodes.entry()
-	node2_entry += nodes.paragraph(text=objname,classes=["wtrl-obj-qid"])
+
+# Depending on configuration variable `wtrl_object_origin_display_mode`,
+# we compose the table headline from one or two components. The object name
+# is always present. The origin module name may be added in long (fully
+# qualified) or short form (module name only).
+	name_owner: str | None = None
+	origin_display_mode = _get_object_origin_display_mode(ctx)
+	if origin_display_mode != "omit":
+		mod_owner = mod_docitem.get_obj_direct_module(obj)
+# We omit the origin note if the object is its own origin.
+		if mod_owner == obj:
+			pass
+		else:
+			name_owner = mod_docitem.get_obj_name(mod_owner) if mod_owner else None
+# Short form: Last segment in the dot notation.
+			if name_owner is not None and origin_display_mode == "short":
+				name_owner = name_owner.split(".")[-1]
+# Now build the node: object name...
+	node_paragraph_name = nodes.paragraph()
+	node_paragraph_name += nodes.inline(text=objname,classes=["wtrl-obj-qid"])
+# ... and origin if applicable.
+	if name_owner:
+# Long dash and non-breakable spacing. We choose class wtrl_lit in order to make
+# sure "from" matches the module name in font size and style.
+		node_paragraph_name += nodes.inline(text=" \u2013\u2060\u00a0from\u00a0",classes=["wtrl_lit"])
+		node_paragraph_name += nodes.inline(text=name_owner,classes=["wtrl_mod"])
+	node2_entry += node_paragraph_name
+
 	node_hrow += node1_entry
 	node_hrow += node2_entry
 	node_thead += node_hrow
@@ -900,6 +955,7 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 				for label1, item_subsection in item_section.items().items():
 # First paragraph of the entry group: clickable constant/variable label.
 					node_label_paragraph = nodes.paragraph()
+					node_content_container: nodes.Element = node_entry
 # Add a referentiable label. Pass "Public_constants"/"Public_variables"/"Public_types" as label for warnings.
 # Referentiable because variables, constants, and types are documented inside the module or class box
 # as the Single Source of Truth. Other sections like "See also" can only link to this point.
@@ -917,10 +973,20 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 					elif label in ("Function_overview",):
 						render_plain_entry(node_label_paragraph,label1,"wtrl_func",ctx.add_role_func,label)
 					node_entry += node_label_paragraph
+					if label in ("Class_overview","Function_overview","Method_overview","Public_constants", "Public_variables", "Public_types"):
+						node_content_container = nodes.container(classes=["wtrl-public-entry-content"])
+						node_entry += node_content_container
+					if label in ("Public_types",):
+						annotation_text = _member_annotation_text(obj, label1, obj_annotations.get(label1))
+						if annotation_text:
+							node_annotation_paragraph = nodes.paragraph(classes=["wtrl-public-type-annotation"])
+							node_annotation_paragraph += nodes.inline(text="Type Alias for ", classes=["wtrl-public-type-annotation-label"])
+							node_annotation_paragraph += nodes.inline(text=annotation_text, classes=["wtrl_type"])
+							node_content_container += node_annotation_paragraph
 # Iterate over logical lines in the public constant's/variable's content and add each paragraph as sibling node.
 					for paragraph in build_paragraphs_from_items(item_subsection.items()):
 						paragraph["classes"].append("wtrl-freeform-paragraph-content")
-						node_entry += paragraph
+						node_content_container += paragraph
 
 		elif label in ("Raises"):
 # For section "Raises" we enforce the line-by-line style and interpret the content as an executable contract.

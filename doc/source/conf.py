@@ -35,6 +35,7 @@ wtrl_current_object_logging_enabled = False
 wtrl_scope_filtered_object_placeholders_enabled = True
 wtrl_state_change_admonitions_enabled = True
 wtrl_state_change_logging_enabled = True
+wtrl_object_origin_display_mode = "short"
 # litinc-end-config-variables
 
 # Configure base directories of documented modules.
@@ -59,6 +60,7 @@ exclude_patterns: list[str] = []
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'furo'
+#html_theme = 'alabaster'
 html_static_path = ['_static']
 
 html_theme_options = {

@@ -32,7 +32,7 @@ Terminology:
 		An element of the Docutils abstract syntax tree (AST),
 		such as |type|`paragraph`, |type|`section`, or |type|`literal`.
 	Docutils role:
-		An inline markup construct of the form ``:role:`content``` implemented
+		An inline markup construct of the form |lit|`:role:`content`` implemented
 		using the Docutils role API. Custom roles provided by this module are
 		registered via Sphinx but conceptually belong to Docutils.
 	Sphinx extension:
@@ -45,14 +45,15 @@ Contract:
 		|Must| provide a default layout for HTML output from Sphinx.
 		|Must| provide a class |type|`context` which provides abstract roles to be configured by the target project's |file|`conf.py`.
 		|Must| provide a function for building Docutils nodes from a module docstring in waterloo format.
-		|Must| provide a function for building Docutils nodes from a function docstring in waterloo format.
+		|Must| provide a function for building Docutils nodes from a function or method docstring in waterloo format.
 		|Must| provide a function for building Docutils nodes from a class docstring in waterloo format.
 		|Must| provide a function for building Docutils nodes from a class docstring and the class' method docstrings in waterloo format.
 		|Must| provide a Docutils role for rendering a function prototype.
 		|Must| provide a Docutils role for rendering a method prototype.
 		|Must| maintain a stack with semantics "current module" and |func|`push`-, |func|`pop`-, |func|`get`-methods.
 		|Must| maintain a stack with semantics "current class" and |func|`push`-, |func|`pop`-, |func|`get`-methods.
-		|Must| provide Docutils roles or directives for modifying these stacks.
+		|Must| maintain a stack with semantics "current scope" and |func|`push`-, |func|`pop`-, |func|`get`-methods.
+		|Must| provide Docutils directives for modifying these stacks.
 Public_classes:
 	context,
 	RolePara
@@ -181,20 +182,22 @@ Function_overview:
 	wtrl_var_type_role:
 		Implementation of role |attr|`:wtrl_var_type:`
 Public_types:
+	ObjectOriginDisplayMode_t:
+		Literal type for configuration variable |var|`wtrl_object_origin_display_mode`.
 	RoleResult:
 		Aggregate type for the return value of role handler functions. |type|`RoleResult` is a tuple\
 		of the form (nodes, messages) where nodes is a list of Docutils nodes and messages is a list of Docutils system messages.
 Public_constants:
 	RST_TEXT_ESCAPE_CHARS:
-		A |type|`frozenset` of characters that must be escaped in reStructuredText text segments to avoid unintended markup interpretation.
+		A |type|`frozenset` of characters escaped in reStructuredText text segments to avoid unintended markup interpretation.
 	RST_ROLE_BODY_ESCAPE_CHARS:
-		A |type|`frozenset` of characters that must be escaped in reStructuredText role bodies to avoid unintended markup interpretation.
+		A |type|`frozenset` of characters escaped in reStructuredText role bodies to avoid unintended markup interpretation.
 	WTRL_TOKEN_REPLACEMENTS:
 		A |type|`Mapping` of Waterloo token strings to their corresponding reStructuredText role expansions.
 		This mapping is used to convert tokens like |lit|`Must` into the appropriate role.
 Notes:
 	Last reviewed:
-		2026-07-16
+		2026-07-26
 """
 
 from __future__ import annotations
@@ -292,6 +295,9 @@ from sphinxcontrib.waterloo_docstrings.wtrl_autodoc import (
 	wtrl_build_autodoc_function_nodes,
 	wtrl_build_autodoc_class_full_nodes
 	)
+from sphinxcontrib.waterloo_docstrings.wtrl_autodoc import ObjectOriginDisplayMode_t as ObjectOriginDisplayMode_t_
+ObjectOriginDisplayMode_t: TypeAlias = ObjectOriginDisplayMode_t_
+
 
 # Leave here for experimenting and debugging, even if unused.
 logger = logging.getLogger(__name__)
@@ -395,6 +401,9 @@ def setup(app: Any) -> dict[str, Any]:
 # push and pop directives.
 	app.add_config_value('wtrl_state_change_admonitions_enabled', True, 'env')
 	app.add_config_value('wtrl_state_change_logging_enabled', True, 'env')
+# Controls whether documentation box headlines show the defining module.
+	app.add_config_value('wtrl_object_origin_display_mode','short', 'env')
+# Dirs to search for modules.
 	app.add_config_value('wtrl_basedirs', [], 'env')
 
 # Add a hook, so that we know when the builder is ready.

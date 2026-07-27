@@ -5,6 +5,10 @@ Format:
 - VERSION [YYYY-MM-DD]: Summary.
 
 #----- extend here --------------------------------------------#
+- 0.8.0 [2026-07-27]:
+	* TypeAliases in Public_types are now added in expanded form (necessary for self-consistent normative docu); Styling of Overview- and Public sections.
+- 0.7.16 [2026-07-26]:
+	* Object origin display mode, for better table headlines.
 - 0.7.15 [2026-07-25]:
 	* Bugfix anchors; Logo monochrome and variant matrix.
 - 0.7.14 [2026-07-25]:
