@@ -911,10 +911,9 @@ to or popped from the state stack.</p>
 <td><p>List of parsed docutils.nodes.Node instances representing the content found in txt. The returned list is created from the parse output; warning and error messages are appended directly to parent and not returned as part of the list.</p></td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Raises</span></p></td>
-<td><p><code class="wtrl_class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<td><p><code class="wtrl_class docutils literal notranslate"><span class="pre">BaseException</span></code></p>
 <ul class="simple">
-<li><p>No exceptions are raised under normal conditions. Exceptions from underlying RST</p></li>
-<li><p>parsing or document handling <span class="wtrl_norm">may</span> propagate depending on the inliner implementation.</p></li>
+<li><p>Exceptions from underlying RST parsing or document handling <span class="wtrl_norm">may</span> propagate depending on the inliner implementation.</p></li>
 </ul>
 </td>
 </tr>
