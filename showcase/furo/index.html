@@ -310,9 +310,13 @@
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">a</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">an integer</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">b</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">a float</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Returns</span></p></td>
@@ -724,8 +728,11 @@
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">severity</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Only include entries with this severity level or higher. Levels are ordered as DEBUG &lt; INFO &lt; WARNING &lt; ERROR.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">schema_version</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Specify the WTRL Tracer JSON Schema version to declare in the output. Defaults to the current version if not provided. This does not affect the structure of the output, which always follows the current schema. Including the schema version allows consumers to validate against the correct schema and maintain compatibility as the schema evolves.<ul class="simple">
 <li><p><span class="wtrl_norm">Must</span> be a string in the format <code class="wtrl_lit docutils literal notranslate"><span class="pre">X.Y.Z</span></code> where X, Y, and Z are non-negative integers.</p></li>
 <li><p><span class="wtrl_norm">Must</span> default to the current schema version if not provided.</p></li>
@@ -733,19 +740,26 @@
 <li><p><span class="wtrl_norm">Must not</span> affect the actual structure of the output, which always follows the current schema.</p></li>
 </ul>
 </p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">waterloo_version</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Optionally include the version of the Waterloo tool that generated the tracer data.<ul class="simple">
 <li><p><span class="wtrl_norm">Must</span> be a string in the format <code class="wtrl_lit docutils literal notranslate"><span class="pre">X.Y.Z</span></code> where X, Y, and Z are non-negative integers.</p></li>
 </ul>
 </p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">id_prefix</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Optionally include a prefix for the `$id` field in the output JSON.<ul class="simple">
 <li><p><span class="wtrl_norm">Must</span> be a string if provided.</p></li>
 <li><p><span class="wtrl_norm">May</span> be omitted, in which case the `$id` field will not include a prefix.</p></li>
 </ul>
 </p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">include_debug</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Optionally include debug notes in the output JSON.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Returns</span></p></td>

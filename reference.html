@@ -295,7 +295,7 @@ to or popped from the state stack.</p>
 <td><p class="wtrl-dfn-term"><span><span class="wtrl_dfn">Docutils node</span></span></p>
 <p class="wtrl-dfn-content">An element of the Docutils abstract syntax tree (AST), such as <code class="wtrl_type docutils literal notranslate"><span class="pre">paragraph</span></code>, <code class="wtrl_type docutils literal notranslate"><span class="pre">section</span></code>, or <code class="wtrl_type docutils literal notranslate"><span class="pre">literal</span></code>.</p>
 <p class="wtrl-dfn-term"><span><span class="wtrl_dfn">Docutils role</span></span></p>
-<p class="wtrl-dfn-content">An inline markup construct of the form <code class="wtrl_lit docutils literal notranslate"><span class="pre">:role:`content`</span></code> implemented using the Docutils role API. Custom roles provided by this module are registered via Sphinx but conceptually belong to Docutils.</p>
+<p class="wtrl-dfn-content">An inline markup construct of the form :role:`content` implemented using the Docutils role API. Custom roles provided by this module are registered via Sphinx but conceptually belong to Docutils.</p>
 <p class="wtrl-dfn-term"><span><span class="wtrl_dfn">Sphinx extension</span></span></p>
 <p class="wtrl-dfn-content">A Python module loaded by Sphinx to extend its parsing, transformation, or rendering behavior. This module is implemented as a Sphinx extension but operates primarily on Docutils data structures.</p>
 </td>
@@ -351,19 +351,19 @@ to or popped from the state stack.</p>
 </div>
 <p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_autodoc_module_nodes</span></code></p>
 <div class="wtrl-public-entry-content docutils container">
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">..</span> <span class="pre">wtrl_autodoc_module::</span></code></p>
+<p class="wtrl-freeform-paragraph-content">Implementation of directive <code class="wtrl_attr docutils literal notranslate"><span class="pre">..</span> <span class="pre">wtrl_autodoc_module::</span></code></p>
 </div>
 <p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_autodoc_function_nodes</span></code></p>
 <div class="wtrl-public-entry-content docutils container">
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">..</span> <span class="pre">wtrl_autodoc_function::</span></code></p>
+<p class="wtrl-freeform-paragraph-content">Implementation of directive <code class="wtrl_attr docutils literal notranslate"><span class="pre">..</span> <span class="pre">wtrl_autodoc_function::</span></code></p>
 </div>
 <p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_autodoc_class_nodes</span></code></p>
 <div class="wtrl-public-entry-content docutils container">
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">..</span> <span class="pre">wtrl_autodoc_class::</span></code></p>
+<p class="wtrl-freeform-paragraph-content">Implementation of directive <code class="wtrl_attr docutils literal notranslate"><span class="pre">..</span> <span class="pre">wtrl_autodoc_class::</span></code></p>
 </div>
 <p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_autodoc_class_full_nodes</span></code></p>
 <div class="wtrl-public-entry-content docutils container">
-<p class="wtrl-freeform-paragraph-content">Implementation of role <code class="wtrl_attr docutils literal notranslate"><span class="pre">..</span> <span class="pre">wtrl_autodoc_class_full::</span></code></p>
+<p class="wtrl-freeform-paragraph-content">Implementation of directive <code class="wtrl_attr docutils literal notranslate"><span class="pre">..</span> <span class="pre">wtrl_autodoc_class_full::</span></code></p>
 </div>
 <p><code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_push_current_module_nodes</span></code></p>
 <div class="wtrl-public-entry-content docutils container">
@@ -564,9 +564,13 @@ to or popped from the state stack.</p>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">ctx</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The context which provides current module and current class.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The qualified name to resolve.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Returns</span></p></td>
@@ -631,9 +635,13 @@ to or popped from the state stack.</p>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">text</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The source text containing Waterloo markup patterns to resolve. Markup patterns include naked tokens (<span class="wtrl_norm">Must</span>, <span class="wtrl_norm">may</span>, <code class="wtrl_value docutils literal notranslate"><span class="pre">True</span></code>, <code class="wtrl_value docutils literal notranslate"><span class="pre">False</span></code>, etc.) and structured marks (<code class="wtrl_tag docutils literal notranslate"><span class="pre">body</span></code>, e.g., <code class="wtrl_type docutils literal notranslate"><span class="pre">str</span></code>, <code class="wtrl_attr docutils literal notranslate"><span class="pre">enabled</span></code>).</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">ctx</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The <code class="wtrl_type docutils literal notranslate"><span class="pre">context</span></code> object providing scope information for markup resolution, used by helper functions to resolve qualified names and check visibility. For currently simple roles this parameter is mostly structural, but reference markup and future context-aware transformations require access to the active Sphinx/Waterloo rendering state.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Returns</span></p></td>
@@ -719,11 +727,17 @@ to or popped from the state stack.</p>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">ctx</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Rendering context providing Sphinx state, configuration, inline parsing, and Waterloo role helpers.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">obj</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The documented Python object.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">doc</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Parsed Waterloo docstring tree for <code class="wtrl_var docutils literal notranslate"><span class="pre">obj</span></code>.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Returns</span></p></td>
@@ -810,11 +824,17 @@ to or popped from the state stack.</p>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">ctx</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Rendering context providing Sphinx state, configuration, diagnostics, inline parsing, and Waterloo role helpers.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">class_obj</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The class object to render.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">session</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Session object used for parser and validator state shared across the recursive render pass.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Returns</span></p></td>
@@ -898,13 +918,21 @@ to or popped from the state stack.</p>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">inliner</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">An inline element parser implementing InlinerProtocol. <span class="wtrl_norm">Must</span> have a parse method and a document attribute with settings and reporter attributes.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">parent</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The parent Element to which parsed content and messages will be appended.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">ln</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The line number (integer) where the txt input begins in the source document.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">txt</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The reStructuredText source string (str) to be parsed for inline markup.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Returns</span></p></td>
@@ -1029,9 +1057,13 @@ to or popped from the state stack.</p>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">parse_inline</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">A callable that takes a <code class="wtrl_class docutils literal notranslate"><span class="pre">nodes.Element</span></code> parent, an integer line number, and a string of inline text, and returns a list of <code class="wtrl_class docutils literal notranslate"><span class="pre">nodes.Node</span></code> objects.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">lineno</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">An integer line number within the source file.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Returns</span></p></td>
@@ -1082,11 +1114,17 @@ to or popped from the state stack.</p>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">app</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">A Sphinx application object.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">parse_inline</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">A callable that takes a <code class="wtrl_class docutils literal notranslate"><span class="pre">nodes.Element</span></code> parent, an integer line number, and a string of inline text, and returns a list of <code class="wtrl_class docutils literal notranslate"><span class="pre">nodes.Node</span></code> objects.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">lineno</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">An integer line number within the source file.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Returns</span></p></td>
@@ -1157,13 +1195,21 @@ to or popped from the state stack.</p>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">app</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Sphinx application instance that carries configuration and environment state.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">inliner</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Docutils inliner used to parse inline markup into nodes.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">lineno</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Line number in the source document.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The qualified module name to build nodes for.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Returns</span></p></td>
@@ -1233,13 +1279,21 @@ to or popped from the state stack.</p>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">app</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Sphinx application instance that carries configuration and environment state.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">inliner</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Docutils inliner used to parse inline markup into nodes.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">lineno</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Line number in the source document.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The qualified class name to document.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Returns</span></p></td>
@@ -1311,13 +1365,21 @@ to or popped from the state stack.</p>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">app</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Sphinx application instance that carries configuration and environment state.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">inliner</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Docutils inliner used to parse inline markup into nodes.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">lineno</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Line number in the source document.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The qualified function name to document.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Returns</span></p></td>
@@ -1387,13 +1449,21 @@ to or popped from the state stack.</p>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">app</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Sphinx application instance that carries configuration and environment state.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">inliner</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Docutils inliner used to parse inline markup into nodes.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">lineno</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Line number in the source document.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The qualified name of the class to be documented.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Returns</span></p></td>
@@ -1456,7 +1526,6 @@ to or popped from the state stack.</p>
 <ul class="simple">
 <li><p><span class="wtrl_norm">Must</span> push the scope identifier in <code class="wtrl_var docutils literal notranslate"><span class="pre">scope_tag</span></code> to the scope stack, which makes it the new current scope.</p></li>
 <li><p><span class="wtrl_norm">Must</span> build a list of Docutils nodes which represent a message about the changed state in the document.</p></li>
-<li><p><span class="wtrl_norm">May</span> write a log message to <code class="wtrl_file docutils literal notranslate"><span class="pre">stdout</span></code>.</p></li>
 </ul>
 </td>
 </tr>
@@ -1465,13 +1534,21 @@ to or popped from the state stack.</p>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">app</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Sphinx application instance that carries configuration and environment state.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">inliner</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Docutils inliner used to parse inline markup into nodes.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">lineno</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Line number in the source document.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">scope_tag</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The scope identifier to push onto the stack.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Returns</span></p></td>
@@ -1533,7 +1610,6 @@ to or popped from the state stack.</p>
 <li><p><span class="wtrl_norm">Must</span> compare the scope identifier name in <code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code> to the top of the scope stack and raise an exception in case of mismatch.</p></li>
 <li><p><span class="wtrl_norm">Must</span> pop one element from the scope stack.</p></li>
 <li><p><span class="wtrl_norm">Must</span> build a list of Docutils nodes which represent a message about the changed state in the document.</p></li>
-<li><p><span class="wtrl_norm">May</span> write a log message to <code class="wtrl_file docutils literal notranslate"><span class="pre">stdout</span></code>.</p></li>
 </ul>
 </td>
 </tr>
@@ -1542,13 +1618,21 @@ to or popped from the state stack.</p>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">app</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Sphinx application instance that carries configuration and environment state.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">inliner</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Docutils inliner used to parse inline markup into nodes.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">lineno</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Line number in the source document.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">scope_tag</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The scope identifier to compare and pop from the stack.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Returns</span></p></td>
@@ -1615,7 +1699,6 @@ to or popped from the state stack.</p>
 <li><p><span class="wtrl_norm">Must</span> push the qualified module name in <code class="wtrl_var docutils literal notranslate"><span class="pre">text</span></code> to the module stack, which makes it the new current module.</p></li>
 <li><p><span class="wtrl_norm">Must</span> resolve <code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code>.</p></li>
 <li><p><span class="wtrl_norm">Must</span> build a list of Docutils nodes which represent a message about the changed state in the document.</p></li>
-<li><p><span class="wtrl_norm">May</span> write a log message to <code class="wtrl_file docutils literal notranslate"><span class="pre">stdout</span></code>.</p></li>
 </ul>
 </td>
 </tr>
@@ -1624,13 +1707,21 @@ to or popped from the state stack.</p>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">app</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Sphinx application instance that carries configuration and environment state.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">inliner</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Docutils inliner used to parse inline markup into nodes.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">lineno</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Line number in the source document.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The qualified module name to push onto the stack.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Returns</span></p></td>
@@ -1694,7 +1785,6 @@ to or popped from the state stack.</p>
 <li><p><span class="wtrl_norm">Must</span> resolve <code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code> against the current module/class context.</p></li>
 <li><p><span class="wtrl_norm">Must</span> pop one element from the module stack.</p></li>
 <li><p><span class="wtrl_norm">Must</span> build a list of Docutils nodes which represent a message about the changed state in the document.</p></li>
-<li><p><span class="wtrl_norm">May</span> write a log message to <code class="wtrl_file docutils literal notranslate"><span class="pre">stdout</span></code>.</p></li>
 </ul>
 </td>
 </tr>
@@ -1703,13 +1793,21 @@ to or popped from the state stack.</p>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">app</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Sphinx application instance that carries configuration and environment state.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">inliner</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Docutils inliner used to parse inline markup into nodes.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">lineno</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Line number in the source document.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The qualified module name to compare and pop from the stack.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Returns</span></p></td>
@@ -1777,7 +1875,6 @@ to or popped from the state stack.</p>
 <li><p><span class="wtrl_norm">Must</span> push the qualified class name in <code class="wtrl_var docutils literal notranslate"><span class="pre">text</span></code> to the class stack, which makes it the new current class.</p></li>
 <li><p><span class="wtrl_norm">Must</span> resolve <code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code>.</p></li>
 <li><p><span class="wtrl_norm">Must</span> build a list of Docutils nodes which represent a message about the changed state in the document.</p></li>
-<li><p><span class="wtrl_norm">May</span> write a log message to <code class="wtrl_file docutils literal notranslate"><span class="pre">stdout</span></code>.</p></li>
 </ul>
 </td>
 </tr>
@@ -1786,13 +1883,21 @@ to or popped from the state stack.</p>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">app</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Sphinx application instance that carries configuration and environment state.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">inliner</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Docutils inliner used to parse inline markup into nodes.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">lineno</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Line number in the source document.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The qualified class name to push onto the stack.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Returns</span></p></td>
@@ -1856,7 +1961,6 @@ to or popped from the state stack.</p>
 <li><p><span class="wtrl_norm">Must</span> resolve <code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code> against the current module/class context.</p></li>
 <li><p><span class="wtrl_norm">Must</span> pop one element from the class stack.</p></li>
 <li><p><span class="wtrl_norm">Must</span> build a list of Docutils nodes which represent a message about the changed state in the document.</p></li>
-<li><p><span class="wtrl_norm">May</span> write a log message to <code class="wtrl_file docutils literal notranslate"><span class="pre">stdout</span></code>.</p></li>
 </ul>
 </td>
 </tr>
@@ -1865,13 +1969,21 @@ to or popped from the state stack.</p>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">app</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Sphinx application instance that carries configuration and environment state.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">inliner</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Docutils inliner used to parse inline markup into nodes.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">lineno</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Line number in the source document.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The qualified class name to compare and pop from the stack.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Returns</span></p></td>
@@ -1945,13 +2057,21 @@ to or popped from the state stack.</p>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">app</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Sphinx application instance that carries configuration and environment state.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">inliner</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Docutils inliner used to parse inline markup into nodes.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">lineno</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Line number in the source document.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Qualified name of method to render.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Returns</span></p></td>
@@ -2015,13 +2135,21 @@ to or popped from the state stack.</p>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">app</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Sphinx application instance that carries configuration and environment state.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">inliner</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Docutils inliner used to parse inline markup into nodes.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">lineno</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Line number in the source document.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Qualified name of function to render.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Returns</span></p></td>
@@ -2085,13 +2213,21 @@ to or popped from the state stack.</p>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">app</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Sphinx application instance that carries configuration and environment state.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">inliner</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Docutils inliner used to parse inline markup into nodes.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">lineno</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Line number in the source document.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Qualified name of method to render.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Returns</span></p></td>
@@ -2155,13 +2291,21 @@ to or popped from the state stack.</p>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">app</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Sphinx application instance that carries configuration and environment state.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">inliner</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The Docutils inliner used to parse inline markup into nodes.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">lineno</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Line number in the source document.</p>
+</div>
 <p><code class="wtrl_var docutils literal notranslate"><span class="pre">qname</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">Qualified name of function to render.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Returns</span></p></td>
@@ -2263,7 +2407,9 @@ to or popped from the state stack.</p>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">para</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content"><code class="wtrl_class docutils literal notranslate"><span class="pre">RolePara</span></code> instance containing the normalized Docutils role parameters.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Returns</span></p></td>
@@ -2348,7 +2494,9 @@ to keep the document low in redundancy.</p>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Parameters</span></p></td>
 <td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">para</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content"><code class="wtrl_class docutils literal notranslate"><span class="pre">RolePara</span></code> instance containing the normalized Docutils role parameters.</p>
+</div>
 </td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Returns</span></p></td>
