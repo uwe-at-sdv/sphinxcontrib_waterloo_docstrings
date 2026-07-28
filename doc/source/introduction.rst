@@ -133,3 +133,15 @@ depends on the Waterloo core package, while a project that actually builds
 Sphinx documentation also needs Sphinx installed in the build environment.
 
 Installation details are covered in :ref:`Getting Started <chapter_getting_started>`.
+
+Related documents
+-----------------
+
+The GitHub repository provides a machine-readable JSON artifact
+containing the extension's docstrings, alongside an interactive HTML website:
+
+* `JSON <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/doc-json/wtrl-sphinx.wtrl.core.rfc-2119.json>`_
+* `HTML <https://uwe-at-sdv.github.io/sphinxcontrib_waterloo_docstrings/doc-html5/wtrl-sphinx.wtrl.core.rfc-2119.html>`_
+
+
+

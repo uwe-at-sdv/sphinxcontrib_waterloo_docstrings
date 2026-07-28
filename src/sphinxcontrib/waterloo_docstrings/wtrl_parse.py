@@ -1,3 +1,18 @@
+r"""
+Preamble:
+	profile:
+		module
+	normative_sections:
+		Contract
+	scope:
+		extension
+Contract:
+	general:
+		|Must| provide a function for inline parsing using a Sphinx Inliner object.
+Notes:
+	Usage:
+		Do not import this module directly. Use the functions via the |ref|`extension <wtrl://sphinxcontrib.waterloo_docstrings.extension>` module instead.
+"""
 from __future__ import annotations
 from typing import List
 

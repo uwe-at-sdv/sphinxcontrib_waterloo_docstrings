@@ -1,3 +1,18 @@
+r"""
+Preamble:
+	profile:
+		module
+	normative_sections:
+		Contract
+	scope:
+		extension
+Contract:
+	general:
+		|Must| provide the |class|`context` class and its factory function |func|`make_context`.
+Notes:
+	Usage:
+		Do not import this module directly. Use the functions via the |ref|`extension <wtrl://sphinxcontrib.waterloo_docstrings.extension>` module instead.
+"""
 from __future__ import annotations
 from typing import Any, Callable, List, cast
 

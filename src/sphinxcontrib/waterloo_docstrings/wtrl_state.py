@@ -1,3 +1,19 @@
+r"""
+Preamble:
+	profile:
+		module
+	normative_sections:
+		Contract
+	scope:
+		extension
+Contract:
+	general:
+		|Must| provide a set of functions to manage the current module, class,\
+		and scope context for Waterloo docstring rendering within Sphinx.
+Notes:
+	Usage:
+		Do not import this module directly. Use the functions via the |ref|`extension <wtrl://sphinxcontrib.waterloo_docstrings.extension>` module instead.
+"""
 from __future__ import annotations
 from typing import Any, List, cast
 
@@ -101,19 +117,42 @@ def get_current_scope(env: Any | None = None) -> mod_docitem.Scope:
 def has_current_scope(env: Any | None = None) -> bool:
 	return len(_get_scope_stack(env)) > 0
 
+#	Convert the current Sphinx rendering scope into a Waterloo scope set.
+#	The Sphinx layer currently maintains a single active scope on a stack,
+#	while the core visibility API expects a set of scopes. This helper
+#	provides the bridge for scope-aware rendering decisions.
 def get_current_scope_set(env: Any | None = None) -> mod_docitem.Scopes:
-	"""
-	Convert the current Sphinx rendering scope into a Waterloo scope set.
-
-	The Sphinx layer currently maintains a single active scope on a stack,
-	while the core visibility API expects a set of scopes. This helper
-	provides the bridge for scope-aware rendering decisions.
-	"""
 	if not has_current_scope(env):
 		return set([mod_docitem.Scope.PUBLIC])
 	return set([get_current_scope(env)])
 
 def is_target_obj_visible_in_current_scope(ctx: context, obj: object) -> bool:
+	r"""
+	Preamble:
+		profile:
+			function
+		normative_sections:
+			Contract, Parameters, Returns, Raises
+		scope:
+			extension
+	Contract:
+		general:
+			|Must| determine whether the target object |var|`obj` is visible in the current Sphinx rendering scope.
+			|Must| use the current Sphinx environment in |var|`ctx.env` to determine the current Waterloo scope.
+			|Must| use the Waterloo visibility API to determine whether the target object |var|`obj` is visible in the current Sphinx rendering scope.
+			|Must| return |True| if the target object |var|`obj` has no docstring, since it m-ay still be in scope but unlinked.
+	Parameters:
+		ctx:
+			The Waterloo rendering context which provides the current Sphinx environment and configuration.
+		obj:
+			The target object whose visibility in the current Sphinx rendering scope is to be determined.
+	Returns:
+		|True| if the target object |var|`obj` is visible in the current Sphinx rendering scope and |False| otherwise.
+	Raises:
+		BaseException:
+			|May| propagate exceptions from |func|`_get_validated_doc_for_object`.
+			|May| propagate exceptions from |func|`get_current_scope_set`.
+	"""
 	doc = _get_validated_doc_for_object(ctx, obj)
 	if doc is None:
 #		return False
@@ -160,7 +199,6 @@ def wtrl_build_push_current_module_nodes(app: SphinxAppProtocol | Any, inliner: 
 			|Must| push the qualified module name in |var|`text` to the module stack, which makes it the new current module.
 			|Must| resolve |var|`qname`.
 			|Must| build a list of Docutils nodes which represent a message about the changed state in the document.
-			|May| write a log message to |file|`stdout`.
 	Description:
 		Implementation of directive |attr|`.. wtrl_push_current_module::`.
 	Parameters:
@@ -215,7 +253,6 @@ def wtrl_build_push_current_class_nodes(app: SphinxAppProtocol | Any, inliner: I
 			|Must| push the qualified class name in |var|`text` to the class stack, which makes it the new current class.
 			|Must| resolve |var|`qname`.
 			|Must| build a list of Docutils nodes which represent a message about the changed state in the document.
-			|May| write a log message to |file|`stdout`.
 	Description:
 		Implementation of directive |attr|`.. wtrl_push_current_class::`.
 	Parameters:
@@ -269,7 +306,6 @@ def wtrl_build_push_current_scope_nodes(app: SphinxAppProtocol | Any, inliner: I
 		general:
 			|Must| push the scope identifier in |var|`scope_tag` to the scope stack, which makes it the new current scope.
 			|Must| build a list of Docutils nodes which represent a message about the changed state in the document.
-			|May| write a log message to |file|`stdout`.
 	Description:
 		Implementation of directive |attr|`.. wtrl_push_current_scope::`.
 	Parameters:
@@ -321,7 +357,6 @@ def wtrl_build_pop_current_module_nodes(app: SphinxAppProtocol | Any, inliner: I
 			|Must| resolve |var|`qname` against the current module/class context.
 			|Must| pop one element from the module stack.
 			|Must| build a list of Docutils nodes which represent a message about the changed state in the document.
-			|May| write a log message to |file|`stdout`.
 	Description:
 		Implementation of directive |attr|`.. wtrl_pop_current_module::`.
 	Parameters:
@@ -398,7 +433,6 @@ def wtrl_build_pop_current_class_nodes(app: SphinxAppProtocol | Any, inliner: In
 			|Must| resolve |var|`qname` against the current module/class context.
 			|Must| pop one element from the class stack.
 			|Must| build a list of Docutils nodes which represent a message about the changed state in the document.
-			|May| write a log message to |file|`stdout`.
 	Description:
 		Implementation of directive |attr|`.. wtrl_pop_current_class::`.
 	Parameters:
@@ -474,7 +508,6 @@ def wtrl_build_pop_current_scope_nodes(app: SphinxAppProtocol | Any, inliner: In
 			|Must| compare the scope identifier name in |var|`qname` to the top of the scope stack and raise an exception in case of mismatch.
 			|Must| pop one element from the scope stack.
 			|Must| build a list of Docutils nodes which represent a message about the changed state in the document.
-			|May| write a log message to |file|`stdout`.
 	Description:
 		Implementation of directive |attr|`.. wtrl_pop_current_scope::`.
 	Parameters:

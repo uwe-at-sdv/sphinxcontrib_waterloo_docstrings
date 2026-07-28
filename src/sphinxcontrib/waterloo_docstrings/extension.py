@@ -32,7 +32,7 @@ Terminology:
 		An element of the Docutils abstract syntax tree (AST),
 		such as |type|`paragraph`, |type|`section`, or |type|`literal`.
 	Docutils role:
-		An inline markup construct of the form |lit|`:role:`content`` implemented
+		An inline markup construct of the form :role:`content` implemented
 		using the Docutils role API. Custom roles provided by this module are
 		registered via Sphinx but conceptually belong to Docutils.
 	Sphinx extension:
@@ -111,13 +111,13 @@ Function_overview:
 		Analyze a qualified name and return the object it refers to plus resolved name components.
 
 	wtrl_build_autodoc_module_nodes:
-		Implementation of role |attr|`.. wtrl_autodoc_module::`
+		Implementation of directive |attr|`.. wtrl_autodoc_module::`
 	wtrl_build_autodoc_function_nodes:
-		Implementation of role |attr|`.. wtrl_autodoc_function::`
+		Implementation of directive |attr|`.. wtrl_autodoc_function::`
 	wtrl_build_autodoc_class_nodes:
-		Implementation of role |attr|`.. wtrl_autodoc_class::`
+		Implementation of directive |attr|`.. wtrl_autodoc_class::`
 	wtrl_build_autodoc_class_full_nodes:
-		Implementation of role |attr|`.. wtrl_autodoc_class_full::`
+		Implementation of directive |attr|`.. wtrl_autodoc_class_full::`
 
 	wtrl_build_push_current_module_nodes:
 		Implementation of directive |attr|`.. wtrl_push_current_module::`
@@ -298,6 +298,11 @@ from sphinxcontrib.waterloo_docstrings.wtrl_autodoc import (
 from sphinxcontrib.waterloo_docstrings.wtrl_autodoc import ObjectOriginDisplayMode_t as ObjectOriginDisplayMode_t_
 ObjectOriginDisplayMode_t: TypeAlias = ObjectOriginDisplayMode_t_
 
+from sphinxcontrib.waterloo_docstrings.wtrl_protocol import (
+	InlinerProtocol,
+	SphinxEnvProtocol,
+	SphinxAppProtocol
+	)
 
 # Leave here for experimenting and debugging, even if unused.
 logger = logging.getLogger(__name__)

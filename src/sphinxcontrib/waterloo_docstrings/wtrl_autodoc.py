@@ -1,3 +1,18 @@
+r"""
+Preamble:
+	profile:
+		module
+	normative_sections:
+		Contract
+	scope:
+		extension
+Contract:
+	general:
+		|Must| provide functions for rendering Waterloo docstrings in Sphinx.
+Notes:
+	Usage:
+		Do not import this module directly. Use the functions via the |ref|`extension <wtrl://sphinxcontrib.waterloo_docstrings.extension>` module instead.
+"""
 from __future__ import annotations
 from typing import Any, Callable, Dict, Iterable, List, Literal, Sequence, Tuple, TypeAlias, cast
 
@@ -973,7 +988,7 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 					elif label in ("Function_overview",):
 						render_plain_entry(node_label_paragraph,label1,"wtrl_func",ctx.add_role_func,label)
 					node_entry += node_label_paragraph
-					if label in ("Class_overview","Function_overview","Method_overview","Public_constants", "Public_variables", "Public_types"):
+					if label in ("Parameters", "Class_overview","Function_overview","Method_overview","Public_constants", "Public_variables", "Public_types"):
 						node_content_container = nodes.container(classes=["wtrl-public-entry-content"])
 						node_entry += node_content_container
 					if label in ("Public_types",):
