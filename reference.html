@@ -7,7 +7,7 @@
 
     <link rel="shortcut icon" href="_static/favicon.ico"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>9. Reference - Sphinx: Waterloo Docstrings documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d75fae25" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/common_styles.css?v=b66e391a" />
     <link rel="stylesheet" type="text/css" href="_static/waterloo_base.css?v=1910b4a6" />
@@ -19,7 +19,7 @@
 
 <style>
   body {
-    --color-code-background: #ffffff;
+    --color-code-background: #f0f0f0;
   --color-code-foreground: black;
   
   }
@@ -1151,8 +1151,75 @@ to or popped from the state stack.</p>
 </div>
 </section>
 </section>
+<section id="directives">
+<h3><span class="section-number">9.1.2. </span>Directives<a class="headerlink" href="#directives" title="Link to this heading">¶</a></h3>
+<section id="wtrldirectivebase">
+<h4><span class="section-number">9.1.2.1. </span><code class="wtrl_class docutils literal notranslate"><span class="pre">WtrlDirectiveBase</span></code><a class="headerlink" href="#wtrldirectivebase" title="Link to this heading">¶</a></h4>
+<div class="table-wrapper wtrl-box docutils container" id="wtrl-cls-13:sphinxcontrib-19:waterloo_docstrings-15:wtrl_directives-17:WtrlDirectiveBase">
+<table class="wtrl-box docutils align-default" id="wtrl-cls-13:sphinxcontrib-19:waterloo_docstrings-15:wtrl_directives-17:WtrlDirectiveBase">
+<tbody>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Preamble</span></p></td>
+<td><p><span class="wtrl_label">normative sections</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_label">Contract</span>, <span class="wtrl_label">Description</span></p></li>
+</ul>
+<p><span class="wtrl_label">scope</span></p>
+<ul class="simple">
+<li><p><code class="wtrl_value docutils literal notranslate"><span class="pre">extension</span></code></p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Description</span></p></td>
+<td><p>This is the base class for all Waterloo Sphinx directives. It provides a common implementation of the <code class="wtrl_func docutils literal notranslate"><span class="pre">run</span></code> method. The <code class="wtrl_func docutils literal notranslate"><span class="pre">run</span></code> method calls the directive-specific node builder function, which is passed as an argument to the <code class="wtrl_func docutils literal notranslate"><span class="pre">_run</span></code> method. Derived_classes <span class="wtrl_norm">must</span> implement the <code class="wtrl_func docutils literal notranslate"><span class="pre">run</span></code> method, which is called by Sphinx at runtime when the directive is used in a reStructuredText document.</p></td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Contract</span></p></td>
+<td><p><span class="wtrl_label">general</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">Must</span> provide a base class for classes representing Waterloo directives.</p></li>
+</ul>
+<p><span class="wtrl_label">constructor</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">Should not</span> be instantiated directly. Subclasses are instantiated by Sphinx at runtime when compiling a reStructuredText document.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Notes</span></p></td>
+<td><p class="wtrl-note-title rubric">Configuration</p>
+<p class="wtrl-freeform-paragraph-content">The directive base class is configured with the following class variables, which are evaluated by Sphinx at runtime when the directive is used in a reStructuredText document:<ul class="simple">
+<li><p><code class="wtrl_var docutils literal notranslate"><span class="pre">required_arguments</span></code>: The number of required arguments for the directive, here: <code class="wtrl_value docutils literal notranslate"><span class="pre">1</span></code>.</p></li>
+<li><p><code class="wtrl_var docutils literal notranslate"><span class="pre">has_content</span></code>: Indicates whether the directive has content, here: <code class="wtrl_value docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+<thead class="wtrl-box-head-class">
+<tr class="row-odd"><th class="head"><span class="wtrl-obj-kind">«Class»</span></th>
+<th class="head"><p><span class="wtrl-obj-qid">WtrlDirectiveBase</span><span class="wtrl_lit"> –⁠ from </span><span class="wtrl_mod">wtrl_directives</span></p></th>
+</tr>
+</thead>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is how the class is used in wtrl_directives.py.</span>
+<span class="c1"># wtrl_build_autodoc_module_nodes is defined in wtrl_autodoc.py</span>
+
+<span class="c1"># Directive class derived from the common base class.</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">WtrlAutodocModuleDirective</span><span class="p">(</span><span class="n">WtrlDirectiveBase</span><span class="p">):</span>
+	<span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">nodes</span><span class="o">.</span><span class="n">Node</span><span class="p">]:</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run</span><span class="p">(</span><span class="n">wtrl_build_autodoc_module_nodes</span><span class="p">)</span>
+
+<span class="c1"># More directive classes here...</span>
+
+<span class="c1"># Invoked by the extension&#39;s setup-function.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">setup_directives</span><span class="p">(</span><span class="n">app</span><span class="p">:</span> <span class="n">SphinxAppProtocol</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+	<span class="n">app</span><span class="o">.</span><span class="n">add_directive</span><span class="p">(</span><span class="s2">&quot;wtrl_autodoc_module&quot;</span><span class="p">,</span> <span class="n">WtrlAutodocModuleDirective</span><span class="p">)</span>
+	<span class="c1"># More directives here...</span>
+</pre></div>
+</div>
+</section>
+</section>
 <section id="directives-for-docstring-rendering">
-<h3><span class="section-number">9.1.2. </span>Directives for docstring rendering<a class="headerlink" href="#directives-for-docstring-rendering" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">9.1.3. </span>Directives for docstring rendering<a class="headerlink" href="#directives-for-docstring-rendering" title="Link to this heading">¶</a></h3>
 <div class="table-wrapper wtrl-box docutils container" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_autodoc-31:wtrl_build_autodoc_module_nodes">
 <table class="wtrl-box docutils align-default" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-12:wtrl_autodoc-31:wtrl_build_autodoc_module_nodes">
 <tbody>
@@ -1495,15 +1562,15 @@ to or popped from the state stack.</p>
 </div>
 </section>
 <section id="directives-for-controlling-the-state-stack">
-<h3><span class="section-number">9.1.3. </span>Directives for controlling the state stack<a class="headerlink" href="#directives-for-controlling-the-state-stack" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">9.1.4. </span>Directives for controlling the state stack<a class="headerlink" href="#directives-for-controlling-the-state-stack" title="Link to this heading">¶</a></h3>
 <section id="scope-stack">
-<h4><span class="section-number">9.1.3.1. </span>Scope stack<a class="headerlink" href="#scope-stack" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">9.1.4.1. </span>Scope stack<a class="headerlink" href="#scope-stack" title="Link to this heading">¶</a></h4>
 <div class="table-wrapper wtrl-box docutils container" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_state-35:wtrl_build_push_current_scope_nodes">
 <table class="wtrl-box docutils align-default" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_state-35:wtrl_build_push_current_scope_nodes">
 <tbody>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
 <td><div class="wtrl-signature-head line"><span class="wtrl_mod">sphinxcontrib.waterloo_docstrings.wtrl_state</span><span class="wtrl_op">.</span><span class="wtrl_func">wtrl_build_push_current_scope_nodes</span><span class="wtrl_op">(</span></div>
-<div class="wtrl-signature-param line"><span class="wtrl_var">app</span><span class="wtrl_op">: </span><span class="wtrl_type">SphinxAppProtocol | Any</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">app</span><span class="wtrl_op">: </span><span class="wtrl_type">SphinxAppProtocol</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">inliner</span><span class="wtrl_op">: </span><span class="wtrl_type">InlinerProtocol</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">lineno</span><span class="wtrl_op">: </span><span class="wtrl_type">int</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">scope_tag</span><span class="wtrl_op">: </span><span class="wtrl_type">str</span></div>
@@ -1586,7 +1653,7 @@ to or popped from the state stack.</p>
 <tbody>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
 <td><div class="wtrl-signature-head line"><span class="wtrl_mod">sphinxcontrib.waterloo_docstrings.wtrl_state</span><span class="wtrl_op">.</span><span class="wtrl_func">wtrl_build_pop_current_scope_nodes</span><span class="wtrl_op">(</span></div>
-<div class="wtrl-signature-param line"><span class="wtrl_var">app</span><span class="wtrl_op">: </span><span class="wtrl_type">SphinxAppProtocol | Any</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">app</span><span class="wtrl_op">: </span><span class="wtrl_type">SphinxAppProtocol</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">inliner</span><span class="wtrl_op">: </span><span class="wtrl_type">InlinerProtocol</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">lineno</span><span class="wtrl_op">: </span><span class="wtrl_type">int</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">scope_tag</span><span class="wtrl_op">: </span><span class="wtrl_type">str</span></div>
@@ -1669,13 +1736,13 @@ to or popped from the state stack.</p>
 </div>
 </section>
 <section id="module-stack">
-<h4><span class="section-number">9.1.3.2. </span>Module stack<a class="headerlink" href="#module-stack" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">9.1.4.2. </span>Module stack<a class="headerlink" href="#module-stack" title="Link to this heading">¶</a></h4>
 <div class="table-wrapper wtrl-box docutils container" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_state-36:wtrl_build_push_current_module_nodes">
 <table class="wtrl-box docutils align-default" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_state-36:wtrl_build_push_current_module_nodes">
 <tbody>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
 <td><div class="wtrl-signature-head line"><span class="wtrl_mod">sphinxcontrib.waterloo_docstrings.wtrl_state</span><span class="wtrl_op">.</span><span class="wtrl_func">wtrl_build_push_current_module_nodes</span><span class="wtrl_op">(</span></div>
-<div class="wtrl-signature-param line"><span class="wtrl_var">app</span><span class="wtrl_op">: </span><span class="wtrl_type">SphinxAppProtocol | Any</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">app</span><span class="wtrl_op">: </span><span class="wtrl_type">SphinxAppProtocol</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">inliner</span><span class="wtrl_op">: </span><span class="wtrl_type">InlinerProtocol</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">lineno</span><span class="wtrl_op">: </span><span class="wtrl_type">int</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">qname</span><span class="wtrl_op">: </span><span class="wtrl_type">str</span></div>
@@ -1760,7 +1827,7 @@ to or popped from the state stack.</p>
 <tbody>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
 <td><div class="wtrl-signature-head line"><span class="wtrl_mod">sphinxcontrib.waterloo_docstrings.wtrl_state</span><span class="wtrl_op">.</span><span class="wtrl_func">wtrl_build_pop_current_module_nodes</span><span class="wtrl_op">(</span></div>
-<div class="wtrl-signature-param line"><span class="wtrl_var">app</span><span class="wtrl_op">: </span><span class="wtrl_type">SphinxAppProtocol | Any</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">app</span><span class="wtrl_op">: </span><span class="wtrl_type">SphinxAppProtocol</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">inliner</span><span class="wtrl_op">: </span><span class="wtrl_type">InlinerProtocol</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">lineno</span><span class="wtrl_op">: </span><span class="wtrl_type">int</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">qname</span><span class="wtrl_op">: </span><span class="wtrl_type">str</span></div>
@@ -1845,13 +1912,13 @@ to or popped from the state stack.</p>
 </div>
 </section>
 <section id="class-stack">
-<h4><span class="section-number">9.1.3.3. </span>Class stack<a class="headerlink" href="#class-stack" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">9.1.4.3. </span>Class stack<a class="headerlink" href="#class-stack" title="Link to this heading">¶</a></h4>
 <div class="table-wrapper wtrl-box docutils container" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_state-35:wtrl_build_push_current_class_nodes">
 <table class="wtrl-box docutils align-default" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_state-35:wtrl_build_push_current_class_nodes">
 <tbody>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
 <td><div class="wtrl-signature-head line"><span class="wtrl_mod">sphinxcontrib.waterloo_docstrings.wtrl_state</span><span class="wtrl_op">.</span><span class="wtrl_func">wtrl_build_push_current_class_nodes</span><span class="wtrl_op">(</span></div>
-<div class="wtrl-signature-param line"><span class="wtrl_var">app</span><span class="wtrl_op">: </span><span class="wtrl_type">SphinxAppProtocol | Any</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">app</span><span class="wtrl_op">: </span><span class="wtrl_type">SphinxAppProtocol</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">inliner</span><span class="wtrl_op">: </span><span class="wtrl_type">InlinerProtocol</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">lineno</span><span class="wtrl_op">: </span><span class="wtrl_type">int</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">qname</span><span class="wtrl_op">: </span><span class="wtrl_type">str</span></div>
@@ -1936,7 +2003,7 @@ to or popped from the state stack.</p>
 <tbody>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
 <td><div class="wtrl-signature-head line"><span class="wtrl_mod">sphinxcontrib.waterloo_docstrings.wtrl_state</span><span class="wtrl_op">.</span><span class="wtrl_func">wtrl_build_pop_current_class_nodes</span><span class="wtrl_op">(</span></div>
-<div class="wtrl-signature-param line"><span class="wtrl_var">app</span><span class="wtrl_op">: </span><span class="wtrl_type">SphinxAppProtocol | Any</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">app</span><span class="wtrl_op">: </span><span class="wtrl_type">SphinxAppProtocol</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">inliner</span><span class="wtrl_op">: </span><span class="wtrl_type">InlinerProtocol</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">lineno</span><span class="wtrl_op">: </span><span class="wtrl_type">int</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">qname</span><span class="wtrl_op">: </span><span class="wtrl_type">str</span></div>
@@ -2022,15 +2089,15 @@ to or popped from the state stack.</p>
 </section>
 </section>
 <section id="directives-for-rendering-signatures">
-<h3><span class="section-number">9.1.4. </span>Directives for rendering signatures<a class="headerlink" href="#directives-for-rendering-signatures" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">9.1.5. </span>Directives for rendering signatures<a class="headerlink" href="#directives-for-rendering-signatures" title="Link to this heading">¶</a></h3>
 <section id="function-wtrl-build-method-signature-nodes">
-<h4><span class="section-number">9.1.4.1. </span>Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_method_signature_nodes</span></code><a class="headerlink" href="#function-wtrl-build-method-signature-nodes" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">9.1.5.1. </span>Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_method_signature_nodes</span></code><a class="headerlink" href="#function-wtrl-build-method-signature-nodes" title="Link to this heading">¶</a></h4>
 <div class="table-wrapper wtrl-box docutils container" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-14:wtrl_signature-33:wtrl_build_method_signature_nodes">
 <table class="wtrl-box docutils align-default" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-14:wtrl_signature-33:wtrl_build_method_signature_nodes">
 <tbody>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
 <td><div class="wtrl-signature-head line"><span class="wtrl_mod">sphinxcontrib.waterloo_docstrings.wtrl_signature</span><span class="wtrl_op">.</span><span class="wtrl_func">wtrl_build_method_signature_nodes</span><span class="wtrl_op">(</span></div>
-<div class="wtrl-signature-param line"><span class="wtrl_var">app</span><span class="wtrl_op">: </span><span class="wtrl_type">SphinxAppProtocol | Any</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">app</span><span class="wtrl_op">: </span><span class="wtrl_type">SphinxAppProtocol</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">inliner</span><span class="wtrl_op">: </span><span class="wtrl_type">InlinerProtocol</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">lineno</span><span class="wtrl_op">: </span><span class="wtrl_type">int</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">qname</span><span class="wtrl_op">: </span><span class="wtrl_type">str</span></div>
@@ -2102,13 +2169,13 @@ to or popped from the state stack.</p>
 </div>
 </section>
 <section id="function-wtrl-build-function-signature-nodes">
-<h4><span class="section-number">9.1.4.2. </span>Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_function_signature_nodes</span></code><a class="headerlink" href="#function-wtrl-build-function-signature-nodes" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">9.1.5.2. </span>Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_function_signature_nodes</span></code><a class="headerlink" href="#function-wtrl-build-function-signature-nodes" title="Link to this heading">¶</a></h4>
 <div class="table-wrapper wtrl-box docutils container" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-14:wtrl_signature-35:wtrl_build_function_signature_nodes">
 <table class="wtrl-box docutils align-default" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-14:wtrl_signature-35:wtrl_build_function_signature_nodes">
 <tbody>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
 <td><div class="wtrl-signature-head line"><span class="wtrl_mod">sphinxcontrib.waterloo_docstrings.wtrl_signature</span><span class="wtrl_op">.</span><span class="wtrl_func">wtrl_build_function_signature_nodes</span><span class="wtrl_op">(</span></div>
-<div class="wtrl-signature-param line"><span class="wtrl_var">app</span><span class="wtrl_op">: </span><span class="wtrl_type">SphinxAppProtocol | Any</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">app</span><span class="wtrl_op">: </span><span class="wtrl_type">SphinxAppProtocol</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">inliner</span><span class="wtrl_op">: </span><span class="wtrl_type">InlinerProtocol</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">lineno</span><span class="wtrl_op">: </span><span class="wtrl_type">int</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">qname</span><span class="wtrl_op">: </span><span class="wtrl_type">str</span></div>
@@ -2180,13 +2247,13 @@ to or popped from the state stack.</p>
 </div>
 </section>
 <section id="function-wtrl-build-method-signature-block-nodes">
-<h4><span class="section-number">9.1.4.3. </span>Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_method_signature_block_nodes</span></code><a class="headerlink" href="#function-wtrl-build-method-signature-block-nodes" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">9.1.5.3. </span>Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_method_signature_block_nodes</span></code><a class="headerlink" href="#function-wtrl-build-method-signature-block-nodes" title="Link to this heading">¶</a></h4>
 <div class="table-wrapper wtrl-box docutils container" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-14:wtrl_signature-39:wtrl_build_method_signature_block_nodes">
 <table class="wtrl-box docutils align-default" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-14:wtrl_signature-39:wtrl_build_method_signature_block_nodes">
 <tbody>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
 <td><div class="wtrl-signature-head line"><span class="wtrl_mod">sphinxcontrib.waterloo_docstrings.wtrl_signature</span><span class="wtrl_op">.</span><span class="wtrl_func">wtrl_build_method_signature_block_nodes</span><span class="wtrl_op">(</span></div>
-<div class="wtrl-signature-param line"><span class="wtrl_var">app</span><span class="wtrl_op">: </span><span class="wtrl_type">SphinxAppProtocol | Any</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">app</span><span class="wtrl_op">: </span><span class="wtrl_type">SphinxAppProtocol</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">inliner</span><span class="wtrl_op">: </span><span class="wtrl_type">InlinerProtocol</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">lineno</span><span class="wtrl_op">: </span><span class="wtrl_type">int</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">qname</span><span class="wtrl_op">: </span><span class="wtrl_type">str</span></div>
@@ -2258,13 +2325,13 @@ to or popped from the state stack.</p>
 </div>
 </section>
 <section id="function-wtrl-build-function-signature-block-nodes">
-<h4><span class="section-number">9.1.4.4. </span>Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_function_signature_block_nodes</span></code><a class="headerlink" href="#function-wtrl-build-function-signature-block-nodes" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">9.1.5.4. </span>Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_function_signature_block_nodes</span></code><a class="headerlink" href="#function-wtrl-build-function-signature-block-nodes" title="Link to this heading">¶</a></h4>
 <div class="table-wrapper wtrl-box docutils container" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-14:wtrl_signature-41:wtrl_build_function_signature_block_nodes">
 <table class="wtrl-box docutils align-default" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-14:wtrl_signature-41:wtrl_build_function_signature_block_nodes">
 <tbody>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
 <td><div class="wtrl-signature-head line"><span class="wtrl_mod">sphinxcontrib.waterloo_docstrings.wtrl_signature</span><span class="wtrl_op">.</span><span class="wtrl_func">wtrl_build_function_signature_block_nodes</span><span class="wtrl_op">(</span></div>
-<div class="wtrl-signature-param line"><span class="wtrl_var">app</span><span class="wtrl_op">: </span><span class="wtrl_type">SphinxAppProtocol | Any</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">app</span><span class="wtrl_op">: </span><span class="wtrl_type">SphinxAppProtocol</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">inliner</span><span class="wtrl_op">: </span><span class="wtrl_type">InlinerProtocol</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">lineno</span><span class="wtrl_op">: </span><span class="wtrl_type">int</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">qname</span><span class="wtrl_op">: </span><span class="wtrl_type">str</span></div>
@@ -2337,9 +2404,9 @@ to or popped from the state stack.</p>
 </section>
 </section>
 <section id="roles-for-semantic-markup">
-<h3><span class="section-number">9.1.5. </span>Roles for semantic markup<a class="headerlink" href="#roles-for-semantic-markup" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">9.1.6. </span>Roles for semantic markup<a class="headerlink" href="#roles-for-semantic-markup" title="Link to this heading">¶</a></h3>
 <section id="helper-classes">
-<h4><span class="section-number">9.1.5.1. </span>Helper classes<a class="headerlink" href="#helper-classes" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">9.1.6.1. </span>Helper classes<a class="headerlink" href="#helper-classes" title="Link to this heading">¶</a></h4>
 <div class="table-wrapper wtrl-box docutils container" id="wtrl-cls-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-8:RolePara">
 <table class="wtrl-box docutils align-default" id="wtrl-cls-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-8:RolePara">
 <tbody>
@@ -2375,7 +2442,7 @@ to or popped from the state stack.</p>
 </div>
 </section>
 <section id="function-wtrl-attr-role">
-<h4><span class="section-number">9.1.5.2. </span>Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_attr_role</span></code><a class="headerlink" href="#function-wtrl-attr-role" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">9.1.6.2. </span>Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_attr_role</span></code><a class="headerlink" href="#function-wtrl-attr-role" title="Link to this heading">¶</a></h4>
 <div class="table-wrapper wtrl-box docutils container" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-14:wtrl_attr_role">
 <table class="wtrl-box docutils align-default" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-14:wtrl_attr_role">
 <tbody>
@@ -2450,14 +2517,14 @@ to or popped from the state stack.</p>
 </div>
 </section>
 <section id="similar-roles">
-<h4><span class="section-number">9.1.5.3. </span>Similar roles<a class="headerlink" href="#similar-roles" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">9.1.6.3. </span>Similar roles<a class="headerlink" href="#similar-roles" title="Link to this heading">¶</a></h4>
 <p>There are around 15 more role implementations like <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_attr_role</span></code>.
 They differ only in the CSS class passed and in the <code class="wtrl_pkg docutils literal notranslate"><span class="pre">docutils</span></code> node
 classes <code class="wtrl_class docutils literal notranslate"><span class="pre">literal</span></code> versus <code class="wtrl_class docutils literal notranslate"><span class="pre">inline</span></code>. We omit them here
 to keep the document low in redundancy.</p>
 </section>
 <section id="function-wtrl-var-type-role">
-<h4><span class="section-number">9.1.5.4. </span>Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_var_type_role</span></code><a class="headerlink" href="#function-wtrl-var-type-role" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">9.1.6.4. </span>Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_var_type_role</span></code><a class="headerlink" href="#function-wtrl-var-type-role" title="Link to this heading">¶</a></h4>
 <div class="table-wrapper wtrl-box docutils container" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-18:wtrl_var_type_role">
 <table class="wtrl-box docutils align-default" id="wtrl-func-13:sphinxcontrib-19:waterloo_docstrings-10:wtrl_roles-18:wtrl_var_type_role">
 <tbody>
@@ -2632,25 +2699,29 @@ to keep the document low in redundancy.</p>
 <li><a class="reference internal" href="#class-context">9.1.1.6. Class <code class="wtrl_class docutils literal notranslate"><span class="pre">context</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#directives-for-docstring-rendering">9.1.2. Directives for docstring rendering</a></li>
-<li><a class="reference internal" href="#directives-for-controlling-the-state-stack">9.1.3. Directives for controlling the state stack</a><ul>
-<li><a class="reference internal" href="#scope-stack">9.1.3.1. Scope stack</a></li>
-<li><a class="reference internal" href="#module-stack">9.1.3.2. Module stack</a></li>
-<li><a class="reference internal" href="#class-stack">9.1.3.3. Class stack</a></li>
+<li><a class="reference internal" href="#directives">9.1.2. Directives</a><ul>
+<li><a class="reference internal" href="#wtrldirectivebase">9.1.2.1. <code class="wtrl_class docutils literal notranslate"><span class="pre">WtrlDirectiveBase</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#directives-for-rendering-signatures">9.1.4. Directives for rendering signatures</a><ul>
-<li><a class="reference internal" href="#function-wtrl-build-method-signature-nodes">9.1.4.1. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_method_signature_nodes</span></code></a></li>
-<li><a class="reference internal" href="#function-wtrl-build-function-signature-nodes">9.1.4.2. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_function_signature_nodes</span></code></a></li>
-<li><a class="reference internal" href="#function-wtrl-build-method-signature-block-nodes">9.1.4.3. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_method_signature_block_nodes</span></code></a></li>
-<li><a class="reference internal" href="#function-wtrl-build-function-signature-block-nodes">9.1.4.4. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_function_signature_block_nodes</span></code></a></li>
+<li><a class="reference internal" href="#directives-for-docstring-rendering">9.1.3. Directives for docstring rendering</a></li>
+<li><a class="reference internal" href="#directives-for-controlling-the-state-stack">9.1.4. Directives for controlling the state stack</a><ul>
+<li><a class="reference internal" href="#scope-stack">9.1.4.1. Scope stack</a></li>
+<li><a class="reference internal" href="#module-stack">9.1.4.2. Module stack</a></li>
+<li><a class="reference internal" href="#class-stack">9.1.4.3. Class stack</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#roles-for-semantic-markup">9.1.5. Roles for semantic markup</a><ul>
-<li><a class="reference internal" href="#helper-classes">9.1.5.1. Helper classes</a></li>
-<li><a class="reference internal" href="#function-wtrl-attr-role">9.1.5.2. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_attr_role</span></code></a></li>
-<li><a class="reference internal" href="#similar-roles">9.1.5.3. Similar roles</a></li>
-<li><a class="reference internal" href="#function-wtrl-var-type-role">9.1.5.4. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_var_type_role</span></code></a></li>
+<li><a class="reference internal" href="#directives-for-rendering-signatures">9.1.5. Directives for rendering signatures</a><ul>
+<li><a class="reference internal" href="#function-wtrl-build-method-signature-nodes">9.1.5.1. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_method_signature_nodes</span></code></a></li>
+<li><a class="reference internal" href="#function-wtrl-build-function-signature-nodes">9.1.5.2. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_function_signature_nodes</span></code></a></li>
+<li><a class="reference internal" href="#function-wtrl-build-method-signature-block-nodes">9.1.5.3. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_method_signature_block_nodes</span></code></a></li>
+<li><a class="reference internal" href="#function-wtrl-build-function-signature-block-nodes">9.1.5.4. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_build_function_signature_block_nodes</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#roles-for-semantic-markup">9.1.6. Roles for semantic markup</a><ul>
+<li><a class="reference internal" href="#helper-classes">9.1.6.1. Helper classes</a></li>
+<li><a class="reference internal" href="#function-wtrl-attr-role">9.1.6.2. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_attr_role</span></code></a></li>
+<li><a class="reference internal" href="#similar-roles">9.1.6.3. Similar roles</a></li>
+<li><a class="reference internal" href="#function-wtrl-var-type-role">9.1.6.4. Function <code class="wtrl_func docutils literal notranslate"><span class="pre">wtrl_var_type_role</span></code></a></li>
 </ul>
 </li>
 </ul>
