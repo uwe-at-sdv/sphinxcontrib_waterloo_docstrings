@@ -85,7 +85,7 @@ html_css_files = [
 	'wtrl_doc_custom.css',
 	]
 
-pygments_style = 'autumn'
+pygments_style = 'friendly'
 pygments_dark_style = "gruvbox-dark"
 
 def setup(app: Any) -> dict[str, Any]:

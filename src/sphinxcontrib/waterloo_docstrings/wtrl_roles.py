@@ -23,6 +23,7 @@ from docutils import nodes
 
 
 from sphinxcontrib.waterloo_docstrings.wtrl_protocol import (
+	SphinxAppProtocol,
 	InlinerProtocol,
 	)
 
@@ -304,7 +305,7 @@ role_map: Final[Dict[str,Callable[[RolePara],RoleResult]]] = {
 	}
 
 # Parameter `app` not required here, but we leave it just in case.
-def setup_roles(app: Any) -> None:
+def setup_roles(app: SphinxAppProtocol) -> None:
 	for name,func in role_map.items():
 		roles.register_local_role(name, cast(RoleHandler,
 			lambda	name, rawtext, text, lineno, inliner, options=None, content=None, func=func:

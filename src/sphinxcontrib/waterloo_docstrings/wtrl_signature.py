@@ -267,7 +267,7 @@ def render_signature_tokens_multiline(ctx: context, func_qname: str, *, drop_sel
 		line_block += ln
 	return [line_block]
 
-def wtrl_build_method_signature_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
+def wtrl_build_method_signature_nodes(app: SphinxAppProtocol, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
 	"""
 Preamble:
 	profile:
@@ -302,7 +302,7 @@ Notes:
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	return render_signature_tokens_inline(ctx, qname)
 
-def wtrl_build_function_signature_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
+def wtrl_build_function_signature_nodes(app: SphinxAppProtocol, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
 	"""
 Preamble:
 	profile:
@@ -337,7 +337,7 @@ Notes:
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	return render_signature_tokens_inline(ctx, qname, drop_self=False)
 
-def wtrl_build_method_signature_block_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
+def wtrl_build_method_signature_block_nodes(app: SphinxAppProtocol, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
 	"""
 Preamble:
 	profile:
@@ -372,7 +372,7 @@ Notes:
 	ctx = make_context(app, lambda parent, ln, txt: parse_inline(inliner, parent, ln, txt), lineno)
 	return render_signature_tokens_multiline(ctx, qname)
 
-def wtrl_build_function_signature_block_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
+def wtrl_build_function_signature_block_nodes(app: SphinxAppProtocol, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
 	"""
 Preamble:
 	profile:

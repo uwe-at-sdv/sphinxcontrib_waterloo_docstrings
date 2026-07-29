@@ -14,7 +14,10 @@ Notes:
 		Do not import this module directly. Use the functions via the |ref|`extension <wtrl://sphinxcontrib.waterloo_docstrings.extension>` module instead.
 """
 from __future__ import annotations
-from typing import Any, Callable, Dict, Final, get_type_hints, get_origin, get_args, Generator, Iterable, Iterator, List, Mapping, NewType, NoReturn, Protocol, Sequence, Set, Tuple, Type, TypeAlias, TypeGuard, Union, cast
+from typing import Any, Callable, Dict, Protocol, TypeAlias
+
+# Target python version is 3.10+, this seems to work with mypy.
+from sphinx.util.docutils import SphinxDirective
 
 from docutils import nodes
 
@@ -102,3 +105,4 @@ class SphinxAppProtocol(Protocol):
 	env: SphinxEnvProtocol
 	config: Any
 	docitem_context_configurator: Dict[str, Any] | None
+	add_directive: Callable[[str, type[SphinxDirective]], None]

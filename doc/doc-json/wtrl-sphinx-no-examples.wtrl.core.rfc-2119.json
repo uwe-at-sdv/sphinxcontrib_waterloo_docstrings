@@ -1,12 +1,12 @@
 {
     "$schema": "https://sci-d-vis.com/schema/wtrl-json-0.1.0.schema.json",
-    "$id": "urn:waterlint:wtrl-json:0.20.6:core:rfc-2119:d8098331256bdedd7b0b306f136f079a5607cfe7fa9628db114304b84aa1720a",
+    "$id": "urn:waterlint:wtrl-json:0.21.0:core:rfc-2119:366acab2c5494e2b99d9d8f92d582e610cfa169e2aaa62dc40c1a9790207718f",
     "__WTRL_VERSION__": {
         "waterloo": "0.12.12",
         "schema": "0.1.0"
     },
     "__WTRL_META__": {
-        "generated_at": "2026-07-28T08:44:01+02:00",
+        "generated_at": "2026-07-29T08:22:11+02:00",
         "generator": "waterlint",
         "scope": "core",
         "flavour": "rfc-2119"
@@ -49,18 +49,24 @@
         }
     },
     "__WTRL_TOC_MODULES__": {
-        "extension": "/__WTRL_OBJECTS__/extension",
+        "sphinxcontrib.waterloo_docstrings.extension": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.extension",
         "sphinxcontrib.waterloo_docstrings.wtrl_context": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_context",
         "sphinxcontrib.waterloo_docstrings.wtrl_state": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_state",
+        "sphinxcontrib.waterloo_docstrings.wtrl_directives": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_directives",
         "sphinxcontrib.waterloo_docstrings.wtrl_markup": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_markup",
         "sphinxcontrib.waterloo_docstrings.wtrl_parse": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_parse",
         "sphinxcontrib.waterloo_docstrings.wtrl_roles": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_roles",
         "sphinxcontrib.waterloo_docstrings.wtrl_signature": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_signature",
-        "sphinxcontrib.waterloo_docstrings.wtrl_autodoc": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_autodoc"
+        "sphinxcontrib.waterloo_docstrings.wtrl_autodoc": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_autodoc",
+        "sphinxcontrib.waterloo_docstrings.wtrl_protocol": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_protocol"
     },
     "__WTRL_TOC_CLASSES__": {
         "sphinxcontrib.waterloo_docstrings.wtrl_context.context": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_context.context",
-        "sphinxcontrib.waterloo_docstrings.wtrl_roles.RolePara": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_roles.RolePara"
+        "sphinxcontrib.waterloo_docstrings.wtrl_directives.WtrlDirectiveBase": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_directives.WtrlDirectiveBase",
+        "sphinxcontrib.waterloo_docstrings.wtrl_roles.RolePara": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_roles.RolePara",
+        "sphinxcontrib.waterloo_docstrings.wtrl_protocol.InlinerProtocol": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_protocol.InlinerProtocol",
+        "sphinxcontrib.waterloo_docstrings.wtrl_protocol.SphinxEnvProtocol": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_protocol.SphinxEnvProtocol",
+        "sphinxcontrib.waterloo_docstrings.wtrl_protocol.SphinxAppProtocol": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_protocol.SphinxAppProtocol"
     },
     "__WTRL_TOC_CALLABLES__": {
         "sphinxcontrib.waterloo_docstrings.wtrl_context.context.__init__": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_context.context.__init__",
@@ -72,6 +78,7 @@
         "sphinxcontrib.waterloo_docstrings.wtrl_state.wtrl_build_pop_current_module_nodes": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_state.wtrl_build_pop_current_module_nodes",
         "sphinxcontrib.waterloo_docstrings.wtrl_state.wtrl_build_pop_current_class_nodes": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_state.wtrl_build_pop_current_class_nodes",
         "sphinxcontrib.waterloo_docstrings.wtrl_state.wtrl_build_pop_current_scope_nodes": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_state.wtrl_build_pop_current_scope_nodes",
+        "sphinxcontrib.waterloo_docstrings.wtrl_state.is_target_obj_visible_in_current_scope": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_state.is_target_obj_visible_in_current_scope",
         "sphinxcontrib.waterloo_docstrings.wtrl_markup.resolve_markup": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_markup.resolve_markup",
         "sphinxcontrib.waterloo_docstrings.wtrl_parse.parse_inline": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_parse.parse_inline",
         "sphinxcontrib.waterloo_docstrings.wtrl_roles.wtrl_attr_role": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_roles.wtrl_attr_role",
@@ -88,17 +95,17 @@
         "sphinxcontrib.waterloo_docstrings.wtrl_autodoc.wtrl_build_autodoc_class_full_nodes": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.wtrl_autodoc.wtrl_build_autodoc_class_full_nodes"
     },
     "__WTRL_TOC_TYPES__": {
-        "extension.ObjectOriginDisplayMode_t": "/__WTRL_OBJECTS__/extension.ObjectOriginDisplayMode_t",
-        "extension.RoleResult": "/__WTRL_OBJECTS__/extension.RoleResult"
+        "sphinxcontrib.waterloo_docstrings.extension.ObjectOriginDisplayMode_t": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.extension.ObjectOriginDisplayMode_t",
+        "sphinxcontrib.waterloo_docstrings.extension.RoleResult": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.extension.RoleResult"
     },
     "__WTRL_TOC_VARIABLES__": {},
     "__WTRL_TOC_CONSTANTS__": {
-        "extension.RST_TEXT_ESCAPE_CHARS": "/__WTRL_OBJECTS__/extension.RST_TEXT_ESCAPE_CHARS",
-        "extension.RST_ROLE_BODY_ESCAPE_CHARS": "/__WTRL_OBJECTS__/extension.RST_ROLE_BODY_ESCAPE_CHARS",
-        "extension.WTRL_TOKEN_REPLACEMENTS": "/__WTRL_OBJECTS__/extension.WTRL_TOKEN_REPLACEMENTS"
+        "sphinxcontrib.waterloo_docstrings.extension.RST_TEXT_ESCAPE_CHARS": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.extension.RST_TEXT_ESCAPE_CHARS",
+        "sphinxcontrib.waterloo_docstrings.extension.RST_ROLE_BODY_ESCAPE_CHARS": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.extension.RST_ROLE_BODY_ESCAPE_CHARS",
+        "sphinxcontrib.waterloo_docstrings.extension.WTRL_TOKEN_REPLACEMENTS": "/__WTRL_OBJECTS__/sphinxcontrib.waterloo_docstrings.extension.WTRL_TOKEN_REPLACEMENTS"
     },
     "__WTRL_OBJECTS__": {
-        "extension.ObjectOriginDisplayMode_t": {
+        "sphinxcontrib.waterloo_docstrings.extension.ObjectOriginDisplayMode_t": {
             "doc": {},
             "doc_lines": [
                 "Literal type for configuration variable |var|`wtrl_object_origin_display_mode`."
@@ -106,7 +113,7 @@
             "annotation": "Literal['omit', 'short', 'long']",
             "doc_lines_kind": "type"
         },
-        "extension.RoleResult": {
+        "sphinxcontrib.waterloo_docstrings.extension.RoleResult": {
             "doc": {},
             "doc_lines": [
                 "Aggregate type for the return value of role handler functions. |type|`RoleResult` is a tuple of the form (nodes, messages) where nodes is a list of Docutils nodes and messages is a list of Docutils system messages."
@@ -114,21 +121,21 @@
             "annotation": "tuple[List[docutils.nodes.Node], list[docutils.nodes.Node]]",
             "doc_lines_kind": "type"
         },
-        "extension.RST_TEXT_ESCAPE_CHARS": {
+        "sphinxcontrib.waterloo_docstrings.extension.RST_TEXT_ESCAPE_CHARS": {
             "doc": {},
             "doc_lines": [
                 "A |type|`frozenset` of characters escaped in reStructuredText text segments to avoid unintended markup interpretation."
             ],
             "doc_lines_kind": "constant"
         },
-        "extension.RST_ROLE_BODY_ESCAPE_CHARS": {
+        "sphinxcontrib.waterloo_docstrings.extension.RST_ROLE_BODY_ESCAPE_CHARS": {
             "doc": {},
             "doc_lines": [
                 "A |type|`frozenset` of characters escaped in reStructuredText role bodies to avoid unintended markup interpretation."
             ],
             "doc_lines_kind": "constant"
         },
-        "extension.WTRL_TOKEN_REPLACEMENTS": {
+        "sphinxcontrib.waterloo_docstrings.extension.WTRL_TOKEN_REPLACEMENTS": {
             "doc": {},
             "doc_lines": [
                 "A |type|`Mapping` of Waterloo token strings to their corresponding reStructuredText role expansions.",
@@ -136,7 +143,7 @@
             ],
             "doc_lines_kind": "constant"
         },
-        "extension": {
+        "sphinxcontrib.waterloo_docstrings.extension": {
             "path": "/server/devel/sdv/privat/uwe/source/sdv_doc_waterloo/package_sphinx/src/sphinxcontrib/waterloo_docstrings/extension.py",
             "doc": {
                 "Preamble": {
@@ -179,7 +186,7 @@
                         "such as |type|`paragraph`, |type|`section`, or |type|`literal`."
                     ],
                     "Docutils role": [
-                        "An inline markup construct of the form |lit|`:role:`content`` implemented",
+                        "An inline markup construct of the form :role:`content` implemented",
                         "using the Docutils role API. Custom roles provided by this module are",
                         "registered via Sphinx but conceptually belong to Docutils."
                     ],
@@ -465,7 +472,27 @@
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_context": {
             "path": "/server/devel/sdv/privat/uwe/source/sdv_doc_waterloo/package_sphinx/src/sphinxcontrib/waterloo_docstrings/wtrl_context.py",
-            "doc": {}
+            "doc": {
+                "Preamble": {
+                    "profile": "module",
+                    "normative_sections": [
+                        "Contract"
+                    ],
+                    "scope": [
+                        "extension"
+                    ]
+                },
+                "Contract": {
+                    "general": [
+                        "MUST provide the |class|`context` class and its factory function |func|`make_context`."
+                    ]
+                },
+                "Notes": {
+                    "Usage": [
+                        "Do not import this module directly. Use the functions via the |ref|`extension <wtrl://sphinxcontrib.waterloo_docstrings.extension>` module instead."
+                    ]
+                }
+            }
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_context.context.__init__": {
             "signature": {
@@ -666,16 +693,36 @@
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_state": {
             "path": "/server/devel/sdv/privat/uwe/source/sdv_doc_waterloo/package_sphinx/src/sphinxcontrib/waterloo_docstrings/wtrl_state.py",
-            "doc": {}
+            "doc": {
+                "Preamble": {
+                    "profile": "module",
+                    "normative_sections": [
+                        "Contract"
+                    ],
+                    "scope": [
+                        "extension"
+                    ]
+                },
+                "Contract": {
+                    "general": [
+                        "MUST provide a set of functions to manage the current module, class, and scope context for Waterloo docstring rendering within Sphinx."
+                    ]
+                },
+                "Notes": {
+                    "Usage": [
+                        "Do not import this module directly. Use the functions via the |ref|`extension <wtrl://sphinxcontrib.waterloo_docstrings.extension>` module instead."
+                    ]
+                }
+            }
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_state.wtrl_build_push_current_module_nodes": {
             "signature": {
-                "text": "wtrl_build_push_current_module_nodes(app: 'SphinxAppProtocol | Any', inliner: 'InlinerProtocol', lineno: 'int', qname: 'str') -> 'list[nodes.Node]'",
+                "text": "wtrl_build_push_current_module_nodes(app: 'SphinxAppProtocol', inliner: 'InlinerProtocol', lineno: 'int', qname: 'str') -> 'list[nodes.Node]'",
                 "parameters": [
                     {
                         "name": "app",
                         "kind": "POSITIONAL_OR_KEYWORD",
-                        "annotation": "SphinxAppProtocol | Any",
+                        "annotation": "SphinxAppProtocol",
                         "default": null
                     },
                     {
@@ -717,8 +764,7 @@
                     "general": [
                         "MUST push the qualified module name in |var|`text` to the module stack, which makes it the new current module.",
                         "MUST resolve |var|`qname`.",
-                        "MUST build a list of Docutils nodes which represent a message about the changed state in the document.",
-                        "MAY write a log message to |file|`stdout`."
+                        "MUST build a list of Docutils nodes which represent a message about the changed state in the document."
                     ]
                 },
                 "Description": [
@@ -764,12 +810,12 @@
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_state.wtrl_build_push_current_class_nodes": {
             "signature": {
-                "text": "wtrl_build_push_current_class_nodes(app: 'SphinxAppProtocol | Any', inliner: 'InlinerProtocol', lineno: 'int', qname: 'str') -> 'list[nodes.Node]'",
+                "text": "wtrl_build_push_current_class_nodes(app: 'SphinxAppProtocol', inliner: 'InlinerProtocol', lineno: 'int', qname: 'str') -> 'list[nodes.Node]'",
                 "parameters": [
                     {
                         "name": "app",
                         "kind": "POSITIONAL_OR_KEYWORD",
-                        "annotation": "SphinxAppProtocol | Any",
+                        "annotation": "SphinxAppProtocol",
                         "default": null
                     },
                     {
@@ -811,8 +857,7 @@
                     "general": [
                         "MUST push the qualified class name in |var|`text` to the class stack, which makes it the new current class.",
                         "MUST resolve |var|`qname`.",
-                        "MUST build a list of Docutils nodes which represent a message about the changed state in the document.",
-                        "MAY write a log message to |file|`stdout`."
+                        "MUST build a list of Docutils nodes which represent a message about the changed state in the document."
                     ]
                 },
                 "Description": [
@@ -858,12 +903,12 @@
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_state.wtrl_build_push_current_scope_nodes": {
             "signature": {
-                "text": "wtrl_build_push_current_scope_nodes(app: 'SphinxAppProtocol | Any', inliner: 'InlinerProtocol', lineno: 'int', scope_tag: 'str') -> 'list[nodes.Node]'",
+                "text": "wtrl_build_push_current_scope_nodes(app: 'SphinxAppProtocol', inliner: 'InlinerProtocol', lineno: 'int', scope_tag: 'str') -> 'list[nodes.Node]'",
                 "parameters": [
                     {
                         "name": "app",
                         "kind": "POSITIONAL_OR_KEYWORD",
-                        "annotation": "SphinxAppProtocol | Any",
+                        "annotation": "SphinxAppProtocol",
                         "default": null
                     },
                     {
@@ -904,8 +949,7 @@
                 "Contract": {
                     "general": [
                         "MUST push the scope identifier in |var|`scope_tag` to the scope stack, which makes it the new current scope.",
-                        "MUST build a list of Docutils nodes which represent a message about the changed state in the document.",
-                        "MAY write a log message to |file|`stdout`."
+                        "MUST build a list of Docutils nodes which represent a message about the changed state in the document."
                     ]
                 },
                 "Description": [
@@ -950,12 +994,12 @@
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_state.wtrl_build_pop_current_module_nodes": {
             "signature": {
-                "text": "wtrl_build_pop_current_module_nodes(app: 'SphinxAppProtocol | Any', inliner: 'InlinerProtocol', lineno: 'int', qname: 'str') -> 'list[nodes.Node]'",
+                "text": "wtrl_build_pop_current_module_nodes(app: 'SphinxAppProtocol', inliner: 'InlinerProtocol', lineno: 'int', qname: 'str') -> 'list[nodes.Node]'",
                 "parameters": [
                     {
                         "name": "app",
                         "kind": "POSITIONAL_OR_KEYWORD",
-                        "annotation": "SphinxAppProtocol | Any",
+                        "annotation": "SphinxAppProtocol",
                         "default": null
                     },
                     {
@@ -998,8 +1042,7 @@
                         "MUST compare the qualified module name in |var|`qname` to the top of the module stack and raise an exception in case of mismatch.",
                         "MUST resolve |var|`qname` against the current module/class context.",
                         "MUST pop one element from the module stack.",
-                        "MUST build a list of Docutils nodes which represent a message about the changed state in the document.",
-                        "MAY write a log message to |file|`stdout`."
+                        "MUST build a list of Docutils nodes which represent a message about the changed state in the document."
                     ]
                 },
                 "Description": [
@@ -1095,8 +1138,7 @@
                         "MUST compare the qualified class name in |var|`qname` to the top of the class stack and raise an exception in case of mismatch.",
                         "MUST resolve |var|`qname` against the current module/class context.",
                         "MUST pop one element from the class stack.",
-                        "MUST build a list of Docutils nodes which represent a message about the changed state in the document.",
-                        "MAY write a log message to |file|`stdout`."
+                        "MUST build a list of Docutils nodes which represent a message about the changed state in the document."
                     ]
                 },
                 "Description": [
@@ -1191,8 +1233,7 @@
                     "general": [
                         "MUST compare the scope identifier name in |var|`qname` to the top of the scope stack and raise an exception in case of mismatch.",
                         "MUST pop one element from the scope stack.",
-                        "MUST build a list of Docutils nodes which represent a message about the changed state in the document.",
-                        "MAY write a log message to |file|`stdout`."
+                        "MUST build a list of Docutils nodes which represent a message about the changed state in the document."
                     ]
                 },
                 "Description": [
@@ -1235,6 +1276,182 @@
                     "wtrl_build_pop_current_module_nodes",
                     "wtrl_build_pop_current_class_nodes"
                 ]
+            }
+        },
+        "sphinxcontrib.waterloo_docstrings.wtrl_state.is_target_obj_visible_in_current_scope": {
+            "signature": {
+                "text": "is_target_obj_visible_in_current_scope(ctx: 'context', obj: 'object') -> 'bool'",
+                "parameters": [
+                    {
+                        "name": "ctx",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "context",
+                        "default": null
+                    },
+                    {
+                        "name": "obj",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": "object",
+                        "default": null
+                    }
+                ],
+                "returns": "bool"
+            },
+            "doc": {
+                "Preamble": {
+                    "profile": "function",
+                    "normative_sections": [
+                        "Contract",
+                        "Parameters",
+                        "Returns",
+                        "Raises"
+                    ],
+                    "scope": [
+                        "extension"
+                    ]
+                },
+                "Contract": {
+                    "general": [
+                        "MUST determine whether the target object |var|`obj` is visible in the current Sphinx rendering scope.",
+                        "MUST use the current Sphinx environment in |var|`ctx.env` to determine the current Waterloo scope.",
+                        "MUST use the Waterloo visibility API to determine whether the target object |var|`obj` is visible in the current Sphinx rendering scope.",
+                        "MUST return |True| if the target object |var|`obj` has no docstring, since it m-ay still be in scope but unlinked."
+                    ]
+                },
+                "Parameters": {
+                    "ctx": [
+                        "The Waterloo rendering context which provides the current Sphinx environment and configuration."
+                    ],
+                    "obj": [
+                        "The target object whose visibility in the current Sphinx rendering scope is to be determined."
+                    ]
+                },
+                "Returns": [
+                    "|True| if the target object |var|`obj` is visible in the current Sphinx rendering scope and |False| otherwise."
+                ],
+                "Raises": {
+                    "BaseException": [
+                        "MAY propagate exceptions from |func|`_get_validated_doc_for_object`.",
+                        "MAY propagate exceptions from |func|`get_current_scope_set`."
+                    ]
+                }
+            }
+        },
+        "sphinxcontrib.waterloo_docstrings.wtrl_directives.WtrlDirectiveBase": {
+            "signature": {
+                "text": "Directive.__init__(self, name, arguments, options, content, lineno, content_offset, block_text, state, state_machine) -> 'None'",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": null,
+                        "default": null
+                    },
+                    {
+                        "name": "arguments",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": null,
+                        "default": null
+                    },
+                    {
+                        "name": "options",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": null,
+                        "default": null
+                    },
+                    {
+                        "name": "content",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": null,
+                        "default": null
+                    },
+                    {
+                        "name": "lineno",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": null,
+                        "default": null
+                    },
+                    {
+                        "name": "content_offset",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": null,
+                        "default": null
+                    },
+                    {
+                        "name": "block_text",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": null,
+                        "default": null
+                    },
+                    {
+                        "name": "state",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": null,
+                        "default": null
+                    },
+                    {
+                        "name": "state_machine",
+                        "kind": "POSITIONAL_OR_KEYWORD",
+                        "annotation": null,
+                        "default": null
+                    }
+                ],
+                "returns": "None"
+            },
+            "doc": {
+                "Preamble": {
+                    "profile": "class",
+                    "normative_sections": [
+                        "Contract",
+                        "Description"
+                    ],
+                    "scope": [
+                        "extension"
+                    ]
+                },
+                "Description": [
+                    "This is the base class for all Waterloo Sphinx directives. It provides a common implementation of the |func|`run` method, which is called by Sphinx at runtime when the directive is used in a reStructuredText document. The |func|`run` method calls the directive-specific node builder function, which is passed as an argument to the |func|`_run` method. Derived_classes MUST implement the |func|`run` method, which is called by Sphinx at runtime when the directive is used in a reStructuredText document."
+                ],
+                "Contract": {
+                    "general": [
+                        "MUST provide a base class for classes representing Waterloo directives."
+                    ],
+                    "constructor": [
+                        "SHOULD NOT be instantiated directly. Subclasses are instantiated by Sphinx at runtime when compiling a reStructuredText document."
+                    ]
+                },
+                "Notes": {
+                    "Configuration": [
+                        "The directive base class is configured with the following class variables,",
+                        "which are evaluated by Sphinx at runtime when the directive is used in a reStructuredText document:",
+                        "* |var|`required_arguments`: The number of required arguments for the directive, here: |value|`1`.",
+                        "* |var|`has_content`: Indicates whether the directive has content, here: |value|`False`."
+                    ]
+                }
+            }
+        },
+        "sphinxcontrib.waterloo_docstrings.wtrl_directives": {
+            "path": "/server/devel/sdv/privat/uwe/source/sdv_doc_waterloo/package_sphinx/src/sphinxcontrib/waterloo_docstrings/wtrl_directives.py",
+            "doc": {
+                "Preamble": {
+                    "profile": "module",
+                    "normative_sections": [
+                        "Contract"
+                    ],
+                    "scope": [
+                        "extension"
+                    ]
+                },
+                "Contract": {
+                    "general": [
+                        "MUST provide the Waterloo Sphinx directive classes and the |func|`setup_directives` function to be called by the extension |func|`setup` function."
+                    ]
+                },
+                "Notes": {
+                    "Usage": [
+                        "Do not import this module directly. Use the functions via the |ref|`extension <wtrl://sphinxcontrib.waterloo_docstrings.extension>` module instead."
+                    ]
+                }
             }
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_markup.resolve_markup": {
@@ -1328,7 +1545,27 @@
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_markup": {
             "path": "/server/devel/sdv/privat/uwe/source/sdv_doc_waterloo/package_sphinx/src/sphinxcontrib/waterloo_docstrings/wtrl_markup.py",
-            "doc": {}
+            "doc": {
+                "Preamble": {
+                    "profile": "module",
+                    "normative_sections": [
+                        "Contract"
+                    ],
+                    "scope": [
+                        "extension"
+                    ]
+                },
+                "Contract": {
+                    "general": [
+                        "MUST provide helpers for Waterloo roles in Sphinx."
+                    ]
+                },
+                "Notes": {
+                    "Usage": [
+                        "Do not import this module directly. Use the functions via the |ref|`extension <wtrl://sphinxcontrib.waterloo_docstrings.extension>` module instead."
+                    ]
+                }
+            }
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_parse.parse_inline": {
             "signature": {
@@ -1422,7 +1659,27 @@
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_parse": {
             "path": "/server/devel/sdv/privat/uwe/source/sdv_doc_waterloo/package_sphinx/src/sphinxcontrib/waterloo_docstrings/wtrl_parse.py",
-            "doc": {}
+            "doc": {
+                "Preamble": {
+                    "profile": "module",
+                    "normative_sections": [
+                        "Contract"
+                    ],
+                    "scope": [
+                        "extension"
+                    ]
+                },
+                "Contract": {
+                    "general": [
+                        "MUST provide a function for inline parsing using a Sphinx Inliner object."
+                    ]
+                },
+                "Notes": {
+                    "Usage": [
+                        "Do not import this module directly. Use the functions via the |ref|`extension <wtrl://sphinxcontrib.waterloo_docstrings.extension>` module instead."
+                    ]
+                }
+            }
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_roles.RolePara": {
             "signature": {
@@ -1495,7 +1752,27 @@
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_roles": {
             "path": "/server/devel/sdv/privat/uwe/source/sdv_doc_waterloo/package_sphinx/src/sphinxcontrib/waterloo_docstrings/wtrl_roles.py",
-            "doc": {}
+            "doc": {
+                "Preamble": {
+                    "profile": "module",
+                    "normative_sections": [
+                        "Contract"
+                    ],
+                    "scope": [
+                        "extension"
+                    ]
+                },
+                "Contract": {
+                    "general": [
+                        "MUST provide functions for registering the Waterloo roles with Docutils/Sphinx."
+                    ]
+                },
+                "Notes": {
+                    "Usage": [
+                        "Do not import this module directly. Use the functions via the |ref|`extension <wtrl://sphinxcontrib.waterloo_docstrings.extension>` module instead."
+                    ]
+                }
+            }
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_roles.wtrl_attr_role": {
             "signature": {
@@ -1645,12 +1922,12 @@
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_signature.wtrl_build_method_signature_nodes": {
             "signature": {
-                "text": "wtrl_build_method_signature_nodes(app: 'SphinxAppProtocol | Any', inliner: 'InlinerProtocol', lineno: 'int', qname: 'str') -> 'list[nodes.Node]'",
+                "text": "wtrl_build_method_signature_nodes(app: 'SphinxAppProtocol', inliner: 'InlinerProtocol', lineno: 'int', qname: 'str') -> 'list[nodes.Node]'",
                 "parameters": [
                     {
                         "name": "app",
                         "kind": "POSITIONAL_OR_KEYWORD",
-                        "annotation": "SphinxAppProtocol | Any",
+                        "annotation": "SphinxAppProtocol",
                         "default": null
                     },
                     {
@@ -1728,16 +2005,36 @@
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_signature": {
             "path": "/server/devel/sdv/privat/uwe/source/sdv_doc_waterloo/package_sphinx/src/sphinxcontrib/waterloo_docstrings/wtrl_signature.py",
-            "doc": {}
+            "doc": {
+                "Preamble": {
+                    "profile": "module",
+                    "normative_sections": [
+                        "Contract"
+                    ],
+                    "scope": [
+                        "extension"
+                    ]
+                },
+                "Contract": {
+                    "general": [
+                        "MUST provide functions to render method and function signatures as Docutils nodes, both in inline and block formats."
+                    ]
+                },
+                "Notes": {
+                    "Usage": [
+                        "Do not import this module directly. Use the functions via the |ref|`extension <wtrl://sphinxcontrib.waterloo_docstrings.extension>` module instead."
+                    ]
+                }
+            }
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_signature.wtrl_build_function_signature_nodes": {
             "signature": {
-                "text": "wtrl_build_function_signature_nodes(app: 'SphinxAppProtocol | Any', inliner: 'InlinerProtocol', lineno: 'int', qname: 'str') -> 'list[nodes.Node]'",
+                "text": "wtrl_build_function_signature_nodes(app: 'SphinxAppProtocol', inliner: 'InlinerProtocol', lineno: 'int', qname: 'str') -> 'list[nodes.Node]'",
                 "parameters": [
                     {
                         "name": "app",
                         "kind": "POSITIONAL_OR_KEYWORD",
-                        "annotation": "SphinxAppProtocol | Any",
+                        "annotation": "SphinxAppProtocol",
                         "default": null
                     },
                     {
@@ -1815,12 +2112,12 @@
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_signature.wtrl_build_method_signature_block_nodes": {
             "signature": {
-                "text": "wtrl_build_method_signature_block_nodes(app: 'SphinxAppProtocol | Any', inliner: 'InlinerProtocol', lineno: 'int', qname: 'str') -> 'list[nodes.Node]'",
+                "text": "wtrl_build_method_signature_block_nodes(app: 'SphinxAppProtocol', inliner: 'InlinerProtocol', lineno: 'int', qname: 'str') -> 'list[nodes.Node]'",
                 "parameters": [
                     {
                         "name": "app",
                         "kind": "POSITIONAL_OR_KEYWORD",
-                        "annotation": "SphinxAppProtocol | Any",
+                        "annotation": "SphinxAppProtocol",
                         "default": null
                     },
                     {
@@ -1898,12 +2195,12 @@
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_signature.wtrl_build_function_signature_block_nodes": {
             "signature": {
-                "text": "wtrl_build_function_signature_block_nodes(app: 'SphinxAppProtocol | Any', inliner: 'InlinerProtocol', lineno: 'int', qname: 'str') -> 'list[nodes.Node]'",
+                "text": "wtrl_build_function_signature_block_nodes(app: 'SphinxAppProtocol', inliner: 'InlinerProtocol', lineno: 'int', qname: 'str') -> 'list[nodes.Node]'",
                 "parameters": [
                     {
                         "name": "app",
                         "kind": "POSITIONAL_OR_KEYWORD",
-                        "annotation": "SphinxAppProtocol | Any",
+                        "annotation": "SphinxAppProtocol",
                         "default": null
                     },
                     {
@@ -2084,7 +2381,27 @@
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_autodoc": {
             "path": "/server/devel/sdv/privat/uwe/source/sdv_doc_waterloo/package_sphinx/src/sphinxcontrib/waterloo_docstrings/wtrl_autodoc.py",
-            "doc": {}
+            "doc": {
+                "Preamble": {
+                    "profile": "module",
+                    "normative_sections": [
+                        "Contract"
+                    ],
+                    "scope": [
+                        "extension"
+                    ]
+                },
+                "Contract": {
+                    "general": [
+                        "MUST provide functions for rendering Waterloo docstrings in Sphinx."
+                    ]
+                },
+                "Notes": {
+                    "Usage": [
+                        "Do not import this module directly. Use the functions via the |ref|`extension <wtrl://sphinxcontrib.waterloo_docstrings.extension>` module instead."
+                    ]
+                }
+            }
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_autodoc.build_sphinx_nodes_full": {
             "signature": {
@@ -2546,6 +2863,159 @@
                     ],
                     "Last reviewed": [
                         "2026-07-23"
+                    ]
+                }
+            }
+        },
+        "sphinxcontrib.waterloo_docstrings.wtrl_protocol.InlinerProtocol": {
+            "signature": {
+                "text": "_no_init_or_replace_init(self, *args, **kwargs)",
+                "parameters": [
+                    {
+                        "name": "args",
+                        "kind": "VAR_POSITIONAL",
+                        "annotation": null,
+                        "default": null
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": null,
+                        "default": null
+                    }
+                ],
+                "returns": null
+            },
+            "doc": {
+                "Preamble": {
+                    "profile": "class",
+                    "normative_sections": [
+                        "Contract"
+                    ]
+                },
+                "Contract": {
+                    "general": [
+                        "MUST describe the subset of the Docutils/Sphinx inliner interface used by Waterloo role and directive rendering.",
+                        "MUST expose the document and reporter attributes used by helper functions that parse inline markup.",
+                        "MUST expose a parse method that converts inline reStructuredText into Docutils nodes.",
+                        "MUST be used for structural typing and developer documentation only."
+                    ],
+                    "constructor": []
+                },
+                "Notes": {
+                    "Runtime": [
+                        "This protocol is structural and is not instantiated by the extension.",
+                        "Sphinx provides the concrete object at runtime."
+                    ]
+                }
+            }
+        },
+        "sphinxcontrib.waterloo_docstrings.wtrl_protocol": {
+            "path": "/server/devel/sdv/privat/uwe/source/sdv_doc_waterloo/package_sphinx/src/sphinxcontrib/waterloo_docstrings/wtrl_protocol.py",
+            "doc": {
+                "Preamble": {
+                    "profile": "module",
+                    "normative_sections": [
+                        "Contract"
+                    ],
+                    "scope": [
+                        "extension"
+                    ]
+                },
+                "Contract": {
+                    "general": [
+                        "MUST provide protocol definitions for Sphinx Inliner and Sphinx App objects to enable type checking and static analysis."
+                    ]
+                },
+                "Notes": {
+                    "Usage": [
+                        "Do not import this module directly. Use the functions via the |ref|`extension <wtrl://sphinxcontrib.waterloo_docstrings.extension>` module instead."
+                    ]
+                }
+            }
+        },
+        "sphinxcontrib.waterloo_docstrings.wtrl_protocol.SphinxEnvProtocol": {
+            "signature": {
+                "text": "_no_init_or_replace_init(self, *args, **kwargs)",
+                "parameters": [
+                    {
+                        "name": "args",
+                        "kind": "VAR_POSITIONAL",
+                        "annotation": null,
+                        "default": null
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": null,
+                        "default": null
+                    }
+                ],
+                "returns": null
+            },
+            "doc": {
+                "Preamble": {
+                    "profile": "class",
+                    "normative_sections": [
+                        "Contract"
+                    ]
+                },
+                "Contract": {
+                    "general": [
+                        "MUST describe the subset of the Sphinx build-environment interface used by this extension.",
+                        "MUST expose the current document name used for diagnostics and context-sensitive rendering.",
+                        "MUST expose the Waterloo context configurator storage used while rendering directives and roles.",
+                        "MUST be used for structural typing and developer documentation only."
+                    ],
+                    "constructor": []
+                },
+                "Notes": {
+                    "Runtime": [
+                        "This protocol is structural and is not instantiated by the extension.",
+                        "Sphinx provides the concrete object at runtime."
+                    ]
+                }
+            }
+        },
+        "sphinxcontrib.waterloo_docstrings.wtrl_protocol.SphinxAppProtocol": {
+            "signature": {
+                "text": "_no_init_or_replace_init(self, *args, **kwargs)",
+                "parameters": [
+                    {
+                        "name": "args",
+                        "kind": "VAR_POSITIONAL",
+                        "annotation": null,
+                        "default": null
+                    },
+                    {
+                        "name": "kwargs",
+                        "kind": "VAR_KEYWORD",
+                        "annotation": null,
+                        "default": null
+                    }
+                ],
+                "returns": null
+            },
+            "doc": {
+                "Preamble": {
+                    "profile": "class",
+                    "normative_sections": [
+                        "Contract"
+                    ]
+                },
+                "Contract": {
+                    "general": [
+                        "MUST describe the subset of the Sphinx application interface used by this extension.",
+                        "MUST expose the build environment, configuration object, and Waterloo context configurator storage.",
+                        "MUST provide the structural shape expected by directive, state, signature, and autodoc helpers.",
+                        "MUST be used for structural typing and developer documentation only."
+                    ],
+                    "constructor": []
+                },
+                "Notes": {
+                    "Runtime": [
+                        "This protocol is structural and is not instantiated by the extension.",
+                        "Sphinx provides the concrete object at runtime."
                     ]
                 }
             }

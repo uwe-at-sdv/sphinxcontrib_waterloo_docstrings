@@ -1,0 +1,14 @@
+{
+    "$schema": "https://sci-d-vis.com/schema/wtrl-example-refs-json-0.1.1.schema.json",
+    "$id": "urn:none:local:wtrl-example-refs-json:0.1.1",
+    "__WTRL_VERSION__": {
+        "waterloo": "0.12.12",
+        "waterlint_min": "0.1.0",
+        "schema": "0.1.1"
+    },
+    "__WTRL_EXAMPLE_REFS__": {
+        "sphinxcontrib.waterloo_docstrings.wtrl_directives.WtrlDirectiveBase": [
+            "../examples-python/doc_example_WtrlDirectiveBase.py"
+        ]
+    }
+}

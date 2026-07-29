@@ -170,7 +170,7 @@ def _make_context_admonition(inliner: InlinerProtocol, lineno: int, title: str, 
 	node_adm += node_par
 	return node_adm
 
-def _emit_state_error_admonition(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, msg: str) -> list[nodes.Node]:
+def _emit_state_error_admonition(app: SphinxAppProtocol, inliner: InlinerProtocol, lineno: int, msg: str) -> list[nodes.Node]:
 	logger.error(msg, location=(app.env.docname, lineno))
 
 	if not app.config.wtrl_diagnostics_admonitions_enabled:
@@ -185,7 +185,7 @@ def _emit_state_error_admonition(app: SphinxAppProtocol | Any, inliner: InlinerP
 
 	return [error_box]
 
-def wtrl_build_push_current_module_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
+def wtrl_build_push_current_module_nodes(app: SphinxAppProtocol, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
 	"""
 	Preamble:
 		profile:
@@ -239,7 +239,7 @@ def wtrl_build_push_current_module_nodes(app: SphinxAppProtocol | Any, inliner: 
 		else:
 			return []
 
-def wtrl_build_push_current_class_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
+def wtrl_build_push_current_class_nodes(app: SphinxAppProtocol, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
 	"""
 	Preamble:
 		profile:
@@ -293,7 +293,7 @@ def wtrl_build_push_current_class_nodes(app: SphinxAppProtocol | Any, inliner: I
 		else:
 			return []
 
-def wtrl_build_push_current_scope_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, scope_tag: str) -> list[nodes.Node]:
+def wtrl_build_push_current_scope_nodes(app: SphinxAppProtocol, inliner: InlinerProtocol, lineno: int, scope_tag: str) -> list[nodes.Node]:
 	"""
 	Preamble:
 		profile:
@@ -342,7 +342,7 @@ def wtrl_build_push_current_scope_nodes(app: SphinxAppProtocol | Any, inliner: I
 		else:
 			return []
 
-def wtrl_build_pop_current_module_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
+def wtrl_build_pop_current_module_nodes(app: SphinxAppProtocol, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
 	"""
 	Preamble:
 		profile:
@@ -418,7 +418,7 @@ def wtrl_build_pop_current_module_nodes(app: SphinxAppProtocol | Any, inliner: I
 		else:
 			return []
 
-def wtrl_build_pop_current_class_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
+def wtrl_build_pop_current_class_nodes(app: SphinxAppProtocol, inliner: InlinerProtocol, lineno: int, qname: str) -> list[nodes.Node]:
 	"""
 	Preamble:
 		profile:
@@ -494,7 +494,7 @@ def wtrl_build_pop_current_class_nodes(app: SphinxAppProtocol | Any, inliner: In
 		else:
 			return []
 
-def wtrl_build_pop_current_scope_nodes(app: SphinxAppProtocol | Any, inliner: InlinerProtocol, lineno: int, scope_tag: str) -> list[nodes.Node]:
+def wtrl_build_pop_current_scope_nodes(app: SphinxAppProtocol, inliner: InlinerProtocol, lineno: int, scope_tag: str) -> list[nodes.Node]:
 	"""
 	Preamble:
 		profile:

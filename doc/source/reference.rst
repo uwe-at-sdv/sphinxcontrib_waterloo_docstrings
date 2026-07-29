@@ -88,6 +88,19 @@ Class :wtrl_class:`context`
 .. wtrl_autodoc_function:: make_context
 
 
+Directives
+~~~~~~~~~~
+
+:wtrl_class:`WtrlDirectiveBase`
+...............................
+
+.. wtrl_autodoc_class:: WtrlDirectiveBase
+
+.. literalinclude:: ../../examples-python/doc_example_WtrlDirectiveBase.py
+	:language: python
+
+
+
 Directives for docstring rendering
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -230,6 +230,7 @@ from sphinxcontrib.waterloo_docstrings.wtrl_state import (
 	is_target_obj_visible_in_current_scope
 	)
 from sphinxcontrib.waterloo_docstrings.wtrl_directives import (
+	WtrlDirectiveBase,
 	setup_directives
 	)
 from sphinxcontrib.waterloo_docstrings.wtrl_markup import (
