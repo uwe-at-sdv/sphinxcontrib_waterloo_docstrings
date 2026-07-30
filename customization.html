@@ -9,8 +9,8 @@
         <title>6. CSS Customization - Sphinx: Waterloo Docstrings documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d75fae25" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
-    <link rel="stylesheet" type="text/css" href="_static/common_styles.css?v=b66e391a" />
-    <link rel="stylesheet" type="text/css" href="_static/waterloo_base.css?v=1910b4a6" />
+    <link rel="stylesheet" type="text/css" href="_static/common_styles.css?v=9842741a" />
+    <link rel="stylesheet" type="text/css" href="_static/waterloo_base.css?v=39be3da6" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="_static/wtrl_doc_custom.css" />
     
@@ -484,6 +484,38 @@ that the reference is intentionally unavailable under the active scope rules.</p
 source document should be fixed. It is therefore reasonable for this style to be
 more visible than ordinary text.</p>
 </section>
+<section id="documentation-box-details">
+<h3><span class="section-number">6.3.6. </span>Documentation box details<a class="headerlink" href="#documentation-box-details" title="Link to this heading">¶</a></h3>
+<p>The following selector path allows to define the style of the left cell
+on the documentation box headline:</p>
+<div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="nt">table</span><span class="p">.</span><span class="nc">wtrl-box</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">thead</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">tr</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">th</span><span class="w"> </span><span class="p">.</span><span class="nc">wtrl-obj-kind</span>
+</pre></div>
+</div>
+<p>and for specific docstring profiles:</p>
+<div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="nt">table</span><span class="p">.</span><span class="nc">wtrl-box</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">thead</span><span class="p">.</span><span class="nc">wtrl-box-head-module</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">tr</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">th</span><span class="w"> </span><span class="p">.</span><span class="nc">wtrl-obj-kind</span>
+<span class="nt">table</span><span class="p">.</span><span class="nc">wtrl-box</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">thead</span><span class="p">.</span><span class="nc">wtrl-box-head-class</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">tr</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">th</span><span class="w"> </span><span class="p">.</span><span class="nc">wtrl-obj-kind</span>
+<span class="nt">table</span><span class="p">.</span><span class="nc">wtrl-box</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">thead</span><span class="p">.</span><span class="nc">wtrl-box-head-function</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">tr</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">th</span><span class="w"> </span><span class="p">.</span><span class="nc">wtrl-obj-kind</span>
+<span class="nt">table</span><span class="p">.</span><span class="nc">wtrl-box</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">thead</span><span class="p">.</span><span class="nc">wtrl-box-head-method</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">tr</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">th</span><span class="w"> </span><span class="p">.</span><span class="nc">wtrl-obj-kind</span>
+<span class="nt">table</span><span class="p">.</span><span class="nc">wtrl-box</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">thead</span><span class="p">.</span><span class="nc">wtrl-box-head-inherited_method</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">tr</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">th</span><span class="w"> </span><span class="p">.</span><span class="nc">wtrl-obj-kind</span>
+</pre></div>
+</div>
+<p>We recommend either to keep the color consistent to other nodes containing
+data sensitive to the profile (like “context” in the screenshot below, which is a class)
+or to pick some neutral color.</p>
+<p>By default we place guillemots around the object kind in order
+to create the look of a “prototype”. This is done by definining selector paths:</p>
+<div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="nt">table</span><span class="p">.</span><span class="nc">wtrl-box</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">thead</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">tr</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">th</span><span class="w"> </span><span class="p">.</span><span class="nc">wtrl-obj-kind</span><span class="p">:</span><span class="nd">before</span>
+<span class="nt">table</span><span class="p">.</span><span class="nc">wtrl-box</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">thead</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">tr</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">th</span><span class="w"> </span><span class="p">.</span><span class="nc">wtrl-obj-kind</span><span class="p">:</span><span class="nd">after</span>
+</pre></div>
+</div>
+<figure class="align-default" id="id1">
+<a class="reference internal image-reference" href="_images/doc_docubox_cell_0_row_0.png"><img alt="_images/doc_docubox_cell_0_row_0.png" src="_images/doc_docubox_cell_0_row_0.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Documentation box table head (here: Theme <code class="wtrl_pkg docutils literal notranslate"><span class="pre">furo</span></code>)</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
 </section>
 </section>
 
@@ -554,6 +586,7 @@ more visible than ordinary text.</p>
 <li><a class="reference internal" href="#normative-keywords">6.3.3. Normative Keywords</a></li>
 <li><a class="reference internal" href="#out-of-scope">6.3.4. Out Of Scope</a></li>
 <li><a class="reference internal" href="#unresolved-links">6.3.5. Unresolved Links</a></li>
+<li><a class="reference internal" href="#documentation-box-details">6.3.6. Documentation box details</a></li>
 </ul>
 </li>
 </ul>

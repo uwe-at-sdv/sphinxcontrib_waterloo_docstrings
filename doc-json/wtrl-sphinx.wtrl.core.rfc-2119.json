@@ -1,12 +1,12 @@
 {
     "$schema": "https://sci-d-vis.com/schema/wtrl-json-0.1.0.schema.json",
-    "$id": "urn:waterlint:wtrl-json:0.21.0:core:rfc-2119:93155252824d04c3e4a8cbb7e609621522aca2f514c500023e7385db9edadfc6",
+    "$id": "urn:waterlint:wtrl-json:0.22.0:core:rfc-2119:85a19e64d931a0de2ce0212af7c42e815fd5f1cedd68ffab75322a6bdbe16254",
     "__WTRL_VERSION__": {
         "waterloo": "0.12.12",
         "schema": "0.1.0"
     },
     "__WTRL_META__": {
-        "generated_at": "2026-07-29T08:22:11+02:00",
+        "generated_at": "2026-07-30T10:00:13+02:00",
         "generator": "waterlint",
         "scope": "core",
         "flavour": "rfc-2119"
@@ -1090,12 +1090,12 @@
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_state.wtrl_build_pop_current_class_nodes": {
             "signature": {
-                "text": "wtrl_build_pop_current_class_nodes(app: 'SphinxAppProtocol | Any', inliner: 'InlinerProtocol', lineno: 'int', qname: 'str') -> 'list[nodes.Node]'",
+                "text": "wtrl_build_pop_current_class_nodes(app: 'SphinxAppProtocol', inliner: 'InlinerProtocol', lineno: 'int', qname: 'str') -> 'list[nodes.Node]'",
                 "parameters": [
                     {
                         "name": "app",
                         "kind": "POSITIONAL_OR_KEYWORD",
-                        "annotation": "SphinxAppProtocol | Any",
+                        "annotation": "SphinxAppProtocol",
                         "default": null
                     },
                     {
@@ -1186,12 +1186,12 @@
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_state.wtrl_build_pop_current_scope_nodes": {
             "signature": {
-                "text": "wtrl_build_pop_current_scope_nodes(app: 'SphinxAppProtocol | Any', inliner: 'InlinerProtocol', lineno: 'int', scope_tag: 'str') -> 'list[nodes.Node]'",
+                "text": "wtrl_build_pop_current_scope_nodes(app: 'SphinxAppProtocol', inliner: 'InlinerProtocol', lineno: 'int', scope_tag: 'str') -> 'list[nodes.Node]'",
                 "parameters": [
                     {
                         "name": "app",
                         "kind": "POSITIONAL_OR_KEYWORD",
-                        "annotation": "SphinxAppProtocol | Any",
+                        "annotation": "SphinxAppProtocol",
                         "default": null
                     },
                     {
@@ -1410,7 +1410,7 @@
                     ]
                 },
                 "Description": [
-                    "This is the base class for all Waterloo Sphinx directives. It provides a common implementation of the |func|`run` method, which is called by Sphinx at runtime when the directive is used in a reStructuredText document. The |func|`run` method calls the directive-specific node builder function, which is passed as an argument to the |func|`_run` method. Derived_classes MUST implement the |func|`run` method, which is called by Sphinx at runtime when the directive is used in a reStructuredText document."
+                    "This is the base class for all Waterloo Sphinx directives. It provides a common implementation of the |func|`run` method. The |func|`run` method calls the directive-specific node builder function, which is passed as an argument to the |func|`_run` method. Derived_classes MUST implement the |func|`run` method, which is called by Sphinx at runtime when the directive is used in a reStructuredText document."
                 ],
                 "Contract": {
                     "general": [
