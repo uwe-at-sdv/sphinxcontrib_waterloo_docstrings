@@ -757,7 +757,7 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 	node_hrow = nodes.row()
 # "Module", "Class", "Function" in Guillemots
 	node1_entry = nodes.entry()
-	node1_entry += nodes.inline(text="«" + profile.capitalize() + "»",classes=["wtrl-obj-kind"])
+	node1_entry += nodes.inline(text=profile.capitalize(),classes=["wtrl-obj-kind"])
 # The qualified name and its owner module
 	node2_entry = nodes.entry()
 

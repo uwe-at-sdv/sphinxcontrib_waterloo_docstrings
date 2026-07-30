@@ -271,3 +271,41 @@ References to non-existing or unresolved docstrings use a stronger style:
 Unlike an out-of-scope reference, an unresolved reference usually means that the
 source document should be fixed. It is therefore reasonable for this style to be
 more visible than ordinary text.
+
+Documentation box details
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following selector path allows to define the style of the left cell
+on the documentation box headline:
+
+.. code:: css
+
+	table.wtrl-box > thead > tr > th .wtrl-obj-kind
+
+and for specific docstring profiles:
+
+.. code:: css
+
+	table.wtrl-box > thead.wtrl-box-head-module > tr > th .wtrl-obj-kind
+	table.wtrl-box > thead.wtrl-box-head-class > tr > th .wtrl-obj-kind
+	table.wtrl-box > thead.wtrl-box-head-function > tr > th .wtrl-obj-kind
+	table.wtrl-box > thead.wtrl-box-head-method > tr > th .wtrl-obj-kind
+	table.wtrl-box > thead.wtrl-box-head-inherited_method > tr > th .wtrl-obj-kind
+
+We recommend either to keep the color consistent to other nodes containing
+data sensitive to the profile (like "context" in the screenshot below, which is a class)
+or to pick some neutral color.
+
+By default we place guillemots around the object kind in order
+to create the look of a "prototype". This is done by definining selector paths:
+
+.. code:: css
+
+	table.wtrl-box > thead > tr > th .wtrl-obj-kind:before
+	table.wtrl-box > thead > tr > th .wtrl-obj-kind:after
+
+.. figure:: img/doc_docubox_cell_0_row_0.png
+	:width: 100%
+
+	Documentation box table head (here: Theme :wtrl_pkg:`furo`)
+

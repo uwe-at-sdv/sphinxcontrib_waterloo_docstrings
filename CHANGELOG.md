@@ -5,6 +5,8 @@ Format:
 - VERSION [YYYY-MM-DD]: Summary.
 
 #----- extend here --------------------------------------------#
+- 0.8.2 [2026-07-30]:
+	* Dark Theme for interactive HTML.
 - 0.8.1 [2026-07-28]:
 	* Documentation
 - 0.8.0 [2026-07-27]:
