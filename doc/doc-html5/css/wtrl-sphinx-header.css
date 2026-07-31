@@ -13,6 +13,17 @@
 	display:none;
 }
 
+
+html[data-wtrl-theme="light"] .wtrl-code {
+/* Override gruvbox-yellow */
+	background:#efe!important;
+}
+html[data-wtrl-theme="dark"] .wtrl-code {
+/* Override gruvbox-whatever-it-is */
+	background:#242d30!important;
+}
+
+
 html[data-wtrl-theme="dark"] .wtrl-header > svg:nth-of-type(1) {
 	display:none;
 }

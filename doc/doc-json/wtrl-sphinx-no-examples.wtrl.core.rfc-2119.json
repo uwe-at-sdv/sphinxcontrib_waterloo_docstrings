@@ -6,7 +6,7 @@
         "schema": "0.1.0"
     },
     "__WTRL_META__": {
-        "generated_at": "2026-07-30T10:00:13+02:00",
+        "generated_at": "2026-07-31T09:28:41+02:00",
         "generator": "waterlint",
         "scope": "core",
         "flavour": "rfc-2119"
@@ -768,7 +768,8 @@
                     ]
                 },
                 "Description": [
-                    "Implementation of directive |attr|`.. wtrl_push_current_module::`."
+                    "Implementation of directive |attr|`.. wtrl_push_current_module::`.",
+                    "The stack is created dynamically in the Sphinx environment |var|`env`."
                 ],
                 "Parameters": {
                     "app": [
@@ -861,7 +862,8 @@
                     ]
                 },
                 "Description": [
-                    "Implementation of directive |attr|`.. wtrl_push_current_class::`."
+                    "Implementation of directive |attr|`.. wtrl_push_current_class::`.",
+                    "The stack is created dynamically in the Sphinx environment |var|`env`."
                 ],
                 "Parameters": {
                     "app": [
@@ -953,7 +955,8 @@
                     ]
                 },
                 "Description": [
-                    "Implementation of directive |attr|`.. wtrl_push_current_scope::`."
+                    "Implementation of directive |attr|`.. wtrl_push_current_scope::`.",
+                    "The stack is created dynamically in the Sphinx environment |var|`env`."
                 ],
                 "Parameters": {
                     "app": [

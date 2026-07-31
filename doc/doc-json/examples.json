@@ -9,6 +9,9 @@
     "__WTRL_EXAMPLE_REFS__": {
         "sphinxcontrib.waterloo_docstrings.wtrl_directives.WtrlDirectiveBase": [
             "../examples-python/doc_example_WtrlDirectiveBase.py"
+        ],
+        "sphinxcontrib.waterloo_docstrings.wtrl_state.wtrl_build_push_current_module_nodes": [
+            "../examples-python/doc_example_wtrl_build_push_current_module_nodes.py"
         ]
     }
 }

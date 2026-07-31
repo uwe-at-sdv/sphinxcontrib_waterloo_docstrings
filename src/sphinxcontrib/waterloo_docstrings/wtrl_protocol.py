@@ -14,7 +14,7 @@ Notes:
 		Do not import this module directly. Use the functions via the |ref|`extension <wtrl://sphinxcontrib.waterloo_docstrings.extension>` module instead.
 """
 from __future__ import annotations
-from typing import Any, Callable, Dict, Protocol, TypeAlias
+from typing import Any, Callable, Dict, List, Protocol, TypeAlias
 
 # Target python version is 3.10+, this seems to work with mypy.
 from sphinx.util.docutils import SphinxDirective
@@ -80,7 +80,12 @@ class SphinxEnvProtocol(Protocol):
 
 	"""
 	docname: str
+	# Note: This is a non-standard attribute added by the Waterloo extension to the Sphinx environment.
 	docitem_context_configurator: Dict[str, Any] | None
+	# These are created dynamically in wtrl_state.py and are not part of the Sphinx API.
+	# _docitem_module_stack: List[str]
+	# _docitem_class_stack: List[str]
+	# _docitem_scope_stack: List[mod_docitem.Scope]
 
 class SphinxAppProtocol(Protocol):
 	r"""

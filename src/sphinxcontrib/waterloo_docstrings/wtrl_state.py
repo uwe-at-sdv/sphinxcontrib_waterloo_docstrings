@@ -21,6 +21,7 @@ import importlib
 
 from sphinxcontrib.waterloo_docstrings.wtrl_protocol import (
 	InlinerProtocol,
+	SphinxEnvProtocol,
 	SphinxAppProtocol
 	)
 from sphinxcontrib.waterloo_docstrings.wtrl_parse import (
@@ -46,82 +47,85 @@ _global_current_class: List[str] = []
 _global_current_scope: List[mod_docitem.Scope] = [mod_docitem.Scope.PUBLIC]
 
 #----- Helpers ------------------------------------------------#
-def _get_module_stack(env: Any | None) -> List[str]:
+def _get_module_stack(env: SphinxEnvProtocol | None) -> List[str]:
 	attr = "_docitem_module_stack"
 	if env is not None and hasattr(env, attr):
 		return cast(List[str], getattr(env, attr))
+	# Create the stack in the Sphinx environment if it does not exist yet.
 	if env is not None and not hasattr(env, attr):
 		setattr(env, attr, [])
 		return cast(List[str], getattr(env, attr))
 	return _global_current_module
 
-def _get_class_stack(env: Any | None) -> List[str]:
+def _get_class_stack(env: SphinxEnvProtocol | None) -> List[str]:
 	attr = "_docitem_class_stack"
 	if env is not None and hasattr(env, attr):
 		return cast(List[str], getattr(env, attr))
+	# Create the stack in the Sphinx environment if it does not exist yet.
 	if env is not None and not hasattr(env, attr):
 		setattr(env, attr, [])
 		return cast(List[str], getattr(env, attr))
 	return _global_current_class
 
-def _get_scope_stack(env: Any | None) -> List[mod_docitem.Scope]:
+def _get_scope_stack(env: SphinxEnvProtocol | None) -> List[mod_docitem.Scope]:
 	attr = "_docitem_scope_stack"
 	if env is not None and hasattr(env, attr):
 		return cast(List[mod_docitem.Scope], getattr(env, attr))
+	# Create the stack in the Sphinx environment if it does not exist yet.
 	if env is not None and not hasattr(env, attr):
 		setattr(env, attr, [mod_docitem.Scope.PUBLIC])
 		return cast(List[mod_docitem.Scope], getattr(env, attr))
 	return _global_current_scope
 
 # Stack ops for current module
-def push_current_module(qualified_module_name : str, env: Any | None = None) -> None:
+def push_current_module(qualified_module_name : str, env: SphinxEnvProtocol | None = None) -> None:
 	stack = _get_module_stack(env)
 	stack.append(qualified_module_name)
-def pop_current_module(env: Any | None = None) -> None:
+def pop_current_module(env: SphinxEnvProtocol | None = None) -> None:
 	stack = _get_module_stack(env)
 	del stack[-1]
-def get_current_module(env: Any | None = None) -> str:
+def get_current_module(env: SphinxEnvProtocol | None = None) -> str:
 	return _get_module_stack(env)[-1]
-def has_current_module(env: Any | None = None) -> bool:
+def has_current_module(env: SphinxEnvProtocol | None = None) -> bool:
 	return len(_get_module_stack(env)) > 0
 
 # Stack ops for current class
-def push_current_class(qualified_class_name : str, env: Any | None = None) -> None:
+def push_current_class(qualified_class_name : str, env: SphinxEnvProtocol | None = None) -> None:
 	stack = _get_class_stack(env)
 	stack.append(qualified_class_name)
-def pop_current_class(env: Any | None = None) -> None:
+def pop_current_class(env: SphinxEnvProtocol | None = None) -> None:
 	stack = _get_class_stack(env)
 	del stack[-1]
-def get_current_class(env: Any | None = None) -> str:
+def get_current_class(env: SphinxEnvProtocol | None = None) -> str:
 	return _get_class_stack(env)[-1]
-def has_current_class(env: Any | None = None) -> bool:
+def has_current_class(env: SphinxEnvProtocol | None = None) -> bool:
 	return len(_get_class_stack(env)) > 0
 
 # Stack ops for current scope.
-def push_current_scope(scope_tag : str, env: Any | None = None) -> None:
+def push_current_scope(scope_tag : str, env: SphinxEnvProtocol | None = None) -> None:
 	if scope_tag not in mod_docitem.SCOPE_TAG_MAP:
 		raise RuntimeError(f"Unknown scope '{scope_tag}'. Expected one of {list(mod_docitem.SCOPE_TAG_MAP.keys())}.")
 	scope = mod_docitem.SCOPE_TAG_MAP[scope_tag]
 	stack = _get_scope_stack(env)
 	stack.append(scope)
 
-def pop_current_scope(env: Any | None = None) -> None:
+def pop_current_scope(env: SphinxEnvProtocol | None = None) -> None:
 	stack = _get_scope_stack(env)
 	if not stack:
 		raise RuntimeError("Cannot pop current scope: stack is empty.")
 	del stack[-1]
 
-def get_current_scope(env: Any | None = None) -> mod_docitem.Scope:
+def get_current_scope(env: SphinxEnvProtocol | None = None) -> mod_docitem.Scope:
 	return _get_scope_stack(env)[-1]
 
-def has_current_scope(env: Any | None = None) -> bool:
+def has_current_scope(env: SphinxEnvProtocol | None = None) -> bool:
 	return len(_get_scope_stack(env)) > 0
 
 #	Convert the current Sphinx rendering scope into a Waterloo scope set.
 #	The Sphinx layer currently maintains a single active scope on a stack,
 #	while the core visibility API expects a set of scopes. This helper
 #	provides the bridge for scope-aware rendering decisions.
-def get_current_scope_set(env: Any | None = None) -> mod_docitem.Scopes:
+def get_current_scope_set(env: SphinxEnvProtocol | None = None) -> mod_docitem.Scopes:
 	if not has_current_scope(env):
 		return set([mod_docitem.Scope.PUBLIC])
 	return set([get_current_scope(env)])
@@ -201,6 +205,7 @@ def wtrl_build_push_current_module_nodes(app: SphinxAppProtocol, inliner: Inline
 			|Must| build a list of Docutils nodes which represent a message about the changed state in the document.
 	Description:
 		Implementation of directive |attr|`.. wtrl_push_current_module::`.
+		The stack is created dynamically in the Sphinx environment |var|`env`.
 	Parameters:
 		app:
 			The Sphinx application instance that carries configuration and environment state.
@@ -255,6 +260,7 @@ def wtrl_build_push_current_class_nodes(app: SphinxAppProtocol, inliner: Inliner
 			|Must| build a list of Docutils nodes which represent a message about the changed state in the document.
 	Description:
 		Implementation of directive |attr|`.. wtrl_push_current_class::`.
+		The stack is created dynamically in the Sphinx environment |var|`env`.
 	Parameters:
 		app:
 			The Sphinx application instance that carries configuration and environment state.
@@ -308,6 +314,7 @@ def wtrl_build_push_current_scope_nodes(app: SphinxAppProtocol, inliner: Inliner
 			|Must| build a list of Docutils nodes which represent a message about the changed state in the document.
 	Description:
 		Implementation of directive |attr|`.. wtrl_push_current_scope::`.
+		The stack is created dynamically in the Sphinx environment |var|`env`.
 	Parameters:
 		app:
 			The Sphinx application instance that carries configuration and environment state.
