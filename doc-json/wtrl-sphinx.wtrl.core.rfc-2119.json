@@ -1,12 +1,12 @@
 {
     "$schema": "https://sci-d-vis.com/schema/wtrl-json-0.1.0.schema.json",
-    "$id": "urn:waterlint:wtrl-json:0.22.0:core:rfc-2119:85a19e64d931a0de2ce0212af7c42e815fd5f1cedd68ffab75322a6bdbe16254",
+    "$id": "urn:waterlint:wtrl-json:0.22.0:core:rfc-2119:5e836bf6ab210456292641d5a679727267e1adaa5592e6ff8c49da303790c7a2",
     "__WTRL_VERSION__": {
         "waterloo": "0.12.12",
         "schema": "0.1.0"
     },
     "__WTRL_META__": {
-        "generated_at": "2026-07-30T10:00:13+02:00",
+        "generated_at": "2026-07-31T09:28:41+02:00",
         "generator": "waterlint",
         "scope": "core",
         "flavour": "rfc-2119"
@@ -768,7 +768,8 @@
                     ]
                 },
                 "Description": [
-                    "Implementation of directive |attr|`.. wtrl_push_current_module::`."
+                    "Implementation of directive |attr|`.. wtrl_push_current_module::`.",
+                    "The stack is created dynamically in the Sphinx environment |var|`env`."
                 ],
                 "Parameters": {
                     "app": [
@@ -806,7 +807,10 @@
                         "2026-07-16"
                     ]
                 }
-            }
+            },
+            "examples": [
+                "/__WTRL_EXAMPLES__/sha256_be9a1ab921106dd5f883749363ea814d77160c46ab3ec2dc3b19114d088f3f2b"
+            ]
         },
         "sphinxcontrib.waterloo_docstrings.wtrl_state.wtrl_build_push_current_class_nodes": {
             "signature": {
@@ -861,7 +865,8 @@
                     ]
                 },
                 "Description": [
-                    "Implementation of directive |attr|`.. wtrl_push_current_class::`."
+                    "Implementation of directive |attr|`.. wtrl_push_current_class::`.",
+                    "The stack is created dynamically in the Sphinx environment |var|`env`."
                 ],
                 "Parameters": {
                     "app": [
@@ -953,7 +958,8 @@
                     ]
                 },
                 "Description": [
-                    "Implementation of directive |attr|`.. wtrl_push_current_scope::`."
+                    "Implementation of directive |attr|`.. wtrl_push_current_scope::`.",
+                    "The stack is created dynamically in the Sphinx environment |var|`env`."
                 ],
                 "Parameters": {
                     "app": [
@@ -3031,6 +3037,14 @@
             "code": "# This is how the class is used in wtrl_directives.py.\n# wtrl_build_autodoc_module_nodes is defined in wtrl_autodoc.py\n\n# Directive class derived from the common base class.\nclass WtrlAutodocModuleDirective(WtrlDirectiveBase):\n\tdef run(self) -> list[nodes.Node]:\n\t\treturn self._run(wtrl_build_autodoc_module_nodes)\n\n# More directive classes here...\n\n# Invoked by the extension's setup-function.\ndef setup_directives(app: SphinxAppProtocol) -> None:\n\tapp.add_directive(\"wtrl_autodoc_module\", WtrlAutodocModuleDirective)\n\t# More directives here...\n",
             "referenced_by": [
                 "sphinxcontrib.waterloo_docstrings.wtrl_directives.WtrlDirectiveBase"
+            ]
+        },
+        "sha256_be9a1ab921106dd5f883749363ea814d77160c46ab3ec2dc3b19114d088f3f2b": {
+            "lang": "python",
+            "hash": "be9a1ab921106dd5f883749363ea814d77160c46ab3ec2dc3b19114d088f3f2b",
+            "code": "\n# Directive class derived from the common base class.\nclass WtrlPushCurrentModuleDirective(WtrlDirectiveBase):\n\tdef run(self) -> list[nodes.Node]:\n\t\treturn self._run(wtrl_build_push_current_module_nodes)\n\n# More directive classes here...\n\n# Invoked by the extension's setup-function.\ndef setup_directives(app: SphinxAppProtocol) -> None:\n\t# other calls to add_directive\n\tapp.add_directive(\"wtrl_push_current_module\", WtrlPushCurrentModuleDirective)\n\t# more calls to add_directive\n",
+            "referenced_by": [
+                "sphinxcontrib.waterloo_docstrings.wtrl_state.wtrl_build_push_current_module_nodes"
             ]
         }
     }
