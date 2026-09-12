@@ -382,13 +382,13 @@ tree.</p>
 <p>Add the extension to <code class="wtrl_file docutils literal notranslate"><span class="pre">/path/to/DOC_DIR/doc/source/conf.py</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span>
         <span class="c1"># other extensions</span>
-        <span class="s2">&quot;sphinxcontrib.waterloo_docstrings&quot;</span><span class="p">,</span>
+        <span class="s2">"sphinxcontrib.waterloo_docstrings"</span><span class="p">,</span>
         <span class="p">]</span>
 </pre></div>
 </div>
 <p>Tell the extension where your project sources are located:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">wtrl_basedirs</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s2">&quot;/path/to/PROJECT_DIR&quot;</span><span class="p">,</span>
+        <span class="s2">"/path/to/PROJECT_DIR"</span><span class="p">,</span>
         <span class="p">]</span>
 </pre></div>
 </div>
@@ -400,7 +400,7 @@ local source directories usually do.</p>
 <h2><span class="section-number">2.6. </span>Add A Waterloo Docstring<a class="headerlink" href="#add-a-waterloo-docstring" title="Link to this heading">¶</a></h2>
 <p>Create or edit <code class="wtrl_file docutils literal notranslate"><span class="pre">/path/to/PROJECT_DIR/my_module.py</span></code> and insert the
 following module docstring:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sa">r</span><span class="sd">"""</span>
 <span class="gh">Preamble:</span>
 <span class="sd">        </span><span class="gu">profile:</span>
 <span class="sd">                </span><span class="no">module</span>
@@ -409,7 +409,7 @@ following module docstring:</p>
 <span class="gh">Contract:</span>
 <span class="sd">        </span><span class="gu">general:</span>
 <span class="sd">                </span><span class="k">|Must|</span><span class="sd"> serve as an example for a Waterloo docstring.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 </pre></div>
 </div>
 <p>Waterloo indentation may use either one tab or four spaces per indentation
@@ -447,13 +447,13 @@ long section names, such as fully qualified identifiers, and has a visible
 effect on the rendering of Waterloo docstring boxes:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">html_css_files</span> <span class="o">=</span> <span class="p">[</span>
         <span class="c1"># other project stylesheets</span>
-        <span class="s2">&quot;waterloo_alabaster.css&quot;</span><span class="p">,</span>
+        <span class="s2">"waterloo_alabaster.css"</span><span class="p">,</span>
         <span class="p">]</span>
 </pre></div>
 </div>
 <p>Most themes support <code class="wtrl_attr docutils literal notranslate"><span class="pre">html_favicon</span></code>. If you do not provide your own
 favicon, you may use the Waterloo favicon:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">html_favicon</span> <span class="o">=</span> <span class="s2">&quot;_static/favicon.ico&quot;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">html_favicon</span> <span class="o">=</span> <span class="s2">"_static/favicon.ico"</span>
 </pre></div>
 </div>
 <p>See <a class="reference internal" href="customization.html#customization"><span class="std std-ref">CSS Customization</span></a> for details about roles, dark-mode

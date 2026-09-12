@@ -251,7 +251,7 @@
 Sphinx backend. The goal is to avoid letting the backend influence the
 Waterloo syntax. Internally, this means that we have to escape critical
 reST characters. Our test module is:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sa">r</span><span class="sd">"""</span>
 <span class="gh">Preamble:</span>
 <span class="sd">    </span><span class="gu">profile:</span>
 <span class="sd">        </span><span class="no">module</span>
@@ -283,14 +283,14 @@ reST characters. Our test module is:</p>
 <span class="sd">    </span><span class="gh">Inline URLs:</span>
 <span class="sd">        https://example.org/a:b?c=d#e mailto:person@example.org file:///tmp/demo.txt</span>
 <span class="sd">    </span><span class="gh">HTML-like text:</span>
-<span class="sd">        &lt;span class=&quot;x&quot;&gt;text&lt;/span&gt; &lt;br/&gt; &lt;input name=&quot;x:y&quot;/&gt;</span>
+<span class="sd">        &lt;span class="x"&gt;text&lt;/span&gt; &lt;br/&gt; &lt;input name="x:y"/&gt;</span>
 <span class="sd">    </span><span class="gh">Quoted tokens:</span>
-<span class="sd">        &quot;Token&quot; &#39;Token&#39; `Token` &quot;|abc|&quot; &#39;|abc|&#39; `|abc|`</span>
+<span class="sd">        "Token" 'Token' `Token` "|abc|" '|abc|' `|abc|`</span>
 <span class="sd">    </span><span class="gh">Mixed Waterloo markup:</span>
 <span class="sd">        </span><span class="k">|lit|</span><span class="l">`abc:def`</span><span class="sd">ghi`` </span><span class="k">|url|</span><span class="sx">`https://example.org/a:b`</span><span class="sd"> </span><span class="k">|var_type|</span><span class="nc">`name:float`</span>
 <span class="sd">    </span><span class="gh">Malformed Waterloo markup:</span>
 <span class="sd">        </span><span class="k">|lit|</span><span class="l">`abc |lit|abc`</span><span class="sd"> </span><span class="k">|lit|</span><span class="l">`abc`</span><span class="sd">` </span><span class="k">|ref|</span><span class="err">`label &lt;target`</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 </pre></div>
 </div>
 <p>The docstring is rendered as follows:</p>
@@ -356,7 +356,7 @@ syntax in a docstring.</p>
 <section id="itemization">
 <h2><span class="section-number">7.2. </span>Itemization<a class="headerlink" href="#itemization" title="Link to this heading">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">myfunc</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="gh">    Preamble:</span>
 <span class="sd">        </span><span class="gu">profile:</span>
 <span class="sd">            </span><span class="no">function</span>
@@ -471,7 +471,7 @@ syntax in a docstring.</p>
 <span class="sd">            </span><span class="k">|May|</span><span class="sd"> raise if </span><span class="k">|lit|</span><span class="l">`&lt;condition 3&gt;`</span>
 <span class="gh">    See_also:</span>
 <span class="sd">        </span><span class="nv">list.of.qualified.identifiers</span><span class="sd">, </span><span class="nv">therefore.no.itemization.or.enumeration</span>
-<span class="sd">    </span><span class="nv">&quot;&quot;&quot;</span>
+<span class="sd">    </span><span class="nv">"""</span>
     <span class="k">pass</span>
 </pre></div>
 </div>
