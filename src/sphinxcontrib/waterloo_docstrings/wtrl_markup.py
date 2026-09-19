@@ -36,6 +36,9 @@ from sphinxcontrib.waterloo_docstrings.wtrl_state import (
 	is_target_obj_visible_in_current_scope,
 	resolve_qualified_name
 	)
+from sdv.doc.waterloo.docitem_types import (
+	WTRL_MARKUP_ROLES,
+	)
 import sdv.doc.waterloo.docitem as mod_docitem
 
 # Official markup resolver: converts |role|`text` into :wtrl_role:`text`
@@ -61,7 +64,7 @@ RE_WTRL_NAKED_TOKEN_COMPILED: Final[re.Pattern[str]] = re.compile(
 	r"(?<!\\)\|(" + "|".join(re.escape(k) for k in WTRL_TOKEN_REPLACEMENTS) + r")\|"
 )
 RE_WTRL_MARKUP_START_COMPILED: Final[re.Pattern[str]] = re.compile(
-	r"(?<!\\)\|" + mod_docitem.WTRL_MARKUP_ROLES + r"\|`"
+	r"(?<!\\)\|" + WTRL_MARKUP_ROLES + r"\|`"
 )
 RE_RST_ANGLE_REF_COMPILED: Final[re.Pattern[str]] = re.compile(
 	r"^\s*([^<>`]+?)\s*<\s*([^>\s]+)\s*>\s*$"
