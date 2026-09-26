@@ -1016,20 +1016,20 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 					if not terms:
 						continue
 # Term
-					node_term = nodes.inline()
+					term_inline = nodes.inline()
 					if len(terms) > 1:
-						node_term.extend(ctx.parse(node_term, 0, ctx.add_role_dfn(terms[0] + " [" + ", ".join(terms[1:]) + "]")))
+						term_inline.extend(ctx.parse(term_inline, 0, ctx.add_role_dfn(terms[0] + " [" + ", ".join(terms[1:]) + "]")))
 					else:
-						node_term.extend(ctx.parse(node_term, 0, ctx.add_role_dfn(terms[0])))
+						term_inline.extend(ctx.parse(term_inline, 0, ctx.add_role_dfn(terms[0])))
 # Content
-					append_term_content(node_entry, [node_term], item_subsection)
+					append_term_content(node_entry, [term_inline], item_subsection)
 			else:
 				for term, item_subsection in item_section.items().items():
 # Term
-					node_term = nodes.inline()
-					node_term.extend(ctx.parse(node_term, 0, ctx.add_role_dfn(term)))
+					term_inline = nodes.inline()
+					term_inline.extend(ctx.parse(term_inline, 0, ctx.add_role_dfn(term)))
 # Content
-					append_term_content(node_entry, [node_term], item_subsection)
+					append_term_content(node_entry, [term_inline], item_subsection)
 # Both a freeform. "Description" is non-normative. "Returns" is normative,
 # yet we msut provide tools  like itemization and enumeration in order to
 # resolve the inner structure of the returned object, therefore freeform.
