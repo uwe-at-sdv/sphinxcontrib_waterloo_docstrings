@@ -247,9 +247,639 @@
           <section id="supplementaty-tests-tables">
 <span id="tables-showcase"></span><h1><span class="section-number">11. </span>Supplementaty tests: Tables<a class="headerlink" href="#supplementaty-tests-tables" title="Link to this heading">¶</a></h1>
 <p>This section is informative.</p>
+<div class="table-wrapper wtrl-box docutils container" id="wtrl-mod-11:test_tables">
+<table class="wtrl-box docutils align-default" id="wtrl-mod-11:test_tables">
+<tbody>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Preamble</span></p></td>
+<td><p><span class="wtrl_label">normative sections</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_label">Contract</span>, <span class="wtrl_label">Public classes</span>, <span class="wtrl_label">Public variables</span>, <span class="wtrl_label">Public types</span></p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Contract</span></p></td>
+<td><p><span class="wtrl_label">general</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">Must</span> demonstrate the HTML rendering of tables</p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Description</span></p></td>
+<td><p>This module demonstrates the rendering of tables in the Sphinx extension and the pipeline JSON -&gt; HTML5.</p>
+<p>Tables can be used in the following sections:<ul class="simple">
+<li><p><span class="wtrl_label">Description</span></p></li>
+<li><p><span class="wtrl_label">Definitions.&lt;item&gt;</span></p></li>
+<li><p><span class="wtrl_label">Terminology.&lt;item&gt;</span></p></li>
+<li><p><span class="wtrl_label">Notes.&lt;item&gt;</span></p></li>
+<li><p><span class="wtrl_label">Factory.&lt;item&gt;</span></p></li>
+<li><p><span class="wtrl_label">Class_overview.&lt;item&gt;</span></p></li>
+<li><p><span class="wtrl_label">Function_overview.&lt;item&gt;</span></p></li>
+<li><p><span class="wtrl_label">Method_overview.&lt;item&gt;</span></p></li>
+<li><p><span class="wtrl_label">Returns</span></p></li>
+<li><p><span class="wtrl_label">Parameters.&lt;item&gt;</span></p></li>
+<li><p><span class="wtrl_label">Raises.&lt;item&gt;</span> (allowed although item-like)</p></li>
+</ul>
+</p>
+<p>They are not allowed in lists of strings:<ul class="simple">
+<li><p><span class="wtrl_label">Preamble.*</span></p></li>
+<li><p><span class="wtrl_label">Derived_from</span></p></li>
+</ul>
+</p>
+<p>They are not allowed in item-like (sub)sections like:<ul class="simple">
+<li><p><span class="wtrl_label">Contract.general</span></p></li>
+<li><p><span class="wtrl_label">Contract.constructor</span></p></li>
+<li><p><span class="wtrl_label">Contract.requires</span></p></li>
+<li><p><span class="wtrl_label">Contract.ensures</span></p></li>
+<li><p><span class="wtrl_label">Contract.invariants</span></p></li>
+</ul>
+</p>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Notes</span></p></td>
+<td><p class="wtrl-note-title rubric">Application</p>
+<p class="wtrl-freeform-paragraph-content">The following table shows where tables are allowed:</p>
+<div class="wtrl-table-block wtrl-freeform-paragraph-content docutils container">
+<div class="wtrl-table-group docutils container">
+<div class="table-wrapper wtrl-content-table docutils container">
+<table class="wtrl-content-table docutils align-default">
+<thead>
+<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Sections in canonical order</p></th>
+<th class="head"><p>Allowed / Applicable</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="wtrl_label">Preamble.*</span></p></td>
+<td><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="wtrl_label">Definitions.&lt;item&gt;</span></p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="wtrl_label">Terminology.&lt;item&gt;</span></p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="wtrl_label">Contract.*</span></p></td>
+<td><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="wtrl_label">Description</span></p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="wtrl_label">Derived_from</span></p></td>
+<td><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="wtrl_label">Factory.&lt;item&gt;</span></p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="wtrl_label">Public_classes</span></p></td>
+<td><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="wtrl_label">Class_overview</span></p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="wtrl_label">Public_functions</span></p></td>
+<td><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="wtrl_label">Function_overview</span></p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="wtrl_label">Public_methods</span></p></td>
+<td><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="wtrl_label">Method_overview</span></p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="wtrl_label">Public_types</span></p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="wtrl_label">Public_variables</span></p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="wtrl_label">Public_constants</span></p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="wtrl_label">Parameters.&lt;item&gt;</span></p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="wtrl_label">Returns</span></p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="wtrl_label">Raises.&lt;item&gt;</span></p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="wtrl_label">Notes.&lt;item&gt;</span></p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="wtrl_label">See_also</span></p></td>
+<td><p>no</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Public classes</span></p></td>
+<td><p><a class="wtrl_class reference internal" href="#wtrl-cls-11:test_tables-1:X" title="test_tables.X"><span>X</span></a></p></td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Class overview</span></p></td>
+<td><p><code class="wtrl_class docutils literal notranslate"><span class="pre">X</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
+<p class="wtrl-freeform-paragraph-content">The plugin controller. Plugins are initialized according to the following table:</p>
+<div class="wtrl-table-block wtrl-freeform-paragraph-content docutils container">
+<div class="wtrl-table-group docutils container">
+<div class="table-wrapper wtrl-content-table docutils container">
+<table class="wtrl-content-table docutils align-default">
+<thead>
+<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Initialization</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>fancy_plugin_a</p></td>
+<td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">LAZY</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>fancy_plugin_b</p></td>
+<td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">LOAD</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Public variables</span></p></td>
+<td><p id="wtrl-obj-11:test_tables-8:location"><code class="wtrl_var docutils literal notranslate"><span class="pre">location</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
+<div class="wtrl-table-block wtrl-freeform-paragraph-content docutils container">
+<div class="wtrl-table-group docutils container">
+<p class="wtrl-table-title">Location for expensive computations</p>
+<div class="table-wrapper wtrl-content-table docutils container">
+<table class="wtrl-content-table docutils align-default">
+<thead>
+<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">LOCAL</span></code></p></td>
+<td><p>Do computations on localhost</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">REMOTE</span></code></p></td>
+<td><p>Do computations on remote host</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Public types</span></p></td>
+<td><p id="wtrl-obj-11:test_tables-14:RemoteAccess_t"><code class="wtrl_type docutils literal notranslate"><span class="pre">RemoteAccess_t</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
+<p class="wtrl-public-type-annotation"><span class="wtrl-public-type-annotation-label">Type Alias for </span><span class="wtrl_type">Literal[‘SSH’, ‘HTTPS’]</span></p>
+<div class="wtrl-table-block wtrl-freeform-paragraph-content docutils container">
+<div class="wtrl-table-group docutils container">
+<p class="wtrl-table-title">Symbols which describe access to remote files</p>
+<div class="table-wrapper wtrl-content-table docutils container">
+<table class="wtrl-content-table docutils align-default">
+<thead>
+<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">&quot;SSH&quot;</span></code></p></td>
+<td><p>Access remote files through ssh, sftp, scp. Requires public key on remote host.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">&quot;HTTPS&quot;</span></code></p></td>
+<td><p>Access remote files through https. Requires token from remote host.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+<thead class="wtrl-box-head-module">
+<tr class="row-odd"><th class="head"><span class="wtrl-obj-kind">Module</span></th>
+<th class="head"><p><span class="wtrl-obj-qid">test_tables</span></p></th>
+</tr>
+</thead>
+</table>
+</div>
 <div class="admonition wtrl-current-module-message wtrl-current-module-push">
 <p class="admonition-title">Waterloo module context</p>
 <p>Classes and functions below this point implicitly belong to package/module <code class="wtrl_mod docutils literal notranslate"><span class="pre">test_tables</span></code>. </p>
+</div>
+<div class="table-wrapper wtrl-box docutils container" id="wtrl-cls-11:test_tables-1:X">
+<table class="wtrl-box docutils align-default" id="wtrl-cls-11:test_tables-1:X">
+<tbody>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Preamble</span></p></td>
+<td><p><span class="wtrl_label">normative sections</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_label">Contract</span>, <span class="wtrl_label">Factory</span></p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Contract</span></p></td>
+<td><p><span class="wtrl_label">general</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">Must</span> demonstrate a table with multiple groups</p></li>
+</ul>
+<p><span class="wtrl_label">constructor</span></p>
+<ul class="simple">
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Factory</span></p></td>
+<td><p><a class="wtrl_func reference internal" href="#wtrl-func-11:test_tables-14:make_X_minimal" title="test_tables.make_X_minimal"><span>make_X_minimal</span></a></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">Must</span> create a minimal instance of <code class="wtrl_class docutils literal notranslate"><span class="pre">X</span></code>.</p></li>
+</ul>
+<p><a class="wtrl_func reference internal" href="#wtrl-func-11:test_tables-15:make_X_complete" title="test_tables.make_X_complete"><span>make_X_complete</span></a></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">Must</span> create a complete instance of <code class="wtrl_class docutils literal notranslate"><span class="pre">X</span></code>.</p></li>
+</ul>
+<p><a class="wtrl_func reference internal" href="#wtrl-func-11:test_tables-16:make_X_by_config" title="test_tables.make_X_by_config"><span>make_X_by_config</span></a></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">Must</span> create an instance of <code class="wtrl_class docutils literal notranslate"><span class="pre">X</span></code> based on the configuration passed.</p></li>
+<li><p><span class="wtrl_norm">Must</span> accept a single parameter <span class="wtrl_var_type"><span class="wtrl_var">config</span><span class="wtrl_op">: </span><span class="wtrl_type">Dict[str,Any]</span></span>.</p></li>
+<li><p>Parameter <code class="wtrl_var docutils literal notranslate"><span class="pre">config</span></code> is map of key-value pairs:</p></li>
+</ul>
+<div class="wtrl-table-block docutils container">
+<div class="wtrl-table-group docutils container">
+<p class="wtrl-table-title">Required</p>
+<div class="table-wrapper wtrl-content-table docutils container">
+<table class="wtrl-content-table docutils align-default">
+<thead>
+<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Key</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Requirements</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">base_prime</span></code></p></td>
+<td><p><code class="wtrl_type docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p>Prime used for encryption.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="wtrl-table-group docutils container">
+<p class="wtrl-table-title">Optional</p>
+<div class="table-wrapper wtrl-content-table docutils container">
+<table class="wtrl-content-table docutils align-default">
+<thead>
+<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Key</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">path_to_log</span></code></p></td>
+<td><p><code class="wtrl_type docutils literal notranslate"><span class="pre">str</span></code></p></td>
+<td><p><code class="wtrl_file docutils literal notranslate"><span class="pre">/var/log/fancy.log</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Notes</span></p></td>
+<td><p class="wtrl-note-title rubric">Test</p>
+<p class="wtrl-freeform-paragraph-content">The <span class="wtrl_label">Notes</span> section allows tables. The following is a table with two distinct groups, each have a title row.</p>
+<div class="wtrl-table-block wtrl-freeform-paragraph-content docutils container">
+<div class="wtrl-table-group docutils container">
+<p class="wtrl-table-title">Input Variables</p>
+<div class="table-wrapper wtrl-content-table docutils container">
+<table class="wtrl-content-table docutils align-default">
+<thead>
+<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>in_host</p></td>
+<td><p><code class="wtrl_type docutils literal notranslate"><span class="pre">string</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>in_port</p></td>
+<td><p><code class="wtrl_type docutils literal notranslate"><span class="pre">int</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="wtrl-table-group docutils container">
+<p class="wtrl-table-title">Output Variables</p>
+<div class="table-wrapper wtrl-content-table docutils container">
+<table class="wtrl-content-table docutils align-default">
+<thead>
+<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>out_length</p></td>
+<td><p><code class="wtrl_type docutils literal notranslate"><span class="pre">int</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>out_payload</p></td>
+<td><p><code class="wtrl_type docutils literal notranslate"><span class="pre">bytes</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+<thead class="wtrl-box-head-class">
+<tr class="row-odd"><th class="head"><span class="wtrl-obj-kind">Class</span></th>
+<th class="head"><p><span class="wtrl-obj-qid">X</span><span class="wtrl_lit"> –⁠ from </span><span class="wtrl_mod">test_tables</span></p></th>
+</tr>
+</thead>
+</table>
+</div>
+<div class="table-wrapper wtrl-box docutils container" id="wtrl-func-11:test_tables-3:log">
+<table class="wtrl-box docutils align-default" id="wtrl-func-11:test_tables-3:log">
+<tbody>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
+<td><div class="wtrl-signature-head line"><span class="wtrl_mod">test_tables</span><span class="wtrl_op">.</span><span class="wtrl_func">log</span><span class="wtrl_op">(</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">level</span><span class="wtrl_op">: </span><span class="wtrl_type">Literal[‘DEBUG’, ‘INFO’, ‘WARNING’, ‘ERROR’, ‘CRITICAL’]</span></div>
+<div class="wtrl-signature-param line"><span class="wtrl_var">msg</span><span class="wtrl_op">: </span><span class="wtrl_type">str</span></div>
+<div class="wtrl-signature-ret line"><span class="wtrl_op">)</span><span class="wtrl_op"> -&gt; </span><span class="wtrl_type">None</span></div>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Preamble</span></p></td>
+<td><p><span class="wtrl_label">normative sections</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_label">Contract</span>, <span class="wtrl_label">Parameters</span>, <span class="wtrl_label">Raises</span>, <span class="wtrl_label">Returns</span></p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Contract</span></p></td>
+<td><p><span class="wtrl_label">general</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">Must</span> demonstrate tables in subsection <span class="wtrl_label">Parameters.&lt;item&gt;</span>.</p></li>
+</ul>
+<p><span class="wtrl_label">requires</span></p>
+<ul class="simple">
+<li><p><code class="wtrl_var docutils literal notranslate"><span class="pre">msg</span></code> <span class="wtrl_norm">must not</span> be empty</p></li>
+</ul>
+<p><span class="wtrl_label">ensures</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">Must not</span> change the state of the module.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Parameters</span></p></td>
+<td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">level</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
+<p class="wtrl-freeform-paragraph-content">A string indicating the minimum severeness of messages to be logged.</p>
+<div class="wtrl-table-block wtrl-freeform-paragraph-content docutils container">
+<div class="wtrl-table-group docutils container">
+<div class="table-wrapper wtrl-content-table docutils container">
+<table class="wtrl-content-table docutils align-default">
+<thead>
+<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">&quot;DEBUG&quot;</span></code></p></td>
+<td><p>Rich debugging output, not recommended in productive environment</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">&quot;INFO&quot;</span></code></p></td>
+<td><p>Normal behaviour</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">&quot;WARNING&quot;</span></code></p></td>
+<td><p>Requires attention but most likely the system remains operational</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">&quot;ERROR&quot;</span></code></p></td>
+<td><p>Administrative action is required</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">&quot;CRITICAL&quot;</span></code></p></td>
+<td><p>System has become unusable</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<p><code class="wtrl_var docutils literal notranslate"><span class="pre">msg</span></code></p>
+<div class="wtrl-public-entry-content docutils container">
+<p class="wtrl-freeform-paragraph-content">The message to be logged</p>
+</div>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Raises</span></p></td>
+<td><p><code class="wtrl_class docutils literal notranslate"><span class="pre">ValueError</span></code></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">Must</span> raise if <code class="wtrl_var docutils literal notranslate"><span class="pre">msg</span></code> is empty.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Returns</span></p></td>
+<td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">None</span></code></p></td>
+</tr>
+</tbody>
+<thead class="wtrl-box-head-function">
+<tr class="row-odd"><th class="head"><span class="wtrl-obj-kind">Function</span></th>
+<th class="head"><p><span class="wtrl-obj-qid">log</span><span class="wtrl_lit"> –⁠ from </span><span class="wtrl_mod">test_tables</span></p></th>
+</tr>
+</thead>
+</table>
+</div>
+<div class="table-wrapper wtrl-box docutils container" id="wtrl-func-11:test_tables-12:init_nothrow">
+<table class="wtrl-box docutils align-default" id="wtrl-func-11:test_tables-12:init_nothrow">
+<tbody>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
+<td><div class="wtrl-signature-head line"><span class="wtrl_mod">test_tables</span><span class="wtrl_op">.</span><span class="wtrl_func">init_nothrow</span><span class="wtrl_op">(</span></div>
+<div class="wtrl-signature-ret line"><span class="wtrl_op">)</span><span class="wtrl_op"> -&gt; </span><span class="wtrl_type">int</span></div>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Preamble</span></p></td>
+<td><p><span class="wtrl_label">normative sections</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_label">Contract</span>, <span class="wtrl_label">Parameters</span>, <span class="wtrl_label">Raises</span>, <span class="wtrl_label">Returns</span></p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Contract</span></p></td>
+<td><p><span class="wtrl_label">general</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">Must</span> demonstrate tables in sections <span class="wtrl_label">Description</span> and <span class="wtrl_label">Returns</span>.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Description</span></p></td>
+<td><p>This function initializes the module. Relevant files are</p>
+<div class="wtrl-table-block docutils container">
+<div class="wtrl-table-group docutils container">
+<div class="table-wrapper wtrl-content-table docutils container">
+<table class="wtrl-content-table docutils align-default">
+<thead>
+<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Path</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="wtrl_file docutils literal notranslate"><span class="pre">/etc/fancy.conf</span></code></p></td>
+<td><p>Configuration</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="wtrl_file docutils literal notranslate"><span class="pre">/var/log/fancy.log</span></code></p></td>
+<td><p>General log</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="wtrl_file docutils literal notranslate"><span class="pre">/var/log/fancy.auth.log</span></code></p></td>
+<td><p>Log for authentication problems</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Parameters</span></p></td>
+<td><code class="wtrl_value docutils literal notranslate"><span class="pre">&lt;empty&gt;</span></code></td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Raises</span></p></td>
+<td><code class="wtrl_value docutils literal notranslate"><span class="pre">&lt;empty&gt;</span></code></td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Returns</span></p></td>
+<td><p><span class="wtrl_norm">Must</span> return one of the following values:</p>
+<div class="wtrl-table-block docutils container">
+<div class="wtrl-table-group docutils container">
+<div class="table-wrapper wtrl-content-table docutils container">
+<table class="wtrl-content-table docutils align-default">
+<thead>
+<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Status</p></th>
+<th class="head"><p>String representation</p></th>
+<th class="head"><p>Semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">ok</span></code></p></td>
+<td><p>No error</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">general_error</span></code></p></td>
+<td><p>General error</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">io_error</span></code></p></td>
+<td><p>Error accessing file system</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">bad_config</span></code></p></td>
+<td><p>Invalid configuration</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+<thead class="wtrl-box-head-function">
+<tr class="row-even"><th class="head"><span class="wtrl-obj-kind">Function</span></th>
+<th class="head"><p><span class="wtrl-obj-qid">init_nothrow</span><span class="wtrl_lit"> –⁠ from </span><span class="wtrl_mod">test_tables</span></p></th>
+</tr>
+</thead>
+</table>
+</div>
+<div class="table-wrapper wtrl-box docutils container" id="wtrl-func-11:test_tables-4:init">
+<table class="wtrl-box docutils align-default" id="wtrl-func-11:test_tables-4:init">
+<tbody>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
+<td><div class="wtrl-signature-head line"><span class="wtrl_mod">test_tables</span><span class="wtrl_op">.</span><span class="wtrl_func">init</span><span class="wtrl_op">(</span></div>
+<div class="wtrl-signature-ret line"><span class="wtrl_op">)</span><span class="wtrl_op"> -&gt; </span><span class="wtrl_type">None</span></div>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Preamble</span></p></td>
+<td><p><span class="wtrl_label">normative sections</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_label">Contract</span>, <span class="wtrl_label">Parameters</span>, <span class="wtrl_label">Raises</span>, <span class="wtrl_label">Returns</span></p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Contract</span></p></td>
+<td><p><span class="wtrl_label">general</span></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">Must</span> demonstrate tables in sections <span class="wtrl_label">Raises</span>.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Parameters</span></p></td>
+<td><code class="wtrl_value docutils literal notranslate"><span class="pre">&lt;empty&gt;</span></code></td>
+</tr>
+<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Raises</span></p></td>
+<td><p><code class="wtrl_class docutils literal notranslate"><span class="pre">MyException</span></code></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">Must</span> raise in case of an error in the controller</p></li>
+<li><p><span class="wtrl_norm">Must</span> provide an error codes according to the following scheme:</p></li>
+</ul>
+<div class="wtrl-table-block docutils container">
+<div class="wtrl-table-group docutils container">
+<div class="table-wrapper wtrl-content-table docutils container">
+<table class="wtrl-content-table docutils align-default">
+<thead>
+<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Value</p></th>
+<th class="head"><p>String representation</p></th>
+<th class="head"><p>Semantics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">general_error</span></code></p></td>
+<td><p>General error</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">io_error</span></code></p></td>
+<td><p>Error accessing file system</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">bad_config</span></code></p></td>
+<td><p>Invalid configuration</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><span class="wtrl_norm">Must</span> raise if initialization of any of the plugins fails.</p></li>
+</ul>
+<p><code class="wtrl_class docutils literal notranslate"><span class="pre">NotImplementedError</span></code></p>
+<ul class="simple">
+<li><p><span class="wtrl_norm">May</span> raise if implementation in any of the plugins is incomplete.</p></li>
+<li><p><span class="wtrl_norm">May</span> raise if implementation in any of the plugin registry classes is incomplete.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Returns</span></p></td>
+<td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">None</span></code></p></td>
+</tr>
+</tbody>
+<thead class="wtrl-box-head-function">
+<tr class="row-odd"><th class="head"><span class="wtrl-obj-kind">Function</span></th>
+<th class="head"><p><span class="wtrl-obj-qid">init</span><span class="wtrl_lit"> –⁠ from </span><span class="wtrl_mod">test_tables</span></p></th>
+</tr>
+</thead>
+</table>
 </div>
 <div class="admonition wtrl-current-module-message wtrl-current-module-pop">
 <p class="admonition-title">Waterloo module context</p>
