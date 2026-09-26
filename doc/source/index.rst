@@ -21,3 +21,4 @@ Sphinx: Waterloo Docstrings documentation
 	admonitions.rst
 	reference.rst
 	supplementary.rst
+	test_tables.rst

@@ -19,9 +19,12 @@ from typing import Any, Callable, Dict, Iterable, List, Literal, Sequence, Tuple
 import re,warnings,inspect,typing
 
 from docutils import nodes
-from sphinx.util import logging
-from sphinx.util import console
+from sphinx.util import (
+	logging,
+	console
+	)
 from sphinx.util.nodes import make_refnode
+
 import sdv.doc.waterloo.docitem as mod_docitem
 
 from sphinxcontrib.waterloo_docstrings.wtrl_protocol import (
@@ -723,13 +726,111 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 		out.append(node_paragraph)
 		return out
 
-	def append_term_paragraphs(node_parent: nodes.Element, term_nodes: Sequence[nodes.Node], items: Sequence[str]) -> None:
+	def build_table_block(table_block: mod_docitem.docitem_table) -> nodes.container:
+		"""Render one Waterloo table block as one or more valid Docutils tables."""
+		node_block = nodes.container(classes=["wtrl-table-block"])
+		for group in table_block.groups():
+			node_group = nodes.container(classes=["wtrl-table-group"])
+			title = group.title()
+			if title is not None:
+				for title_line in title:
+					node_title = nodes.paragraph(classes=["wtrl-table-title"])
+					node_title.extend(parse_text(node_title, title_line))
+					node_group += node_title
+
+			columns = group.header()
+			node_table_content = nodes.table(classes=["wtrl-content-table"])
+			node_tgroup_content = nodes.tgroup(cols=len(columns))
+			for _ in columns:
+				node_tgroup_content += nodes.colspec(colwidth=1)
+
+			node_thead_content = nodes.thead()
+			node_header_row = nodes.row(classes=["wtrl-content-table-header"])
+			for header in columns:
+				node_header_entry = nodes.entry()
+				node_header_paragraph = nodes.paragraph()
+				node_header_paragraph.extend(parse_text(node_header_paragraph, header))
+				node_header_entry += node_header_paragraph
+				node_header_row += node_header_entry
+			node_thead_content += node_header_row
+			node_tgroup_content += node_thead_content
+
+			node_tbody_content = nodes.tbody()
+			for row in group.rows():
+				node_row = nodes.row()
+				for cell in row:
+					node_cell = nodes.entry()
+					node_cell_paragraph = nodes.paragraph()
+					node_cell_paragraph.extend(parse_text(node_cell_paragraph, cell))
+					node_cell += node_cell_paragraph
+					node_row += node_cell
+				node_tbody_content += node_row
+			node_tgroup_content += node_tbody_content
+			node_table_content += node_tgroup_content
+			node_group += node_table_content
+			node_block += node_group
+		return node_block
+
+	def build_freeform_content_nodes(
+		item_subsection: mod_docitem.docitem_list_of_content_blocks_base,
+		content_class: str | None = None,
+	) -> List[nodes.Node]:
+		"""Render free-form text and table blocks while retaining source order."""
+		out: List[nodes.Node] = []
+		text_items: List[str] = []
+
+		def flush_text_items() -> None:
+			if not text_items:
+				return
+			for paragraph in build_paragraphs_from_items(text_items):
+				if content_class is not None:
+					paragraph["classes"].append(content_class)
+				out.append(paragraph)
+			text_items.clear()
+
+		for block in item_subsection.content_blocks():
+			if isinstance(block, str):
+				text_items.append(block)
+			else:
+				flush_text_items()
+				node_table_block = build_table_block(block)
+				if content_class is not None:
+					node_table_block["classes"].append(content_class)
+				out.append(node_table_block)
+		flush_text_items()
+		return out
+
+	def build_statement_content_nodes(
+		item_subsection: mod_docitem.docitem_list_of_content_blocks_base,
+	) -> List[nodes.Node]:
+		"""Render statement lists, interrupted where a Waterloo table occurs."""
+		out: List[nodes.Node] = []
+		text_items: List[str] = []
+
+		def flush_text_items() -> None:
+			if text_items:
+				out.append(build_bullet_list_from_subsection_items(text_items))
+				text_items.clear()
+
+		for block in item_subsection.content_blocks():
+			if isinstance(block, str):
+				text_items.append(block)
+			else:
+				flush_text_items()
+				out.append(build_table_block(block))
+		flush_text_items()
+		return out
+
+	def append_term_content(
+		node_parent: nodes.Element,
+		term_nodes: Sequence[nodes.Node],
+		item_subsection: mod_docitem.docitem_list_of_content_blocks_base,
+	) -> None:
 		node_term = nodes.paragraph(classes=["wtrl-dfn-term"])
 		node_term.extend(term_nodes)
 		node_parent += node_term
-		for paragraph in build_paragraphs_from_items(items):
-			paragraph["classes"].append("wtrl-dfn-content")
-			node_parent += paragraph
+		for content_node in build_freeform_content_nodes(item_subsection, "wtrl-dfn-content"):
+			node_parent += content_node
 
 	objname = mod_docitem.get_obj_name(obj)
 	objname_q = mod_docitem.get_obj_fully_qualified_name(obj)
@@ -894,11 +995,14 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 						node_label = nodes.inline()
 						node_label.extend(ctx.parse(node_label, 0, ctx.add_role_label("<Terms inherited from module>")))
 						term_nodes = [node_label]
-					append_term_paragraphs(
-						node_entry,
-						term_nodes,
-						[", ".join([ctx.add_role_dfn(inh) for inh in obj_definitions.inherited()])],
-					)
+					node_term = nodes.paragraph(classes=["wtrl-dfn-term"])
+					node_term.extend(term_nodes)
+					node_entry += node_term
+					for paragraph in build_paragraphs_from_items([
+						", ".join([ctx.add_role_dfn(inh) for inh in obj_definitions.inherited()]),
+					]):
+						paragraph["classes"].append("wtrl-dfn-content")
+						node_entry += paragraph
 
 				seen: Dict[Any,List[str]] = {}
 # Collect terms having the same content (we have a DAG, not a tree!)
@@ -918,21 +1022,21 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 					else:
 						node_term.extend(ctx.parse(node_term, 0, ctx.add_role_dfn(terms[0])))
 # Content
-					append_term_paragraphs(node_entry, [node_term], item_subsection.items())
+					append_term_content(node_entry, [node_term], item_subsection)
 			else:
 				for term, item_subsection in item_section.items().items():
 # Term
 					node_term = nodes.inline()
 					node_term.extend(ctx.parse(node_term, 0, ctx.add_role_dfn(term)))
 # Content
-					append_term_paragraphs(node_entry, [node_term], item_subsection.items())
+					append_term_content(node_entry, [node_term], item_subsection)
 # Both a freeform. "Description" is non-normative. "Returns" is normative,
 # yet we msut provide tools  like itemization and enumeration in order to
 # resolve the inner structure of the returned object, therefore freeform.
 		elif label in ("Description", "Returns"):
 # Content
-			for paragraph in build_paragraphs_from_items(item_section.items()):
-				node_entry += paragraph
+			for content_node in build_freeform_content_nodes(item_section):
+				node_entry += content_node
 		elif label in ("Notes",):
 			for term, item_subsection in item_section.items().items():
 # Rubric, allows classes=['',...]
@@ -940,9 +1044,8 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 				rub.extend(ctx.parse(rub, 0, term))
 				node_entry += rub
 # Content
-				for paragraph in build_paragraphs_from_items(item_subsection.items()):
-					paragraph["classes"].append("wtrl-freeform-paragraph-content")
-					node_entry += paragraph
+				for content_node in build_freeform_content_nodes(item_subsection, "wtrl-freeform-paragraph-content"):
+					node_entry += content_node
 # Factory: List of function names, each with a line-by-line executable contract.
 		elif label in ("Factory"):
 			if len(item_section.items()) == 0:
@@ -955,7 +1058,7 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 					render_linked_factory_entry(node_label_paragraph,label1,objname,"wtrl_func",ctx.add_role_func)
 					node_entry += node_label_paragraph
 # Iterate over logical lines in the exception class' content and add each bullet list as sibling node.
-					node_entry += build_bullet_list_from_subsection_items(item_subsection.items())
+					node_entry.extend(build_statement_content_nodes(item_subsection))
 
 # New in 0.1.1: Parameters and Class/Method/Function_overview are rendered as freeform, like Public_...
 # The reason for parameters is that we must have tools like itemization and enumeration
@@ -999,9 +1102,8 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 							node_annotation_paragraph += nodes.inline(text=annotation_text, classes=["wtrl_type"])
 							node_content_container += node_annotation_paragraph
 # Iterate over logical lines in the public constant's/variable's content and add each paragraph as sibling node.
-					for paragraph in build_paragraphs_from_items(item_subsection.items()):
-						paragraph["classes"].append("wtrl-freeform-paragraph-content")
-						node_content_container += paragraph
+					for content_node in build_freeform_content_nodes(item_subsection, "wtrl-freeform-paragraph-content"):
+						node_content_container += content_node
 
 		elif label in ("Raises"):
 # For section "Raises" we enforce the line-by-line style and interpret the content as an executable contract.
@@ -1013,7 +1115,7 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 					render_plain_entry(node_label_paragraph,label1,"wtrl_class",ctx.add_role_class,"Raises")
 					node_entry += node_label_paragraph
 # Iterate over logical lines in the exception class' content and add each bullet list as sibling node.
-					node_entry += build_bullet_list_from_subsection_items(item_subsection.items())
+					node_entry.extend(build_statement_content_nodes(item_subsection))
 		elif label in ("Derived_from"):
 # Build a paragraph and fill it either with "|empty|" or a list of entries.
 			node1_paragraph = nodes.paragraph()

@@ -1,12 +1,12 @@
 {
-    "$schema": "https://sci-d-vis.com/schema/wtrl-json-0.1.0.schema.json",
-    "$id": "urn:waterlint:wtrl-json:0.24.1:core:rfc-2119:04e49c7023d916a4e1be44226f157328786ca6410ec7cb8c5d495956389899fb",
+    "$schema": "https://sci-d-vis.com/schema/wtrl-json-0.3.0.schema.json",
+    "$id": "urn:waterlint:wtrl-json:0.24.2:core:rfc-2119:db7bb81a4e2b0463f800abb67604237a9fea904d3a871301fbfedf06afaa82a8",
     "__WTRL_VERSION__": {
-        "waterloo": "0.24.1",
-        "schema": "0.1.0"
+        "waterloo": "0.24.2",
+        "schema": "0.3.0"
     },
     "__WTRL_META__": {
-        "generated_at": "2026-09-19T10:42:21+02:00",
+        "generated_at": "2026-09-26T20:12:48+02:00",
         "generator": "waterlint",
         "scope": "core",
         "flavour": "rfc-2119"
@@ -110,12 +110,18 @@
             "doc_lines": [
                 "Literal type for configuration variable |var|`wtrl_object_origin_display_mode`."
             ],
+            "doc_blocks": [
+                "Literal type for configuration variable |var|`wtrl_object_origin_display_mode`."
+            ],
             "annotation": "Literal['omit', 'short', 'long']",
             "doc_lines_kind": "type"
         },
         "sphinxcontrib.waterloo_docstrings.extension.RoleResult": {
             "doc": {},
             "doc_lines": [
+                "Aggregate type for the return value of role handler functions. |type|`RoleResult` is a tuple of the form (nodes, messages) where nodes is a list of Docutils nodes and messages is a list of Docutils system messages."
+            ],
+            "doc_blocks": [
                 "Aggregate type for the return value of role handler functions. |type|`RoleResult` is a tuple of the form (nodes, messages) where nodes is a list of Docutils nodes and messages is a list of Docutils system messages."
             ],
             "annotation": "tuple[List[docutils.nodes.Node], list[docutils.nodes.Node]]",
@@ -126,6 +132,9 @@
             "doc_lines": [
                 "A |type|`frozenset` of characters escaped in reStructuredText text segments to avoid unintended markup interpretation."
             ],
+            "doc_blocks": [
+                "A |type|`frozenset` of characters escaped in reStructuredText text segments to avoid unintended markup interpretation."
+            ],
             "doc_lines_kind": "constant"
         },
         "sphinxcontrib.waterloo_docstrings.extension.RST_ROLE_BODY_ESCAPE_CHARS": {
@@ -133,11 +142,18 @@
             "doc_lines": [
                 "A |type|`frozenset` of characters escaped in reStructuredText role bodies to avoid unintended markup interpretation."
             ],
+            "doc_blocks": [
+                "A |type|`frozenset` of characters escaped in reStructuredText role bodies to avoid unintended markup interpretation."
+            ],
             "doc_lines_kind": "constant"
         },
         "sphinxcontrib.waterloo_docstrings.extension.WTRL_TOKEN_REPLACEMENTS": {
             "doc": {},
             "doc_lines": [
+                "A |type|`Mapping` of Waterloo token strings to their corresponding reStructuredText role expansions.",
+                "This mapping is used to convert tokens like |lit|`Must` into the appropriate role."
+            ],
+            "doc_blocks": [
                 "A |type|`Mapping` of Waterloo token strings to their corresponding reStructuredText role expansions.",
                 "This mapping is used to convert tokens like |lit|`Must` into the appropriate role."
             ],
