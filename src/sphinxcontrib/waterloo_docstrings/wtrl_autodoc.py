@@ -727,35 +727,36 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 		return out
 
 	def build_table_block(table_block: mod_docitem.docitem_table) -> nodes.container:
-		"""Render one Waterloo table block as one or more valid Docutils tables."""
+		"""Render one Waterloo table block as one Docutils table with grouped rows."""
 		node_block = nodes.container(classes=["wtrl-table-block"])
-		for group in table_block.groups():
-			node_group = nodes.container(classes=["wtrl-table-group"])
+		groups = table_block.groups()
+		columns = groups[0].header()
+		node_table_content = nodes.table(classes=["wtrl-content-table"])
+		node_tgroup_content = nodes.tgroup(cols=len(columns))
+		for _ in columns:
+			node_tgroup_content += nodes.colspec(colwidth=1)
+		node_tbody_content = nodes.tbody()
+
+		for group in groups:
 			title = group.title()
 			if title is not None:
+				node_title_row = nodes.row(classes=["wtrl-content-table-group-title"])
+				node_title_entry = nodes.entry(morecols=len(columns) - 1)
 				for title_line in title:
 					node_title = nodes.paragraph(classes=["wtrl-table-title"])
 					node_title.extend(parse_text(node_title, title_line))
-					node_group += node_title
+					node_title_entry += node_title
+				node_title_row += node_title_entry
+				node_tbody_content += node_title_row
 
-			columns = group.header()
-			node_table_content = nodes.table(classes=["wtrl-content-table"])
-			node_tgroup_content = nodes.tgroup(cols=len(columns))
-			for _ in columns:
-				node_tgroup_content += nodes.colspec(colwidth=1)
-
-			node_thead_content = nodes.thead()
 			node_header_row = nodes.row(classes=["wtrl-content-table-header"])
-			for header in columns:
+			for header in group.header():
 				node_header_entry = nodes.entry()
 				node_header_paragraph = nodes.paragraph()
 				node_header_paragraph.extend(parse_text(node_header_paragraph, header))
 				node_header_entry += node_header_paragraph
 				node_header_row += node_header_entry
-			node_thead_content += node_header_row
-			node_tgroup_content += node_thead_content
-
-			node_tbody_content = nodes.tbody()
+			node_tbody_content += node_header_row
 			for row in group.rows():
 				node_row = nodes.row()
 				for cell in row:
@@ -765,10 +766,9 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 					node_cell += node_cell_paragraph
 					node_row += node_cell
 				node_tbody_content += node_row
-			node_tgroup_content += node_tbody_content
-			node_table_content += node_tgroup_content
-			node_group += node_table_content
-			node_block += node_group
+		node_tgroup_content += node_tbody_content
+		node_table_content += node_tgroup_content
+		node_block += node_table_content
 		return node_block
 
 	def build_freeform_content_nodes(
@@ -904,7 +904,7 @@ def build_sphinx_nodes(ctx : context,obj: object,doc: mod_docitem.docitem_docstr
 	if mod_docitem.is_obj_function(obj):
 # We achieve this by adding a (pseudo) section.
 # Create a table row:
-		node_row = nodes.row(classes=["wtrl-section"])
+		node_row = nodes.row(classes=["wtrl-section", "wtrl-signature-row"])
 # Left column
 		node_entry = nodes.entry()
 		node_paragraph = nodes.paragraph()

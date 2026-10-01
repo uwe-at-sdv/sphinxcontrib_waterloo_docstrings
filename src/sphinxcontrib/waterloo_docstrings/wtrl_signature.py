@@ -83,18 +83,27 @@ def render_head_of_callable(ctx: context, obj: object, display_scope: bool = Tru
 		lines.append(decorator)
 # Header: Coroutine marker, module, class hierarchy and function name.
 	header = nodes.line(classes=["wtrl-signature-head"])
+
+	def append_dot() -> None:
+		"""Append a dot with an invisible, preferred break point immediately before it."""
+		header.append(nodes.inline("\u200b", "\u200b", classes=["wtrl-signature-break"]))
+		header.extend(_tkn(ctx.add_role_op, "."))
+
 # coroutine
 	if coroutine_marker:
 		header += _tkn(ctx.add_role_attr, coroutine_marker)
 	if display_scope:
 # module name
-		header += _tkn(ctx.add_role_mod, mod_docitem.get_obj_name(mod))
-		header += _tkn(ctx.add_role_op, ".")
+		for i_seg, segment in enumerate(mod.split(".")):
+			if i_seg:
+				append_dot()
+			header += _tkn(ctx.add_role_mod, segment)
+		append_dot()
 # qualified function name: class segments
 	for i_seg in range(len(objname_segments) - 1):
 # Class and nested classes
 		header += _tkn(ctx.add_role_type, objname_segments[i_seg])
-		header += _tkn(ctx.add_role_op, ".")
+		append_dot()
 # Unqualified function name.
 	header += _tkn(ctx.add_role_func, objname_segments[-1])
 	header += _tkn(ctx.add_role_op, "(")

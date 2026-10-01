@@ -366,12 +366,38 @@ table.wtrl-box td:nth-child(2) {
 	max-width: 82%;
 	}
 
+/* Keep human-readable section labels intact where possible. Normal whitespace
+   remains the preferred wrap point; only an exceptionally long single word
+   may break within itself. */
+table.wtrl-box > tbody > tr.wtrl-section > td:first-child {
+	hyphens: none;
+	overflow-wrap: break-word;
+	word-break: normal;
+	}
+table.wtrl-box > tbody > tr.wtrl-section > td:first-child > p {
+	hyphens: none;
+	overflow-wrap: break-word;
+	word-break: normal;
+	}
+
 table.wtrl-box > tbody > tr > td:nth-child(2) pre,
 table.wtrl-box > tbody > tr > td:nth-child(2) span.pre,
 table.wtrl-box > tbody > tr > td:nth-child(2) code.literal {
 	white-space: pre-wrap;
 	overflow-wrap: anywhere;
 	word-break: break-all;
+	}
+
+/* Signature heads contain explicit zero-width break opportunities before
+   qualified-name separators. Keep normal word breaking here so an identifier
+   remains intact until a qualified-name boundary is needed. */
+table.wtrl-box > tbody > tr.wtrl-signature-row > td:nth-child(2) {
+	min-width: 0;
+	}
+table.wtrl-box > tbody > tr.wtrl-signature-row > td:nth-child(2) .wtrl-signature-head {
+	white-space: normal;
+	overflow-wrap: normal;
+	word-break: normal;
 	}
 
 /* For sections "Notes" which contains a rubric elements.*/
@@ -408,6 +434,14 @@ table.wtrl-box > tbody > tr > td:nth-child(2) table.wtrl-content-table > thead >
 	}
 table.wtrl-box > tbody > tr > td:nth-child(2) table.wtrl-content-table > tbody > tr > td {
 	background-color: inherit;
+	}
+table.wtrl-box > tbody > tr > td:nth-child(2) table.wtrl-content-table > tbody > tr.wtrl-content-table-header > td {
+	font-weight:bold;
+	}
+table.wtrl-box > tbody > tr > td:nth-child(2) table.wtrl-content-table > tbody > tr.wtrl-content-table-group-title > td {
+	text-align: center;
+	font-style: italic;
+	font-weight: normal;
 	}
 table.wtrl-box > tbody > tr > td:nth-child(2) table.wtrl-content-table th,
 table.wtrl-box > tbody > tr > td:nth-child(2) table.wtrl-content-table td {
