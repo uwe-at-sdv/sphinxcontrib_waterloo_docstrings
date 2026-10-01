@@ -10,7 +10,7 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d75fae25" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/common_styles.css?v=9842741a" />
-    <link rel="stylesheet" type="text/css" href="_static/waterloo_base.css?v=f14269ff" />
+    <link rel="stylesheet" type="text/css" href="_static/waterloo_base.css?v=0534d635" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="_static/wtrl_doc_custom.css" />
     
@@ -299,15 +299,12 @@
 <td><p class="wtrl-note-title rubric">Application</p>
 <p class="wtrl-freeform-paragraph-content">The following table shows where tables are allowed:</p>
 <div class="wtrl-table-block wtrl-freeform-paragraph-content docutils container">
-<div class="wtrl-table-group docutils container">
 <div class="table-wrapper wtrl-content-table docutils container">
 <table class="wtrl-content-table docutils align-default">
-<thead>
-<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Sections in canonical order</p></th>
-<th class="head"><p>Allowed / Applicable</p></th>
-</tr>
-</thead>
 <tbody>
+<tr class="wtrl-content-table-header row-odd"><td><p>Sections in canonical order</p></td>
+<td><p>Allowed / Applicable</p></td>
+</tr>
 <tr class="row-even"><td><p><span class="wtrl_label">Preamble.*</span></p></td>
 <td><p>no</p></td>
 </tr>
@@ -375,7 +372,6 @@
 </table>
 </div>
 </div>
-</div>
 </td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Public classes</span></p></td>
@@ -386,15 +382,12 @@
 <div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">The plugin controller. Plugins are initialized according to the following table:</p>
 <div class="wtrl-table-block wtrl-freeform-paragraph-content docutils container">
-<div class="wtrl-table-group docutils container">
 <div class="table-wrapper wtrl-content-table docutils container">
 <table class="wtrl-content-table docutils align-default">
-<thead>
-<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Name</p></th>
-<th class="head"><p>Initialization</p></th>
-</tr>
-</thead>
 <tbody>
+<tr class="wtrl-content-table-header row-odd"><td><p>Name</p></td>
+<td><p>Initialization</p></td>
+</tr>
 <tr class="row-even"><td><p>fancy_plugin_a</p></td>
 <td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">LAZY</span></code></p></td>
 </tr>
@@ -406,32 +399,28 @@
 </div>
 </div>
 </div>
-</div>
 </td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Public variables</span></p></td>
 <td><p id="wtrl-obj-11:test_tables-8:location"><code class="wtrl_var docutils literal notranslate"><span class="pre">location</span></code></p>
 <div class="wtrl-public-entry-content docutils container">
 <div class="wtrl-table-block wtrl-freeform-paragraph-content docutils container">
-<div class="wtrl-table-group docutils container">
-<p class="wtrl-table-title">Location for expensive computations</p>
 <div class="table-wrapper wtrl-content-table docutils container">
 <table class="wtrl-content-table docutils align-default">
-<thead>
-<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Symbol</p></th>
-<th class="head"><p>Semantics</p></th>
-</tr>
-</thead>
 <tbody>
-<tr class="row-even"><td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">LOCAL</span></code></p></td>
+<tr class="wtrl-content-table-group-title row-odd"><td colspan="2"><p class="wtrl-table-title">Location for expensive computations</p></td>
+</tr>
+<tr class="wtrl-content-table-header row-even"><td><p>Symbol</p></td>
+<td><p>Semantics</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">LOCAL</span></code></p></td>
 <td><p>Do computations on localhost</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">REMOTE</span></code></p></td>
+<tr class="row-even"><td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">REMOTE</span></code></p></td>
 <td><p>Do computations on remote host</p></td>
 </tr>
 </tbody>
 </table>
-</div>
 </div>
 </div>
 </div>
@@ -442,25 +431,22 @@
 <div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-public-type-annotation"><span class="wtrl-public-type-annotation-label">Type Alias for </span><span class="wtrl_type">Literal[‘SSH’, ‘HTTPS’]</span></p>
 <div class="wtrl-table-block wtrl-freeform-paragraph-content docutils container">
-<div class="wtrl-table-group docutils container">
-<p class="wtrl-table-title">Symbols which describe access to remote files</p>
 <div class="table-wrapper wtrl-content-table docutils container">
 <table class="wtrl-content-table docutils align-default">
-<thead>
-<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Symbol</p></th>
-<th class="head"><p>Semantics</p></th>
-</tr>
-</thead>
 <tbody>
-<tr class="row-even"><td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">&quot;SSH&quot;</span></code></p></td>
+<tr class="wtrl-content-table-group-title row-odd"><td colspan="2"><p class="wtrl-table-title">Symbols which describe access to remote files</p></td>
+</tr>
+<tr class="wtrl-content-table-header row-even"><td><p>Symbol</p></td>
+<td><p>Semantics</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">&quot;SSH&quot;</span></code></p></td>
 <td><p>Access remote files through ssh, sftp, scp. Requires public key on remote host.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">&quot;HTTPS&quot;</span></code></p></td>
+<tr class="row-even"><td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">&quot;HTTPS&quot;</span></code></p></td>
 <td><p>Access remote files through https. Requires token from remote host.</p></td>
 </tr>
 </tbody>
 </table>
-</div>
 </div>
 </div>
 </div>
@@ -514,36 +500,25 @@
 <li><p>Parameter <code class="wtrl_var docutils literal notranslate"><span class="pre">config</span></code> is map of key-value pairs:</p></li>
 </ul>
 <div class="wtrl-table-block docutils container">
-<div class="wtrl-table-group docutils container">
-<p class="wtrl-table-title">Required</p>
 <div class="table-wrapper wtrl-content-table docutils container">
 <table class="wtrl-content-table docutils align-default">
-<thead>
-<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Key</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Requirements</p></th>
-</tr>
-</thead>
 <tbody>
-<tr class="row-even"><td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">base_prime</span></code></p></td>
+<tr class="wtrl-content-table-group-title row-odd"><td colspan="3"><p class="wtrl-table-title">Required</p></td>
+</tr>
+<tr class="wtrl-content-table-header row-even"><td><p>Key</p></td>
+<td><p>Type</p></td>
+<td><p>Requirements</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">base_prime</span></code></p></td>
 <td><p><code class="wtrl_type docutils literal notranslate"><span class="pre">int</span></code></p></td>
 <td><p>Prime used for encryption.</p></td>
 </tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="wtrl-table-group docutils container">
-<p class="wtrl-table-title">Optional</p>
-<div class="table-wrapper wtrl-content-table docutils container">
-<table class="wtrl-content-table docutils align-default">
-<thead>
-<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Key</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Default</p></th>
+<tr class="wtrl-content-table-group-title row-even"><td colspan="3"><p class="wtrl-table-title">Optional</p></td>
 </tr>
-</thead>
-<tbody>
+<tr class="wtrl-content-table-header row-odd"><td><p>Key</p></td>
+<td><p>Type</p></td>
+<td><p>Default</p></td>
+</tr>
 <tr class="row-even"><td><p><code class="wtrl_var docutils literal notranslate"><span class="pre">path_to_log</span></code></p></td>
 <td><p><code class="wtrl_type docutils literal notranslate"><span class="pre">str</span></code></p></td>
 <td><p><code class="wtrl_file docutils literal notranslate"><span class="pre">/var/log/fancy.log</span></code>.</p></td>
@@ -552,52 +527,39 @@
 </table>
 </div>
 </div>
-</div>
 </td>
 </tr>
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Notes</span></p></td>
 <td><p class="wtrl-note-title rubric">Test</p>
 <p class="wtrl-freeform-paragraph-content">The <span class="wtrl_label">Notes</span> section allows tables. The following is a table with two distinct groups, each have a title row.</p>
 <div class="wtrl-table-block wtrl-freeform-paragraph-content docutils container">
-<div class="wtrl-table-group docutils container">
-<p class="wtrl-table-title">Input Variables</p>
 <div class="table-wrapper wtrl-content-table docutils container">
 <table class="wtrl-content-table docutils align-default">
-<thead>
-<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Name</p></th>
-<th class="head"><p>Type</p></th>
-</tr>
-</thead>
 <tbody>
-<tr class="row-even"><td><p>in_host</p></td>
+<tr class="wtrl-content-table-group-title row-odd"><td colspan="2"><p class="wtrl-table-title">Input Variables</p></td>
+</tr>
+<tr class="wtrl-content-table-header row-even"><td><p>Name</p></td>
+<td><p>Type</p></td>
+</tr>
+<tr class="row-odd"><td><p>in_host</p></td>
 <td><p><code class="wtrl_type docutils literal notranslate"><span class="pre">string</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p>in_port</p></td>
+<tr class="row-even"><td><p>in_port</p></td>
 <td><p><code class="wtrl_type docutils literal notranslate"><span class="pre">int</span></code></p></td>
 </tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="wtrl-table-group docutils container">
-<p class="wtrl-table-title">Output Variables</p>
-<div class="table-wrapper wtrl-content-table docutils container">
-<table class="wtrl-content-table docutils align-default">
-<thead>
-<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Name</p></th>
-<th class="head"><p>Type</p></th>
+<tr class="wtrl-content-table-group-title row-odd"><td colspan="2"><p class="wtrl-table-title">Output Variables</p></td>
 </tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>out_length</p></td>
+<tr class="wtrl-content-table-header row-even"><td><p>Name</p></td>
+<td><p>Type</p></td>
+</tr>
+<tr class="row-odd"><td><p>out_length</p></td>
 <td><p><code class="wtrl_type docutils literal notranslate"><span class="pre">int</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p>out_payload</p></td>
+<tr class="row-even"><td><p>out_payload</p></td>
 <td><p><code class="wtrl_type docutils literal notranslate"><span class="pre">bytes</span></code></p></td>
 </tr>
 </tbody>
 </table>
-</div>
 </div>
 </div>
 </td>
@@ -613,8 +575,8 @@
 <div class="table-wrapper wtrl-box docutils container" id="wtrl-func-11:test_tables-3:log">
 <table class="wtrl-box docutils align-default" id="wtrl-func-11:test_tables-3:log">
 <tbody>
-<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
-<td><div class="wtrl-signature-head line"><span class="wtrl_mod">test_tables</span><span class="wtrl_op">.</span><span class="wtrl_func">log</span><span class="wtrl_op">(</span></div>
+<tr class="wtrl-section wtrl-signature-row row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
+<td><div class="wtrl-signature-head line"><span class="wtrl_mod">test_tables</span><span class="wtrl-signature-break">​</span><span class="wtrl_op">.</span><span class="wtrl_func">log</span><span class="wtrl_op">(</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">level</span><span class="wtrl_op">: </span><span class="wtrl_type">Literal[‘DEBUG’, ‘INFO’, ‘WARNING’, ‘ERROR’, ‘CRITICAL’]</span></div>
 <div class="wtrl-signature-param line"><span class="wtrl_var">msg</span><span class="wtrl_op">: </span><span class="wtrl_type">str</span></div>
 <div class="wtrl-signature-ret line"><span class="wtrl_op">)</span><span class="wtrl_op"> -&gt; </span><span class="wtrl_type">None</span></div>
@@ -647,15 +609,12 @@
 <div class="wtrl-public-entry-content docutils container">
 <p class="wtrl-freeform-paragraph-content">A string indicating the minimum severeness of messages to be logged.</p>
 <div class="wtrl-table-block wtrl-freeform-paragraph-content docutils container">
-<div class="wtrl-table-group docutils container">
 <div class="table-wrapper wtrl-content-table docutils container">
 <table class="wtrl-content-table docutils align-default">
-<thead>
-<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Symbol</p></th>
-<th class="head"><p>Semantics</p></th>
-</tr>
-</thead>
 <tbody>
+<tr class="wtrl-content-table-header row-odd"><td><p>Symbol</p></td>
+<td><p>Semantics</p></td>
+</tr>
 <tr class="row-even"><td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">&quot;DEBUG&quot;</span></code></p></td>
 <td><p>Rich debugging output, not recommended in productive environment</p></td>
 </tr>
@@ -673,7 +632,6 @@
 </tr>
 </tbody>
 </table>
-</div>
 </div>
 </div>
 </div>
@@ -704,8 +662,8 @@
 <div class="table-wrapper wtrl-box docutils container" id="wtrl-func-11:test_tables-12:init_nothrow">
 <table class="wtrl-box docutils align-default" id="wtrl-func-11:test_tables-12:init_nothrow">
 <tbody>
-<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
-<td><div class="wtrl-signature-head line"><span class="wtrl_mod">test_tables</span><span class="wtrl_op">.</span><span class="wtrl_func">init_nothrow</span><span class="wtrl_op">(</span></div>
+<tr class="wtrl-section wtrl-signature-row row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
+<td><div class="wtrl-signature-head line"><span class="wtrl_mod">test_tables</span><span class="wtrl-signature-break">​</span><span class="wtrl_op">.</span><span class="wtrl_func">init_nothrow</span><span class="wtrl_op">(</span></div>
 <div class="wtrl-signature-ret line"><span class="wtrl_op">)</span><span class="wtrl_op"> -&gt; </span><span class="wtrl_type">int</span></div>
 </td>
 </tr>
@@ -726,15 +684,12 @@
 <tr class="wtrl-section row-even"><td><p><span class="wtrl_label">Description</span></p></td>
 <td><p>This function initializes the module. Relevant files are</p>
 <div class="wtrl-table-block docutils container">
-<div class="wtrl-table-group docutils container">
 <div class="table-wrapper wtrl-content-table docutils container">
 <table class="wtrl-content-table docutils align-default">
-<thead>
-<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Path</p></th>
-<th class="head"><p>Purpose</p></th>
-</tr>
-</thead>
 <tbody>
+<tr class="wtrl-content-table-header row-odd"><td><p>Path</p></td>
+<td><p>Purpose</p></td>
+</tr>
 <tr class="row-even"><td><p><code class="wtrl_file docutils literal notranslate"><span class="pre">/etc/fancy.conf</span></code></p></td>
 <td><p>Configuration</p></td>
 </tr>
@@ -748,7 +703,6 @@
 </table>
 </div>
 </div>
-</div>
 </td>
 </tr>
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Parameters</span></p></td>
@@ -760,16 +714,13 @@
 <tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Returns</span></p></td>
 <td><p><span class="wtrl_norm">Must</span> return one of the following values:</p>
 <div class="wtrl-table-block docutils container">
-<div class="wtrl-table-group docutils container">
 <div class="table-wrapper wtrl-content-table docutils container">
 <table class="wtrl-content-table docutils align-default">
-<thead>
-<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Status</p></th>
-<th class="head"><p>String representation</p></th>
-<th class="head"><p>Semantics</p></th>
-</tr>
-</thead>
 <tbody>
+<tr class="wtrl-content-table-header row-odd"><td><p>Status</p></td>
+<td><p>String representation</p></td>
+<td><p>Semantics</p></td>
+</tr>
 <tr class="row-even"><td><p>0</p></td>
 <td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">ok</span></code></p></td>
 <td><p>No error</p></td>
@@ -790,7 +741,6 @@
 </table>
 </div>
 </div>
-</div>
 </td>
 </tr>
 </tbody>
@@ -804,8 +754,8 @@
 <div class="table-wrapper wtrl-box docutils container" id="wtrl-func-11:test_tables-4:init">
 <table class="wtrl-box docutils align-default" id="wtrl-func-11:test_tables-4:init">
 <tbody>
-<tr class="wtrl-section row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
-<td><div class="wtrl-signature-head line"><span class="wtrl_mod">test_tables</span><span class="wtrl_op">.</span><span class="wtrl_func">init</span><span class="wtrl_op">(</span></div>
+<tr class="wtrl-section wtrl-signature-row row-odd"><td><p><span class="wtrl_label">Signature</span></p></td>
+<td><div class="wtrl-signature-head line"><span class="wtrl_mod">test_tables</span><span class="wtrl-signature-break">​</span><span class="wtrl_op">.</span><span class="wtrl_func">init</span><span class="wtrl_op">(</span></div>
 <div class="wtrl-signature-ret line"><span class="wtrl_op">)</span><span class="wtrl_op"> -&gt; </span><span class="wtrl_type">None</span></div>
 </td>
 </tr>
@@ -833,16 +783,13 @@
 <li><p><span class="wtrl_norm">Must</span> provide an error codes according to the following scheme:</p></li>
 </ul>
 <div class="wtrl-table-block docutils container">
-<div class="wtrl-table-group docutils container">
 <div class="table-wrapper wtrl-content-table docutils container">
 <table class="wtrl-content-table docutils align-default">
-<thead>
-<tr class="wtrl-content-table-header row-odd"><th class="head"><p>Value</p></th>
-<th class="head"><p>String representation</p></th>
-<th class="head"><p>Semantics</p></th>
-</tr>
-</thead>
 <tbody>
+<tr class="wtrl-content-table-header row-odd"><td><p>Value</p></td>
+<td><p>String representation</p></td>
+<td><p>Semantics</p></td>
+</tr>
 <tr class="row-even"><td><p>1</p></td>
 <td><p><code class="wtrl_value docutils literal notranslate"><span class="pre">general_error</span></code></p></td>
 <td><p>General error</p></td>
@@ -857,7 +804,6 @@
 </tr>
 </tbody>
 </table>
-</div>
 </div>
 </div>
 <ul class="simple">
